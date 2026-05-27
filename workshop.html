@@ -1075,16 +1075,16 @@ section.lab.today-focus::before {
 
 
 <!-- ============================================================
-     SECTION 3 - Lists & Links
+     SECTION 3 - Lists, Links & Images
      ============================================================ -->
 <section class="lab" id="sec-3" data-section="3">
   <div class="sec-head">
     <span class="sec-num">3</span>
-    <h2>Lists &amp; Links</h2>
+    <h2>Lists, Links &amp; Images</h2>
     <span class="tier-ribbon" data-ribbon="3">MUST DO</span>
   </div>
   <p class="sec-intro">
-    Bullet list: <code>&lt;ul&gt;</code>. Numbered list: <code>&lt;ol&gt;</code>. Each item: <code>&lt;li&gt;</code>. A link: <code>&lt;a href="..."&gt;</code>.
+    Bullet list: <code>&lt;ul&gt;</code>. Numbered list: <code>&lt;ol&gt;</code>. Link: <code>&lt;a href="..."&gt;</code>. Image: <code>&lt;img src="..." alt="..."&gt;</code>.
   </p>
 
   <div class="step-tabs" data-section="3">
@@ -1110,20 +1110,24 @@ section.lab.today-focus::before {
     &lt;/ul&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<pre class="code-ref" data-section="3" data-step="2" hidden>&lt;h1&gt;My Top 5&lt;/h1&gt;
+<pre class="code-ref" data-section="3" data-step="2" hidden>&lt;h2&gt;My Top 5&lt;/h2&gt;
 &lt;ol&gt;
     &lt;li&gt;First favourite&lt;/li&gt;
     &lt;li&gt;Second favourite&lt;/li&gt;
     &lt;li&gt;Third favourite&lt;/li&gt;
     &lt;li&gt;Fourth favourite&lt;/li&gt;
     &lt;li&gt;Fifth favourite&lt;/li&gt;
-&lt;/ol&gt;</pre>
-<pre class="code-ref" data-section="3" data-step="3" hidden>&lt;p&gt;Watch matches at
-    &lt;a href="https://www.nba.com"&gt;NBA.com&lt;/a&gt;
-&lt;/p&gt;
+&lt;/ol&gt;
 
-&lt;p&gt;Or search on
-    &lt;a href="https://www.google.com"&gt;Google&lt;/a&gt;
+&lt;p&gt;Watch matches at
+    &lt;a href="https://www.nba.com"&gt;NBA.com&lt;/a&gt;
+&lt;/p&gt;</pre>
+<pre class="code-ref" data-section="3" data-step="3" hidden>&lt;h2&gt;A picture I like&lt;/h2&gt;
+
+&lt;p&gt;
+    &lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"
+         alt="LeBron James in a Lakers jersey"
+         width="240"&gt;
 &lt;/p&gt;</pre>
     </div>
 
@@ -1697,330 +1701,102 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-8" data-save="done-8" onchange="updateDoneStyle(8)">
         <label for="done-8">I finished Section 8</label>
       </div>
-      <div class="next-link"><a href="#sec-9">Next: Section 9 &mdash; Plan Your Site &rarr;</a></div>
+      <div class="next-link"><a href="#sec-9">Next: Section 9 &mdash; Final Challenge &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 9 - Plan Your GTPA (no code editor, just plan)
+     SECTION 9 - FINAL CHALLENGE - Build "All About Sam"
      ============================================================ -->
 <section class="lab" id="sec-9" data-section="9">
   <div class="sec-head">
     <span class="sec-num">9</span>
-    <h2>Plan Your Website</h2>
+    <h2>Final Challenge &mdash; All About Sam</h2>
     <span class="tier-ribbon" data-ribbon="9">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Time to plan <strong>your own</strong> website. Answer the questions below. A good plan makes coding much easier later.
+    Recreate the webpage from your pre-test. Use <strong>everything you learnt</strong>: headings, paragraph, lists, table, image, form, and CSS. When you finish, you can change "Sam" to your own name.
   </p>
 
-  <div class="plan-grid">
-
-    <div class="plan-block">
-      <h4>1. What is your website about?</h4>
-      <textarea data-save="plan-topic" placeholder="Example: My website is about my favourite sport. It will show rules, teams, and my own games."></textarea>
-    </div>
-
-    <div class="plan-block">
-      <h4>2. Who is it for? (Audience)</h4>
-      <textarea data-save="plan-audience" placeholder="Example: Year 7 students who want to learn about basketball."></textarea>
-    </div>
-
-    <div class="plan-block">
-      <h4>3. Your 3 pages</h4>
-      <p style="font-size:13px; color:#6b7280; margin:0 0 8px 0;">What goes on each one?</p>
-      <div class="plan-3col">
-        <div>
-          <label style="font-weight:700; font-size:13px;">Page 1 (Home)</label>
-          <textarea data-save="plan-page1" placeholder="What's on the Home page?"></textarea>
-        </div>
-        <div>
-          <label style="font-weight:700; font-size:13px;">Page 2</label>
-          <textarea data-save="plan-page2" placeholder="Page 2 name and content."></textarea>
-        </div>
-        <div>
-          <label style="font-weight:700; font-size:13px;">Page 3</label>
-          <textarea data-save="plan-page3" placeholder="Page 3 name and content."></textarea>
-        </div>
-      </div>
-    </div>
-
-    <div class="plan-block">
-      <h4>4. Colours and fonts</h4>
-      <div class="plan-3col">
-        <div>
-          <label style="font-weight:700; font-size:13px;">Main colour</label>
-          <input type="text" data-save="plan-color1" placeholder="e.g. dark blue">
-        </div>
-        <div>
-          <label style="font-weight:700; font-size:13px;">Accent colour</label>
-          <input type="text" data-save="plan-color2" placeholder="e.g. orange">
-        </div>
-        <div>
-          <label style="font-weight:700; font-size:13px;">Font</label>
-          <input type="text" data-save="plan-font" placeholder="e.g. Arial">
-        </div>
-      </div>
-    </div>
-
-    <div class="plan-block">
-      <h4>5. Features you want to include</h4>
-      <p style="font-size:13px; color:#6b7280; margin:0 0 8px 0;">Tick what you'll use:</p>
-      <label style="display:block; padding:4px 0;"><input type="checkbox" data-save="plan-feat-heading"> Big headings (h1, h2)</label>
-      <label style="display:block; padding:4px 0;"><input type="checkbox" data-save="plan-feat-list"> Bullet or numbered lists</label>
-      <label style="display:block; padding:4px 0;"><input type="checkbox" data-save="plan-feat-image"> Images</label>
-      <label style="display:block; padding:4px 0;"><input type="checkbox" data-save="plan-feat-link"> Links between pages (menu)</label>
-      <label style="display:block; padding:4px 0;"><input type="checkbox" data-save="plan-feat-table"> A table</label>
-      <label style="display:block; padding:4px 0;"><input type="checkbox" data-save="plan-feat-form"> A form (contact / feedback)</label>
-      <label style="display:block; padding:4px 0;"><input type="checkbox" data-save="plan-feat-css"> CSS styling (colours and fonts)</label>
-    </div>
-
-    <div class="plan-block">
-      <h4>6. What might be hard? What help will you need?</h4>
-      <textarea data-save="plan-hard" placeholder="Example: I might need help making the menu work on every page."></textarea>
-    </div>
-
+  <div class="step-tabs" data-section="9">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(9,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(9,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(9,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-
-  <div class="bottom-row">
-    <div class="reflection">
-      <h4>Reflection</h4>
-      <div class="ref-grid">
-        <div><label>What's my next step?</label><textarea id="learnt-9" data-save="learnt-9"></textarea></div>
-        <div><label>What do I want feedback on?</label><textarea id="stuck-9" data-save="stuck-9"></textarea></div>
-      </div>
-    </div>
-    <div class="done-card" id="done-card-9">
-      <div class="done-row">
-        <input type="checkbox" id="done-9" data-save="done-9" onchange="updateDoneStyle(9)">
-        <label for="done-9">I finished my plan</label>
-      </div>
-      <div class="next-link"><a href="#sec-10">Next: Section 10 &mdash; Images &rarr;</a></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================
-     SECTION 10 - Add Images
-     ============================================================ -->
-<section class="lab" id="sec-10" data-section="10">
-  <div class="sec-head">
-    <span class="sec-num">10</span>
-    <h2>Add Images to Your Page</h2>
-    <span class="tier-ribbon" data-ribbon="10">SHOULD DO</span>
-  </div>
-  <p class="sec-intro">
-    Use <code>&lt;img&gt;</code>. It needs <strong>src</strong> (where the image is) and <strong>alt</strong> (what it shows).
-  </p>
-
-  <div class="step-tabs" data-section="10">
-    <button type="button" class="step-tab active" data-step="1" onclick="showStep(10,1)"><span class="num-dot">1</span>Step 1</button>
-    <button type="button" class="step-tab" data-step="2" onclick="showStep(10,2)"><span class="num-dot">2</span>Step 2</button>
-    <button type="button" class="step-tab" data-step="3" onclick="showStep(10,3)"><span class="num-dot">3</span>Step 3</button>
-  </div>
-  <div class="step-task" id="task-10"><span class="task-text">Add one image with an <code>alt</code> description.</span><button type="button" class="next-step-btn" onclick="advanceStep(10)" id="advance-10">Done &mdash; show me Step 2 &rarr;</button></div>
+  <div class="step-task" id="task-9"><span class="task-text">Build the page structure: title, h1, h2, paragraph.</span><button type="button" class="next-step-btn" onclick="advanceStep(9)" id="advance-9">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="10" data-step="1">&lt;html&gt;
+<pre class="code-ref" data-section="9" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;My Photos&lt;/title&gt;
+    &lt;title&gt;All about Sam&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;My Photos&lt;/h1&gt;
-    &lt;img src="https://picsum.photos/id/237/300/200"
-         alt="A black puppy"&gt;
+    &lt;h1&gt;All About Sam&lt;/h1&gt;
+    &lt;h2&gt;My Favourite Things&lt;/h2&gt;
+    &lt;p&gt;Hey, I&#x27;m Sam! I&#x27;m in Year 9
+       and basketball is pretty much
+       my whole life. I train twice a week.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<pre class="code-ref" data-section="10" data-step="2" hidden>&lt;img src="https://picsum.photos/id/237/600/400"
-     alt="A black puppy"
-     width="240" height="160"&gt;
-
-&lt;img src="https://picsum.photos/id/1015/600/400"
-     alt="A mountain river"
-     width="240" height="160"&gt;
-
-&lt;img src="https://picsum.photos/id/1025/600/400"
-     alt="A pug face"
-     width="240" height="160"&gt;</pre>
-<pre class="code-ref" data-section="10" data-step="3" hidden>&lt;style&gt;
-    body { font-family: Arial; }
-    img {
-        border-radius: 12px;
-        border: 3px solid #1f3a68;
-        margin: 8px;
-    }
-&lt;/style&gt;
-
-&lt;img src="https://picsum.photos/id/237/300/200"
-     alt="Black puppy"
-     width="280"&gt;</pre>
-    </div>
-
-    <div class="col col-type">
-      <div class="col-label"><span class="col-num">2</span> Type here</div>
-      <textarea class="code-editor" data-save="code-10" data-section="10" spellcheck="false"></textarea>
-      <div class="run-row">
-        <button type="button" class="run-btn" onclick="runSection(10)">Run</button>
-        <button type="button" class="clear-btn" onclick="clearEditor(10)">Clear</button>
-      </div>
-    </div>
-
-    <div class="col col-result">
-      <div class="col-label"><span class="col-num">3</span> Your result</div>
-      <iframe class="output" id="output-10" title="Section 10 preview"></iframe>
-    </div>
-  </div>
-
-  <div class="bottom-row">
-    <div class="reflection">
-      <h4>Reflection</h4>
-      <div class="ref-grid">
-        <div><label>What I learnt</label><textarea id="learnt-10" data-save="learnt-10"></textarea></div>
-        <div><label>I am stuck on</label><textarea id="stuck-10" data-save="stuck-10"></textarea></div>
-      </div>
-    </div>
-    <div class="done-card" id="done-card-10">
-      <div class="done-row">
-        <input type="checkbox" id="done-10" data-save="done-10" onchange="updateDoneStyle(10)">
-        <label for="done-10">I finished Section 10</label>
-      </div>
-      <div class="next-link"><a href="#sec-11">Next: Section 11 &mdash; Challenge &rarr;</a></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================
-     SECTION 11 - Mini-Site Challenge
-     ============================================================ -->
-<section class="lab" id="sec-11" data-section="11">
-  <div class="sec-head">
-    <span class="sec-num">11</span>
-    <h2>Mini-Site Challenge</h2>
-    <span class="tier-ribbon" data-ribbon="11">SHOULD DO</span>
-  </div>
-  <p class="sec-intro">
-    The big one. Use <strong>everything</strong> in one page. This is practice for your real website project.
-  </p>
-
-  <div class="step-tabs" data-section="11">
-    <button type="button" class="step-tab active" data-step="1" onclick="showStep(11,1)"><span class="num-dot">1</span>Step 1</button>
-    <button type="button" class="step-tab" data-step="2" onclick="showStep(11,2)"><span class="num-dot">2</span>Step 2</button>
-    <button type="button" class="step-tab" data-step="3" onclick="showStep(11,3)"><span class="num-dot">3</span>Step 3</button>
-  </div>
-  <div class="step-task" id="task-11"><span class="task-text">Start with a heading, a paragraph, a nav menu and a footer.</span><button type="button" class="next-step-btn" onclick="advanceStep(11)" id="advance-11">Done &mdash; show me Step 2 &rarr;</button></div>
-
-  <div class="workspace3">
-    <div class="col col-read">
-      <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="11" data-step="1">&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;My Mini-Site&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;nav&gt;
-        &lt;a href="#about"&gt;About&lt;/a&gt; |
-        &lt;a href="#stuff"&gt;Stuff&lt;/a&gt; |
-        &lt;a href="#contact"&gt;Contact&lt;/a&gt;
-    &lt;/nav&gt;
-
-    &lt;h1&gt;My Mini-Site&lt;/h1&gt;
-    &lt;p&gt;Welcome!&lt;/p&gt;
-
-    &lt;footer&gt;
-        &lt;p&gt;(c) 2026 Your Name&lt;/p&gt;
-    &lt;/footer&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="11" data-step="2" hidden>&lt;h2 id="about"&gt;About Me&lt;/h2&gt;
-&lt;img src="https://picsum.photos/id/1025/300/200"
-     alt="A friendly dog" width="240"&gt;
-&lt;p&gt;Hi! I am in Year 9.&lt;/p&gt;
-
-&lt;h2 id="stuff"&gt;Stuff I Like&lt;/h2&gt;
-&lt;ul&gt;
-    &lt;li&gt;Music&lt;/li&gt;
-    &lt;li&gt;Sport&lt;/li&gt;
-    &lt;li&gt;Coding&lt;/li&gt;
+<pre class="code-ref" data-section="9" data-step="2" hidden>&lt;ul&gt;
+    &lt;li&gt;dribbling drills&lt;/li&gt;
+    &lt;li&gt;free throws&lt;/li&gt;
+    &lt;li&gt;watching the NBA&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;This Week&lt;/h2&gt;
-&lt;table border="1"&gt;
-    &lt;tr&gt;&lt;th&gt;Day&lt;/th&gt;&lt;th&gt;Plan&lt;/th&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;Mon&lt;/td&gt;&lt;td&gt;Coding&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;Tue&lt;/td&gt;&lt;td&gt;Sport&lt;/td&gt;&lt;/tr&gt;
+&lt;h2&gt;My Top 3 Players&lt;/h2&gt;
+&lt;ol&gt;
+    &lt;li&gt;LeBron James&lt;/li&gt;
+    &lt;li&gt;Stephen Curry&lt;/li&gt;
+    &lt;li&gt;Ja Morant&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;table&gt;
+    &lt;tr&gt;&lt;th&gt;Game&lt;/th&gt;&lt;th&gt;Points&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Eagles vs Tigers&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Hawks vs Lions&lt;/td&gt;&lt;td&gt;76&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 
-&lt;h2 id="contact"&gt;Contact&lt;/h2&gt;
+&lt;p&gt;
+    &lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"
+         alt="LeBron James"&gt;
+&lt;/p&gt;
+
 &lt;form&gt;
-    &lt;label&gt;Name:
-        &lt;input type="text"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-    &lt;input type="submit" value="Send"&gt;
+    Name: &lt;input type="text"&gt;
+    &lt;input type="submit"&gt;
 &lt;/form&gt;</pre>
-<pre class="code-ref" data-section="11" data-step="3" hidden>&lt;style&gt;
+<pre class="code-ref" data-section="9" data-step="3" hidden>&lt;style&gt;
     body {
-        font-family: "Segoe UI", Arial;
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 20px;
-        background: #f4f6fb;
+        background-color: lightblue;
+        font-family: Arial;
     }
-    nav {
-        background: #1f3a68;
-        padding: 10px 18px;
-        border-radius: 8px;
-    }
-    nav a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 4px 10px;
-    }
-    nav a:hover { color: #14b8a6; }
-    h1 { color: #1f3a68; }
-    h2 {
-        color: #14b8a6;
-        border-bottom: 2px solid #14b8a6;
-        padding-bottom: 4px;
-    }
-    img { border-radius: 8px; }
-    table { border-collapse: collapse; }
-    th, td { padding: 6px 14px; }
-    th { background: #eef2ff; }
-    form {
-        background: white;
-        padding: 14px;
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        max-width: 400px;
-    }
-    footer {
-        margin-top: 30px;
-        color: grey;
-        font-size: 12px;
-        text-align: center;
+    h1 { color: navy; }
+    h2 { color: navy; }
+    table, td, th {
+        border-style: solid;
+        border-color: navy;
+        border-width: 2px;
     }
 &lt;/style&gt;</pre>
     </div>
 
     <div class="col col-type">
       <div class="col-label"><span class="col-num">2</span> Type here</div>
-      <textarea class="code-editor" data-save="code-11" data-section="11" spellcheck="false"></textarea>
+      <textarea class="code-editor" data-save="code-9" data-section="9" spellcheck="false"></textarea>
       <div class="run-row">
-        <button type="button" class="run-btn" onclick="runSection(11)">Run</button>
-        <button type="button" class="clear-btn" onclick="clearEditor(11)">Clear</button>
+        <button type="button" class="run-btn" onclick="runSection(9)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(9)">Clear</button>
       </div>
     </div>
 
     <div class="col col-result">
       <div class="col-label"><span class="col-num">3</span> Your result</div>
-      <iframe class="output" id="output-11" title="Section 11 preview"></iframe>
+      <iframe class="output" id="output-9" title="Section 9 preview"></iframe>
     </div>
   </div>
 
@@ -2028,14 +1804,14 @@ section.lab.today-focus::before {
     <div class="reflection">
       <h4>Reflection</h4>
       <div class="ref-grid">
-        <div><label>What I learnt building this</label><textarea id="learnt-11" data-save="learnt-11"></textarea></div>
-        <div><label>What would I improve next time</label><textarea id="stuck-11" data-save="stuck-11"></textarea></div>
+        <div><label>What I learnt building this</label><textarea id="learnt-9" data-save="learnt-9"></textarea></div>
+        <div><label>What I would improve next time</label><textarea id="stuck-9" data-save="stuck-9"></textarea></div>
       </div>
     </div>
-    <div class="done-card" id="done-card-11">
+    <div class="done-card" id="done-card-9">
       <div class="done-row">
-        <input type="checkbox" id="done-11" data-save="done-11" onchange="updateDoneStyle(11)">
-        <label for="done-11">I finished my Mini-Site Challenge</label>
+        <input type="checkbox" id="done-9" data-save="done-9" onchange="updateDoneStyle(9)">
+        <label for="done-9">I finished the Final Challenge</label>
       </div>
       <div class="next-link"><a href="#" onclick="submitWork();return false;" style="background:#fde68a; color:#78350f; border-color:#f59e0b;">Submit My Work &rarr;</a></div>
     </div>
@@ -2092,27 +1868,23 @@ const TIER_CONFIG = {
   6: "could",
   7: "could",
   8: "should",
-  9: "should",
-  10: "should",
-  11: "should"
+  9: "should"
 };
 
 const SECTION_TITLES = {
   1:  "First Page",
   2:  "Headings",
-  3:  "Lists & Links",
+  3:  "Lists, Links & Images",
   4:  "Forms",
   5:  "Tables",
   6:  "Colours",
   7:  "Fonts & Borders",
   8:  "Forms & Dropdown",
-  9:  "Plan My Site",
-  10: "Images",
-  11: "Challenge"
+  9:  "Final Challenge"
 };
 
 const STORAGE_KEY = "cotyc-workshop-v2";
-const TOTAL_SECTIONS = 11;
+const TOTAL_SECTIONS = 9;
 let saveTimer = null;
 
 /* ====================================================
@@ -2167,8 +1939,8 @@ const STEP_TASKS = {
       "Add a third h2 about your school.",
       "Pick one h2 and add an h3 sub-heading under it."],
   3: ["Build a bullet list of 3 things you like.",
-      "Build a numbered list (ol) of your top 5.",
-      "Add a link to a website you like."],
+      "Build a numbered list with a link inside.",
+      "Add an image with &lt;img&gt; and an alt description."],
   4: ["Build a form with one name box and a Submit button.",
       "Add email, password, and a big message box (textarea).",
       "Add a select dropdown and a checkbox."],
@@ -2184,13 +1956,9 @@ const STEP_TASKS = {
   8: ["Build a simple feedback form (Name + Email + Submit).",
       "Add more form fields - textarea, dropdown, checkbox.",
       "Add a dropdown using &lt;details&gt; and &lt;summary&gt;."],
-  9: ["Fill in the plan below.", "", ""],
-  10: ["Add one image with alt description.",
-       "Add 3 images, each with width and height.",
-       "Style images with CSS (rounded corners, border)."],
-  11: ["Build the skeleton: nav, h1, paragraph, footer.",
-       "Add image, list, table, form.",
-       "Add a <style> block to make it look good."]
+  9: ["Build the page structure: title, h1, h2, paragraph.",
+      "Add the lists, table, image and form.",
+      "Add the CSS to make it look like the target."]
 };
 
 function showStep(sectionNum, stepNum) {
