@@ -39,6 +39,17 @@ header p { margin: 0; font-size: 15px; opacity: 0.95; }
   font-size: 11px; font-weight: bold; letter-spacing: 1.5px;
 }
 
+.lesson-card.bonus { border-left-color: #f59e0b;
+                      background: linear-gradient(to right, #fffbeb, white 35%); }
+.lesson-card.bonus::after {
+  content: "BONUS"; position: absolute; top: 16px; right: 20px;
+  background: #f59e0b; color: white;
+  padding: 4px 12px; border-radius: 12px;
+  font-size: 11px; font-weight: bold; letter-spacing: 1.5px;
+}
+.lesson-card.bonus .lesson-arrow { color: #f59e0b; }
+.lesson-card.bonus .lesson-tag { background: #fef3c7; color: #92400e; }
+
 .lesson-num { font-size: 12px; color: #1f3a68;
                font-weight: bold; letter-spacing: 1.5px;
                text-transform: uppercase; }
@@ -75,8 +86,14 @@ footer { color: #6b7280; font-size: 12px;
 <div class="block-title">Term 2 - Interactive Worksheets</div>
 <a href="g8.html" class="lesson-card today">
   <span class="lesson-num">Lesson 1<span class="lesson-tag">HTML</span></span>
-  <h2 class="lesson-title">Menus, Forms and Images</h2>
-  <p class="lesson-subtitle">Link your pages, build a feedback form with a textarea and dropdown, add a picture, get ready for JavaScript.</p>
+  <h2 class="lesson-title">Pages, Menu and Form</h2>
+  <p class="lesson-subtitle">Build a 3-page website. Link the pages with a menu. Add an image. Make a feedback form. 5 sections.</p>
+  <span class="lesson-arrow">&rarr;</span>
+</a>
+<a href="g8-bonus.html" class="lesson-card bonus">
+  <span class="lesson-num">Lesson 1+<span class="lesson-tag">Bonus</span></span>
+  <h2 class="lesson-title">More Forms and JS Setup</h2>
+  <p class="lesson-subtitle">Finished Lesson 1? Try this: build the example form, a login, a search box, and a survey. Then add CSS. 4 sections.</p>
   <span class="lesson-arrow">&rarr;</span>
 </a>
 <a href="js1.html" class="lesson-card">
