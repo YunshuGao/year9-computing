@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marking Tool - HTML &amp; CSS Workshop</title>
+<style>
+/* ============================================================
+   TEACHER MARKING TOOL - HTML & CSS Workshop
+   Loads a student submission HTML, auto-detects features,
+   suggests scores, lets teacher override + comment, saves
+   an annotated PDF/HTML for return to the student.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", Calibri, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6fb;
+  color: #1f2937;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+header.top {
+  background: linear-gradient(135deg, #581c87, #c026d3);
+  color: white;
+  padding: 18px 26px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+header.top h1 { margin: 0 0 6px 0; font-size: 22px; }
+header.top p { margin: 0; font-size: 13px; opacity: 0.92; }
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.toolbar button, .toolbar label.file-btn {
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+  color: #581c87;
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.toolbar button:hover, .toolbar label.file-btn:hover {
+  background: #fbcfe8;
+}
+.toolbar .primary {
+  background: #fde68a;
+  color: #78350f;
+}
+.toolbar .primary:hover { background: #fcd34d; }
+.toolbar input[type="file"] { display: none; }
+.toolbar .session-state {
+  margin-left: auto;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 16px 80px 16px;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  background: white;
+  border: 2px dashed #c026d3;
+  border-radius: 14px;
+  padding: 48px 30px;
+  text-align: center;
+  margin-top: 30px;
+}
+.empty-state h2 { margin: 0 0 10px 0; color: #581c87; font-size: 24px; }
+.empty-state p { margin: 6px 0; font-size: 15px; color: #4b5563; }
+.empty-state .big-load {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 16px 32px;
+  background: #c026d3;
+  color: white;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(192,38,211,0.35);
+}
+.empty-state .big-load:hover { background: #a21caf; }
+
+/* ===== STUDENT INFO CARD ===== */
+.student-card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  border-left: 8px solid #c026d3;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.student-card h2 {
+  margin: 0 0 8px 0;
+  color: #581c87;
+  font-size: 22px;
+}
+.student-meta {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: #4b5563;
+}
+.student-meta b { color: #1f2937; }
+
+/* ===== SECTION MARK CARDS ===== */
+.mark-card {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #e5e7eb;
+  border-left: 8px solid #1f3a68;
+  overflow: hidden;
+}
+.mark-card[data-tier="must"]   { border-left-color: #10b981; }
+.mark-card[data-tier="could"]  { border-left-color: #7c3aed; }
+.mark-card[data-tier="should"] { border-left-color: #1f3a68; }
+
+.mark-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #fafbfd;
+  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+}
+.mark-num {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 50%;
+  background: #1f3a68;
+  color: white;
+  font-weight: 800;
+  font-size: 15px;
+}
+.mark-card[data-tier="must"]   .mark-num { background: #10b981; }
+.mark-card[data-tier="could"]  .mark-num { background: #7c3aed; }
+.mark-card[data-tier="should"] .mark-num { background: #1f3a68; }
+.mark-head h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #1f3a68;
+  flex: 1;
+  min-width: 200px;
+}
+.tier-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.tier-pill.must   { background: #10b981; }
+.tier-pill.could  { background: #7c3aed; }
+.tier-pill.should { background: #1f3a68; }
+.finished-tag {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.finished-tag.yes { background: #d1fae5; color: #065f46; }
+
+.mark-body {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  padding: 16px 18px;
+}
+
+.evidence-pane h4 {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+}
+
+.feature-list {
+  list-style: none;
+  margin: 0 0 12px 0;
+  padding: 0;
+}
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 13.5px;
+}
+.feature-list .tick {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 800;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.feature-list .tick.met { background: #d1fae5; color: #065f46; }
+.feature-list .bonus { color: #6b7280; font-size: 12px; margin-left: auto; font-style: italic; }
+
+.code-show {
+  background: #0d1117;
+  color: #e0f7f5;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 240px;
+  overflow: auto;
+  margin: 0;
+}
+.code-empty {
+  background: #fef2f2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 6px;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.reflections {
+  background: #fffaf0;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+.reflections b { color: #78350f; }
+.reflections p { margin: 4px 0; }
+.reflections .empty { color: #999; font-style: italic; }
+
+.scoring-pane {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.scoring-pane h4 {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+}
+.score-row {
+  display: grid;
+  grid-template-columns: 1fr 70px;
+  gap: 8px;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+  border-bottom: 1px dashed #e5e7eb;
+}
+.score-row:last-child { border-bottom: 0; }
+.score-row label { color: #4b5563; }
+.score-row .score-input {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+.score-row .max { color: #9ca3af; font-size: 12px; margin-left: 4px; }
+.score-row .auto-badge {
+  display: inline-block;
+  background: #eef2ff;
+  color: #1f3a68;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+.score-row.total {
+  border-top: 2px solid #1f3a68;
+  padding-top: 8px;
+  margin-top: 8px;
+  font-weight: 800;
+  color: #1f3a68;
+  font-size: 14px;
+  border-bottom: 0;
+}
+
+.teacher-comment {
+  margin-top: 10px;
+}
+.teacher-comment label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+.teacher-comment textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+/* ===== SUMMARY CARD ===== */
+.summary {
+  background: linear-gradient(135deg, #1f3a68, #14b8a6);
+  color: white;
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin: 24px 0 16px 0;
+  box-shadow: 0 4px 12px rgba(31,58,104,0.2);
+}
+.summary h2 {
+  margin: 0 0 12px 0;
+  font-size: 22px;
+}
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.summary-stat {
+  background: rgba(255,255,255,0.12);
+  padding: 12px 14px;
+  border-radius: 8px;
+  text-align: center;
+}
+.summary-stat .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.85;
+}
+.summary-stat .val {
+  font-size: 28px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+.summary-stat.grade .val { font-size: 42px; }
+.overall-comment {
+  margin-top: 14px;
+}
+.overall-comment label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.overall-comment textarea {
+  width: 100%;
+  min-height: 70px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+/* ===== PLAN-SECTION (Section 9) ===== */
+.plan-display {
+  background: #fbfdff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+}
+.plan-display .row { padding: 4px 0; }
+.plan-display .row b { color: #1f3a68; }
+.plan-display .empty { color: #999; font-style: italic; }
+
+.action-bar {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  border-top: 2px solid #c026d3;
+  padding: 12px 22px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+  z-index: 40;
+}
+.action-bar button {
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+.action-bar .save-btn {
+  background: #c026d3;
+  color: white;
+}
+.action-bar .save-btn:hover { background: #a21caf; }
+.action-bar .print-btn {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+.action-bar .print-btn:hover { background: #e5e7eb; }
+
+@media (max-width: 880px) {
+  .mark-body { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+}
+@media print {
+  header.top, .toolbar, .action-bar, .empty-state, .file-btn { display: none !important; }
+  body { background: white; }
+  .mark-card, .student-card, .summary { box-shadow: none; break-inside: avoid; }
+  .summary { background: #1f3a68 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Workshop Marking Tool - 9 COTYB &amp; 9 COTYC</h1>
+  <p>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; Term 2 GTPA prep</p>
+  <div class="toolbar">
+    <label class="file-btn" for="fileInput">Load student submission (.html)</label>
+    <input type="file" id="fileInput" accept=".html,text/html">
+    <button onclick="loadDemo()">Try with demo data</button>
+    <button onclick="clearAll()">Clear</button>
+    <span class="session-state" id="sessionState">No file loaded</span>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="empty-state" id="emptyState">
+  <h2>Drop or load a student submission to start marking</h2>
+  <p>The student should have clicked <strong>Submit My Work</strong> in the workshop and uploaded the resulting <code>.html</code> file to Google Classroom.</p>
+  <p>Download it from Classroom and load it here. The tool will detect what they built and suggest scores.</p>
+  <label class="big-load" for="fileInput">Choose student .html file</label>
+</div>
+
+<div id="markingArea" style="display:none;">
+  <div class="student-card" id="studentCard"></div>
+  <div id="sectionsArea"></div>
+  <div class="summary" id="summary"></div>
+</div>
+
+</main>
+
+<div class="action-bar" id="actionBar" style="display:none;">
+  <button class="print-btn" onclick="window.print()">Print to PDF</button>
+  <button class="save-btn" onclick="saveMarkedReport()">Save Marked Report</button>
+</div>
+
+<script>
+/* ====================================================
+   FEATURE DETECTION RULES per section
+   Each rule has: required[] (3 pts) and bonus[] (1 pt up to max)
+   ==================================================== */
+const RULES = {
+  1: {
+    title: "Your First Web Page",
+    required: [
+      { id: "doctype",   label: "Has <!DOCTYPE html>",          test: c => /<!DOCTYPE\s+html/i.test(c) },
+      { id: "h1",        label: "Uses <h1>",                    test: c => /<h1[^>]*>[\s\S]*?<\/h1>/i.test(c) },
+      { id: "p",         label: "Uses <p>",                     test: c => /<p[^>]*>[\s\S]*?<\/p>/i.test(c) },
+      { id: "title",     label: "Has <title>",                  test: c => /<title[^>]*>[\s\S]*?<\/title>/i.test(c) },
+    ],
+    bonus: [
+      { id: "emphasis",  label: "Uses <strong> or <em>",        test: c => /<(strong|em)[^>]*>/i.test(c) },
+      { id: "charset",   label: "Has <meta charset>",           test: c => /<meta[^>]*charset/i.test(c) },
+    ]
+  },
+  2: {
+    title: "Headings & Paragraphs",
+    required: [
+      { id: "h1",     label: "Uses <h1>",                       test: c => /<h1[^>]*>/i.test(c) },
+      { id: "h2",     label: "Uses <h2>",                       test: c => /<h2[^>]*>/i.test(c) },
+      { id: "p-multi",label: "Multiple paragraphs (2+)",        test: c => (c.match(/<p[^>]*>/gi) || []).length >= 2 },
+    ],
+    bonus: [
+      { id: "h3",     label: "Uses <h3>",                       test: c => /<h3[^>]*>/i.test(c) },
+      { id: "h2-3",   label: "3+ <h2> topics",                  test: c => (c.match(/<h2[^>]*>/gi) || []).length >= 3 },
+    ]
+  },
+  3: {
+    title: "Lists & Links",
+    required: [
+      { id: "list",   label: "Uses <ul> or <ol>",               test: c => /<(ul|ol)[^>]*>/i.test(c) },
+      { id: "li3",    label: "3+ <li> items",                   test: c => (c.match(/<li[^>]*>/gi) || []).length >= 3 },
+    ],
+    bonus: [
+      { id: "both",   label: "Both <ul> AND <ol>",              test: c => /<ul[^>]*>/i.test(c) && /<ol[^>]*>/i.test(c) },
+      { id: "link",   label: "Uses <a href>",                   test: c => /<a\s+[^>]*href=/i.test(c) },
+    ]
+  },
+  4: {
+    title: "Forms",
+    required: [
+      { id: "form",   label: "Has <form>",                      test: c => /<form[^>]*>/i.test(c) },
+      { id: "input",  label: "Uses <input>",                    test: c => /<input[^>]*>/i.test(c) },
+      { id: "submit", label: "Has submit button",               test: c => /type=["']?submit/i.test(c) },
+    ],
+    bonus: [
+      { id: "textarea",label: "Uses <textarea>",                test: c => /<textarea/i.test(c) },
+      { id: "select", label: "Uses <select>",                   test: c => /<select/i.test(c) },
+      { id: "label",  label: "Uses <label> (accessibility)",    test: c => /<label/i.test(c) },
+    ]
+  },
+  5: {
+    title: "Tables",
+    required: [
+      { id: "table",  label: "Has <table>",                     test: c => /<table[^>]*>/i.test(c) },
+      { id: "tr",     label: "Has <tr> rows",                   test: c => /<tr[^>]*>/i.test(c) },
+      { id: "td",     label: "Has <td> cells",                  test: c => /<td[^>]*>/i.test(c) },
+    ],
+    bonus: [
+      { id: "th",     label: "Uses <th> heading cells",         test: c => /<th[^>]*>/i.test(c) },
+      { id: "rows3",  label: "3+ rows",                         test: c => (c.match(/<tr[^>]*>/gi) || []).length >= 3 },
+    ]
+  },
+  6: {
+    title: "Colours & CSS",
+    required: [
+      { id: "style",  label: "Has <style> block",               test: c => /<style[^>]*>[\s\S]*?<\/style>/i.test(c) },
+      { id: "color",  label: "Uses color: property",            test: c => /[^-]color\s*:/i.test(c) },
+      { id: "bg",     label: "Uses background-color",           test: c => /background(-color)?\s*:/i.test(c) },
+    ],
+    bonus: [
+      { id: "multi",  label: "2+ selectors styled",             test: c => {
+        const m = c.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+        return m && (m[1].match(/\{/g) || []).length >= 2;
+      }},
+    ]
+  },
+  7: {
+    title: "Fonts & Borders",
+    required: [
+      { id: "ff",     label: "Uses font-family",                test: c => /font-family\s*:/i.test(c) },
+      { id: "fs",     label: "Uses font-size",                  test: c => /font-size\s*:/i.test(c) },
+      { id: "border", label: "Uses border",                     test: c => /border\s*:|border-(width|style|color)\s*:/i.test(c) },
+    ],
+    bonus: [
+      { id: "padding",label: "Uses padding",                    test: c => /padding\s*:/i.test(c) },
+      { id: "radius", label: "Uses border-radius",              test: c => /border-radius\s*:/i.test(c) },
+    ]
+  },
+  8: {
+    title: "Multi-page Site",
+    required: [
+      { id: "links3", label: "3+ menu links",                   test: c => (c.match(/<a\s+[^>]*href=/gi) || []).length >= 3 },
+    ],
+    bonus: [
+      { id: "nav",    label: "Uses <nav> semantic tag",         test: c => /<nav[^>]*>/i.test(c) },
+      { id: "navcss", label: "Styles the menu",                 test: c => /nav\s+a|nav\s*\{/i.test(c) },
+      { id: "footer", label: "Has <footer>",                    test: c => /<footer[^>]*>/i.test(c) },
+    ]
+  },
+  9: {
+    title: "Plan Your GTPA",
+    isPlan: true
+  },
+  10: {
+    title: "Add Images",
+    required: [
+      { id: "img",    label: "Uses <img> with src",             test: c => /<img[^>]*src/i.test(c) },
+      { id: "alt",    label: "Has alt attribute (a11y)",        test: c => /<img[^>]*alt=/i.test(c) },
+    ],
+    bonus: [
+      { id: "imgs2",  label: "2+ images",                       test: c => (c.match(/<img[^>]*>/gi) || []).length >= 2 },
+      { id: "size",   label: "Sets width or height",            test: c => /<img[^>]*(width|height)=/i.test(c) },
+      { id: "imgcss", label: "Styles images with CSS",          test: c => /img\s*\{/i.test(c) },
+    ]
+  },
+  11: {
+    title: "Mini-Site Challenge",
+    required: [
+      { id: "headings", label: "Heading (h1 + h2)",             test: c => /<h1[^>]*>/i.test(c) && /<h2[^>]*>/i.test(c) },
+      { id: "navmenu",  label: "Nav menu (3+ links or <nav>)",  test: c => /<nav[^>]*>/i.test(c) || (c.match(/<a\s+[^>]*href=/gi) || []).length >= 3 },
+      { id: "imgalt",   label: "Image with alt",                test: c => /<img[^>]*alt=/i.test(c) },
+      { id: "list",     label: "List (ul or ol)",               test: c => /<(ul|ol)[^>]*>/i.test(c) },
+      { id: "tableth",  label: "Table with <th>",               test: c => /<table[^>]*>[\s\S]*?<th[^>]*>[\s\S]*?<\/table>/i.test(c) },
+      { id: "form",     label: "Form with <input>",             test: c => /<form[^>]*>[\s\S]*?<input[^>]*>[\s\S]*?<\/form>/i.test(c) },
+      { id: "css",      label: "CSS styling",                   test: c => /<style[^>]*>[\s\S]{20,}<\/style>/i.test(c) },
+    ],
+    bonus: [
+      { id: "footer",   label: "Has <footer>",                  test: c => /<footer[^>]*>/i.test(c) },
+      { id: "textarea", label: "Form has <textarea>",           test: c => /<textarea/i.test(c) },
+    ]
+  }
+};
+
+const TOTAL_SECTIONS = 11;
+
+/* Grade banding aligned with NESA Common Course Performance Descriptors */
+function gradeForPercent(pct) {
+  if (pct >= 85) return { letter: "A", label: "Outstanding" };
+  if (pct >= 70) return { letter: "B", label: "High" };
+  if (pct >= 50) return { letter: "C", label: "Sound" };
+  if (pct >= 30) return { letter: "D", label: "Basic" };
+  return { letter: "E", label: "Limited" };
+}
+
+/* ====================================================
+   PARSE STUDENT SUBMISSION
+   ==================================================== */
+let currentSubmission = null; // { name, cls, date, sections: [{n, tier, code, learnt, stuck, finished, planFields}] }
+
+function parseSubmission(html) {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+
+  // Extract student info from header
+  const header = doc.querySelector("header");
+  const name = textAfterBold(header, "Name:") || "Unknown";
+  const cls  = textAfterBold(header, "Class:") || "9 COTYB or 9 COTYC";
+  const date = textAfterBold(header, "Date completed:") || "";
+  const sub  = textAfterBold(header, "Submitted at:") || "";
+
+  const segs = doc.querySelectorAll("section.seg");
+  const sections = [];
+  segs.forEach((seg, idx) => {
+    const n = idx + 1;
+    const tierClass = Array.from(seg.classList).find(c => c.startsWith("t-")) || "t-must";
+    const tier = tierClass.replace("t-", "");
+    const finishedEl = seg.querySelector(".meta");
+    const finished = finishedEl && /Yes/i.test(finishedEl.textContent);
+
+    const codeEl = seg.querySelector("pre.code");
+    const code = codeEl ? codeEl.textContent : "";
+
+    // For section 9 (plan), grab the plan div
+    let planFields = null;
+    const planEl = seg.querySelector(".plan");
+    if (planEl) {
+      planFields = parsePlanElement(planEl);
+    }
+
+    // Find learnt + stuck
+    const learnEls = seg.querySelectorAll(".learn, .stuck");
+    let learnt = "", stuck = "";
+    if (learnEls.length >= 2) {
+      learnt = learnEls[0].textContent.trim();
+      stuck  = learnEls[1].textContent.trim();
+    } else if (learnEls.length === 1) {
+      learnt = learnEls[0].textContent.trim();
+    }
+
+    sections.push({ n, tier, finished, code, learnt, stuck, planFields });
+  });
+
+  return { name, cls, date, sub, sections };
+}
+
+function textAfterBold(root, labelText) {
+  if (!root) return null;
+  const bolds = root.querySelectorAll("b, strong");
+  for (const b of bolds) {
+    if (b.textContent.trim().toLowerCase().startsWith(labelText.toLowerCase())) {
+      const parent = b.parentNode;
+      return parent.textContent.replace(b.textContent, "").trim();
+    }
+  }
+  return null;
+}
+
+function parsePlanElement(planEl) {
+  // Walk each <p> child; treat the <b> text as the key, the rest as the value
+  const fields = {};
+  const ps = planEl.querySelectorAll("p");
+  ps.forEach(p => {
+    const b = p.querySelector("b, strong");
+    if (!b) return;
+    const key = b.textContent.trim();
+    // Clone, remove the <b>, then read remaining textContent as the value
+    const clone = p.cloneNode(true);
+    const innerB = clone.querySelector("b, strong");
+    if (innerB) innerB.remove();
+    const value = clone.textContent.trim();
+    fields[key] = value;
+  });
+  return fields;
+}
+
+/* ====================================================
+   AUTO-SCORE A SECTION
+   ==================================================== */
+function autoScoreSection(sec) {
+  const rules = RULES[sec.n];
+  let completion = 0, technical = 0, requiredMet = 0, requiredTotal = 0, bonusMet = 0;
+
+  // Completion: 0-2 (checkbox + reflection length)
+  if (sec.finished) completion++;
+  const totalReflection = ((sec.learnt || "") + " " + (sec.stuck || "")).trim();
+  const refWords = totalReflection ? totalReflection.split(/\s+/).filter(w => w).length : 0;
+  if (refWords >= 5) completion++;
+
+  // Technical: 0-3 based on features
+  let featureResults = [];
+  if (rules && rules.isPlan && sec.planFields) {
+    const filled = Object.values(sec.planFields).filter(v => v && v.length > 1).length;
+    requiredTotal = 9; // 9 plan fields
+    requiredMet = filled;
+    if (filled >= 8) technical = 3;
+    else if (filled >= 5) technical = 2;
+    else if (filled >= 2) technical = 1;
+    featureResults = Object.keys(sec.planFields).map(k => ({
+      id: k, label: k.replace(":", ""), met: sec.planFields[k] && sec.planFields[k].length > 1
+    }));
+  } else if (rules) {
+    rules.required.forEach(r => {
+      const met = r.test(sec.code || "");
+      featureResults.push({ id: r.id, label: r.label, met, bonus: false });
+      if (met) requiredMet++;
+    });
+    requiredTotal = rules.required.length;
+    (rules.bonus || []).forEach(b => {
+      const met = b.test(sec.code || "");
+      featureResults.push({ id: b.id, label: b.label, met, bonus: true });
+      if (met) bonusMet++;
+    });
+
+    const requiredRatio = requiredTotal ? requiredMet / requiredTotal : 0;
+    if (requiredRatio >= 1 && bonusMet >= 1) technical = 3;
+    else if (requiredRatio >= 0.66) technical = 2;
+    else if (requiredRatio >= 0.33) technical = 1;
+    else technical = 0;
+  }
+
+  // Quality: default 1 (out of 2), teacher overrides
+  const quality = sec.finished ? 1 : 0;
+
+  return {
+    completion, technical, quality,
+    completionMax: 2, technicalMax: 3, qualityMax: 2,
+    total: completion + technical + quality,
+    max: 7,
+    requiredMet, requiredTotal, bonusMet,
+    features: featureResults
+  };
+}
+
+/* ====================================================
+   RENDER MARKING INTERFACE
+   ==================================================== */
+function renderSubmission(data) {
+  currentSubmission = data;
+  document.getElementById("emptyState").style.display = "none";
+  document.getElementById("markingArea").style.display = "block";
+  document.getElementById("actionBar").style.display = "flex";
+  document.getElementById("sessionState").textContent =
+    "Loaded: " + data.name + " (" + data.sections.length + " sections)";
+
+  // Student card
+  document.getElementById("studentCard").innerHTML =
+    '<h2>' + escapeHTML(data.name) + '</h2>' +
+    '<div class="student-meta">' +
+    '<span><b>Class:</b> ' + escapeHTML(data.cls) + '</span>' +
+    '<span><b>Date completed:</b> ' + escapeHTML(data.date) + '</span>' +
+    '<span><b>Submitted at:</b> ' + escapeHTML(data.sub) + '</span>' +
+    '</div>';
+
+  // Section cards
+  const wrap = document.getElementById("sectionsArea");
+  wrap.innerHTML = "";
+  data.sections.forEach(sec => {
+    wrap.appendChild(renderSectionCard(sec));
+  });
+
+  renderSummary();
+}
+
+function renderSectionCard(sec) {
+  const rules = RULES[sec.n] || {};
+  const title = rules.title || ("Section " + sec.n);
+  const score = autoScoreSection(sec);
+
+  const card = document.createElement("div");
+  card.className = "mark-card";
+  card.setAttribute("data-tier", sec.tier);
+  card.setAttribute("data-section", sec.n);
+  card.dataset.autoTotal = score.total;
+
+  let html = '<div class="mark-head">' +
+    '<span class="mark-num">' + sec.n + '</span>' +
+    '<h3>' + escapeHTML(title) + '</h3>' +
+    '<span class="tier-pill ' + sec.tier + '">' + sec.tier.toUpperCase() + '</span>' +
+    '<span class="finished-tag ' + (sec.finished ? 'yes' : '') + '">' +
+      (sec.finished ? 'FINISHED' : 'Not ticked') + '</span>' +
+    '</div>';
+
+  html += '<div class="mark-body">';
+
+  // ==== Evidence pane ====
+  html += '<div class="evidence-pane">';
+  html += '<h4>Auto-detected features</h4>';
+  if (rules.isPlan && sec.planFields) {
+    html += '<ul class="feature-list">';
+    const planKeys = ["About:", "Audience:", "Page 1:", "Page 2:", "Page 3:",
+                      "Colours:", "Font:", "Features planned:", "What might be hard:"];
+    planKeys.forEach(k => {
+      const v = sec.planFields[k] || "";
+      const met = v.length > 1;
+      html += '<li><span class="tick ' + (met ? 'met' : '') + '">' + (met ? 'v' : 'x') + '</span>' +
+              escapeHTML(k) + (v ? ' ' + escapeHTML(truncate(v, 50)) : '') + '</li>';
+    });
+    html += '</ul>';
+    html += '<h4>Plan content</h4>';
+    html += '<div class="plan-display">';
+    planKeys.forEach(k => {
+      const v = sec.planFields[k] || "";
+      html += '<div class="row"><b>' + escapeHTML(k) + '</b> ' +
+              (v ? escapeHTML(v) : '<span class="empty">(empty)</span>') + '</div>';
+    });
+    html += '</div>';
+  } else {
+    html += '<ul class="feature-list">';
+    score.features.forEach(f => {
+      html += '<li><span class="tick ' + (f.met ? 'met' : '') + '">' + (f.met ? 'v' : 'x') + '</span>' +
+              escapeHTML(f.label) +
+              (f.bonus ? '<span class="bonus">bonus</span>' : '') + '</li>';
+    });
+    html += '</ul>';
+
+    html += '<h4>Student code</h4>';
+    if (sec.code && sec.code.trim()) {
+      html += '<pre class="code-show">' + escapeHTML(sec.code) + '</pre>';
+    } else {
+      html += '<div class="code-empty">(no code submitted)</div>';
+    }
+  }
+
+  // Reflections
+  html += '<div class="reflections">';
+  html += '<p><b>What I learnt:</b> ' +
+          (sec.learnt ? escapeHTML(sec.learnt) : '<span class="empty">(blank)</span>') + '</p>';
+  html += '<p><b>I am stuck on:</b> ' +
+          (sec.stuck ? escapeHTML(sec.stuck) : '<span class="empty">(blank)</span>') + '</p>';
+  html += '</div>';
+
+  html += '</div>'; // end evidence-pane
+
+  // ==== Scoring pane ====
+  html += '<div class="scoring-pane">';
+  html += '<h4>Score</h4>';
+  html += scoreRow("Completion", "c", sec.n, score.completion, 2, true);
+  html += scoreRow("Technical",  "t", sec.n, score.technical,  3, true);
+  html += scoreRow("Quality",    "q", sec.n, score.quality,    2, false);
+  html += '<div class="score-row total"><label>Total</label><span id="total-' + sec.n + '">' +
+          score.total + ' / 7</span></div>';
+  html += '<div class="teacher-comment">' +
+          '<label>Teacher comment</label>' +
+          '<textarea id="comment-' + sec.n + '" oninput="renderSummary()" placeholder="Optional: feedback to the student."></textarea>' +
+          '</div>';
+  html += '</div>'; // end scoring-pane
+
+  html += '</div>'; // end mark-body
+
+  card.innerHTML = html;
+  return card;
+}
+
+function scoreRow(label, prefix, n, value, max, isAuto) {
+  return '<div class="score-row">' +
+    '<label>' + label +
+      (isAuto ? '<span class="auto-badge">auto</span>' : '') +
+      '</label>' +
+    '<div><input type="number" min="0" max="' + max + '" value="' + value +
+    '" class="score-input" id="' + prefix + '-' + n + '" oninput="updateSectionTotal(' + n + ')">' +
+    '<span class="max">/' + max + '</span></div>' +
+    '</div>';
+}
+
+function updateSectionTotal(n) {
+  const c = parseInt(document.getElementById("c-" + n).value) || 0;
+  const t = parseInt(document.getElementById("t-" + n).value) || 0;
+  const q = parseInt(document.getElementById("q-" + n).value) || 0;
+  const total = c + t + q;
+  document.getElementById("total-" + n).textContent = total + " / 7";
+  document.querySelector('.mark-card[data-section="' + n + '"]').dataset.userTotal = total;
+  renderSummary();
+}
+
+function renderSummary() {
+  if (!currentSubmission) return;
+  let earned = 0, max = 0, finished = 0;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const card = document.querySelector('.mark-card[data-section="' + i + '"]');
+    if (!card) continue;
+    const c = parseInt((document.getElementById("c-" + i) || {}).value) || 0;
+    const t = parseInt((document.getElementById("t-" + i) || {}).value) || 0;
+    const q = parseInt((document.getElementById("q-" + i) || {}).value) || 0;
+    earned += (c + t + q);
+    max += 7;
+    if (card.querySelector(".finished-tag.yes")) finished++;
+  }
+  const pct = max ? Math.round((earned / max) * 100) : 0;
+  const grade = gradeForPercent(pct);
+
+  document.getElementById("summary").innerHTML =
+    '<h2>Overall Result</h2>' +
+    '<div class="summary-grid">' +
+      '<div class="summary-stat"><div class="label">Sections finished</div>' +
+        '<div class="val">' + finished + ' / ' + TOTAL_SECTIONS + '</div></div>' +
+      '<div class="summary-stat"><div class="label">Points</div>' +
+        '<div class="val">' + earned + ' / ' + max + '</div></div>' +
+      '<div class="summary-stat"><div class="label">Percent</div>' +
+        '<div class="val">' + pct + '%</div></div>' +
+      '<div class="summary-stat grade"><div class="label">Grade band</div>' +
+        '<div class="val">' + grade.letter + '</div>' +
+        '<div style="font-size:13px; margin-top:2px;">' + grade.label + '</div></div>' +
+    '</div>' +
+    '<div class="overall-comment">' +
+      '<label for="overallComment">Overall feedback to student</label>' +
+      '<textarea id="overallComment" placeholder="Two or three sentences. What did they do well? What\'s next?"></textarea>' +
+    '</div>';
+}
+
+/* ====================================================
+   LOAD FILE
+   ==================================================== */
+document.getElementById("fileInput").addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = parseSubmission(ev.target.result);
+      if (!data.sections.length) {
+        alert("That doesn't look like a workshop submission file. It should have <section class='seg'> blocks.");
+        return;
+      }
+      renderSubmission(data);
+    } catch (err) {
+      alert("Could not read that file: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+});
+
+function clearAll() {
+  if (!confirm("Clear current marking?")) return;
+  currentSubmission = null;
+  document.getElementById("emptyState").style.display = "block";
+  document.getElementById("markingArea").style.display = "none";
+  document.getElementById("actionBar").style.display = "none";
+  document.getElementById("sessionState").textContent = "No file loaded";
+  document.getElementById("fileInput").value = "";
+}
+
+/* ====================================================
+   DEMO DATA - lets you see the tool without a real file
+   ==================================================== */
+function loadDemo() {
+  const demo = {
+    name: "Demo Student",
+    cls: "9 COTYB",
+    date: "2026-05-26",
+    sub: new Date().toLocaleString("en-AU"),
+    sections: [
+      { n:1, tier:"must", finished:true,
+        code: '<!DOCTYPE html>\n<html lang="en-AU">\n<head>\n  <meta charset="UTF-8">\n  <title>All About Me</title>\n</head>\n<body>\n  <h1>About Sam</h1>\n  <p>Hi! My name is <strong>Sam</strong>. I am 14.</p>\n  <p>I love <em>basketball</em>.</p>\n</body>\n</html>',
+        learnt: "How tags open and close in pairs.",
+        stuck: "Nothing." },
+      { n:2, tier:"must", finished:true,
+        code: '<!DOCTYPE html>\n<html><head><title>Stuff</title></head>\n<body>\n  <h1>My Page</h1>\n  <h2>About me</h2>\n  <p>I am in Year 9.</p>\n  <h2>School</h2>\n  <p>I go to a high school in Parramatta.</p>\n  <h2>Hobbies</h2>\n  <p>Basketball.</p>\n  <h3>Favourite team</h3>\n  <p>Sydney Kings.</p>\n</body></html>',
+        learnt: "h1 is bigger than h2 and h3.",
+        stuck: "nothing" },
+      { n:3, tier:"must", finished:true,
+        code: '<h1>Things I like</h1>\n<ul>\n  <li>Basketball</li>\n  <li>Pizza</li>\n  <li>Music</li>\n</ul>\n<h2>Top 5</h2>\n<ol>\n  <li>NBA</li>\n  <li>Pizza</li>\n  <li>Music</li>\n  <li>Games</li>\n  <li>Sleep</li>\n</ol>\n<p>Visit <a href="https://www.nba.com">NBA.com</a></p>',
+        learnt: "ul gives bullets, ol gives numbers.",
+        stuck: "" },
+      { n:4, tier:"must", finished:true,
+        code: '<form>\n  <label>Name: <input type="text" name="name"></label><br>\n  <label>Email: <input type="email" name="email"></label><br>\n  <label>Message:<br><textarea rows="3"></textarea></label><br>\n  <input type="submit" value="Send">\n</form>',
+        learnt: "Forms have input, textarea, submit.",
+        stuck: "How forms send data." },
+      { n:5, tier:"must", finished:true,
+        code: '<table border="1">\n  <tr><th>Period</th><th>Subject</th><th>Room</th></tr>\n  <tr><td>1</td><td>Computing</td><td>12</td></tr>\n  <tr><td>2</td><td>Maths</td><td>8</td></tr>\n  <tr><td>3</td><td>PE</td><td>Hall</td></tr>\n</table>',
+        learnt: "tr is rows, td is cells, th is headings.",
+        stuck: "nothing" },
+      { n:6, tier:"could", finished:true,
+        code: '<style>\n  body { background-color: lightyellow; }\n  p { color: navy; }\n  h1 { color: darkred; }\n</style>',
+        learnt: "color changes text, background-color changes the background.",
+        stuck: "" },
+      { n:7, tier:"could", finished:false,
+        code: '<style>\n  body { font-family: Arial; }\n  p { font-size: 16px; }\n</style>',
+        learnt: "fonts",
+        stuck: "borders" },
+      { n:8, tier:"should", finished:false, code: "",
+        learnt: "", stuck: "" },
+      { n:9, tier:"should", finished:true,
+        code: "",
+        learnt: "I'll start with the home page tomorrow.",
+        stuck: "Where to find images.",
+        planFields: {
+          "About:": "My website is about my favourite sport, basketball.",
+          "Audience:": "Year 7 kids who want to learn basketball.",
+          "Page 1:": "Home - intro and welcome message",
+          "Page 2:": "Teams I support (NBA + local)",
+          "Page 3:": "Contact form",
+          "Colours:": "navy / orange",
+          "Font:": "Arial",
+          "Features planned:": "Headings, Lists, Images, Menu/Links, Form, CSS styling",
+          "What might be hard:": "Making the menu look good on every page."
+        } },
+      { n:10, tier:"should", finished:false, code: "", learnt: "", stuck: "" },
+      { n:11, tier:"should", finished:false, code: "", learnt: "", stuck: "" }
+    ]
+  };
+  renderSubmission(demo);
+}
+
+/* ====================================================
+   SAVE MARKED REPORT
+   ==================================================== */
+function buildMarkedHTML() {
+  if (!currentSubmission) return "";
+  const data = currentSubmission;
+  const overallComment = (document.getElementById("overallComment") || {}).value || "";
+
+  let body = "";
+  let earned = 0, max = 0;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const sec = data.sections.find(s => s.n === i);
+    if (!sec) continue;
+    const rules = RULES[i] || {};
+    const score = autoScoreSection(sec);
+    const c = parseInt((document.getElementById("c-" + i) || {}).value) || score.completion;
+    const t = parseInt((document.getElementById("t-" + i) || {}).value) || score.technical;
+    const q = parseInt((document.getElementById("q-" + i) || {}).value) || score.quality;
+    const total = c + t + q;
+    earned += total;
+    max += 7;
+    const comment = (document.getElementById("comment-" + i) || {}).value || "";
+
+    body += '<section class="m-' + sec.tier + '">';
+    body += '<h2><span class="num">' + i + '</span> ' +
+            escapeHTML(rules.title || "Section " + i) +
+            ' <span class="pill ' + sec.tier + '">' + sec.tier.toUpperCase() + '</span>' +
+            ' <span class="score">' + total + '/7</span></h2>';
+    body += '<p class="meta">Finished: ' + (sec.finished ? "Yes" : "No") +
+            ' &middot; Completion ' + c + '/2 &middot; Technical ' + t +
+            '/3 &middot; Quality ' + q + '/2</p>';
+
+    // Features
+    if (rules.required) {
+      body += '<h3>Features checked</h3><ul>';
+      rules.required.forEach(r => {
+        const ok = r.test(sec.code || "");
+        body += '<li>' + (ok ? '[v]' : '[x]') + ' ' + escapeHTML(r.label) + '</li>';
+      });
+      (rules.bonus || []).forEach(b => {
+        const ok = b.test(sec.code || "");
+        body += '<li>' + (ok ? '[v]' : '[ ]') + ' ' + escapeHTML(b.label) + ' (bonus)</li>';
+      });
+      body += '</ul>';
+    }
+
+    // Code
+    if (sec.code && sec.code.trim()) {
+      body += '<h3>Student code</h3>';
+      body += '<pre class="code">' + escapeHTML(sec.code) + '</pre>';
+    } else if (rules.isPlan && sec.planFields) {
+      body += '<h3>Plan</h3><div class="plan">';
+      Object.keys(sec.planFields).forEach(k => {
+        body += '<p><b>' + escapeHTML(k) + '</b> ' + escapeHTML(sec.planFields[k] || "(empty)") + '</p>';
+      });
+      body += '</div>';
+    }
+
+    // Reflections
+    body += '<h3>Reflections</h3>';
+    body += '<p><b>Learnt:</b> ' + escapeHTML(sec.learnt || "(blank)") + '</p>';
+    body += '<p><b>Stuck on:</b> ' + escapeHTML(sec.stuck || "(blank)") + '</p>';
+
+    // Teacher comment
+    if (comment.trim()) {
+      body += '<div class="teacher"><b>Teacher:</b> ' + escapeHTML(comment) + '</div>';
+    }
+
+    body += '</section>';
+  }
+
+  const pct = max ? Math.round((earned / max) * 100) : 0;
+  const grade = gradeForPercent(pct);
+  const now = new Date().toLocaleString("en-AU");
+
+  return `<!DOCTYPE html>
+<html lang="en-AU"><head><meta charset="UTF-8">
+<title>${escapeHTML(data.name)} - MARKED Workshop Submission</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 900px;
+         margin: 0 auto; padding: 20px; color: #1f2937; }
+  header { background: linear-gradient(135deg,#581c87,#c026d3);
+           color: white; padding: 20px 22px; border-radius: 10px; }
+  header h1 { margin: 0 0 6px 0; }
+  header p { margin: 2px 0; font-size: 14px; opacity: 0.95; }
+  .summary { background: linear-gradient(135deg,#1f3a68,#14b8a6);
+             color: white; padding: 20px; border-radius: 12px;
+             margin: 16px 0; }
+  .summary .row { display: flex; gap: 24px; flex-wrap: wrap; }
+  .summary .stat { background: rgba(255,255,255,0.12);
+                   padding: 10px 14px; border-radius: 8px; }
+  .summary .stat b { font-size: 24px; display: block; }
+  .summary .stat.grade b { font-size: 36px; }
+  section { background: white; border: 1px solid #e5e7eb;
+            border-radius: 10px; padding: 16px 20px; margin-bottom: 14px;
+            border-left: 8px solid #1f3a68; page-break-inside: avoid; }
+  section.m-must   { border-left-color: #10b981; }
+  section.m-could  { border-left-color: #7c3aed; }
+  section.m-should { border-left-color: #1f3a68; }
+  section h2 { margin: 0 0 4px 0; color: #1f3a68; font-size: 18px; }
+  .num { display: inline-block; width: 26px; height: 26px;
+         line-height: 26px; text-align: center; background: #1f3a68;
+         color: white; border-radius: 50%; font-size: 13px;
+         margin-right: 6px; }
+  .pill { padding: 2px 8px; border-radius: 12px; color: white;
+          font-size: 11px; font-weight: bold; letter-spacing: 1px;
+          margin-left: 6px; }
+  .pill.must { background: #10b981; }
+  .pill.could { background: #7c3aed; }
+  .pill.should { background: #1f3a68; }
+  .score { float: right; background: #fbcfe8; color: #831843;
+           padding: 3px 12px; border-radius: 14px; font-size: 14px;
+           font-weight: bold; }
+  .meta { font-size: 12px; color: #6b7280; margin: 0 0 8px 0; }
+  section h3 { font-size: 12px; text-transform: uppercase;
+               letter-spacing: 1px; color: #6b7280;
+               margin: 12px 0 4px 0; }
+  ul { padding-left: 22px; font-size: 13.5px; }
+  .code { background: #0d1117; color: #e0f7f5; padding: 10px;
+          border-radius: 6px; font-family: Consolas, monospace;
+          font-size: 12px; white-space: pre-wrap; word-break: break-word; }
+  .plan p { margin: 4px 0; font-size: 13.5px; }
+  .teacher { background: #fef3c7; border: 2px solid #f59e0b;
+             border-radius: 6px; padding: 8px 12px; margin-top: 10px;
+             font-size: 14px; }
+  .overall { background: #fef3c7; border: 2px solid #f59e0b;
+             border-radius: 10px; padding: 14px 18px;
+             font-size: 15px; line-height: 1.6; }
+  footer { color: #6b7280; font-size: 12px; text-align: center;
+           margin-top: 20px; }
+  @media print { section { break-inside: avoid; } }
+</style></head><body>
+  <header>
+    <h1>${escapeHTML(data.name)} - MARKED</h1>
+    <p><b>Class:</b> ${escapeHTML(data.cls)}</p>
+    <p><b>Date completed:</b> ${escapeHTML(data.date)}</p>
+    <p><b>Marked at:</b> ${escapeHTML(now)}</p>
+    
+  </header>
+  <div class="summary">
+    <h2 style="margin:0 0 12px 0;">Result</h2>
+    <div class="row">
+      <div class="stat"><b>${earned} / ${max}</b>Points</div>
+      <div class="stat"><b>${pct}%</b>Percent</div>
+      <div class="stat grade"><b>${grade.letter}</b>${grade.label}</div>
+    </div>
+  </div>
+  ${overallComment.trim() ? '<div class="overall"><b>Overall feedback:</b><br>' + escapeHTML(overallComment) + '</div>' : ''}
+  ${body}
+  <footer>9 COTYB &amp; 9 COTYC &middot; Year 9 Computing Technology &middot; Term 2 2026</footer>
+</body></html>`;
+}
+
+function saveMarkedReport() {
+  if (!currentSubmission) {
+    alert("Load a student file first.");
+    return;
+  }
+  const html = buildMarkedHTML();
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const safeName = currentSubmission.name.replace(/[^a-zA-Z0-9_-]/g, "_") || "Student";
+  const dateStr = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = safeName + "_MARKED_" + dateStr + ".html";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ====================================================
+   UTILITIES
+   ==================================================== */
+function escapeHTML(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+function truncate(s, n) {
+  s = String(s || "");
+  return s.length > n ? s.slice(0, n) + "..." : s;
+}
+</script>
+
+</body>
+</html>

@@ -1,53 +1,48 @@
 # Year 9 Computing
 
-Interactive web-development worksheets for Year 9 students at Arthur Phillip High School.
+Interactive web-development worksheets for Year 9 Computing Technology (combined classes 9 COTYB & 9 COTYC).
 
 **Live site:** <https://yunshugao.github.io/year9-computing/>
 
 ## What's here
 
-| Lesson | Topic | Direct link |
+| Worksheet | Topic | Direct link |
 |---|---|---|
-| 1 | HTML — Menus, Forms and Images | [g8.html](https://yunshugao.github.io/year9-computing/g8.html) |
-| 2 | JavaScript — Meet JavaScript | [js1.html](https://yunshugao.github.io/year9-computing/js1.html) |
-| 3 | JavaScript — Buttons and Functions | [js2.html](https://yunshugao.github.io/year9-computing/js2.html) |
+| Main Workshop | HTML + CSS - 11 sections | [workshop.html](https://yunshugao.github.io/year9-computing/workshop.html) |
+| Older: Lesson 1 | HTML - Menus, Forms and Images | [g8.html](https://yunshugao.github.io/year9-computing/g8.html) |
+| Older: Lesson 1+ | More Forms + JS setup | [g8-bonus.html](https://yunshugao.github.io/year9-computing/g8-bonus.html) |
+| Lesson 2 | JavaScript - Meet JavaScript | [js1.html](https://yunshugao.github.io/year9-computing/js1.html) |
+| Lesson 3 | JavaScript - Buttons and Functions | [js2.html](https://yunshugao.github.io/year9-computing/js2.html) |
+| Marking tool (teacher) | Load + auto-score student submissions | [marking.html](https://yunshugao.github.io/year9-computing/marking.html) |
 
 Each worksheet:
 
 - Lives in **one self-contained `.html` file** (HTML + CSS + JavaScript all inline)
-- Has **9 sections** (Guide 8) or **5 sections** (JS guides), navigated by big numbered tabs
-- Uses **Must do / Should do / Could do** tiered scaffolding inside every section
-- Embeds a **basketball image** as base64 so students learn `<img src="basketball.jpg">` with no download
+- Uses **MUST DO / COULD DO / SHOULD DO** tiered scaffolding
 - **Auto-saves** student code to browser `localStorage` while they type
-- Has a **Save my work as .html** button so students hand in a single file
+- Has a **Submit My Work** button so students download a single file to hand in via Google Classroom
 
-## How students use it
+## How students use the Main Workshop
 
 1. Open the live site link above.
-2. Click a lesson card.
-3. Click a number tab (1–9) to jump to a section.
-4. Read the **Reference** code on the left (it cannot be copied — that's how you learn).
-5. Type the code into the **Editor** on the right.
-6. Click **Run** to see your page in the **Result** box.
-7. Move through MUST DO → SHOULD DO → COULD DO.
-8. Use ← / → keys or the Prev / Next buttons to move between sections.
-9. At the end, click **Save my work as .html** to download your work.
+2. Click the green **Main Workshop** card.
+3. Type your name and pick your class (9 COTYB or 9 COTYC) at the top.
+4. Read each section. Type the blue code into the editor (you cannot copy it - that's how you learn).
+5. Click **Run** to see your page.
+6. Tick "I finished this section" when done. Write a short reflection.
+7. Your work auto-saves while you type.
+8. When you have finished as much as you can, click **Submit My Work** - a file downloads. Upload it to Google Classroom.
 
 ## For teachers
 
-See [README-DEPLOY.md](README-DEPLOY.md) for:
+See [README-DEPLOY.md](README-DEPLOY.md) for deployment commands and content update instructions.
 
-- Deployment commands (already done if you're reading this on github.io)
-- How to update content (regenerate + push)
-- How to roll the "TODAY" badge between lessons
-- Troubleshooting
+The **Marking Tool** (`marking.html`) loads a student's submitted file and auto-scores it against the rubric. Open the link above, click **Choose student .html file**, pick the file you downloaded from Google Classroom, then adjust the suggested scores and add comments before clicking **Save Marked Report**.
 
 ## Course context
 
-- **Class:** 9 COTYC (Year 9 Computing, Term 2 2026)
-- **Teacher:** Yunshu Gao
-- **School:** Arthur Phillip High School, Parramatta NSW
-- **Syllabus:** NSW NESA Computing Technology
+- **Class:** 9 COTYB & 9 COTYC (Year 9 Computing Technology, Term 2 2026)
+- **Syllabus:** NSW NESA Computing Technology 7-10 (2022)
 
 ---
 

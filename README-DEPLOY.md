@@ -10,7 +10,7 @@ You'll do this once. After that, redeploying is **three commands**.
 Open <https://github.com/new> and fill in:
 - **Owner:** YunshuGao
 - **Repository name:** `year9-computing`
-- **Description:** `Year 9 Computing - interactive worksheets for Arthur Phillip HS`
+- **Description:** `Year 9 Computing - interactive worksheets (9 COTYB & 9 COTYC)`
 - **Public** (must be public for free GitHub Pages)
 - ❌ Do **NOT** tick "Add a README file" / `.gitignore` / license — this folder already has files.
 

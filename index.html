@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>9 COTYC - Year 9 Coding</title>
+<title>9 COTYB &amp; 9 COTYC - Year 9 Coding</title>
 <style>
 * { box-sizing: border-box; }
 body { font-family: Calibri, "Segoe UI", Arial, sans-serif;
@@ -72,6 +72,32 @@ header p { margin: 0; font-size: 15px; opacity: 0.95; }
        font-size: 13px; color: #4b5563; }
 .tip b { color: #1f3a68; }
 
+.teacher-strip {
+  margin-top: 24px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #581c87, #c026d3);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.teacher-strip b { font-size: 14px; }
+.teacher-strip a {
+  background: white;
+  color: #581c87;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.teacher-strip a:hover { background: #fbcfe8; }
+
 footer { color: #6b7280; font-size: 12px;
          text-align: center; margin-top: 26px; }
 </style>
@@ -80,20 +106,26 @@ footer { color: #6b7280; font-size: 12px;
 
 <header>
   <h1>Year 9 Computing</h1>
-  <p>Yunshu Gao &middot; 9 COTYC &middot; Arthur Phillip High School</p>
+  <p>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC</p>
 </header>
 
 <div class="block-title">Term 2 - Interactive Worksheets</div>
-<a href="g8.html" class="lesson-card today">
-  <span class="lesson-num">Lesson 1<span class="lesson-tag">HTML</span></span>
+<a href="workshop.html" class="lesson-card today">
+  <span class="lesson-num">Main Workshop<span class="lesson-tag">HTML + CSS</span></span>
+  <h2 class="lesson-title">HTML &amp; CSS Workshop (9 Sections)</h2>
+  <p class="lesson-subtitle">One page that covers everything from Guides 1-7. Build a page, headings, lists, forms, tables, colours, fonts, multi-page sites, and plan your GTPA. Auto-saves. Submit for marking when done.</p>
+  <span class="lesson-arrow">&rarr;</span>
+</a>
+<a href="g8.html" class="lesson-card">
+  <span class="lesson-num">Older: Lesson 1<span class="lesson-tag">HTML</span></span>
   <h2 class="lesson-title">Pages, Menu and Form</h2>
-  <p class="lesson-subtitle">Build a 3-page website. Link the pages with a menu. Add an image. Make a feedback form. 5 sections.</p>
+  <p class="lesson-subtitle">Older worksheet: build a 3-page website with a menu and a feedback form. 5 sections.</p>
   <span class="lesson-arrow">&rarr;</span>
 </a>
 <a href="g8-bonus.html" class="lesson-card bonus">
-  <span class="lesson-num">Lesson 1+<span class="lesson-tag">Bonus</span></span>
+  <span class="lesson-num">Older: Lesson 1+<span class="lesson-tag">Bonus</span></span>
   <h2 class="lesson-title">More Forms and JS Setup</h2>
-  <p class="lesson-subtitle">Finished Lesson 1? Try this: build the example form, a login, a search box, and a survey. Then add CSS. 4 sections.</p>
+  <p class="lesson-subtitle">Try this: build the example form, a login, a search box, and a survey. Then add CSS. 4 sections.</p>
   <span class="lesson-arrow">&rarr;</span>
 </a>
 <a href="js1.html" class="lesson-card">
@@ -111,15 +143,22 @@ footer { color: #6b7280; font-size: 12px;
 
 
 <div class="tip">
-  <b>How to use these worksheets</b><br>
-  Type the code from the reference (you cannot copy it - that's how you
-  learn!). Click <b>Run</b> to see your page. When you finish, click
-  <b>Save my work as .html</b> at the top to hand in. Your work
-  auto-saves while you type.
+  <b>How to use the workshop</b><br>
+  1. Type your name at the top.<br>
+  2. Read each section. Type the blue code into the editor (you cannot copy it - that's how you learn!).<br>
+  3. Click <b>Run</b> to see your page.<br>
+  4. Tick "I finished this section" when done.<br>
+  5. Write a short reflection. Your work <b>auto-saves</b> while you type.<br>
+  6. When you've finished as much as you can, click <b>Submit My Work</b>. A file will download - upload it to Google Classroom.
+</div>
+
+<div class="teacher-strip">
+  <span><b>Teacher tools.</b> Use the marking tool to load submitted student files and auto-score them against the rubric.</span>
+  <a href="marking.html">Open Marking Tool &rarr;</a>
 </div>
 
 <footer>
-  Year 9 IST &middot; 9 COTYC &middot; Term 2 Web Development
+  Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; Term 2 Web Development
 </footer>
 
 </body>
