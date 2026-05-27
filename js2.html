@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JS Guide 2 - Interactive Worksheet</title>
+<style>
+
+* { box-sizing: border-box; }
+body { font-family: Calibri, "Segoe UI", Arial, sans-serif;
+       max-width: 1200px; margin: 0 auto; padding: 20px;
+       background: #f4f6fb; color: #222; }
+
+header { background: linear-gradient(135deg, #1f3a68, #14b8a6);
+         color: white; padding: 20px 24px; border-radius: 10px;
+         margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+header h1 { margin: 0 0 4px 0; font-size: 22px; }
+header .subtitle { margin: 0 0 12px 0; font-size: 14px; opacity: 0.92; }
+.meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px;
+        margin-bottom: 10px; align-items: center; }
+.meta input { background: rgba(255,255,255,0.95); color: #222;
+              padding: 6px 10px; border: 0; border-radius: 4px;
+              font-size: 14px; min-width: 160px; }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+.toolbar button { padding: 9px 16px; background: white; color: #1f3a68;
+                  border: 0; border-radius: 6px; cursor: pointer;
+                  font-size: 13px; font-weight: bold; }
+.toolbar button:hover { background: #e0f7f5; }
+.toolbar button.danger { background: #fee2e2; color: #b91c1c; }
+.toolbar button.danger:hover { background: #fecaca; }
+
+.legend { background: white; border-radius: 8px; padding: 10px 16px;
+          margin-bottom: 18px; border: 1px solid #e5e7eb;
+          font-size: 13px; display: flex; gap: 16px; flex-wrap: wrap;
+          align-items: center; }
+.legend .swatch { display: inline-block; width: 16px; height: 16px;
+                   border-radius: 3px; vertical-align: middle;
+                   margin-right: 6px; }
+.legend b { font-weight: 700; }
+
+/* --- big numbered tab bar at top of page --- */
+.tab-bar { display: flex; gap: 6px; padding: 8px; margin-bottom: 14px;
+            background: white; border-radius: 10px;
+            border: 1px solid #e5e7eb; overflow-x: auto;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.tab-btn { flex: 1 1 auto; min-width: 60px; padding: 14px 10px;
+            background: #f3f4f6; color: #4b5563;
+            border: 0; border-radius: 8px; cursor: pointer;
+            font-size: 18px; font-weight: bold;
+            transition: background 0.12s, color 0.12s, transform 0.12s; }
+.tab-btn:hover { background: #e0f7f5; color: #1f3a68;
+                  transform: translateY(-1px); }
+.tab-btn.active { background: #14b8a6; color: white;
+                   box-shadow: 0 2px 8px rgba(20,184,166,0.35); }
+
+/* --- one section at a time --- */
+section.lab { background: white; padding: 18px 22px; margin-bottom: 18px;
+              border-radius: 10px; border: 1px solid #e5e7eb;
+              box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+              display: none; }
+section.lab.is-active { display: block; }
+
+/* --- Prev/Next bar at the bottom --- */
+.section-nav { display: flex; justify-content: space-between;
+                align-items: center; padding: 14px 22px;
+                margin-bottom: 14px; background: white;
+                border-radius: 10px; border: 1px solid #e5e7eb;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.section-nav .nav-btn { padding: 12px 28px; background: #14b8a6;
+                         color: white; border: 0; border-radius: 8px;
+                         cursor: pointer; font-size: 15px;
+                         font-weight: bold;
+                         transition: background 0.15s; }
+.section-nav .nav-btn:hover:not(:disabled) { background: #0e9488; }
+.section-nav .nav-btn:disabled { background: #e5e7eb; color: #9ca3af;
+                                   cursor: not-allowed; }
+.section-position { font-size: 15px; color: #374151; }
+.section-position b { color: #1f3a68; font-size: 16px; }
+section.lab > h2 { color: #1f3a68; margin-top: 0; font-size: 19px;
+                    border-bottom: 3px solid #14b8a6; padding-bottom: 6px;
+                    margin-bottom: 8px; }
+section.lab > .intro { font-size: 13.5px; color: #4b5563;
+                        margin: 0 0 12px 0; line-height: 1.45; }
+
+/* --- shared workspace: editor + result + optional console --- */
+.workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+             margin-bottom: 16px; }
+.workspace.with-console { grid-template-columns: 1fr 1fr 1fr; }
+.workspace label { font-weight: bold; font-size: 11px; color: #1f3a68;
+                    margin-bottom: 5px; display: block;
+                    text-transform: uppercase; letter-spacing: 0.5px; }
+.editor-pane { display: flex; flex-direction: column; }
+.code-editor { width: 100%; min-height: 240px; max-height: 480px;
+               resize: vertical;
+               font-family: "Consolas", "Courier New", monospace;
+               font-size: 12px; padding: 10px;
+               border: 2px solid #1f3a68; border-radius: 4px;
+               background: #fefefe; color: #222; line-height: 1.45;
+               tab-size: 4; -moz-tab-size: 4; }
+.code-editor:focus { outline: none; border-color: #14b8a6;
+                     box-shadow: 0 0 0 3px rgba(20,184,166,0.15); }
+.run-btn { margin-top: 8px; padding: 10px 28px; background: #14b8a6;
+           color: white; border: 0; border-radius: 6px; cursor: pointer;
+           font-size: 16px; font-weight: bold; align-self: flex-start; }
+.run-btn:hover { background: #0e9488; }
+.output { width: 100%; height: 270px; border: 2px solid #1f3a68;
+          border-radius: 4px; background: white; }
+.console-out { width: 100%; height: 270px; background: #0d1117;
+               color: #c9d1d9; border: 2px solid #1f3a68;
+               border-radius: 4px; padding: 8px;
+               font-family: "Consolas", "Courier New", monospace;
+               font-size: 12px; overflow: auto; line-height: 1.5; }
+.console-out .log { color: #c9d1d9; }
+.console-out .err { color: #ff7b72; }
+.console-out:empty::before { content: "(no console output - click Run)";
+                              color: #6b7280; font-style: italic; }
+
+/* --- tiered task panels (no screenshot pane any more) --- */
+.tier { border: 1px solid #e5e7eb; border-radius: 8px;
+        padding: 12px 16px; margin-top: 10px;
+        border-left-width: 6px; }
+.tier.must  { border-left-color: #10b981; background: #f0fdf4; }
+.tier.should{ border-left-color: #1f3a68; background: #eef2ff; }
+.tier.could { border-left-color: #7c3aed; background: #f5f3ff; }
+.tier h3 { margin: 0 0 6px 0; font-size: 15px; color: #111; }
+.tier-badge { display: inline-block; padding: 3px 10px; border-radius: 12px;
+              color: white; font-size: 11px; font-weight: bold;
+              letter-spacing: 1px; margin-right: 8px;
+              vertical-align: middle; }
+.tier-badge.must   { background: #10b981; }
+.tier-badge.should { background: #1f3a68; }
+.tier-badge.could  { background: #7c3aed; }
+.tier-instr { font-size: 14px; color: #111827; line-height: 1.5;
+              margin: 0 0 10px 0; font-weight: 500; }
+
+/* uncopyable reference code */
+.code-ref { background: #1f3a68; color: #e0f7f5; padding: 12px;
+            border-radius: 4px;
+            font-family: "Consolas", "Courier New", monospace;
+            font-size: 12px; white-space: pre; overflow: auto;
+            max-height: 360px; margin: 0;
+            line-height: 1.45;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            cursor: default; }
+.code-ref::selection { background: transparent; color: inherit; }
+.code-ref::-moz-selection { background: transparent; color: inherit; }
+
+.hint-btn { padding: 6px 14px; background: #7c3aed; color: white;
+            border: 0; border-radius: 4px; cursor: pointer;
+            font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+.hint-btn:hover { background: #6d28d9; }
+.hint-pane.hidden { display: none; }
+
+footer { text-align: center; color: #6b7280; font-size: 12px;
+         padding: 16px 0; }
+
+@media (max-width: 1000px) {
+  .workspace, .workspace.with-console { grid-template-columns: 1fr; }
+}
+@media print {
+  body { background: white; max-width: none; padding: 0; }
+  header { background: #1f3a68 !important; -webkit-print-color-adjust: exact;
+           print-color-adjust: exact; }
+  .toolbar, .legend { display: none; }
+  section.lab { box-shadow: none; page-break-inside: avoid;
+                border: 1px solid #999; }
+}
+
+</style>
+</head>
+<body data-file-label="JS-Guide-2">
+
+<header>
+  <h1>JS Guide 2 - Interactive Worksheet</h1>
+  <p class="subtitle">Buttons and Functions</p>
+  <div class="meta">
+    <span>Name: <input type="text" id="studentName" placeholder="Your name"></span>
+    <span>Class: 9 COTYC</span>
+    <span>Date: <input type="text" id="studentDate" placeholder="DD/MM/2026"></span>
+  </div>
+  <div class="toolbar">
+    <button onclick="saveWork()">Save my work as .html (hand this in)</button>
+    <button class="danger" onclick="clearAll()">Reset all my work</button>
+  </div>
+</header>
+
+<nav class="tab-bar" aria-label="Sections">
+  <button class="tab-btn" data-section="1" onclick="showSection(1)">1</button>
+  <button class="tab-btn" data-section="2" onclick="showSection(2)">2</button>
+  <button class="tab-btn" data-section="3" onclick="showSection(3)">3</button>
+  <button class="tab-btn" data-section="4" onclick="showSection(4)">4</button>
+  <button class="tab-btn" data-section="5" onclick="showSection(5)">5</button>
+</nav>
+
+<div class="legend">
+  <span><span class="swatch" style="background:#10b981"></span><b>MUST DO</b> - start here</span>
+  <span><span class="swatch" style="background:#1f3a68"></span><b>SHOULD DO</b> - standard task</span>
+  <span><span class="swatch" style="background:#7c3aed"></span><b>COULD DO</b> - challenge</span>
+  <span style="color:#6b7280">The Reference cannot be copied. Type it.</span>
+</div>
+
+<main>
+
+<section class="lab" data-section="1">
+  <h2>Section 1. Make a button that runs a function</h2>
+  <p class="intro">Buttons run functions when clicked. Functions are named code.</p>
+
+  <div class="workspace with-console">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="1"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(1)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-1"></iframe>
+    </div>
+    <div class="console-pane">
+      <label>Console output</label>
+      <div class="console-out" id="console-1"></div>
+    </div>
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code. Click Run. Click the button.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Click the button&lt;/title&gt;
+    &lt;script&gt;
+        function sayHi() {
+            alert(&quot;Hi there!&quot;);
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Click the button&lt;/h1&gt;
+    &lt;button onclick=&quot;sayHi()&quot;&gt;Click me&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Make the function do 2 things: alert AND console.log.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Function with 2 lines&lt;/title&gt;
+    &lt;script&gt;
+        function sayHi() {
+            alert(&quot;Hi there!&quot;);
+            console.log(&quot;Button clicked.&quot;);
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Click the button&lt;/h1&gt;
+    &lt;button onclick=&quot;sayHi()&quot;&gt;Click me&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Use a variable in the function.</p>
+  <button class="hint-btn" data-hint="1-could" onclick="toggleHint('1-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-1-could">function sayHi() {
+    let me = &quot;Tom&quot;;
+    alert(&quot;Hi! I&#x27;m &quot; + me + &quot;.&quot;);
+}</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="2">
+  <h2>Section 2. More buttons + more functions</h2>
+  <p class="intro">Each button calls its own function.</p>
+
+  <div class="workspace with-console">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="2"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(2)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-2"></iframe>
+    </div>
+    <div class="console-pane">
+      <label>Console output</label>
+      <div class="console-out" id="console-2"></div>
+    </div>
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Add sayBye + a second button. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Two buttons&lt;/title&gt;
+    &lt;script&gt;
+        function sayHi() {
+            alert(&quot;Hi there!&quot;);
+        }
+        function sayBye() {
+            alert(&quot;See you later!&quot;);
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Click a button&lt;/h1&gt;
+    &lt;button onclick=&quot;sayHi()&quot;&gt;Click me&lt;/button&gt;
+    &lt;button onclick=&quot;sayBye()&quot;&gt;Bye!&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add a third function + third button.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Three buttons&lt;/title&gt;
+    &lt;script&gt;
+        function sayHi() {
+            alert(&quot;Hi there!&quot;);
+        }
+        function sayBye() {
+            alert(&quot;See you later!&quot;);
+        }
+        function sayWow() {
+            alert(&quot;WOW! That was a click!&quot;);
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Click a button&lt;/h1&gt;
+    &lt;button onclick=&quot;sayHi()&quot;&gt;Click me&lt;/button&gt;
+    &lt;button onclick=&quot;sayBye()&quot;&gt;Bye!&lt;/button&gt;
+    &lt;button onclick=&quot;sayWow()&quot;&gt;Surprise!&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">One button, two alerts in a row.</p>
+  <button class="hint-btn" data-hint="2-could" onclick="toggleHint('2-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-2-could">function doBoth() {
+    alert(&quot;First&quot;);
+    alert(&quot;Second&quot;);
+}
+&lt;button onclick=&quot;doBoth()&quot;&gt;Do both&lt;/button&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="3">
+  <h2>Section 3. Change the page (getElementById + innerHTML)</h2>
+  <p class="intro">getElementById finds a part of the page. .innerHTML is its text.</p>
+
+  <div class="workspace with-console">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="3"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(3)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-3"></iframe>
+    </div>
+    <div class="console-pane">
+      <label>Console output</label>
+      <div class="console-out" id="console-3"></div>
+    </div>
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code. Click Run. Click the button.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Change the page&lt;/title&gt;
+    &lt;script&gt;
+        function changeTitle() {
+            document.getElementById(&quot;title&quot;).innerHTML
+                = &quot;You changed me!&quot;;
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1 id=&quot;title&quot;&gt;Click the button&lt;/h1&gt;
+    &lt;button onclick=&quot;changeTitle()&quot;&gt;Change the title&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Change a paragraph too. Add a second button.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Change two things&lt;/title&gt;
+    &lt;script&gt;
+        function changeTitle() {
+            document.getElementById(&quot;title&quot;).innerHTML
+                = &quot;You changed me!&quot;;
+        }
+        function changeMsg() {
+            document.getElementById(&quot;msg&quot;).innerHTML
+                = &quot;Paragraph changed!&quot;;
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1 id=&quot;title&quot;&gt;Click the button&lt;/h1&gt;
+    &lt;p id=&quot;msg&quot;&gt;Original paragraph.&lt;/p&gt;
+    &lt;button onclick=&quot;changeTitle()&quot;&gt;Change title&lt;/button&gt;
+    &lt;button onclick=&quot;changeMsg()&quot;&gt;Change paragraph&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Add a Reset button that puts the original text back.</p>
+  <button class="hint-btn" data-hint="3-could" onclick="toggleHint('3-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-3-could">function reset() {
+    document.getElementById(&quot;title&quot;).innerHTML
+        = &quot;Click the button&quot;;
+    document.getElementById(&quot;msg&quot;).innerHTML
+        = &quot;Original paragraph.&quot;;
+}
+&lt;button onclick=&quot;reset()&quot;&gt;Reset&lt;/button&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="4">
+  <h2>Section 4. Change the colour (style.color)</h2>
+  <p class="intro">.style.color sets text colour. .style.backgroundColor sets background.</p>
+
+  <div class="workspace with-console">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="4"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(4)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-4"></iframe>
+    </div>
+    <div class="console-pane">
+      <label>Console output</label>
+      <div class="console-out" id="console-4"></div>
+    </div>
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code. Click Run. Click &quot;Make it red&quot;.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Change the colour&lt;/title&gt;
+    &lt;script&gt;
+        function makeRed() {
+            document.getElementById(&quot;title&quot;).style.color
+                = &quot;red&quot;;
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1 id=&quot;title&quot;&gt;Click the button&lt;/h1&gt;
+    &lt;button onclick=&quot;makeRed()&quot;&gt;Make it red&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add 3 buttons for 3 different colours.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Three colours&lt;/title&gt;
+    &lt;script&gt;
+        function makeRed() {
+            document.getElementById(&quot;title&quot;).style.color = &quot;red&quot;;
+        }
+        function makeBlue() {
+            document.getElementById(&quot;title&quot;).style.color = &quot;blue&quot;;
+        }
+        function makeGreen() {
+            document.getElementById(&quot;title&quot;).style.color = &quot;green&quot;;
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1 id=&quot;title&quot;&gt;Pick a colour&lt;/h1&gt;
+    &lt;button onclick=&quot;makeRed()&quot;&gt;Red&lt;/button&gt;
+    &lt;button onclick=&quot;makeBlue()&quot;&gt;Blue&lt;/button&gt;
+    &lt;button onclick=&quot;makeGreen()&quot;&gt;Green&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Party mode! Change text AND background colour.</p>
+  <button class="hint-btn" data-hint="4-could" onclick="toggleHint('4-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-4-could">function partyMode() {
+    document.getElementById(&quot;title&quot;).style.color
+        = &quot;yellow&quot;;
+    document.body.style.backgroundColor
+        = &quot;purple&quot;;
+}</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="5">
+  <h2>Section 5. Put it together (ask + change the page)</h2>
+  <p class="intro">Combine: function + button + prompt + DOM. The real deal.</p>
+
+  <div class="workspace with-console">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="5"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(5)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-5"></iframe>
+    </div>
+    <div class="console-pane">
+      <label>Console output</label>
+      <div class="console-out" id="console-5"></div>
+    </div>
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code. Click Run. Click Greet me.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Greet me&lt;/title&gt;
+    &lt;script&gt;
+        function greet() {
+            let name = prompt(&quot;What is your name?&quot;);
+            document.getElementById(&quot;title&quot;).innerHTML
+                = &quot;Hello, &quot; + name + &quot;!&quot;;
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1 id=&quot;title&quot;&gt;Click Greet me&lt;/h1&gt;
+    &lt;button onclick=&quot;greet()&quot;&gt;Greet me&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Ask name AND age. Put both on the page.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Greet me v2&lt;/title&gt;
+    &lt;script&gt;
+        function greet() {
+            let name = prompt(&quot;What is your name?&quot;);
+            let age  = prompt(&quot;How old are you?&quot;);
+            document.getElementById(&quot;title&quot;).innerHTML
+                = &quot;Hello, &quot; + name + &quot;!&lt;br&gt;&quot;
+                + &quot;You are &quot; + age + &quot; years old.&quot;;
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1 id=&quot;title&quot;&gt;Click Greet me&lt;/h1&gt;
+    &lt;button onclick=&quot;greet()&quot;&gt;Greet me&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Mini quiz: &quot;What is 2+2?&quot; Show Correct or Try again.</p>
+  <button class="hint-btn" data-hint="5-could" onclick="toggleHint('5-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-5-could">function quiz() {
+    let ans = prompt(&quot;What is 2 + 2?&quot;);
+    let t = document.getElementById(&quot;title&quot;);
+    if (ans == &quot;4&quot;) {
+        t.innerHTML = &quot;Correct!&quot;;
+        t.style.color = &quot;green&quot;;
+    } else {
+        t.innerHTML = &quot;Try again!&quot;;
+        t.style.color = &quot;red&quot;;
+    }
+}</pre>
+</div>
+
+</section>
+
+</main>
+
+<div class="section-nav">
+  <button class="nav-btn btn-prev" onclick="prevSection()">&larr; Previous</button>
+  <span class="section-position">Section <b id="curNum">1</b> of <b id="totNum">?</b></span>
+  <button class="nav-btn btn-next" onclick="nextSection()">Next &rarr;</button>
+</div>
+
+<footer>
+  Year 9 IST &middot; 9 COTYC &middot; Your work auto-saves. Click <b>Save my work as .html</b> to hand in.
+</footer>
+
+<script>
+
+const STORAGE_KEY = "ksw-js2-progress-v3";
+const EMBEDDED_IMAGE = "";  // empty string for JS guides
+
+// ---- one-section-at-a-time navigation
+const SECTIONS_TOTAL = document.querySelectorAll('section.lab').length;
+document.getElementById('totNum').textContent = SECTIONS_TOTAL;
+
+function showSection(n) {
+  n = parseInt(n);
+  if (!n || n < 1 || n > SECTIONS_TOTAL) return;
+  document.querySelectorAll('section.lab').forEach(function(s){
+    s.classList.toggle('is-active', parseInt(s.dataset.section) === n);
+  });
+  document.querySelectorAll('.tab-btn').forEach(function(b){
+    b.classList.toggle('active', parseInt(b.dataset.section) === n);
+  });
+  document.getElementById('curNum').textContent = n;
+  document.querySelector('.btn-prev').disabled = (n <= 1);
+  document.querySelector('.btn-next').disabled = (n >= SECTIONS_TOTAL);
+  // remember position in URL + localStorage
+  history.replaceState(null, '', '#section-' + n);
+  try { localStorage.setItem(STORAGE_KEY + ':lastSection', n); } catch(e){}
+  window.scrollTo({top: 0, behavior: 'instant'});
+}
+function prevSection() {
+  const cur = parseInt(document.querySelector('.tab-btn.active').dataset.section);
+  showSection(cur - 1);
+}
+function nextSection() {
+  const cur = parseInt(document.querySelector('.tab-btn.active').dataset.section);
+  showSection(cur + 1);
+}
+// Keyboard: left/right arrows navigate sections (when not in a textarea/input)
+document.addEventListener('keydown', function(e){
+  if (e.target && (e.target.tagName === 'TEXTAREA'
+      || e.target.tagName === 'INPUT'
+      || e.target.isContentEditable)) return;
+  if (e.key === 'ArrowLeft')  prevSection();
+  if (e.key === 'ArrowRight') nextSection();
+});
+
+// On load: prefer URL hash, else last-saved section, else 1
+(function initSection(){
+  let start = 1;
+  const m = window.location.hash.match(/^#section-(\d+)$/);
+  if (m) start = parseInt(m[1]);
+  else {
+    try {
+      const v = parseInt(localStorage.getItem(STORAGE_KEY + ':lastSection'));
+      if (v) start = v;
+    } catch(e){}
+  }
+  showSection(start);
+})();
+
+// ---- run code: write the editor's value into the iframe; clear console
+function runSection(n) {
+  const editor = document.querySelector('.code-editor[data-section="' + n + '"]');
+  const out = document.getElementById('output-' + n);
+  const consoleEl = document.getElementById('console-' + n);
+  if (consoleEl) consoleEl.innerHTML = '';
+
+  let userHtml = editor.value;
+
+  // Magic: swap "basketball.jpg" / 'basketball.jpg' for the embedded data URL
+  if (EMBEDDED_IMAGE) {
+    userHtml = userHtml.replace(
+      /src\s*=\s*(["'])basketball\.jpg\1/gi,
+      'src="' + EMBEDDED_IMAGE + '"'
+    );
+  }
+
+  // Inject shim to forward console.log + errors to the parent page
+  const shim = '<scr' + 'ipt>(function(){\n' +
+    '  function send(level, args) {\n' +
+    '    try {\n' +
+    '      parent.postMessage({ksw:1, section: ' + n + ', level: level,\n' +
+    '        text: Array.from(args).map(a => {\n' +
+    '          try { return typeof a === "object" ? JSON.stringify(a) : String(a); }\n' +
+    '          catch(e) { return String(a); }\n' +
+    '        }).join(" ")}, "*");\n' +
+    '    } catch(e){}\n' +
+    '  }\n' +
+    '  const _l = console.log, _e = console.error, _w = console.warn;\n' +
+    '  console.log = function(){ send("log", arguments); _l.apply(console, arguments); };\n' +
+    '  console.error = function(){ send("err", arguments); _e.apply(console, arguments); };\n' +
+    '  console.warn = function(){ send("err", arguments); _w.apply(console, arguments); };\n' +
+    '  window.addEventListener("error", function(ev){\n' +
+    '    send("err", ["JS error: " + ev.message + " (line " + ev.lineno + ")"]);\n' +
+    '  });\n' +
+    '})();</scr' + 'ipt>';
+  if (/<head[^>]*>/i.test(userHtml)) {
+    userHtml = userHtml.replace(/<head[^>]*>/i, m => m + shim);
+  } else {
+    userHtml = shim + userHtml;
+  }
+
+  out.srcdoc = userHtml;
+  saveLS();
+}
+
+// ---- receive console output from any iframe
+window.addEventListener('message', function(ev){
+  if (!ev.data || ev.data.ksw !== 1) return;
+  const consoleEl = document.getElementById('console-' + ev.data.section);
+  if (!consoleEl) return;
+  const line = document.createElement('div');
+  line.className = ev.data.level === 'err' ? 'err' : 'log';
+  line.textContent = ev.data.text;
+  consoleEl.appendChild(line);
+  consoleEl.scrollTop = consoleEl.scrollHeight;
+});
+
+// ---- make Reference code uncopyable
+function lockRef(el) {
+  el.setAttribute('tabindex', '-1');
+  el.setAttribute('draggable', 'false');
+  el.addEventListener('copy',        e => { e.preventDefault(); });
+  el.addEventListener('cut',         e => { e.preventDefault(); });
+  el.addEventListener('contextmenu', e => { e.preventDefault(); });
+  el.addEventListener('dragstart',   e => { e.preventDefault(); });
+  el.addEventListener('selectstart', e => { e.preventDefault(); });
+}
+document.querySelectorAll('.code-ref').forEach(lockRef);
+
+// Document-level safety net for copy events
+document.addEventListener('copy', function(e){
+  const sel = window.getSelection();
+  if (!sel || !sel.toString()) return;
+  for (let i = 0; i < sel.rangeCount; i++) {
+    const range = sel.getRangeAt(i);
+    let node = range.commonAncestorContainer;
+    if (node.nodeType === 3) node = node.parentNode;
+    if (node && node.closest && node.closest('.code-ref')) {
+      e.preventDefault();
+      if (e.clipboardData) e.clipboardData.setData('text/plain', '');
+      return;
+    }
+  }
+});
+
+// ---- Could-do hint toggle
+function toggleHint(id) {
+  const el = document.getElementById('hint-' + id);
+  if (!el) return;
+  el.classList.toggle('hidden');
+  const btn = document.querySelector('button.hint-btn[data-hint="' + id + '"]');
+  if (btn) btn.textContent = el.classList.contains('hidden')
+                             ? 'Show example' : 'Hide example';
+}
+
+// ---- localStorage: just name, date and editor code (no screenshots)
+function saveLS() {
+  try {
+    const data = {
+      studentName: document.getElementById('studentName').value,
+      studentDate: document.getElementById('studentDate').value,
+      code: {},
+    };
+    document.querySelectorAll('.code-editor').forEach(function(e){
+      data.code[e.dataset.section] = e.value;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) {}
+}
+window.addEventListener('load', function(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.studentName) document.getElementById('studentName').value = data.studentName;
+    if (data.studentDate) document.getElementById('studentDate').value = data.studentDate;
+    if (data.code) {
+      document.querySelectorAll('.code-editor').forEach(function(e){
+        const v = data.code[e.dataset.section];
+        if (v) e.value = v;
+      });
+    }
+  } catch(e) {}
+});
+document.querySelectorAll('.code-editor').forEach(function(e){
+  e.addEventListener('input', saveLS);
+  e.addEventListener('keydown', function(ev){
+    if (ev.key === 'Tab') {
+      ev.preventDefault();
+      const s = e.selectionStart, end = e.selectionEnd;
+      e.value = e.value.substring(0, s) + '    ' + e.value.substring(end);
+      e.selectionStart = e.selectionEnd = s + 4;
+    }
+  });
+});
+document.getElementById('studentName').addEventListener('input', saveLS);
+document.getElementById('studentDate').addEventListener('input', saveLS);
+
+// ---- save-as-html: serialise current DOM (with student code) to file
+function saveWork() {
+  saveLS();
+  document.querySelectorAll('.code-editor').forEach(function(e){
+    e.textContent = e.value;
+  });
+  document.querySelectorAll('input[type="text"]').forEach(function(inp){
+    inp.setAttribute('value', inp.value);
+  });
+  const docHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([docHtml], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const studentName = (document.getElementById('studentName').value || 'student')
+                      .replace(/[^A-Za-z0-9_-]/g, '_');
+  const fileLabel = document.body.dataset.fileLabel || 'work';
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = studentName + '__' + fileLabel + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+}
+
+function clearAll() {
+  if (!confirm('This will erase all your code. Are you sure?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  location.reload();
+}
+
+</script>
+</body>
+</html>

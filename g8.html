@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HTML Guide 8 - Interactive Worksheet</title>
+<style>
+
+* { box-sizing: border-box; }
+body { font-family: Calibri, "Segoe UI", Arial, sans-serif;
+       max-width: 1200px; margin: 0 auto; padding: 20px;
+       background: #f4f6fb; color: #222; }
+
+header { background: linear-gradient(135deg, #1f3a68, #14b8a6);
+         color: white; padding: 20px 24px; border-radius: 10px;
+         margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+header h1 { margin: 0 0 4px 0; font-size: 22px; }
+header .subtitle { margin: 0 0 12px 0; font-size: 14px; opacity: 0.92; }
+.meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px;
+        margin-bottom: 10px; align-items: center; }
+.meta input { background: rgba(255,255,255,0.95); color: #222;
+              padding: 6px 10px; border: 0; border-radius: 4px;
+              font-size: 14px; min-width: 160px; }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+.toolbar button { padding: 9px 16px; background: white; color: #1f3a68;
+                  border: 0; border-radius: 6px; cursor: pointer;
+                  font-size: 13px; font-weight: bold; }
+.toolbar button:hover { background: #e0f7f5; }
+.toolbar button.danger { background: #fee2e2; color: #b91c1c; }
+.toolbar button.danger:hover { background: #fecaca; }
+
+.legend { background: white; border-radius: 8px; padding: 10px 16px;
+          margin-bottom: 18px; border: 1px solid #e5e7eb;
+          font-size: 13px; display: flex; gap: 16px; flex-wrap: wrap;
+          align-items: center; }
+.legend .swatch { display: inline-block; width: 16px; height: 16px;
+                   border-radius: 3px; vertical-align: middle;
+                   margin-right: 6px; }
+.legend b { font-weight: 700; }
+
+/* --- big numbered tab bar at top of page --- */
+.tab-bar { display: flex; gap: 6px; padding: 8px; margin-bottom: 14px;
+            background: white; border-radius: 10px;
+            border: 1px solid #e5e7eb; overflow-x: auto;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.tab-btn { flex: 1 1 auto; min-width: 60px; padding: 14px 10px;
+            background: #f3f4f6; color: #4b5563;
+            border: 0; border-radius: 8px; cursor: pointer;
+            font-size: 18px; font-weight: bold;
+            transition: background 0.12s, color 0.12s, transform 0.12s; }
+.tab-btn:hover { background: #e0f7f5; color: #1f3a68;
+                  transform: translateY(-1px); }
+.tab-btn.active { background: #14b8a6; color: white;
+                   box-shadow: 0 2px 8px rgba(20,184,166,0.35); }
+
+/* --- one section at a time --- */
+section.lab { background: white; padding: 18px 22px; margin-bottom: 18px;
+              border-radius: 10px; border: 1px solid #e5e7eb;
+              box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+              display: none; }
+section.lab.is-active { display: block; }
+
+/* --- Prev/Next bar at the bottom --- */
+.section-nav { display: flex; justify-content: space-between;
+                align-items: center; padding: 14px 22px;
+                margin-bottom: 14px; background: white;
+                border-radius: 10px; border: 1px solid #e5e7eb;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.section-nav .nav-btn { padding: 12px 28px; background: #14b8a6;
+                         color: white; border: 0; border-radius: 8px;
+                         cursor: pointer; font-size: 15px;
+                         font-weight: bold;
+                         transition: background 0.15s; }
+.section-nav .nav-btn:hover:not(:disabled) { background: #0e9488; }
+.section-nav .nav-btn:disabled { background: #e5e7eb; color: #9ca3af;
+                                   cursor: not-allowed; }
+.section-position { font-size: 15px; color: #374151; }
+.section-position b { color: #1f3a68; font-size: 16px; }
+section.lab > h2 { color: #1f3a68; margin-top: 0; font-size: 19px;
+                    border-bottom: 3px solid #14b8a6; padding-bottom: 6px;
+                    margin-bottom: 8px; }
+section.lab > .intro { font-size: 13.5px; color: #4b5563;
+                        margin: 0 0 12px 0; line-height: 1.45; }
+
+/* --- shared workspace: editor + result + optional console --- */
+.workspace { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+             margin-bottom: 16px; }
+.workspace.with-console { grid-template-columns: 1fr 1fr 1fr; }
+.workspace label { font-weight: bold; font-size: 11px; color: #1f3a68;
+                    margin-bottom: 5px; display: block;
+                    text-transform: uppercase; letter-spacing: 0.5px; }
+.editor-pane { display: flex; flex-direction: column; }
+.code-editor { width: 100%; min-height: 240px; max-height: 480px;
+               resize: vertical;
+               font-family: "Consolas", "Courier New", monospace;
+               font-size: 12px; padding: 10px;
+               border: 2px solid #1f3a68; border-radius: 4px;
+               background: #fefefe; color: #222; line-height: 1.45;
+               tab-size: 4; -moz-tab-size: 4; }
+.code-editor:focus { outline: none; border-color: #14b8a6;
+                     box-shadow: 0 0 0 3px rgba(20,184,166,0.15); }
+.run-btn { margin-top: 8px; padding: 10px 28px; background: #14b8a6;
+           color: white; border: 0; border-radius: 6px; cursor: pointer;
+           font-size: 16px; font-weight: bold; align-self: flex-start; }
+.run-btn:hover { background: #0e9488; }
+.output { width: 100%; height: 270px; border: 2px solid #1f3a68;
+          border-radius: 4px; background: white; }
+.console-out { width: 100%; height: 270px; background: #0d1117;
+               color: #c9d1d9; border: 2px solid #1f3a68;
+               border-radius: 4px; padding: 8px;
+               font-family: "Consolas", "Courier New", monospace;
+               font-size: 12px; overflow: auto; line-height: 1.5; }
+.console-out .log { color: #c9d1d9; }
+.console-out .err { color: #ff7b72; }
+.console-out:empty::before { content: "(no console output - click Run)";
+                              color: #6b7280; font-style: italic; }
+
+/* --- tiered task panels (no screenshot pane any more) --- */
+.tier { border: 1px solid #e5e7eb; border-radius: 8px;
+        padding: 12px 16px; margin-top: 10px;
+        border-left-width: 6px; }
+.tier.must  { border-left-color: #10b981; background: #f0fdf4; }
+.tier.should{ border-left-color: #1f3a68; background: #eef2ff; }
+.tier.could { border-left-color: #7c3aed; background: #f5f3ff; }
+.tier h3 { margin: 0 0 6px 0; font-size: 15px; color: #111; }
+.tier-badge { display: inline-block; padding: 3px 10px; border-radius: 12px;
+              color: white; font-size: 11px; font-weight: bold;
+              letter-spacing: 1px; margin-right: 8px;
+              vertical-align: middle; }
+.tier-badge.must   { background: #10b981; }
+.tier-badge.should { background: #1f3a68; }
+.tier-badge.could  { background: #7c3aed; }
+.tier-instr { font-size: 14px; color: #111827; line-height: 1.5;
+              margin: 0 0 10px 0; font-weight: 500; }
+
+/* uncopyable reference code */
+.code-ref { background: #1f3a68; color: #e0f7f5; padding: 12px;
+            border-radius: 4px;
+            font-family: "Consolas", "Courier New", monospace;
+            font-size: 12px; white-space: pre; overflow: auto;
+            max-height: 360px; margin: 0;
+            line-height: 1.45;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            cursor: default; }
+.code-ref::selection { background: transparent; color: inherit; }
+.code-ref::-moz-selection { background: transparent; color: inherit; }
+
+.hint-btn { padding: 6px 14px; background: #7c3aed; color: white;
+            border: 0; border-radius: 4px; cursor: pointer;
+            font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+.hint-btn:hover { background: #6d28d9; }
+.hint-pane.hidden { display: none; }
+
+footer { text-align: center; color: #6b7280; font-size: 12px;
+         padding: 16px 0; }
+
+@media (max-width: 1000px) {
+  .workspace, .workspace.with-console { grid-template-columns: 1fr; }
+}
+@media print {
+  body { background: white; max-width: none; padding: 0; }
+  header { background: #1f3a68 !important; -webkit-print-color-adjust: exact;
+           print-color-adjust: exact; }
+  .toolbar, .legend { display: none; }
+  section.lab { box-shadow: none; page-break-inside: avoid;
+                border: 1px solid #999; }
+}
+
+</style>
+</head>
+<body data-file-label="HTML-Guide-8">
+
+<header>
+  <h1>HTML Guide 8 - Interactive Worksheet</h1>
+  <p class="subtitle">Menus, Forms, Images and Getting Ready for JavaScript</p>
+  <div class="meta">
+    <span>Name: <input type="text" id="studentName" placeholder="Your name"></span>
+    <span>Class: 9 COTYC</span>
+    <span>Date: <input type="text" id="studentDate" placeholder="DD/MM/2026"></span>
+  </div>
+  <div class="toolbar">
+    <button onclick="saveWork()">Save my work as .html (hand this in)</button>
+    <button class="danger" onclick="clearAll()">Reset all my work</button>
+  </div>
+</header>
+
+<nav class="tab-bar" aria-label="Sections">
+  <button class="tab-btn" data-section="1" onclick="showSection(1)">1</button>
+  <button class="tab-btn" data-section="2" onclick="showSection(2)">2</button>
+  <button class="tab-btn" data-section="3" onclick="showSection(3)">3</button>
+  <button class="tab-btn" data-section="4" onclick="showSection(4)">4</button>
+  <button class="tab-btn" data-section="5" onclick="showSection(5)">5</button>
+  <button class="tab-btn" data-section="6" onclick="showSection(6)">6</button>
+  <button class="tab-btn" data-section="7" onclick="showSection(7)">7</button>
+  <button class="tab-btn" data-section="8" onclick="showSection(8)">8</button>
+  <button class="tab-btn" data-section="9" onclick="showSection(9)">9</button>
+</nav>
+
+<div class="legend">
+  <span><span class="swatch" style="background:#10b981"></span><b>MUST DO</b> - start here</span>
+  <span><span class="swatch" style="background:#1f3a68"></span><b>SHOULD DO</b> - standard task</span>
+  <span><span class="swatch" style="background:#7c3aed"></span><b>COULD DO</b> - challenge</span>
+  <span style="color:#6b7280">The Reference cannot be copied. Type it.</span>
+</div>
+
+<main>
+
+<section class="lab" data-section="1">
+  <h2>Section 1. Make the home page</h2>
+  <p class="intro">The first page of your website.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="1"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(1)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-1"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add a paragraph. Click Run again.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+    &lt;p&gt;Welcome! Use the menu to visit my other pages.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Make it about YOU. Change the title and text.</p>
+  <button class="hint-btn" data-hint="1-could" onclick="toggleHint('1-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-1-could">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Tom&#x27;s Site&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Tom&#x27;s Website&lt;/h1&gt;
+    &lt;p&gt;Hi! I love basketball.&lt;/p&gt;
+    &lt;p&gt;My favourite snack is chips.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="2">
+  <h2>Section 2. Make the About Me page</h2>
+  <p class="intro">The second page.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="2"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(2)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-2"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;About Me&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;About Me&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add a paragraph. Change _____ to your name.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;About Me&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;About Me&lt;/h1&gt;
+    &lt;p&gt;Hi, my name is _____ and I am in Year 9.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Add a list of 3 things you like.</p>
+  <button class="hint-btn" data-hint="2-could" onclick="toggleHint('2-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-2-could">&lt;h2&gt;Things I like&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li&gt;basketball&lt;/li&gt;
+    &lt;li&gt;NBA games&lt;/li&gt;
+    &lt;li&gt;chips&lt;/li&gt;
+&lt;/ul&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="3">
+  <h2>Section 3. Make the Favourites page (with an image!)</h2>
+  <p class="intro">The third page. NEW: add a picture with &lt;img&gt;. The image is built into this worksheet - just type the code below and it will appear.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="3"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(3)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-3"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Favourites&lt;/h1&gt;
+    &lt;p&gt;My top three things, in order:&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add the ordered list AND an image. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Favourites&lt;/h1&gt;
+    &lt;p&gt;My top three things, in order:&lt;/p&gt;
+    &lt;ol&gt;
+        &lt;li&gt;____________&lt;/li&gt;
+        &lt;li&gt;____________&lt;/li&gt;
+        &lt;li&gt;____________&lt;/li&gt;
+    &lt;/ol&gt;
+    &lt;p&gt;&lt;img src=&quot;basketball.jpg&quot;&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Fill in your own favourites. Add a second image too.</p>
+  <button class="hint-btn" data-hint="3-could" onclick="toggleHint('3-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-3-could">&lt;ol&gt;
+    &lt;li&gt;basketball&lt;/li&gt;
+    &lt;li&gt;chess&lt;/li&gt;
+    &lt;li&gt;gaming&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;basketball.jpg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;basketball.jpg&quot;&gt;&lt;/p&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="4">
+  <h2>Section 4. Add a menu</h2>
+  <p class="intro">Link your pages with three &lt;a&gt; links.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="4"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(4)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-4"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code (one link only). Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Favourites&lt;/h1&gt;
+    &lt;p&gt;
+        &lt;a href=&quot;index.html&quot;&gt;Home&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add the other two links with | bars. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Favourites&lt;/h1&gt;
+    &lt;p&gt;
+        &lt;a href=&quot;index.html&quot;&gt;Home&lt;/a&gt; |
+        &lt;a href=&quot;about.html&quot;&gt;About Me&lt;/a&gt; |
+        &lt;a href=&quot;favourites.html&quot;&gt;My Favourites&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Add a fourth link to contact.html.</p>
+  <button class="hint-btn" data-hint="4-could" onclick="toggleHint('4-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-4-could">&lt;a href=&quot;favourites.html&quot;&gt;My Favourites&lt;/a&gt; |
+&lt;a href=&quot;contact.html&quot;&gt;Contact&lt;/a&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="5">
+  <h2>Section 5. Add a feedback form</h2>
+  <p class="intro">NEW: textarea (multi-line with a scroll bar) and select (dropdown).</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="5"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(5)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-5"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the code (text input + Submit only). Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Tell me yours!&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        Your name:
+        &lt;input type=&quot;text&quot; name=&quot;yourname&quot;&gt;
+        &lt;input type=&quot;submit&quot; name=&quot;Submit&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add textarea, select and checkbox. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Tell me yours!&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        Your name:
+        &lt;input type=&quot;text&quot; name=&quot;yourname&quot;&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        Your message:
+        &lt;br&gt;
+        &lt;textarea name=&quot;msg&quot; rows=&quot;4&quot; cols=&quot;40&quot;&gt;&lt;/textarea&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        How did you find this site?
+        &lt;select name=&quot;found&quot;&gt;
+            &lt;option&gt;Friend told me&lt;/option&gt;
+            &lt;option&gt;Google search&lt;/option&gt;
+            &lt;option&gt;Just exploring&lt;/option&gt;
+        &lt;/select&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        Email me back? &lt;input type=&quot;checkbox&quot; name=&quot;emailme&quot;&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        &lt;input type=&quot;submit&quot; name=&quot;Submit&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Add radio buttons (Daily / Weekly / Never).</p>
+  <button class="hint-btn" data-hint="5-could" onclick="toggleHint('5-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-5-could">How often do you visit?
+&lt;input type=&quot;radio&quot; name=&quot;freq&quot; value=&quot;D&quot;&gt; Daily
+&lt;input type=&quot;radio&quot; name=&quot;freq&quot; value=&quot;W&quot;&gt; Weekly
+&lt;input type=&quot;radio&quot; name=&quot;freq&quot; value=&quot;N&quot;&gt; Never</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="6">
+  <h2>Section 6. Build the MY EXAMPLE FORM</h2>
+  <p class="intro">Mix different input types into one card-style form: text, date as 3 boxes, radio, dropdown and a row of buttons.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="6"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(6)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-6"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Type the basic form (Name + Date in 3 boxes).</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Example Form&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;MY EXAMPLE FORM&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        &lt;h2&gt;Name:
+            &lt;input type=&quot;text&quot;&gt;
+        &lt;/h2&gt;
+        &lt;h2&gt;Date:
+            &lt;input type=&quot;text&quot; size=&quot;2&quot;&gt;
+            &lt;input type=&quot;text&quot; size=&quot;2&quot;&gt;
+            &lt;input type=&quot;text&quot; size=&quot;4&quot;&gt;
+        &lt;/h2&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add Age (radio + dropdown) and 3 buttons.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Example Form&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;MY EXAMPLE FORM&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        &lt;h2&gt;Name:
+            &lt;input type=&quot;text&quot;&gt;
+        &lt;/h2&gt;
+        &lt;h2&gt;Date:
+            &lt;input type=&quot;text&quot; size=&quot;2&quot;&gt;
+            &lt;input type=&quot;text&quot; size=&quot;2&quot;&gt;
+            &lt;input type=&quot;text&quot; size=&quot;4&quot;&gt;
+        &lt;/h2&gt;
+        &lt;h2&gt;Age:
+            &lt;input type=&quot;radio&quot; name=&quot;age&quot;&gt; Kid
+            &lt;select name=&quot;agegroup&quot;&gt;
+                &lt;option&gt;18 - 25&lt;/option&gt;
+                &lt;option&gt;26 - 40&lt;/option&gt;
+                &lt;option&gt;41 +&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/h2&gt;
+        &lt;p&gt;
+            &lt;button&gt;Yes&lt;/button&gt;
+            &lt;button&gt;No&lt;/button&gt;
+            &lt;button&gt;?&lt;/button&gt;
+        &lt;/p&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Style it: pink card, red border, copyright footer.</p>
+  <button class="hint-btn" data-hint="6-could" onclick="toggleHint('6-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-6-could">&lt;head&gt;
+    &lt;style&gt;
+        body { font-family: Arial; }
+        form { border: 2px solid red;
+               padding: 16px;
+               width: 320px;
+               background: pink; }
+        h1 { color: navy; }
+    &lt;/style&gt;
+&lt;/head&gt;
+...inside the form, before &lt;/form&gt;:
+    &lt;hr&gt;
+    &lt;p&gt;(c) Example&lt;br&gt;
+       &amp;laquo; &amp;raquo;&lt;/p&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="7">
+  <h2>Section 7. More kinds of forms</h2>
+  <p class="intro">Forms are everywhere: login, search, survey. Same building blocks, different shapes.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="7"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(7)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-7"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Build a LOGIN form (username + password).</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Login&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Login to MyApp&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        &lt;p&gt;Username:
+            &lt;input type=&quot;text&quot; name=&quot;user&quot;&gt;
+        &lt;/p&gt;
+        &lt;p&gt;Password:
+            &lt;input type=&quot;password&quot; name=&quot;pw&quot;&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+            &lt;input type=&quot;submit&quot; value=&quot;Log in&quot;&gt;
+        &lt;/p&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Build a SEARCH box (single input + Search button).</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Search&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Cool Site&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;q&quot;
+               placeholder=&quot;Search...&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Search&quot;&gt;
+    &lt;/form&gt;
+    &lt;p&gt;(Your search results will appear here.)&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Build a SURVEY with 2 radio-button questions.</p>
+  <button class="hint-btn" data-hint="7-could" onclick="toggleHint('7-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-7-could">&lt;form&gt;
+    &lt;p&gt;How was your day?&lt;/p&gt;
+    &lt;p&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;day&quot;&gt; Great
+        &lt;input type=&quot;radio&quot; name=&quot;day&quot;&gt; OK
+        &lt;input type=&quot;radio&quot; name=&quot;day&quot;&gt; Bad
+    &lt;/p&gt;
+    &lt;p&gt;Favourite season?&lt;/p&gt;
+    &lt;p&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;sea&quot;&gt; Spring
+        &lt;input type=&quot;radio&quot; name=&quot;sea&quot;&gt; Summer
+        &lt;input type=&quot;radio&quot; name=&quot;sea&quot;&gt; Winter
+    &lt;/p&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+&lt;/form&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="8">
+  <h2>Section 8. Get ready for JavaScript</h2>
+  <p class="intro">JavaScript needs id=&quot;...&quot; to find things. Add ids + a &lt;button&gt;.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="8"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(8)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-8"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Add id to the text input. Change submit to &lt;button&gt;.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Tell me yours!&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        Your name:
+        &lt;input type=&quot;text&quot; name=&quot;yourname&quot; id=&quot;nameBox&quot;&gt;
+        &lt;br&gt;&lt;br&gt;
+        &lt;button id=&quot;sendBtn&quot;&gt;Send&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add ids to ALL fields. Add &lt;p id=&quot;output&quot;&gt;&lt;/p&gt;.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;Tell me yours!&lt;/h1&gt;
+    &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+        Your name:
+        &lt;input type=&quot;text&quot; name=&quot;yourname&quot; id=&quot;nameBox&quot;&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        Your message:
+        &lt;br&gt;
+        &lt;textarea name=&quot;msg&quot; id=&quot;msgBox&quot;
+                  rows=&quot;4&quot; cols=&quot;40&quot;&gt;&lt;/textarea&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        How did you find this site?
+        &lt;select name=&quot;found&quot; id=&quot;foundList&quot;&gt;
+            &lt;option&gt;Friend told me&lt;/option&gt;
+            &lt;option&gt;Google search&lt;/option&gt;
+            &lt;option&gt;Just exploring&lt;/option&gt;
+        &lt;/select&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        Email me back?
+        &lt;input type=&quot;checkbox&quot; name=&quot;emailme&quot; id=&quot;emailBox&quot;&gt;
+        &lt;br&gt;&lt;br&gt;
+
+        &lt;button id=&quot;sendBtn&quot;&gt;Send&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;p id=&quot;output&quot;&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Bonus: write your first JavaScript line.</p>
+  <button class="hint-btn" data-hint="8-could" onclick="toggleHint('8-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-8-could">Add right before &lt;/body&gt;:
+&lt;script&gt;
+    console.log(&quot;page loaded&quot;);
+&lt;/script&gt;</pre>
+</div>
+
+</section>
+
+
+<section class="lab" data-section="9">
+  <h2>Section 9. Style your site with CSS</h2>
+  <p class="intro">Add a &lt;style&gt; block to &lt;head&gt;.</p>
+
+  <div class="workspace ">
+    <div class="editor-pane">
+      <label>Editor - type here</label>
+      <textarea class="code-editor" data-section="9"
+                spellcheck="false"
+                placeholder="Type the code from the Reference (Must do first)..."></textarea>
+      <button class="run-btn" onclick="runSection(9)">Run</button>
+    </div>
+    <div class="result-pane">
+      <label>Result - your page</label>
+      <iframe class="output" id="output-9"></iframe>
+    </div>
+    
+  </div>
+
+  
+<div class="tier must">
+  <h3><span class="tier-badge must">MUST DO</span></h3>
+  <p class="tier-instr">Add one CSS rule for background colour. Click Run.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+    &lt;style&gt;
+        body { background-color: lightyellow; }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Favourites&lt;/h1&gt;
+    &lt;p&gt;Welcome to my favourites page.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier should">
+  <h3><span class="tier-badge should">SHOULD DO</span></h3>
+  <p class="tier-instr">Add font and colour rules.</p>
+  <pre class="code-ref">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Favourites&lt;/title&gt;
+    &lt;style&gt;
+        body { background-color: lightyellow;
+               font-family: Arial; }
+        h1 { color: navy; }
+        a  { color: navy; }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;h1&gt;My Favourites&lt;/h1&gt;
+    &lt;p&gt;Welcome to my favourites page.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+  
+<div class="tier could">
+  <h3><span class="tier-badge could">COULD DO</span></h3>
+  <p class="tier-instr">Pick your own colours (lightblue, lavender, palegreen).</p>
+  <button class="hint-btn" data-hint="9-could" onclick="toggleHint('9-could')">Show example</button>
+  <pre class="code-ref hint-pane hidden" id="hint-9-could">&lt;style&gt;
+    body { background-color: lavender;
+           font-family: Arial; }
+    h1 { color: purple; }
+    a { color: purple; }
+&lt;/style&gt;</pre>
+</div>
+
+</section>
+
+</main>
+
+<div class="section-nav">
+  <button class="nav-btn btn-prev" onclick="prevSection()">&larr; Previous</button>
+  <span class="section-position">Section <b id="curNum">1</b> of <b id="totNum">?</b></span>
+  <button class="nav-btn btn-next" onclick="nextSection()">Next &rarr;</button>
+</div>
+
+<footer>
+  Year 9 IST &middot; 9 COTYC &middot; Your work auto-saves. Click <b>Save my work as .html</b> to hand in.
+</footer>
+
+<script>
+
+const STORAGE_KEY = "ksw-g8-progress-v3";
+const EMBEDDED_IMAGE = "data:image/jpeg;base64,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";  // empty string for JS guides
+
+// ---- one-section-at-a-time navigation
+const SECTIONS_TOTAL = document.querySelectorAll('section.lab').length;
+document.getElementById('totNum').textContent = SECTIONS_TOTAL;
+
+function showSection(n) {
+  n = parseInt(n);
+  if (!n || n < 1 || n > SECTIONS_TOTAL) return;
+  document.querySelectorAll('section.lab').forEach(function(s){
+    s.classList.toggle('is-active', parseInt(s.dataset.section) === n);
+  });
+  document.querySelectorAll('.tab-btn').forEach(function(b){
+    b.classList.toggle('active', parseInt(b.dataset.section) === n);
+  });
+  document.getElementById('curNum').textContent = n;
+  document.querySelector('.btn-prev').disabled = (n <= 1);
+  document.querySelector('.btn-next').disabled = (n >= SECTIONS_TOTAL);
+  // remember position in URL + localStorage
+  history.replaceState(null, '', '#section-' + n);
+  try { localStorage.setItem(STORAGE_KEY + ':lastSection', n); } catch(e){}
+  window.scrollTo({top: 0, behavior: 'instant'});
+}
+function prevSection() {
+  const cur = parseInt(document.querySelector('.tab-btn.active').dataset.section);
+  showSection(cur - 1);
+}
+function nextSection() {
+  const cur = parseInt(document.querySelector('.tab-btn.active').dataset.section);
+  showSection(cur + 1);
+}
+// Keyboard: left/right arrows navigate sections (when not in a textarea/input)
+document.addEventListener('keydown', function(e){
+  if (e.target && (e.target.tagName === 'TEXTAREA'
+      || e.target.tagName === 'INPUT'
+      || e.target.isContentEditable)) return;
+  if (e.key === 'ArrowLeft')  prevSection();
+  if (e.key === 'ArrowRight') nextSection();
+});
+
+// On load: prefer URL hash, else last-saved section, else 1
+(function initSection(){
+  let start = 1;
+  const m = window.location.hash.match(/^#section-(\d+)$/);
+  if (m) start = parseInt(m[1]);
+  else {
+    try {
+      const v = parseInt(localStorage.getItem(STORAGE_KEY + ':lastSection'));
+      if (v) start = v;
+    } catch(e){}
+  }
+  showSection(start);
+})();
+
+// ---- run code: write the editor's value into the iframe; clear console
+function runSection(n) {
+  const editor = document.querySelector('.code-editor[data-section="' + n + '"]');
+  const out = document.getElementById('output-' + n);
+  const consoleEl = document.getElementById('console-' + n);
+  if (consoleEl) consoleEl.innerHTML = '';
+
+  let userHtml = editor.value;
+
+  // Magic: swap "basketball.jpg" / 'basketball.jpg' for the embedded data URL
+  if (EMBEDDED_IMAGE) {
+    userHtml = userHtml.replace(
+      /src\s*=\s*(["'])basketball\.jpg\1/gi,
+      'src="' + EMBEDDED_IMAGE + '"'
+    );
+  }
+
+  // Inject shim to forward console.log + errors to the parent page
+  const shim = '<scr' + 'ipt>(function(){\n' +
+    '  function send(level, args) {\n' +
+    '    try {\n' +
+    '      parent.postMessage({ksw:1, section: ' + n + ', level: level,\n' +
+    '        text: Array.from(args).map(a => {\n' +
+    '          try { return typeof a === "object" ? JSON.stringify(a) : String(a); }\n' +
+    '          catch(e) { return String(a); }\n' +
+    '        }).join(" ")}, "*");\n' +
+    '    } catch(e){}\n' +
+    '  }\n' +
+    '  const _l = console.log, _e = console.error, _w = console.warn;\n' +
+    '  console.log = function(){ send("log", arguments); _l.apply(console, arguments); };\n' +
+    '  console.error = function(){ send("err", arguments); _e.apply(console, arguments); };\n' +
+    '  console.warn = function(){ send("err", arguments); _w.apply(console, arguments); };\n' +
+    '  window.addEventListener("error", function(ev){\n' +
+    '    send("err", ["JS error: " + ev.message + " (line " + ev.lineno + ")"]);\n' +
+    '  });\n' +
+    '})();</scr' + 'ipt>';
+  if (/<head[^>]*>/i.test(userHtml)) {
+    userHtml = userHtml.replace(/<head[^>]*>/i, m => m + shim);
+  } else {
+    userHtml = shim + userHtml;
+  }
+
+  out.srcdoc = userHtml;
+  saveLS();
+}
+
+// ---- receive console output from any iframe
+window.addEventListener('message', function(ev){
+  if (!ev.data || ev.data.ksw !== 1) return;
+  const consoleEl = document.getElementById('console-' + ev.data.section);
+  if (!consoleEl) return;
+  const line = document.createElement('div');
+  line.className = ev.data.level === 'err' ? 'err' : 'log';
+  line.textContent = ev.data.text;
+  consoleEl.appendChild(line);
+  consoleEl.scrollTop = consoleEl.scrollHeight;
+});
+
+// ---- make Reference code uncopyable
+function lockRef(el) {
+  el.setAttribute('tabindex', '-1');
+  el.setAttribute('draggable', 'false');
+  el.addEventListener('copy',        e => { e.preventDefault(); });
+  el.addEventListener('cut',         e => { e.preventDefault(); });
+  el.addEventListener('contextmenu', e => { e.preventDefault(); });
+  el.addEventListener('dragstart',   e => { e.preventDefault(); });
+  el.addEventListener('selectstart', e => { e.preventDefault(); });
+}
+document.querySelectorAll('.code-ref').forEach(lockRef);
+
+// Document-level safety net for copy events
+document.addEventListener('copy', function(e){
+  const sel = window.getSelection();
+  if (!sel || !sel.toString()) return;
+  for (let i = 0; i < sel.rangeCount; i++) {
+    const range = sel.getRangeAt(i);
+    let node = range.commonAncestorContainer;
+    if (node.nodeType === 3) node = node.parentNode;
+    if (node && node.closest && node.closest('.code-ref')) {
+      e.preventDefault();
+      if (e.clipboardData) e.clipboardData.setData('text/plain', '');
+      return;
+    }
+  }
+});
+
+// ---- Could-do hint toggle
+function toggleHint(id) {
+  const el = document.getElementById('hint-' + id);
+  if (!el) return;
+  el.classList.toggle('hidden');
+  const btn = document.querySelector('button.hint-btn[data-hint="' + id + '"]');
+  if (btn) btn.textContent = el.classList.contains('hidden')
+                             ? 'Show example' : 'Hide example';
+}
+
+// ---- localStorage: just name, date and editor code (no screenshots)
+function saveLS() {
+  try {
+    const data = {
+      studentName: document.getElementById('studentName').value,
+      studentDate: document.getElementById('studentDate').value,
+      code: {},
+    };
+    document.querySelectorAll('.code-editor').forEach(function(e){
+      data.code[e.dataset.section] = e.value;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) {}
+}
+window.addEventListener('load', function(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.studentName) document.getElementById('studentName').value = data.studentName;
+    if (data.studentDate) document.getElementById('studentDate').value = data.studentDate;
+    if (data.code) {
+      document.querySelectorAll('.code-editor').forEach(function(e){
+        const v = data.code[e.dataset.section];
+        if (v) e.value = v;
+      });
+    }
+  } catch(e) {}
+});
+document.querySelectorAll('.code-editor').forEach(function(e){
+  e.addEventListener('input', saveLS);
+  e.addEventListener('keydown', function(ev){
+    if (ev.key === 'Tab') {
+      ev.preventDefault();
+      const s = e.selectionStart, end = e.selectionEnd;
+      e.value = e.value.substring(0, s) + '    ' + e.value.substring(end);
+      e.selectionStart = e.selectionEnd = s + 4;
+    }
+  });
+});
+document.getElementById('studentName').addEventListener('input', saveLS);
+document.getElementById('studentDate').addEventListener('input', saveLS);
+
+// ---- save-as-html: serialise current DOM (with student code) to file
+function saveWork() {
+  saveLS();
+  document.querySelectorAll('.code-editor').forEach(function(e){
+    e.textContent = e.value;
+  });
+  document.querySelectorAll('input[type="text"]').forEach(function(inp){
+    inp.setAttribute('value', inp.value);
+  });
+  const docHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([docHtml], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const studentName = (document.getElementById('studentName').value || 'student')
+                      .replace(/[^A-Za-z0-9_-]/g, '_');
+  const fileLabel = document.body.dataset.fileLabel || 'work';
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = studentName + '__' + fileLabel + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+}
+
+function clearAll() {
+  if (!confirm('This will erase all your code. Are you sure?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  location.reload();
+}
+
+</script>
+</body>
+</html>

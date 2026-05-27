@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9 COTYC - Year 9 Coding</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: Calibri, "Segoe UI", Arial, sans-serif;
+       max-width: 880px; margin: 0 auto; padding: 30px 20px;
+       background: #f4f6fb; color: #222; }
+
+header { background: linear-gradient(135deg, #1f3a68, #14b8a6);
+         color: white; padding: 30px 28px; border-radius: 12px;
+         margin-bottom: 26px;
+         box-shadow: 0 4px 14px rgba(31,58,104,0.18); }
+header h1 { margin: 0 0 8px 0; font-size: 28px; }
+header p { margin: 0; font-size: 15px; opacity: 0.95; }
+
+.block-title { font-size: 13px; color: #6b7280;
+                font-weight: bold; letter-spacing: 1.5px;
+                text-transform: uppercase; margin: 6px 4px 12px 4px; }
+
+.lesson-card { background: white; border: 1px solid #e5e7eb;
+               border-radius: 12px; padding: 22px 26px;
+               margin-bottom: 16px; text-decoration: none;
+               color: inherit; display: block; position: relative;
+               border-left: 8px solid #1f3a68;
+               transition: transform 0.15s, box-shadow 0.15s; }
+.lesson-card:hover { transform: translateY(-2px);
+                      box-shadow: 0 8px 22px rgba(31,58,104,0.12);
+                      border-left-color: #14b8a6; }
+.lesson-card.today { border-left-color: #10b981;
+                      background: linear-gradient(to right, #ecfdf5, white 35%); }
+.lesson-card.today::after {
+  content: "TODAY"; position: absolute; top: 16px; right: 20px;
+  background: #10b981; color: white;
+  padding: 4px 12px; border-radius: 12px;
+  font-size: 11px; font-weight: bold; letter-spacing: 1.5px;
+}
+
+.lesson-num { font-size: 12px; color: #1f3a68;
+               font-weight: bold; letter-spacing: 1.5px;
+               text-transform: uppercase; }
+.lesson-tag { display: inline-block; background: #eef2ff;
+               color: #1f3a68; padding: 2px 8px;
+               border-radius: 4px; font-size: 11px;
+               font-weight: bold; margin-left: 6px;
+               letter-spacing: 0.5px; }
+.lesson-title { font-size: 21px; font-weight: bold; color: #111;
+                 margin: 6px 0 6px 0; }
+.lesson-subtitle { font-size: 14px; color: #4b5563;
+                    line-height: 1.5; margin: 0; }
+.lesson-arrow { position: absolute; right: 24px; bottom: 22px;
+                 font-size: 22px; color: #14b8a6;
+                 font-weight: bold; }
+.lesson-card.today .lesson-arrow { color: #10b981; }
+
+.tip { background: white; border: 1px solid #e5e7eb;
+       border-radius: 10px; padding: 14px 18px; margin-top: 22px;
+       font-size: 13px; color: #4b5563; }
+.tip b { color: #1f3a68; }
+
+footer { color: #6b7280; font-size: 12px;
+         text-align: center; margin-top: 26px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Year 9 Computing</h1>
+  <p>Yunshu Gao &middot; 9 COTYC &middot; Arthur Phillip High School</p>
+</header>
+
+<div class="block-title">Term 2 - Interactive Worksheets</div>
+<a href="g8.html" class="lesson-card today">
+  <span class="lesson-num">Lesson 1<span class="lesson-tag">HTML</span></span>
+  <h2 class="lesson-title">Menus, Forms and Images</h2>
+  <p class="lesson-subtitle">Link your pages, build a feedback form with a textarea and dropdown, add a picture, get ready for JavaScript.</p>
+  <span class="lesson-arrow">&rarr;</span>
+</a>
+<a href="js1.html" class="lesson-card">
+  <span class="lesson-num">Lesson 2<span class="lesson-tag">JavaScript</span></span>
+  <h2 class="lesson-title">Meet JavaScript</h2>
+  <p class="lesson-subtitle">console.log, alert, variables, prompt. Your first ever JavaScript code.</p>
+  <span class="lesson-arrow">&rarr;</span>
+</a>
+<a href="js2.html" class="lesson-card">
+  <span class="lesson-num">Lesson 3<span class="lesson-tag">JavaScript</span></span>
+  <h2 class="lesson-title">Buttons and Functions</h2>
+  <p class="lesson-subtitle">Buttons that run code, change the page, ask the user questions and react to clicks.</p>
+  <span class="lesson-arrow">&rarr;</span>
+</a>
+
+
+<div class="tip">
+  <b>How to use these worksheets</b><br>
+  Type the code from the reference (you cannot copy it - that's how you
+  learn!). Click <b>Run</b> to see your page. When you finish, click
+  <b>Save my work as .html</b> at the top to hand in. Your work
+  auto-saves while you type.
+</div>
+
+<footer>
+  Year 9 IST &middot; 9 COTYC &middot; Term 2 Web Development
+</footer>
+
+</body>
+</html>
