@@ -812,6 +812,39 @@ section.lab.today-focus::before {
 }
 
 
+
+/* Section 9 target preview - "this is what you're building" */
+.target-preview {
+  background: #f9fafb;
+  border: 2px solid #1f3a68;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 12px 0 16px 0;
+  text-align: center;
+}
+.target-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #1f3a68;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.target-frame {
+  width: 100%;
+  max-width: 760px;
+  height: 720px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 6px;
+}
+.target-help {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 8px;
+  font-style: italic;
+}
+
 /* When a section has many step tabs, slightly tighten them so they fit */
 .step-tabs { flex-wrap: wrap; }
 @media (max-width: 1100px) {
@@ -1776,7 +1809,6 @@ section.lab.today-focus::before {
   </div>
 </section>
 
-
 <!-- ============================================================
      SECTION 9 - FINAL CHALLENGE - Build "All About Sam"
      ============================================================ -->
@@ -1787,15 +1819,23 @@ section.lab.today-focus::before {
     <span class="tier-ribbon" data-ribbon="9">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Recreate the webpage from your pre-test. Use <strong>everything you learnt</strong>: headings, paragraph, lists, table, image, form, and CSS. When you finish, you can change "Sam" to your own name.
+    Recreate the webpage from your pre-test. Build it piece by piece. Compare your work to the target below as you go.
   </p>
+
+  <div class="target-preview">
+    <div class="target-label">&#9733; This is what you're building</div>
+    <iframe class="target-frame" src="target.html" title="Target: All About Sam page"></iframe>
+    <p class="target-help">Open this in a new tab if you want to see it bigger - or just keep comparing to your result on the right.</p>
+  </div>
 
   <div class="step-tabs" data-section="9">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(9,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(9,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(9,3)"><span class="num-dot">3</span></button>
+    <button type="button" class="step-tab" data-step="4" onclick="showStep(9,4)"><span class="num-dot">4</span></button>
+    <button type="button" class="step-tab" data-step="5" onclick="showStep(9,5)"><span class="num-dot">5</span></button>
   </div>
-  <div class="step-task" id="task-9"><span class="task-text">Build the page structure: title, h1, h2, paragraph.</span><button type="button" class="next-step-btn" onclick="advanceStep(9)" id="advance-9">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-9"><span class="task-text">Structure: title 'All about Sam', h1, h2 'My Favourite Things', intro paragraph.</span><button type="button" class="next-step-btn" onclick="advanceStep(9)" id="advance-9">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
@@ -1807,52 +1847,70 @@ section.lab.today-focus::before {
 &lt;body&gt;
     &lt;h1&gt;All About Sam&lt;/h1&gt;
     &lt;h2&gt;My Favourite Things&lt;/h2&gt;
-    &lt;p&gt;Hey, I&#x27;m Sam! I&#x27;m in Year 9
-       and basketball is pretty much
-       my whole life. I train twice a week.&lt;/p&gt;
+    &lt;p&gt;Hey, I'm Sam! I'm in Year 9
+       and basketball is pretty much my whole life.
+       I train twice a week.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<pre class="code-ref" data-section="9" data-step="2" hidden>&lt;ul&gt;
-    &lt;li&gt;dribbling drills&lt;/li&gt;
-    &lt;li&gt;free throws&lt;/li&gt;
-    &lt;li&gt;watching the NBA&lt;/li&gt;
-&lt;/ul&gt;
+<pre class="code-ref" data-section="9" data-step="2" hidden>&lt;body&gt;
+    &lt;h1&gt;All About Sam&lt;/h1&gt;
+    &lt;h2&gt;My Favourite Things&lt;/h2&gt;
+    &lt;p&gt;Hey, I'm Sam! I'm in Year 9
+       and basketball is pretty much
+       my whole life. I train twice a week.&lt;/p&gt;
 
-&lt;h2&gt;My Top 3 Players&lt;/h2&gt;
-&lt;ol&gt;
-    &lt;li&gt;LeBron James&lt;/li&gt;
-    &lt;li&gt;Stephen Curry&lt;/li&gt;
-    &lt;li&gt;Ja Morant&lt;/li&gt;
-&lt;/ol&gt;
+    &lt;ul&gt;
+        &lt;li&gt;dribbling drills&lt;/li&gt;
+        &lt;li&gt;free throws&lt;/li&gt;
+        &lt;li&gt;watching the NBA&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/body&gt;</pre>
+<pre class="code-ref" data-section="9" data-step="3" hidden>    &lt;ul&gt;
+        &lt;li&gt;dribbling drills&lt;/li&gt;
+        &lt;li&gt;free throws&lt;/li&gt;
+        &lt;li&gt;watching the NBA&lt;/li&gt;
+    &lt;/ul&gt;
 
-&lt;table&gt;
-    &lt;tr&gt;&lt;th&gt;Game&lt;/th&gt;&lt;th&gt;Points&lt;/th&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;Eagles vs Tigers&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;Hawks vs Lions&lt;/td&gt;&lt;td&gt;76&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
+    &lt;h2&gt;My Top 3 Players&lt;/h2&gt;
+    &lt;ol&gt;
+        &lt;li&gt;LeBron James&lt;/li&gt;
+        &lt;li&gt;Stephen Curry&lt;/li&gt;
+        &lt;li&gt;Ja Morant&lt;/li&gt;
+    &lt;/ol&gt;</pre>
+<pre class="code-ref" data-section="9" data-step="4" hidden>    &lt;ol&gt;
+        &lt;li&gt;LeBron James&lt;/li&gt;
+        &lt;li&gt;Stephen Curry&lt;/li&gt;
+        &lt;li&gt;Ja Morant&lt;/li&gt;
+    &lt;/ol&gt;
 
-&lt;p&gt;
-    &lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"
-         alt="LeBron James"&gt;
-&lt;/p&gt;
+    &lt;table&gt;
+        &lt;tr&gt;&lt;th&gt;Game&lt;/th&gt;&lt;th&gt;Points&lt;/th&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Eagles vs Tigers&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Hawks vs Lions&lt;/td&gt;&lt;td&gt;76&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
 
-&lt;form&gt;
-    Name: &lt;input type="text"&gt;
-    &lt;input type="submit"&gt;
-&lt;/form&gt;</pre>
-<pre class="code-ref" data-section="9" data-step="3" hidden>&lt;style&gt;
-    body {
-        background-color: lightblue;
-        font-family: Arial;
-    }
-    h1 { color: navy; }
-    h2 { color: navy; }
-    table, td, th {
-        border-style: solid;
-        border-color: navy;
-        border-width: 2px;
-    }
-&lt;/style&gt;</pre>
+    &lt;p&gt;&lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"&gt;&lt;/p&gt;
+
+    &lt;form&gt;
+        Name: &lt;input type="text"&gt;
+        &lt;input type="submit"&gt;
+    &lt;/form&gt;</pre>
+<pre class="code-ref" data-section="9" data-step="5" hidden>&lt;head&gt;
+    &lt;title&gt;All about Sam&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            background-color: lightblue;
+            font-family: Arial;
+        }
+        h1 { color: navy; }
+        h2 { color: navy; }
+        table, td, th {
+            border-style: solid;
+            border-color: navy;
+            border-width: 2px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -2034,9 +2092,11 @@ const STEP_TASKS = {
       "Build a login form: username + password.",
       "Build a survey form: radio buttons + checkboxes + dropdown.",
       "Build an FAQ dropdown using &lt;details&gt; and &lt;summary&gt;."],
-  9: ["Build the page structure: title, h1, h2, paragraph.",
-      "Add the lists, table, image and form.",
-      "Add the CSS to make it look like the target."]
+  9: ["Structure: title 'All about Sam', h1, h2 'My Favourite Things', intro paragraph.",
+      "Add the bullet list (ul): dribbling drills, free throws, watching the NBA.",
+      "Add h2 'My Top 3 Players' and numbered list: LeBron, Curry, Ja Morant.",
+      "Add the table (Game/Points), the image, and a Name + Submit form.",
+      "Add the CSS in &lt;head&gt;: lightblue background, Arial font, navy h1+h2, navy table borders."]
 };
 
 function showStep(sectionNum, stepNum) {
