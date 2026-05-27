@@ -521,14 +521,16 @@ const RULES = {
     ]
   },
   3: {
-    title: "Lists & Links",
+    title: "Lists, Links & Images",
     required: [
       { id: "list",   label: "Uses <ul> or <ol>",               test: c => /<(ul|ol)[^>]*>/i.test(c) },
       { id: "li3",    label: "3+ <li> items",                   test: c => (c.match(/<li[^>]*>/gi) || []).length >= 3 },
+      { id: "img",    label: "Uses <img>",                      test: c => /<img[^>]*src/i.test(c) },
     ],
     bonus: [
       { id: "both",   label: "Both <ul> AND <ol>",              test: c => /<ul[^>]*>/i.test(c) && /<ol[^>]*>/i.test(c) },
       { id: "link",   label: "Uses <a href>",                   test: c => /<a\s+[^>]*href=/i.test(c) },
+      { id: "alt",    label: "Image has alt attribute (a11y)",  test: c => /<img[^>]*alt=/i.test(c) },
     ]
   },
   4: {
@@ -594,40 +596,29 @@ const RULES = {
     ]
   },
   9: {
-    title: "Plan Your GTPA",
-    isPlan: true
-  },
-  10: {
-    title: "Add Images",
+    title: "Final Challenge",
     required: [
-      { id: "img",    label: "Uses <img> with src",             test: c => /<img[^>]*src/i.test(c) },
-      { id: "alt",    label: "Has alt attribute (a11y)",        test: c => /<img[^>]*alt=/i.test(c) },
+      { id: "h1",       label: "Has <h1>",                        test: c => /<h1[^>]*>/i.test(c) },
+      { id: "h2",       label: "Has <h2> (2+)",                   test: c => (c.match(/<h2[^>]*>/gi) || []).length >= 2 },
+      { id: "p",        label: "Has paragraph(s)",                test: c => /<p[^>]*>/i.test(c) },
+      { id: "ul",       label: "Has bullet list (<ul>)",          test: c => /<ul[^>]*>/i.test(c) },
+      { id: "ol",       label: "Has numbered list (<ol>)",        test: c => /<ol[^>]*>/i.test(c) },
+      { id: "table",    label: "Has <table> with <th>",           test: c => /<table[^>]*>[\s\S]*?<th[^>]*>[\s\S]*?<\/table>/i.test(c) },
+      { id: "img",      label: "Has <img>",                       test: c => /<img[^>]*src/i.test(c) },
+      { id: "form",     label: "Has <form> with input",           test: c => /<form[^>]*>[\s\S]*?<input[^>]*>[\s\S]*?<\/form>/i.test(c) },
+      { id: "style",    label: "Has <style> block (CSS)",         test: c => /<style[^>]*>[\s\S]{15,}<\/style>/i.test(c) },
     ],
     bonus: [
-      { id: "imgs2",  label: "2+ images",                       test: c => (c.match(/<img[^>]*>/gi) || []).length >= 2 },
-      { id: "size",   label: "Sets width or height",            test: c => /<img[^>]*(width|height)=/i.test(c) },
-      { id: "imgcss", label: "Styles images with CSS",          test: c => /img\s*\{/i.test(c) },
+      { id: "lightblue",label: "lightblue background",            test: c => /background[-\w]*\s*:\s*lightblue/i.test(c) },
+      { id: "navy",     label: "navy colour used",                test: c => /color\s*:\s*navy/i.test(c) },
+      { id: "arial",    label: "Arial font",                      test: c => /font-family\s*:\s*[^;]*Arial/i.test(c) },
+      { id: "tbborder", label: "Table border styled in CSS",      test: c => /(table|td|th)[^{]*\{[^}]*border/i.test(c) },
+      { id: "alt",      label: "Image alt attribute",             test: c => /<img[^>]*alt=/i.test(c) },
     ]
   },
-  11: {
-    title: "Mini-Site Challenge",
-    required: [
-      { id: "headings", label: "Heading (h1 + h2)",             test: c => /<h1[^>]*>/i.test(c) && /<h2[^>]*>/i.test(c) },
-      { id: "navmenu",  label: "Nav menu (3+ links or <nav>)",  test: c => /<nav[^>]*>/i.test(c) || (c.match(/<a\s+[^>]*href=/gi) || []).length >= 3 },
-      { id: "imgalt",   label: "Image with alt",                test: c => /<img[^>]*alt=/i.test(c) },
-      { id: "list",     label: "List (ul or ol)",               test: c => /<(ul|ol)[^>]*>/i.test(c) },
-      { id: "tableth",  label: "Table with <th>",               test: c => /<table[^>]*>[\s\S]*?<th[^>]*>[\s\S]*?<\/table>/i.test(c) },
-      { id: "form",     label: "Form with <input>",             test: c => /<form[^>]*>[\s\S]*?<input[^>]*>[\s\S]*?<\/form>/i.test(c) },
-      { id: "css",      label: "CSS styling",                   test: c => /<style[^>]*>[\s\S]{20,}<\/style>/i.test(c) },
-    ],
-    bonus: [
-      { id: "footer",   label: "Has <footer>",                  test: c => /<footer[^>]*>/i.test(c) },
-      { id: "textarea", label: "Form has <textarea>",           test: c => /<textarea/i.test(c) },
-    ]
-  }
 };
 
-const TOTAL_SECTIONS = 11;
+const TOTAL_SECTIONS = 9;
 
 /* Grade banding aligned with NESA Common Course Performance Descriptors */
 function gradeForPercent(pct) {
@@ -1025,22 +1016,9 @@ function loadDemo() {
       { n:8, tier:"should", finished:false, code: "",
         learnt: "", stuck: "" },
       { n:9, tier:"should", finished:true,
-        code: "",
-        learnt: "I'll start with the home page tomorrow.",
-        stuck: "Where to find images.",
-        planFields: {
-          "About:": "My website is about my favourite sport, basketball.",
-          "Audience:": "Year 7 kids who want to learn basketball.",
-          "Page 1:": "Home - intro and welcome message",
-          "Page 2:": "Teams I support (NBA + local)",
-          "Page 3:": "Contact form",
-          "Colours:": "navy / orange",
-          "Font:": "Arial",
-          "Features planned:": "Headings, Lists, Images, Menu/Links, Form, CSS styling",
-          "What might be hard:": "Making the menu look good on every page."
-        } },
-      { n:10, tier:"should", finished:false, code: "", learnt: "", stuck: "" },
-      { n:11, tier:"should", finished:false, code: "", learnt: "", stuck: "" }
+        code: '<html>\n<head>\n  <title>All about Sam</title>\n  <style>\n    body { background-color: lightblue; font-family: Arial; }\n    h1, h2 { color: navy; }\n    table, td, th { border-style: solid; border-color: navy; border-width: 2px; }\n  </style>\n</head>\n<body>\n  <h1>All About Sam</h1>\n  <h2>My Favourite Things</h2>\n  <p>Basketball is my whole life!</p>\n  <ul><li>dribbling</li><li>free throws</li></ul>\n  <h2>My Top 3</h2>\n  <ol><li>LeBron</li><li>Curry</li><li>Ja</li></ol>\n  <table><tr><th>Game</th><th>Points</th></tr><tr><td>Eagles</td><td>82</td></tr></table>\n  <p><img src="pic.jpg" alt="LeBron"></p>\n  <form>Name: <input><input type="submit"></form>\n</body>\n</html>',
+        learnt: "I combined every skill we did.",
+        stuck: "The CSS table border took a few tries." }
     ]
   };
   renderSubmission(demo);
@@ -1096,12 +1074,6 @@ function buildMarkedHTML() {
     if (sec.code && sec.code.trim()) {
       body += '<h3>Student code</h3>';
       body += '<pre class="code">' + escapeHTML(sec.code) + '</pre>';
-    } else if (rules.isPlan && sec.planFields) {
-      body += '<h3>Plan</h3><div class="plan">';
-      Object.keys(sec.planFields).forEach(k => {
-        body += '<p><b>' + escapeHTML(k) + '</b> ' + escapeHTML(sec.planFields[k] || "(empty)") + '</p>';
-      });
-      body += '</div>';
     }
 
     // Reflections
