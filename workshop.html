@@ -7,13 +7,15 @@
 <style>
 /* ============================================================
    Year 9 HTML & CSS Workshop - 9 COTYB & 9 COTYC
-   Designed for low-literacy readers: large fonts, big buttons,
-   strong colour cues, short sentences.
+   3-column layout: READ -> TYPE -> RESULT
+   Tier bar at top: MUST DO / COULD DO / SHOULD DO at a glance.
+   Designed for low-literacy readers: big buttons, strong colour,
+   short sentences, one focus per row.
    ============================================================ */
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 230px; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 
 body {
   font-family: "Segoe UI", Calibri, Arial, sans-serif;
@@ -25,14 +27,14 @@ body {
   color: #1f2937;
 }
 
-/* ===== STICKY HEADER ===== */
+/* ===== STICKY HEADER (minimal) ===== */
 .top-bar {
   position: sticky;
   top: 0;
   z-index: 100;
   background: linear-gradient(135deg, #1f3a68, #14b8a6);
   color: white;
-  padding: 14px 22px;
+  padding: 14px 22px 12px 22px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.18);
 }
 .top-bar h1 {
@@ -40,7 +42,7 @@ body {
   font-size: 22px;
 }
 .top-bar .school-line {
-  margin: 0;
+  margin: 0 0 10px 0;
   font-size: 13px;
   opacity: 0.92;
 }
@@ -49,9 +51,9 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 10px;
   align-items: center;
   font-size: 14px;
+  margin-bottom: 8px;
 }
 .student-row label {
   display: flex;
@@ -59,31 +61,35 @@ body {
   gap: 6px;
   font-weight: 600;
 }
-.student-row input, .student-row select {
+.student-row input,
+.student-row select {
   background: white;
   color: #1f2937;
   border: 0;
   border-radius: 6px;
-  padding: 6px 10px;
+  padding: 7px 10px;
   font-size: 14px;
   min-width: 120px;
+  font-family: inherit;
 }
-.student-row #studentName { min-width: 180px; }
+.student-row #studentName { min-width: 200px; }
+.student-row select { cursor: pointer; }
 
 .progress-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 6px;
   font-size: 13px;
 }
 .progress-track {
   flex: 1;
-  height: 10px;
+  height: 9px;
   background: rgba(255,255,255,0.25);
   border-radius: 5px;
   overflow: hidden;
   min-width: 150px;
+  max-width: 320px;
 }
 .progress-fill {
   height: 100%;
@@ -91,14 +97,14 @@ body {
   width: 0%;
   transition: width 0.4s ease;
 }
-#progressText { font-weight: 700; min-width: 90px; }
-#saveStatus { opacity: 0.9; min-width: 130px; text-align: right; }
+#progressText { font-weight: 700; min-width: 80px; }
+#saveStatus { opacity: 0.92; margin-left: auto; font-size: 13px; }
 
 .toolbar {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 .toolbar button {
   padding: 10px 18px;
@@ -110,9 +116,8 @@ body {
   background: white;
   color: #1f3a68;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.1s, background 0.15s;
 }
-.toolbar button:hover { transform: translateY(-1px); background: #e0f7f5; }
+.toolbar button:hover { background: #e0f7f5; }
 .toolbar button.primary {
   background: #fde68a;
   color: #78350f;
@@ -122,146 +127,119 @@ body {
 .toolbar button.danger { background: #fee2e2; color: #b91c1c; }
 .toolbar button.danger:hover { background: #fecaca; }
 
-/* ===== CSS-ONLY DROPDOWN NAV (mentor: no JS) ===== */
-.main-nav {
+/* ============================================================
+   BIG TIER BAR - the headline navigation
+   Three colour-coded zones; each section is a number+title pill.
+   ============================================================ */
+.tier-bar {
   background: white;
+  padding: 18px 20px 14px 20px;
   border-bottom: 1px solid #e5e7eb;
-  padding: 8px 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+}
+.tier-zone {
+  border-radius: 12px;
+  padding: 12px 14px 14px 14px;
+}
+.tier-zone.must   { background: #ecfdf5; border: 2px solid #10b981; }
+.tier-zone.could  { background: #f5f3ff; border: 2px solid #7c3aed; }
+.tier-zone.should { background: #eef2ff; border: 2px solid #1f3a68; }
+
+.tier-zone .zone-head {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  position: sticky;
-  top: 168px;
-  z-index: 90;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
-.nav-group {
-  position: relative;
+.tier-zone h3 {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
 }
-.nav-group > summary {
-  list-style: none;
-  cursor: pointer;
-  padding: 8px 14px;
-  background: #eef2ff;
-  color: #1f3a68;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 14px;
-  user-select: none;
-}
-.nav-group > summary::-webkit-details-marker { display: none; }
-.nav-group > summary::after {
-  content: " v";
+.tier-zone.must   h3 { color: #047857; }
+.tier-zone.could  h3 { color: #5b21b6; }
+.tier-zone.should h3 { color: #1f3a68; }
+.zone-tag {
   font-size: 11px;
-  margin-left: 4px;
-  letter-spacing: -1px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  font-weight: 600;
 }
-.nav-group[open] > summary {
-  background: #1f3a68;
-  color: white;
-}
-.nav-group[open] > summary::after { content: " ^"; }
-.nav-group > .nav-panel {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  padding: 8px;
-  min-width: 280px;
-  z-index: 99;
-}
-.nav-panel ul { list-style: none; margin: 0; padding: 0; }
-.nav-panel li { margin: 0; }
-.nav-panel a {
+
+.pills {
   display: flex;
-  align-items: center;
   gap: 8px;
-  padding: 9px 12px;
-  color: #1f2937;
-  text-decoration: none;
-  border-radius: 6px;
-  font-size: 14px;
-}
-.nav-panel a:hover { background: #eef2ff; }
-.nav-num {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-align: center;
-  background: #1f3a68;
-  color: white;
-  border-radius: 50%;
-  font-weight: 700;
-  font-size: 12px;
-  flex-shrink: 0;
-}
-.mini-badge {
-  margin-left: auto;
-  padding: 2px 7px;
-  border-radius: 10px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: white;
-}
-.mini-badge.must   { background: #10b981; }
-.mini-badge.could  { background: #7c3aed; }
-.mini-badge.should { background: #1f3a68; }
-
-/* ===== TIER LEGEND ===== */
-.legend {
-  max-width: 1180px;
-  margin: 18px auto 12px auto;
-  padding: 12px 18px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  display: flex;
-  gap: 16px;
   flex-wrap: wrap;
-  font-size: 13.5px;
+}
+.pill {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  flex: 0 1 78px;
+  padding: 8px 6px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  transition: transform 0.12s, box-shadow 0.12s;
 }
-.legend strong { font-weight: 700; }
-.legend .lg-item { display: flex; align-items: center; gap: 7px; }
-.legend .swatch {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
+.pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
 }
-.legend .swatch.must   { background: #10b981; }
-.legend .swatch.could  { background: #7c3aed; }
-.legend .swatch.should { background: #1f3a68; }
-.legend .help-note {
-  margin-left: auto;
-  color: #6b7280;
-  font-size: 12px;
-  font-style: italic;
+.pill .num {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 800;
+}
+.pill .ttl {
+  font-size: 10.5px;
+  line-height: 1.15;
+  margin-top: 5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.pill.must   { background: #10b981; }
+.pill.could  { background: #7c3aed; }
+.pill.should { background: #1f3a68; }
+.pill.done::after {
+  content: "v";
+  position: absolute;
+  /* For checkmark indicator - kept simple */
+}
+.pill.is-done {
+  outline: 3px solid #fde68a;
+  outline-offset: 2px;
 }
 
-/* ===== MAIN CONTENT ===== */
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
 main {
-  max-width: 1180px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 16px 60px 16px;
+  padding: 22px 16px 60px 16px;
 }
 
 /* ===== SECTION CARD ===== */
 section.lab {
   background: white;
   border-radius: 14px;
-  padding: 20px 26px 26px 26px;
+  padding: 22px 26px 24px 26px;
   margin-bottom: 22px;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  scroll-margin-top: 230px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  scroll-margin-top: 24px;
   position: relative;
+  overflow: hidden;
 }
 section.lab::before {
   content: "";
@@ -269,8 +247,7 @@ section.lab::before {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 8px;
-  border-radius: 14px 0 0 14px;
+  width: 10px;
   background: #1f3a68;
 }
 section.lab[data-tier="must"]::before   { background: #10b981; }
@@ -281,20 +258,20 @@ section.lab[data-tier="should"]::before { background: #1f3a68; }
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   flex-wrap: wrap;
 }
 .sec-num {
   display: inline-block;
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
   text-align: center;
   background: #1f3a68;
   color: white;
   border-radius: 50%;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 22px;
   flex-shrink: 0;
 }
 section.lab[data-tier="must"]   .sec-num { background: #10b981; }
@@ -303,16 +280,16 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
 
 .sec-head h2 {
   margin: 0;
-  font-size: 22px;
-  color: #1f3a68;
+  font-size: 24px;
+  color: #111;
   flex: 1;
   min-width: 200px;
 }
 .tier-ribbon {
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: 999px;
   color: white;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 1.5px;
 }
@@ -322,51 +299,167 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
 
 .sec-intro {
   margin: 10px 0 16px 0;
-  font-size: 15px;
+  font-size: 15.5px;
   color: #374151;
   line-height: 1.55;
-  background: #f9fafb;
+  background: #fbfdff;
   padding: 12px 16px;
   border-radius: 8px;
   border-left: 4px solid #14b8a6;
 }
-
-/* ===== WORKSPACE ===== */
-.workspace {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 18px;
+.sec-intro code {
+  background: #1f3a68;
+  color: #e0f7f5;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
 }
-.editor-pane, .result-pane { display: flex; flex-direction: column; }
-.pane-label {
-  font-size: 11px;
+
+/* ============================================================
+   STEP TABS (Step 1 / Step 2 / Step 3)
+   Only one step's reference shows at a time.
+   ============================================================ */
+.step-tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 0 0;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0;
+}
+.step-tab {
+  background: #f3f4f6;
+  border: 2px solid transparent;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6b7280;
+  cursor: pointer;
+  position: relative;
+  bottom: -2px;
+}
+.step-tab .num-dot {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 12px;
+  margin-right: 6px;
+  background: #d1d5db;
+  color: white;
+  font-weight: 800;
+}
+.step-tab[data-step="1"] .num-dot { background: #14b8a6; }
+.step-tab[data-step="2"] .num-dot { background: #f59e0b; }
+.step-tab[data-step="3"] .num-dot { background: #ef4444; }
+.step-tab.active {
+  background: white;
+  color: #111;
+  border-color: #e5e7eb;
+  border-bottom: 2px solid white;
+  z-index: 1;
+}
+.step-tab:hover:not(.active) { background: #e5e7eb; color: #1f2937; }
+.step-task {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  padding: 10px 16px;
+  font-size: 14.5px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1f2937;
+}
+
+/* ============================================================
+   3-COLUMN WORKSPACE: READ | TYPE | RESULT
+   ============================================================ */
+.workspace3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+}
+.col-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #1f3a68;
-  margin-bottom: 5px;
+  color: #4b5563;
+  margin-bottom: 6px;
 }
-.code-editor {
-  width: 100%;
-  min-height: 260px;
-  resize: vertical;
+.col-label .col-num {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  background: #1f3a68;
+  color: white;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 12px;
+}
+.col-read   .col-num { background: #14b8a6; }
+.col-type   .col-num { background: #f59e0b; }
+.col-result .col-num { background: #10b981; }
+
+/* code reference (left column) */
+.code-ref {
+  background: #1f3a68;
+  color: #e0f7f5;
+  padding: 12px 14px;
+  border-radius: 8px;
   font-family: Consolas, "Courier New", monospace;
   font-size: 13px;
-  line-height: 1.5;
-  padding: 12px;
-  border: 2px solid #1f3a68;
+  line-height: 1.6;
+  white-space: pre;
+  overflow: auto;
+  margin: 0;
+  height: 360px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+.code-ref::selection { background: transparent; color: inherit; }
+.code-ref[hidden] { display: none; }
+
+/* editor (middle column) */
+.code-editor {
+  width: 100%;
+  height: 360px;
+  resize: vertical;
+  min-height: 240px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  padding: 12px 14px;
+  border: 2px solid #f59e0b;
   border-radius: 8px;
-  background: #fefefe;
+  background: #fffbeb;
   color: #111;
   tab-size: 4;
   -moz-tab-size: 4;
 }
 .code-editor:focus {
   outline: none;
-  border-color: #14b8a6;
-  box-shadow: 0 0 0 3px rgba(20,184,166,0.18);
+  border-color: #d97706;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+  background: white;
 }
+
 .run-row {
   display: flex;
   align-items: center;
@@ -374,20 +467,21 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   margin-top: 10px;
 }
 .run-btn {
-  padding: 12px 30px;
+  padding: 12px 32px;
   font-size: 16px;
   font-weight: 800;
   border: 0;
-  border-radius: 8px;
-  background: #14b8a6;
+  border-radius: 10px;
+  background: #10b981;
   color: white;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(20,184,166,0.35);
+  box-shadow: 0 3px 8px rgba(16,185,129,0.35);
+  letter-spacing: 0.5px;
 }
-.run-btn:hover { background: #0e9488; }
-.run-btn::before { content: "> "; }
+.run-btn:hover { background: #047857; }
+.run-btn::before { content: "> "; font-weight: 800; }
 .clear-btn {
-  padding: 10px 16px;
+  padding: 10px 14px;
   font-size: 13px;
   background: #f3f4f6;
   color: #6b7280;
@@ -397,102 +491,34 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   font-weight: 600;
 }
 .clear-btn:hover { background: #fee2e2; color: #b91c1c; }
+
+/* result (right column) */
 .output {
   width: 100%;
-  height: 320px;
-  border: 2px solid #1f3a68;
+  height: 360px;
+  border: 2px solid #10b981;
   border-radius: 8px;
   background: white;
 }
 
-/* ===== STEP PANELS (Step 1 / Step 2 / Step 3) ===== */
-.steps { display: grid; gap: 12px; }
-.step {
-  border: 1px solid #e5e7eb;
-  border-left: 6px solid #1f3a68;
-  border-radius: 10px;
-  padding: 14px 18px;
-  background: #fbfdff;
+/* ============================================================
+   REFLECTION + DONE
+   ============================================================ */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
 }
-.step.s1 { border-left-color: #14b8a6; background: #f0fdfa; }
-.step.s2 { border-left-color: #f59e0b; background: #fffbeb; }
-.step.s3 { border-left-color: #ef4444; background: #fef2f2; }
-
-.step-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  color: #111;
-}
-.step-num {
-  display: inline-block;
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
-  text-align: center;
-  border-radius: 50%;
-  color: white;
-  font-size: 13px;
-  font-weight: 800;
-}
-.step.s1 .step-num { background: #14b8a6; }
-.step.s2 .step-num { background: #f59e0b; }
-.step.s3 .step-num { background: #ef4444; }
-.step-task {
-  font-size: 14.5px;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0 0 8px 0;
-}
-
-.code-ref {
-  background: #1f3a68;
-  color: #e0f7f5;
-  padding: 12px 14px;
-  border-radius: 6px;
-  font-family: Consolas, "Courier New", monospace;
-  font-size: 13px;
-  line-height: 1.55;
-  white-space: pre;
-  overflow: auto;
-  max-height: 360px;
-  margin: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  cursor: default;
-}
-.code-ref::selection { background: transparent; color: inherit; }
-
-.hint-toggle {
-  margin-top: 8px;
-  display: inline-block;
-  background: transparent;
-  border: 1px dashed #6b7280;
-  color: #6b7280;
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-}
-.hint-toggle:hover { background: #f9fafb; color: #1f2937; border-color: #1f2937; }
-.hint-pane { margin-top: 8px; }
-.hint-pane[hidden] { display: none; }
-
-/* ===== REFLECTION ===== */
 .reflection {
-  margin-top: 16px;
   background: #fffaf0;
   border: 1px solid #fde68a;
   border-radius: 10px;
-  padding: 14px 18px;
+  padding: 14px 16px;
 }
 .reflection h4 {
   margin: 0 0 8px 0;
-  font-size: 13px;
+  font-size: 12px;
   color: #78350f;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -511,8 +537,8 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
 }
 .reflection textarea {
   width: 100%;
-  min-height: 60px;
-  padding: 8px 10px;
+  min-height: 56px;
+  padding: 7px 10px;
   border: 1px solid #fde68a;
   border-radius: 6px;
   font-size: 13.5px;
@@ -525,13 +551,18 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
 }
 
-/* ===== DONE CHECKBOX ===== */
-.done-row {
-  margin-top: 14px;
-  padding: 12px 16px;
+.done-card {
   background: #ecfdf5;
   border: 1px solid #a7f3d0;
   border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+.done-card.is-done { background: #d1fae5; border-color: #10b981; }
+.done-row {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -548,39 +579,33 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   color: #065f46;
   cursor: pointer;
 }
-.done-row.is-done { background: #d1fae5; border-color: #10b981; }
-.done-row.is-done label::after {
+.done-card.is-done .done-row label::after {
   content: " - well done!";
   color: #047857;
-  font-weight: 700;
 }
-
-/* ===== JUMP NAV (between sections) ===== */
-.jump-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
-  gap: 10px;
+.done-card .next-link {
+  margin-top: 4px;
 }
-.jump-nav a {
+.done-card .next-link a {
+  display: inline-block;
+  padding: 8px 14px;
+  background: white;
+  color: #047857;
+  border: 2px solid #10b981;
+  border-radius: 6px;
   text-decoration: none;
-  padding: 10px 18px;
-  border-radius: 8px;
   font-weight: 700;
-  font-size: 14px;
-  background: #f3f4f6;
-  color: #1f3a68;
+  font-size: 13px;
 }
-.jump-nav a:hover { background: #e0f7f5; }
-.jump-nav .top-link { background: #1f3a68; color: white; }
-.jump-nav .top-link:hover { background: #14b8a6; }
+.done-card .next-link a:hover { background: #10b981; color: white; }
 
-/* ===== PLAN SECTION (Section 9, no code) ===== */
+/* ============================================================
+   PLAN SECTION (Section 9, no editor)
+   ============================================================ */
 .plan-grid {
   display: grid;
   gap: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 .plan-block {
   background: #fbfdff;
@@ -609,15 +634,9 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   gap: 10px;
 }
 
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  color: #6b7280;
-  font-size: 12px;
-  padding: 30px 20px 60px 20px;
-}
-
-/* ===== SUBMIT MODAL ===== */
+/* ============================================================
+   SUBMIT MODAL
+   ============================================================ */
 .modal-bg {
   position: fixed;
   inset: 0;
@@ -637,21 +656,9 @@ footer {
   padding: 26px 28px;
   box-shadow: 0 12px 36px rgba(0,0,0,0.3);
 }
-.modal h2 {
-  margin: 0 0 10px 0;
-  color: #1f3a68;
-  font-size: 22px;
-}
-.modal p {
-  margin: 0 0 12px 0;
-  font-size: 15px;
-  line-height: 1.6;
-}
-.modal ol {
-  font-size: 14.5px;
-  line-height: 1.7;
-  padding-left: 22px;
-}
+.modal h2 { margin: 0 0 10px 0; color: #1f3a68; font-size: 22px; }
+.modal p { margin: 0 0 12px 0; font-size: 15px; line-height: 1.6; }
+.modal ol { font-size: 14.5px; line-height: 1.7; padding-left: 22px; }
 .modal-actions {
   display: flex;
   gap: 10px;
@@ -669,22 +676,36 @@ footer {
 .modal-actions .ok-btn { background: #14b8a6; color: white; }
 .modal-actions .ok-btn:hover { background: #0e9488; }
 
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  color: #6b7280;
+  font-size: 12px;
+  padding: 24px 20px 50px 20px;
+}
+
 /* ===== RESPONSIVE ===== */
-@media (max-width: 920px) {
-  .workspace { grid-template-columns: 1fr; }
+@media (max-width: 1100px) {
+  .tier-bar { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  .workspace3 { grid-template-columns: 1fr; }
+  .bottom-row { grid-template-columns: 1fr; }
   .reflection .ref-grid { grid-template-columns: 1fr; }
   .plan-3col { grid-template-columns: 1fr; }
-  .main-nav { top: 220px; }
+  .pill { min-width: 64px; flex: 0 1 64px; }
+  .pill .ttl { font-size: 10px; }
 }
 
 /* ===== PRINT ===== */
 @media print {
-  .top-bar, .main-nav, .toolbar, .legend, .jump-nav, .run-row, .clear-btn,
-  .hint-toggle, .modal-bg { display: none !important; }
+  .top-bar, .tier-bar, .toolbar, .step-tabs, .run-row, .clear-btn,
+  .modal-bg, .done-card .next-link { display: none !important; }
   body { background: white; }
   section.lab { box-shadow: none; page-break-inside: avoid; border: 1px solid #ccc; }
-  .code-editor { border: 1px solid #999; }
-  .output { display: none; }
+  .workspace3 { grid-template-columns: 1fr; }
+  .code-editor, .output { border: 1px solid #999; }
+  .output { height: 200px; }
 }
 </style>
 </head>
@@ -698,92 +719,45 @@ footer {
   <p class="school-line">Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC</p>
   <div class="student-row">
     <label>Name <input type="text" id="studentName" placeholder="Your name" autocomplete="off"></label>
-    <label>Class <select id="studentClass"><option value="">Pick your class...</option><option value="9 COTYB">9 COTYB</option><option value="9 COTYC">9 COTYC</option></select></label>
+    <label>Class
+      <select id="studentClass">
+        <option value="">Pick your class...</option>
+        <option value="9 COTYB">9 COTYB</option>
+        <option value="9 COTYC">9 COTYC</option>
+      </select>
+    </label>
     <label>Date <input type="date" id="studentDate"></label>
   </div>
   <div class="progress-row">
     <span>Progress:</span>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    <span id="progressText">0 of 9 done</span>
+    <span id="progressText">0 of 11 done</span>
     <span id="saveStatus">Not saved yet</span>
   </div>
   <div class="toolbar">
-    <button class="primary" onclick="submitWork()">Submit My Work (Download)</button>
+    <button class="primary" onclick="submitWork()">Submit My Work</button>
     <button onclick="window.print()">Print to PDF</button>
-    <button onclick="scrollToTop()">Back to Top</button>
     <button class="danger" onclick="confirmReset()">Reset Everything</button>
   </div>
 </header>
 
 <!-- ============================================================
-     CSS-ONLY DROPDOWN NAV (uses <details>, no JavaScript)
+     BIG TIER BAR - "at a glance, what to do today"
      ============================================================ -->
-<nav class="main-nav" aria-label="Section navigation">
-  <details class="nav-group">
-    <summary>Jump to Section</summary>
-    <div class="nav-panel">
-      <ul id="navList">
-        <!-- Populated by JS to keep tier badges in sync with config -->
-      </ul>
-    </div>
-  </details>
-  <details class="nav-group">
-    <summary>HTML Basics</summary>
-    <div class="nav-panel">
-      <ul>
-        <li><a href="#sec-1"><span class="nav-num">1</span> Your First Page</a></li>
-        <li><a href="#sec-2"><span class="nav-num">2</span> Headings &amp; Paragraphs</a></li>
-        <li><a href="#sec-3"><span class="nav-num">3</span> Lists &amp; Links</a></li>
-      </ul>
-    </div>
-  </details>
-  <details class="nav-group">
-    <summary>Forms &amp; Tables</summary>
-    <div class="nav-panel">
-      <ul>
-        <li><a href="#sec-4"><span class="nav-num">4</span> Forms</a></li>
-        <li><a href="#sec-5"><span class="nav-num">5</span> Tables</a></li>
-      </ul>
-    </div>
-  </details>
-  <details class="nav-group">
-    <summary>CSS</summary>
-    <div class="nav-panel">
-      <ul>
-        <li><a href="#sec-6"><span class="nav-num">6</span> Colours &amp; CSS</a></li>
-        <li><a href="#sec-7"><span class="nav-num">7</span> Fonts &amp; Borders</a></li>
-      </ul>
-    </div>
-  </details>
-  <details class="nav-group">
-    <summary>Project</summary>
-    <div class="nav-panel">
-      <ul>
-        <li><a href="#sec-8"><span class="nav-num">8</span> Multi-page Site</a></li>
-        <li><a href="#sec-9"><span class="nav-num">9</span> Plan Your GTPA</a></li>
-      </ul>
-    </div>
-  </details>
-  <details class="nav-group">
-    <summary>Extras</summary>
-    <div class="nav-panel">
-      <ul>
-        <li><a href="#sec-10"><span class="nav-num">10</span> Add Images</a></li>
-        <li><a href="#sec-11"><span class="nav-num">11</span> Mini-Site Challenge</a></li>
-      </ul>
-    </div>
-  </details>
+<nav class="tier-bar" aria-label="Section navigation by tier">
+  <div class="tier-zone must">
+    <div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">today's focus</span></div>
+    <div class="pills" id="pills-must"></div>
+  </div>
+  <div class="tier-zone could">
+    <div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">bonus</span></div>
+    <div class="pills" id="pills-could"></div>
+  </div>
+  <div class="tier-zone should">
+    <div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">extra challenge</span></div>
+    <div class="pills" id="pills-should"></div>
+  </div>
 </nav>
-
-<!-- ============================================================
-     TIER LEGEND
-     ============================================================ -->
-<div class="legend">
-  <span class="lg-item"><span class="swatch must"></span><strong>MUST DO</strong> &mdash; today's focus</span>
-  <span class="lg-item"><span class="swatch could"></span><strong>COULD DO</strong> &mdash; bonus</span>
-  <span class="lg-item"><span class="swatch should"></span><strong>SHOULD DO</strong> &mdash; extra challenge</span>
-  <span class="help-note">Your work saves automatically. You cannot copy the blue code &mdash; type it yourself, that's how you learn.</span>
-</div>
 
 <main>
 
@@ -797,96 +771,93 @@ footer {
     <span class="tier-ribbon" data-ribbon="1">MUST DO</span>
   </div>
   <p class="sec-intro">
-    Every web page is built from <strong>tags</strong>. A tag looks like <code>&lt;h1&gt;</code>.
-    Tags come in pairs: an opening tag and a closing tag. Today you will build your first page.
+    Every web page is built from <strong>tags</strong>. A tag looks like <code>&lt;h1&gt;</code>. Tags come in pairs.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor &mdash; type here</div>
+  <div class="step-tabs" data-section="1">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(1,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(1,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(1,3)"><span class="num-dot">3</span>Step 3</button>
+  </div>
+  <div class="step-task" id="task-1">Type the code on the left into the editor. Click <strong>Run</strong>.</div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="1" data-step="1">&lt;!DOCTYPE html&gt;
+&lt;html lang="en-AU"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;All About Me&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;All About Me&lt;/h1&gt;
+    &lt;p&gt;Hi! My name is _____.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<pre class="code-ref" data-section="1" data-step="2" hidden>&lt;!DOCTYPE html&gt;
+&lt;html lang="en-AU"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;All About Me&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;All About Me&lt;/h1&gt;
+    &lt;p&gt;Hi! My name is Sam.&lt;/p&gt;
+    &lt;p&gt;I love basketball.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<pre class="code-ref" data-section="1" data-step="3" hidden>&lt;!DOCTYPE html&gt;
+&lt;html lang="en-AU"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;All About Me&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;All About Me&lt;/h1&gt;
+    &lt;p&gt;Hi! My name is &lt;strong&gt;Sam&lt;/strong&gt;.&lt;/p&gt;
+    &lt;p&gt;I love &lt;em&gt;basketball&lt;/em&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
       <textarea class="code-editor" data-save="code-1" data-section="1"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below. The blue code cannot be copied."></textarea>
+                spellcheck="false" placeholder="Type the code from the left into here..."></textarea>
       <div class="run-row">
-        <button class="run-btn" onclick="runSection(1)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(1)">Clear</button>
+        <button type="button" class="run-btn" onclick="runSection(1)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(1)">Clear</button>
       </div>
     </div>
-    <div class="result-pane">
-      <div class="pane-label">Result &mdash; your page appears here</div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
       <iframe class="output" id="output-1" title="Section 1 preview"></iframe>
     </div>
   </div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; Type this exactly</div>
-      <p class="step-task">Type this in the editor. Click <strong>Run</strong> to see your page.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;All About Me&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;All About Me&lt;/h1&gt;
-    &lt;p&gt;Hi! My name is _____. I am in Year 9.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Make it about you</div>
-      <p class="step-task">Replace <strong>_____</strong> with your real name. Add a second paragraph about something you like.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;All About Me&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;All About Me&lt;/h1&gt;
-    &lt;p&gt;Hi! My name is Sam. I am in Year 9.&lt;/p&gt;
-    &lt;p&gt;I love playing basketball after school.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Try the challenge</div>
-      <p class="step-task">Make one word <strong>bold</strong> using <code>&lt;strong&gt;</code> and one word <em>italic</em> using <code>&lt;em&gt;</code>.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-1-3')">Show example</button>
-      <div class="hint-pane" id="hint-1-3" hidden>
-<pre class="code-ref">&lt;p&gt;I love playing &lt;strong&gt;basketball&lt;/strong&gt; after school.&lt;/p&gt;
-&lt;p&gt;My favourite team is the &lt;em&gt;Sydney Kings&lt;/em&gt;.&lt;/p&gt;</pre>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection (for your teacher)</h4>
+      <div class="ref-grid">
+        <div>
+          <label for="learnt-1">What I learnt</label>
+          <textarea id="learnt-1" data-save="learnt-1" placeholder="One short sentence."></textarea>
+        </div>
+        <div>
+          <label for="stuck-1">I am stuck on</label>
+          <textarea id="stuck-1" data-save="stuck-1" placeholder="One sentence (or 'nothing')."></textarea>
+        </div>
       </div>
     </div>
-
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection (for your teacher)</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-1">What I learnt</label>
-        <textarea id="learnt-1" data-save="learnt-1" placeholder="One sentence: what is something new you can do now?"></textarea>
+    <div class="done-card" id="done-card-1">
+      <div class="done-row">
+        <input type="checkbox" id="done-1" data-save="done-1" onchange="updateDoneStyle(1)">
+        <label for="done-1">I finished Section 1</label>
       </div>
-      <div>
-        <label for="stuck-1">I am stuck on</label>
-        <textarea id="stuck-1" data-save="stuck-1" placeholder="One sentence: what was tricky? (or write 'nothing')"></textarea>
-      </div>
+      <div class="next-link"><a href="#sec-2">Next: Section 2 &mdash; Headings &rarr;</a></div>
     </div>
-  </div>
-
-  <div class="done-row" id="done-row-1">
-    <input type="checkbox" id="done-1" data-save="done-1" onchange="updateDoneStyle(1)">
-    <label for="done-1">I finished Section 1</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Back to Top</a>
-    <a href="#sec-2">Next: Section 2 &mdash; Headings &gt;</a>
   </div>
 </section>
 
@@ -901,95 +872,88 @@ footer {
     <span class="tier-ribbon" data-ribbon="2">MUST DO</span>
   </div>
   <p class="sec-intro">
-    Headings break your page into parts. The biggest heading is <code>&lt;h1&gt;</code>.
-    The next size down is <code>&lt;h2&gt;</code>, then <code>&lt;h3&gt;</code>. There are 6 sizes (h1 to h6).
+    Headings break your page into parts. <code>&lt;h1&gt;</code> is biggest, then <code>&lt;h2&gt;</code>, then <code>&lt;h3&gt;</code>.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor &mdash; type here</div>
-      <textarea class="code-editor" data-save="code-2" data-section="2"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(2)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(2)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result &mdash; your page</div>
-      <iframe class="output" id="output-2" title="Section 2 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="2">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(2,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(2,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(2,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-2">Type the code on the left. Notice how each heading is a different size.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; Three headings</div>
-      <p class="step-task">Type this code. Notice how each heading is a different size.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="2" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;My Second Page&lt;/title&gt;
+    &lt;title&gt;Page 2&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;My Second Web Page&lt;/h1&gt;
+    &lt;h1&gt;My Page&lt;/h1&gt;
 
     &lt;h2&gt;What this is&lt;/h2&gt;
     &lt;p&gt;A page built with HTML.&lt;/p&gt;
 
-    &lt;h2&gt;Why I'm doing this&lt;/h2&gt;
+    &lt;h2&gt;Why I'm here&lt;/h2&gt;
     &lt;p&gt;To learn how websites work.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
+<pre class="code-ref" data-section="2" data-step="2" hidden>&lt;body&gt;
+    &lt;h1&gt;My Page&lt;/h1&gt;
 
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Add a third topic</div>
-      <p class="step-task">Add a third <code>&lt;h2&gt;</code> called <strong>About my school</strong> with a paragraph under it.</p>
-<pre class="code-ref">&lt;h2&gt;About my school&lt;/h2&gt;
-&lt;p&gt;I go to high school in Parramatta.&lt;/p&gt;</pre>
-    </div>
+    &lt;h2&gt;What this is&lt;/h2&gt;
+    &lt;p&gt;A page built with HTML.&lt;/p&gt;
 
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Use a sub-heading (h3)</div>
-      <p class="step-task">Pick one of your <code>&lt;h2&gt;</code> topics. Add an <code>&lt;h3&gt;</code> sub-heading under it.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-2-3')">Show example</button>
-      <div class="hint-pane" id="hint-2-3" hidden>
-<pre class="code-ref">&lt;h2&gt;About my school&lt;/h2&gt;
-&lt;p&gt;I go to high school.&lt;/p&gt;
+    &lt;h2&gt;Why I'm here&lt;/h2&gt;
+    &lt;p&gt;To learn how websites work.&lt;/p&gt;
+
+    &lt;h2&gt;About my school&lt;/h2&gt;
+    &lt;p&gt;I go to high school in Parramatta.&lt;/p&gt;
+&lt;/body&gt;</pre>
+<pre class="code-ref" data-section="2" data-step="3" hidden>&lt;h2&gt;About my school&lt;/h2&gt;
+&lt;p&gt;I go to high school in Parramatta.&lt;/p&gt;
 
 &lt;h3&gt;My favourite subject&lt;/h3&gt;
-&lt;p&gt;I really like Computing because we build websites.&lt;/p&gt;</pre>
+&lt;p&gt;I really like Computing.&lt;/p&gt;
+
+&lt;h3&gt;Best lunch&lt;/h3&gt;
+&lt;p&gt;Hot food on Wednesdays.&lt;/p&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-2" data-section="2"
+                spellcheck="false" placeholder="Type the code from the left."></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(2)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(2)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-2">What I learnt</label>
-        <textarea id="learnt-2" data-save="learnt-2" placeholder="One sentence about headings."></textarea>
-      </div>
-      <div>
-        <label for="stuck-2">I am stuck on</label>
-        <textarea id="stuck-2" data-save="stuck-2" placeholder="One sentence (or 'nothing')."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-2" title="Section 2 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-2">
-    <input type="checkbox" id="done-2" data-save="done-2" onchange="updateDoneStyle(2)">
-    <label for="done-2">I finished Section 2</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-1">&lt; Back: Section 1</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-3">Next: Section 3 &mdash; Lists &amp; Links &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-2" data-save="learnt-2"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-2" data-save="stuck-2"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-2">
+      <div class="done-row">
+        <input type="checkbox" id="done-2" data-save="done-2" onchange="updateDoneStyle(2)">
+        <label for="done-2">I finished Section 2</label>
+      </div>
+      <div class="next-link"><a href="#sec-3">Next: Section 3 &mdash; Lists &amp; Links &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -1004,34 +968,20 @@ footer {
     <span class="tier-ribbon" data-ribbon="3">MUST DO</span>
   </div>
   <p class="sec-intro">
-    Lists are great for showing items. A bullet list uses <code>&lt;ul&gt;</code> (unordered list).
-    A numbered list uses <code>&lt;ol&gt;</code> (ordered list). Each item goes in <code>&lt;li&gt;</code>.
-    A link uses <code>&lt;a href="..."&gt;</code>.
+    Bullet list: <code>&lt;ul&gt;</code>. Numbered list: <code>&lt;ol&gt;</code>. Each item: <code>&lt;li&gt;</code>. A link: <code>&lt;a href="..."&gt;</code>.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-3" data-section="3"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(3)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(3)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-3" title="Section 3 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="3">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(3,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(3,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(3,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-3">Build a bullet list of 3 things you like.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; A bullet list</div>
-      <p class="step-task">Build a bullet list of 3 things you like.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="3" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -1046,12 +996,7 @@ footer {
     &lt;/ul&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; A numbered list</div>
-      <p class="step-task">Add a <strong>numbered list</strong> of your top 5 things. Use <code>&lt;ol&gt;</code> instead of <code>&lt;ul&gt;</code>.</p>
-<pre class="code-ref">&lt;h2&gt;My top 5&lt;/h2&gt;
+<pre class="code-ref" data-section="3" data-step="2" hidden>&lt;h1&gt;My Top 5&lt;/h1&gt;
 &lt;ol&gt;
     &lt;li&gt;First favourite&lt;/li&gt;
     &lt;li&gt;Second favourite&lt;/li&gt;
@@ -1059,50 +1004,51 @@ footer {
     &lt;li&gt;Fourth favourite&lt;/li&gt;
     &lt;li&gt;Fifth favourite&lt;/li&gt;
 &lt;/ol&gt;</pre>
-    </div>
+<pre class="code-ref" data-section="3" data-step="3" hidden>&lt;p&gt;Watch matches at
+    &lt;a href="https://www.nba.com"&gt;NBA.com&lt;/a&gt;
+&lt;/p&gt;
 
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Add a link</div>
-      <p class="step-task">Add a link to a website you like. The tag is <code>&lt;a href="..."&gt;text&lt;/a&gt;</code>.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-3-3')">Show example</button>
-      <div class="hint-pane" id="hint-3-3" hidden>
-<pre class="code-ref">&lt;p&gt;Watch matches at
-   &lt;a href="https://www.nba.com"&gt;NBA.com&lt;/a&gt;
+&lt;p&gt;Or search on
+    &lt;a href="https://www.google.com"&gt;Google&lt;/a&gt;
 &lt;/p&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-3" data-section="3" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(3)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(3)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-3">What I learnt</label>
-        <textarea id="learnt-3" data-save="learnt-3" placeholder="One sentence."></textarea>
-      </div>
-      <div>
-        <label for="stuck-3">I am stuck on</label>
-        <textarea id="stuck-3" data-save="stuck-3" placeholder="One sentence."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-3" title="Section 3 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-3">
-    <input type="checkbox" id="done-3" data-save="done-3" onchange="updateDoneStyle(3)">
-    <label for="done-3">I finished Section 3</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-2">&lt; Back: Section 2</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-4">Next: Section 4 &mdash; Forms &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-3" data-save="learnt-3"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-3" data-save="stuck-3"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-3">
+      <div class="done-row">
+        <input type="checkbox" id="done-3" data-save="done-3" onchange="updateDoneStyle(3)">
+        <label for="done-3">I finished Section 3</label>
+      </div>
+      <div class="next-link"><a href="#sec-4">Next: Section 4 &mdash; Forms &rarr;</a></div>
+    </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 4 - FORMS (moved up from typical pos 5)
+     SECTION 4 - Forms
      ============================================================ -->
 <section class="lab" id="sec-4" data-section="4">
   <div class="sec-head">
@@ -1111,34 +1057,20 @@ footer {
     <span class="tier-ribbon" data-ribbon="4">MUST DO</span>
   </div>
   <p class="sec-intro">
-    Forms let people fill in their details on your website. We won't process the answers
-    (that needs JavaScript later) &mdash; today we will <strong>build</strong> the form.
-    A form starts with <code>&lt;form&gt;</code> and uses <code>&lt;input&gt;</code> tags for each box.
+    A form lets people fill in answers. <code>&lt;form&gt;</code> wraps it; <code>&lt;input&gt;</code> is each box.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-4" data-section="4"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(4)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(4)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-4" title="Section 4 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="4">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(4,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(4,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(4,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-4">Build a form with one name box and a Submit button.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; A simple form</div>
-      <p class="step-task">Build a form with one name box and a Submit button.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="4" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -1155,12 +1087,7 @@ footer {
     &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; More input types</div>
-      <p class="step-task">Add email, password, and a big message box (<code>&lt;textarea&gt;</code>).</p>
-<pre class="code-ref">&lt;form&gt;
+<pre class="code-ref" data-section="4" data-step="2" hidden>&lt;form&gt;
     &lt;label&gt;Name:
         &lt;input type="text" name="name"&gt;
     &lt;/label&gt;&lt;br&gt;&lt;br&gt;
@@ -1174,19 +1101,13 @@ footer {
     &lt;/label&gt;&lt;br&gt;&lt;br&gt;
 
     &lt;label&gt;Your message:&lt;br&gt;
-        &lt;textarea name="msg" rows="4" cols="40"&gt;&lt;/textarea&gt;
+        &lt;textarea name="msg"
+                  rows="4" cols="40"&gt;&lt;/textarea&gt;
     &lt;/label&gt;&lt;br&gt;&lt;br&gt;
 
     &lt;input type="submit" value="Send"&gt;
 &lt;/form&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Dropdown + checkbox</div>
-      <p class="step-task">Add a <code>&lt;select&gt;</code> dropdown for favourite subject and a checkbox to subscribe.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-4-3')">Show example</button>
-      <div class="hint-pane" id="hint-4-3" hidden>
-<pre class="code-ref">&lt;label&gt;Favourite subject:
+<pre class="code-ref" data-section="4" data-step="3" hidden>&lt;label&gt;Favourite subject:
     &lt;select name="subject"&gt;
         &lt;option&gt;Computing&lt;/option&gt;
         &lt;option&gt;Maths&lt;/option&gt;
@@ -1199,34 +1120,38 @@ footer {
     &lt;input type="checkbox" name="news"&gt;
     Send me updates
 &lt;/label&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-4" data-section="4" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(4)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(4)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-4">What I learnt</label>
-        <textarea id="learnt-4" data-save="learnt-4" placeholder="One sentence."></textarea>
-      </div>
-      <div>
-        <label for="stuck-4">I am stuck on</label>
-        <textarea id="stuck-4" data-save="stuck-4" placeholder="One sentence."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-4" title="Section 4 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-4">
-    <input type="checkbox" id="done-4" data-save="done-4" onchange="updateDoneStyle(4)">
-    <label for="done-4">I finished Section 4</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-3">&lt; Back: Section 3</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-5">Next: Section 5 &mdash; Tables &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-4" data-save="learnt-4"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-4" data-save="stuck-4"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-4">
+      <div class="done-row">
+        <input type="checkbox" id="done-4" data-save="done-4" onchange="updateDoneStyle(4)">
+        <label for="done-4">I finished Section 4</label>
+      </div>
+      <div class="next-link"><a href="#sec-5">Next: Section 5 &mdash; Tables &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -1241,42 +1166,27 @@ footer {
     <span class="tier-ribbon" data-ribbon="5">MUST DO</span>
   </div>
   <p class="sec-intro">
-    Tables show information in <strong>rows</strong> and <strong>columns</strong>.
-    Think of a timetable or a list of scores.
-    <code>&lt;table&gt;</code> wraps the whole table. <code>&lt;tr&gt;</code> is a row.
-    <code>&lt;td&gt;</code> is a cell. <code>&lt;th&gt;</code> is a heading cell.
+    <code>&lt;table&gt;</code> wraps the table. <code>&lt;tr&gt;</code> is a row. <code>&lt;td&gt;</code> is a cell. <code>&lt;th&gt;</code> is a heading cell.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-5" data-section="5"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(5)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(5)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-5" title="Section 5 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="5">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(5,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(5,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(5,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-5">Build a 2-row table. Add <code>border="1"</code> so you can see the cells.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; A 2-row table</div>
-      <p class="step-task">Build a table with 2 rows and 2 columns. Add <code>border="1"</code> so you can see the cells.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="5" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;My Table&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;My First Table&lt;/h1&gt;
+    &lt;h1&gt;Fruit Table&lt;/h1&gt;
     &lt;table border="1"&gt;
         &lt;tr&gt;
             &lt;td&gt;Apple&lt;/td&gt;
@@ -1289,12 +1199,7 @@ footer {
     &lt;/table&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Add a heading row</div>
-      <p class="step-task">Add a <strong>heading row</strong> using <code>&lt;th&gt;</code>. <code>&lt;th&gt;</code> cells are bold and centred.</p>
-<pre class="code-ref">&lt;table border="1"&gt;
+<pre class="code-ref" data-section="5" data-step="2" hidden>&lt;table border="1"&gt;
     &lt;tr&gt;
         &lt;th&gt;Fruit&lt;/th&gt;
         &lt;th&gt;Colour&lt;/th&gt;
@@ -1308,14 +1213,7 @@ footer {
         &lt;td&gt;Yellow&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Build a school timetable</div>
-      <p class="step-task">Build a table with 4 columns: <strong>Period, Subject, Room, Teacher</strong>. Add 3 rows of your real timetable.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-5-3')">Show example</button>
-      <div class="hint-pane" id="hint-5-3" hidden>
-<pre class="code-ref">&lt;table border="1"&gt;
+<pre class="code-ref" data-section="5" data-step="3" hidden>&lt;table border="1"&gt;
     &lt;tr&gt;
         &lt;th&gt;Period&lt;/th&gt;
         &lt;th&gt;Subject&lt;/th&gt;
@@ -1341,34 +1239,38 @@ footer {
         &lt;td&gt;Ms Jones&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-5" data-section="5" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(5)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(5)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-5">What I learnt</label>
-        <textarea id="learnt-5" data-save="learnt-5" placeholder="One sentence."></textarea>
-      </div>
-      <div>
-        <label for="stuck-5">I am stuck on</label>
-        <textarea id="stuck-5" data-save="stuck-5" placeholder="One sentence."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-5" title="Section 5 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-5">
-    <input type="checkbox" id="done-5" data-save="done-5" onchange="updateDoneStyle(5)">
-    <label for="done-5">I finished Section 5</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-4">&lt; Back: Section 4</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-6">Next: Section 6 &mdash; Colours &amp; CSS &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-5" data-save="learnt-5"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-5" data-save="stuck-5"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-5">
+      <div class="done-row">
+        <input type="checkbox" id="done-5" data-save="done-5" onchange="updateDoneStyle(5)">
+        <label for="done-5">I finished Section 5</label>
+      </div>
+      <div class="next-link"><a href="#sec-6">Next: Section 6 &mdash; Colours &amp; CSS &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -1383,34 +1285,20 @@ footer {
     <span class="tier-ribbon" data-ribbon="6">COULD DO</span>
   </div>
   <p class="sec-intro">
-    <strong>CSS</strong> is how you make your page look good. CSS goes inside a <code>&lt;style&gt;</code> tag
-    in your <code>&lt;head&gt;</code>. Each rule has a <strong>selector</strong> (which tag to style),
-    a <strong>property</strong> (what to change), and a <strong>value</strong> (what to change it to).
+    CSS goes inside a <code>&lt;style&gt;</code> tag in <code>&lt;head&gt;</code>. Each rule has a selector, a property, and a value.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-6" data-section="6"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(6)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(6)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-6" title="Section 6 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="6">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(6,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(6,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(6,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-6">Make all paragraphs red.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; Colour the text</div>
-      <p class="step-task">Make all paragraphs red. The selector <code>p</code> picks every <code>&lt;p&gt;</code> on the page.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="6" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -1423,16 +1311,11 @@ footer {
 &lt;/head&gt;
 &lt;body&gt;
     &lt;h1&gt;Colour Test&lt;/h1&gt;
-    &lt;p&gt;This paragraph should be red.&lt;/p&gt;
+    &lt;p&gt;Red paragraph.&lt;/p&gt;
     &lt;p&gt;This one too!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Change the background</div>
-      <p class="step-task">Make the whole page background light yellow. Try other colours: <code>lightblue</code>, <code>pink</code>, <code>aqua</code>.</p>
-<pre class="code-ref">&lt;style&gt;
+<pre class="code-ref" data-section="6" data-step="2" hidden>&lt;style&gt;
     body {
         background-color: lightyellow;
     }
@@ -1443,48 +1326,45 @@ footer {
         color: darkred;
     }
 &lt;/style&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Style links and headings differently</div>
-      <p class="step-task">Make <code>&lt;a&gt;</code> links one colour, <code>&lt;h1&gt;</code> another colour, and <code>&lt;h2&gt;</code> a third colour.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-6-3')">Show example</button>
-      <div class="hint-pane" id="hint-6-3" hidden>
-<pre class="code-ref">&lt;style&gt;
+<pre class="code-ref" data-section="6" data-step="3" hidden>&lt;style&gt;
     body { background-color: #f0f4ff; }
     h1   { color: darkblue; }
     h2   { color: teal; }
     p    { color: #333; }
     a    { color: orange; }
 &lt;/style&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-6" data-section="6" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(6)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(6)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-6">What I learnt</label>
-        <textarea id="learnt-6" data-save="learnt-6" placeholder="One sentence."></textarea>
-      </div>
-      <div>
-        <label for="stuck-6">I am stuck on</label>
-        <textarea id="stuck-6" data-save="stuck-6" placeholder="One sentence."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-6" title="Section 6 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-6">
-    <input type="checkbox" id="done-6" data-save="done-6" onchange="updateDoneStyle(6)">
-    <label for="done-6">I finished Section 6</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-5">&lt; Back: Section 5</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-7">Next: Section 7 &mdash; Fonts &amp; Borders &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-6" data-save="learnt-6"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-6" data-save="stuck-6"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-6">
+      <div class="done-row">
+        <input type="checkbox" id="done-6" data-save="done-6" onchange="updateDoneStyle(6)">
+        <label for="done-6">I finished Section 6</label>
+      </div>
+      <div class="next-link"><a href="#sec-7">Next: Section 7 &mdash; Fonts &amp; Borders &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -1499,34 +1379,20 @@ footer {
     <span class="tier-ribbon" data-ribbon="7">COULD DO</span>
   </div>
   <p class="sec-intro">
-    Change how text looks with <code>font-family</code> and <code>font-size</code>.
-    Put a box around things with <code>border</code>.
-    A border has 3 parts: <strong>width</strong> (thick or thin), <strong>style</strong> (solid, dashed, dotted), and <strong>colour</strong>.
+    Use <code>font-family</code> and <code>font-size</code> to style text. Use <code>border</code> to add a box.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-7" data-section="7"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(7)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(7)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-7" title="Section 7 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="7">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(7,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(7,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(7,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-7">Pick a font and a size for your text.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; Pick a font and size</div>
-      <p class="step-task">Change the font for the whole page. Make paragraphs 18 pixels tall.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="7" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -1542,15 +1408,10 @@ footer {
 &lt;/head&gt;
 &lt;body&gt;
     &lt;h1&gt;Big and Clear&lt;/h1&gt;
-    &lt;p&gt;This text is 18 pixels tall.&lt;/p&gt;
+    &lt;p&gt;This text is 18px tall.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Add a border</div>
-      <p class="step-task">Put a blue border around your <code>&lt;h1&gt;</code>. Add some <strong>padding</strong> so the text isn't touching the edge.</p>
-<pre class="code-ref">&lt;style&gt;
+<pre class="code-ref" data-section="7" data-step="2" hidden>&lt;style&gt;
     body { font-family: "Arial", sans-serif; }
     h1 {
         border: 3px solid blue;
@@ -1562,14 +1423,7 @@ footer {
         padding: 6px;
     }
 &lt;/style&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Make a "card"</div>
-      <p class="step-task">Make a paragraph look like a <strong>card</strong>: a border, padding, a background colour, and rounded corners with <code>border-radius</code>.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-7-3')">Show example</button>
-      <div class="hint-pane" id="hint-7-3" hidden>
-<pre class="code-ref">&lt;style&gt;
+<pre class="code-ref" data-section="7" data-step="3" hidden>&lt;style&gt;
     body { font-family: "Arial", sans-serif;
            background: #f0f4ff; }
     .card {
@@ -1580,38 +1434,44 @@ footer {
         max-width: 360px;
     }
 &lt;/style&gt;
-...
+
+...inside &lt;body&gt;:
+
 &lt;p class="card"&gt;
     This paragraph is a card!
 &lt;/p&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-7" data-section="7" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(7)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(7)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-7">What I learnt</label>
-        <textarea id="learnt-7" data-save="learnt-7" placeholder="One sentence."></textarea>
-      </div>
-      <div>
-        <label for="stuck-7">I am stuck on</label>
-        <textarea id="stuck-7" data-save="stuck-7" placeholder="One sentence."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-7" title="Section 7 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-7">
-    <input type="checkbox" id="done-7" data-save="done-7" onchange="updateDoneStyle(7)">
-    <label for="done-7">I finished Section 7</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-6">&lt; Back: Section 6</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-8">Next: Section 8 &mdash; Multi-page Site &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-7" data-save="learnt-7"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-7" data-save="stuck-7"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-7">
+      <div class="done-row">
+        <input type="checkbox" id="done-7" data-save="done-7" onchange="updateDoneStyle(7)">
+        <label for="done-7">I finished Section 7</label>
+      </div>
+      <div class="next-link"><a href="#sec-8">Next: Section 8 &mdash; Multi-page Site &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -1626,34 +1486,20 @@ footer {
     <span class="tier-ribbon" data-ribbon="8">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Real websites have many pages. Pages are linked together with a <strong>menu</strong>.
-    The menu is just a list of <code>&lt;a&gt;</code> links. You put the same menu on every page,
-    so users can jump between pages.
+    Real websites have many pages. A <strong>menu</strong> is a list of <code>&lt;a&gt;</code> links shared by every page.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-8" data-section="8"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(8)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(8)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-8" title="Section 8 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="8">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(8,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(8,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(8,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-8">Build a Home page with a menu linking to two other pages.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; A menu of 3 links</div>
-      <p class="step-task">Build a Home page with a menu linking to <strong>about.html</strong> and <strong>contact.html</strong>.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="8" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -1667,16 +1513,11 @@ footer {
     &lt;/nav&gt;
     &lt;hr&gt;
     &lt;h1&gt;Welcome to My Site&lt;/h1&gt;
-    &lt;p&gt;Hi! Use the menu at the top to look around.&lt;/p&gt;
+    &lt;p&gt;Use the menu above to look around.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Style the menu</div>
-      <p class="step-task">Make the menu look like a real navigation bar.</p>
-<pre class="code-ref">&lt;style&gt;
-    body { font-family: Arial, sans-serif; margin: 0; }
+<pre class="code-ref" data-section="8" data-step="2" hidden>&lt;style&gt;
+    body { font-family: Arial; margin: 0; }
     nav {
         background: #1f3a68;
         padding: 12px 20px;
@@ -1687,57 +1528,57 @@ footer {
         padding: 6px 14px;
         font-weight: bold;
     }
-    nav a:hover { background: #14b8a6;
-                  border-radius: 4px; }
+    nav a:hover {
+        background: #14b8a6;
+        border-radius: 4px;
+    }
     h1, p { padding: 0 20px; }
 &lt;/style&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Add a footer</div>
-      <p class="step-task">Add a <code>&lt;footer&gt;</code> at the bottom with your name and the year.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-8-3')">Show example</button>
-      <div class="hint-pane" id="hint-8-3" hidden>
-<pre class="code-ref">&lt;footer&gt;
+<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;footer&gt;
     &lt;hr&gt;
-    &lt;p style="text-align:center; color:grey;"&gt;
+    &lt;p style="text-align:center;
+              color:grey;"&gt;
         (c) 2026 by Your Name
     &lt;/p&gt;
 &lt;/footer&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-8" data-section="8" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(8)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(8)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-8">What I learnt</label>
-        <textarea id="learnt-8" data-save="learnt-8" placeholder="One sentence."></textarea>
-      </div>
-      <div>
-        <label for="stuck-8">I am stuck on</label>
-        <textarea id="stuck-8" data-save="stuck-8" placeholder="One sentence."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-8" title="Section 8 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-8">
-    <input type="checkbox" id="done-8" data-save="done-8" onchange="updateDoneStyle(8)">
-    <label for="done-8">I finished Section 8</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-7">&lt; Back: Section 7</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-9">Next: Section 9 &mdash; Plan Your GTPA &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-8" data-save="learnt-8"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-8" data-save="stuck-8"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-8">
+      <div class="done-row">
+        <input type="checkbox" id="done-8" data-save="done-8" onchange="updateDoneStyle(8)">
+        <label for="done-8">I finished Section 8</label>
+      </div>
+      <div class="next-link"><a href="#sec-9">Next: Section 9 &mdash; Plan Your GTPA &rarr;</a></div>
+    </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 9 - Plan Your GTPA Site (planning, not coding)
+     SECTION 9 - Plan Your GTPA (no code editor, just plan)
      ============================================================ -->
 <section class="lab" id="sec-9" data-section="9">
   <div class="sec-head">
@@ -1746,27 +1587,24 @@ footer {
     <span class="tier-ribbon" data-ribbon="9">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Time to plan <strong>your own</strong> website for the GTPA project.
-    Before you write any code, answer the questions below. Good plans make coding much easier.
+    Time to plan <strong>your own</strong> website. Answer the questions below. Good plans make coding much easier.
   </p>
 
   <div class="plan-grid">
 
     <div class="plan-block">
       <h4>1. What is your website about?</h4>
-      <textarea data-save="plan-topic"
-                placeholder="Example: My website is about my favourite sport. It will show rules, teams I support, and my own games."></textarea>
+      <textarea data-save="plan-topic" placeholder="Example: My website is about my favourite sport. It will show rules, teams, and my own games."></textarea>
     </div>
 
     <div class="plan-block">
       <h4>2. Who is it for? (Audience)</h4>
-      <textarea data-save="plan-audience"
-                placeholder="Example: Year 7 students who want to learn about basketball."></textarea>
+      <textarea data-save="plan-audience" placeholder="Example: Year 7 students who want to learn about basketball."></textarea>
     </div>
 
     <div class="plan-block">
       <h4>3. Your 3 pages</h4>
-      <p style="font-size:13px; color:#6b7280; margin:0 0 8px 0;">Plan three pages. What goes on each one?</p>
+      <p style="font-size:13px; color:#6b7280; margin:0 0 8px 0;">What goes on each one?</p>
       <div class="plan-3col">
         <div>
           <label style="font-weight:700; font-size:13px;">Page 1 (Home)</label>
@@ -1815,35 +1653,26 @@ footer {
 
     <div class="plan-block">
       <h4>6. What might be hard? What help will you need?</h4>
-      <textarea data-save="plan-hard"
-                placeholder="Example: I might need help making the menu work on every page."></textarea>
+      <textarea data-save="plan-hard" placeholder="Example: I might need help making the menu work on every page."></textarea>
     </div>
 
   </div>
 
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-9">What's my next step?</label>
-        <textarea id="learnt-9" data-save="learnt-9" placeholder="One sentence: what will you do first?"></textarea>
-      </div>
-      <div>
-        <label for="stuck-9">What do I want feedback on?</label>
-        <textarea id="stuck-9" data-save="stuck-9" placeholder="One sentence."></textarea>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What's my next step?</label><textarea id="learnt-9" data-save="learnt-9"></textarea></div>
+        <div><label>What do I want feedback on?</label><textarea id="stuck-9" data-save="stuck-9"></textarea></div>
       </div>
     </div>
-  </div>
-
-  <div class="done-row" id="done-row-9">
-    <input type="checkbox" id="done-9" data-save="done-9" onchange="updateDoneStyle(9)">
-    <label for="done-9">I finished my plan</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-8">&lt; Back: Section 8</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-10">Next: Section 10 &mdash; Images &gt;</a>
+    <div class="done-card" id="done-card-9">
+      <div class="done-row">
+        <input type="checkbox" id="done-9" data-save="done-9" onchange="updateDoneStyle(9)">
+        <label for="done-9">I finished my plan</label>
+      </div>
+      <div class="next-link"><a href="#sec-10">Next: Section 10 &mdash; Images &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -1858,35 +1687,20 @@ footer {
     <span class="tier-ribbon" data-ribbon="10">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Images make a page interesting. Use the <code>&lt;img&gt;</code> tag.
-    It needs two things: <strong>src</strong> (where the image is) and <strong>alt</strong>
-    (what the image shows, for people who can't see it). The <code>alt</code> is not optional &mdash;
-    it's how screen readers and search engines understand your image.
+    Use <code>&lt;img&gt;</code>. It needs <strong>src</strong> (where the image is) and <strong>alt</strong> (what it shows).
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-10" data-section="10"
-                spellcheck="false"
-                placeholder="Type the code from Step 1 below."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(10)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(10)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-10" title="Section 10 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="10">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(10,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(10,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(10,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-10">Add one image with an <code>alt</code> description.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; One image with alt text</div>
-      <p class="step-task">Use an online image and the <code>alt</code> attribute.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="10" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -1895,15 +1709,10 @@ footer {
 &lt;body&gt;
     &lt;h1&gt;My Photos&lt;/h1&gt;
     &lt;img src="https://picsum.photos/id/237/300/200"
-         alt="A black puppy looking at the camera"&gt;
+         alt="A black puppy"&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Set width and height</div>
-      <p class="step-task">Control the size with <code>width</code> and <code>height</code> (in pixels). Add 2 more images.</p>
-<pre class="code-ref">&lt;img src="https://picsum.photos/id/237/600/400"
+<pre class="code-ref" data-section="10" data-step="2" hidden>&lt;img src="https://picsum.photos/id/237/600/400"
      alt="A black puppy"
      width="240" height="160"&gt;
 
@@ -1912,63 +1721,52 @@ footer {
      width="240" height="160"&gt;
 
 &lt;img src="https://picsum.photos/id/1025/600/400"
-     alt="A pug face close-up"
+     alt="A pug face"
      width="240" height="160"&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Style images with CSS</div>
-      <p class="step-task">Use CSS to add rounded corners and a border. Put a caption under each image.</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-10-3')">Show example</button>
-      <div class="hint-pane" id="hint-10-3" hidden>
-<pre class="code-ref">&lt;style&gt;
-    body { font-family: Arial, sans-serif; }
+<pre class="code-ref" data-section="10" data-step="3" hidden>&lt;style&gt;
+    body { font-family: Arial; }
     img {
         border-radius: 12px;
         border: 3px solid #1f3a68;
         margin: 8px;
     }
-    figcaption {
-        font-style: italic;
-        color: #555;
-        text-align: center;
-    }
 &lt;/style&gt;
-...
-&lt;figure&gt;
-    &lt;img src="https://picsum.photos/id/237/300/200"
-         alt="Black puppy"
-         width="280"&gt;
-    &lt;figcaption&gt;My imaginary puppy&lt;/figcaption&gt;
-&lt;/figure&gt;</pre>
+
+&lt;img src="https://picsum.photos/id/237/300/200"
+     alt="Black puppy"
+     width="280"&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-10" data-section="10" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(10)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(10)">Clear</button>
       </div>
     </div>
 
-  </div>
-
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-10">What I learnt</label>
-        <textarea id="learnt-10" data-save="learnt-10" placeholder="One sentence about images and alt text."></textarea>
-      </div>
-      <div>
-        <label for="stuck-10">I am stuck on</label>
-        <textarea id="stuck-10" data-save="stuck-10" placeholder="One sentence (or 'nothing')."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-10" title="Section 10 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-10">
-    <input type="checkbox" id="done-10" data-save="done-10" onchange="updateDoneStyle(10)">
-    <label for="done-10">I finished Section 10</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-9">&lt; Back: Section 9</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#sec-11">Next: Section 11 &mdash; Mini-Site Challenge &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-10" data-save="learnt-10"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-10" data-save="stuck-10"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-10">
+      <div class="done-row">
+        <input type="checkbox" id="done-10" data-save="done-10" onchange="updateDoneStyle(10)">
+        <label for="done-10">I finished Section 10</label>
+      </div>
+      <div class="next-link"><a href="#sec-11">Next: Section 11 &mdash; Challenge &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -1983,34 +1781,20 @@ footer {
     <span class="tier-ribbon" data-ribbon="11">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    The big one. Use <strong>everything you've learnt</strong> to build a one-page mini-site.
-    This is practice for your real GTPA project &mdash; if you can do this, you can do the project.
-    Aim for one page that contains all the building blocks. Don't worry if it looks rough &mdash; the goal is to <em>use</em> each thing once.
+    The big one. Use <strong>everything</strong> in one page. This is practice for your real GTPA project.
   </p>
 
-  <div class="workspace">
-    <div class="editor-pane">
-      <div class="pane-label">Editor</div>
-      <textarea class="code-editor" data-save="code-11" data-section="11"
-                spellcheck="false"
-                placeholder="Build a page that uses headings, a paragraph, a list, an image, a table, a form and CSS."></textarea>
-      <div class="run-row">
-        <button class="run-btn" onclick="runSection(11)">Run</button>
-        <button class="clear-btn" onclick="clearEditor(11)">Clear</button>
-      </div>
-    </div>
-    <div class="result-pane">
-      <div class="pane-label">Result</div>
-      <iframe class="output" id="output-11" title="Section 11 preview"></iframe>
-    </div>
+  <div class="step-tabs" data-section="11">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(11,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(11,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(11,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
+  <div class="step-task" id="task-11">Start with a heading, a paragraph, a nav menu and a footer.</div>
 
-  <div class="steps">
-
-    <div class="step s1">
-      <div class="step-head"><span class="step-num">1</span> Step 1 &mdash; Build the skeleton</div>
-      <p class="step-task">Start with a heading, a paragraph, a nav menu and a footer.</p>
-<pre class="code-ref">&lt;!DOCTYPE html&gt;
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="11" data-step="1">&lt;!DOCTYPE html&gt;
 &lt;html lang="en-AU"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -2019,28 +1803,22 @@ footer {
 &lt;body&gt;
     &lt;nav&gt;
         &lt;a href="#about"&gt;About&lt;/a&gt; |
-        &lt;a href="#stuff"&gt;Stuff I Like&lt;/a&gt; |
+        &lt;a href="#stuff"&gt;Stuff&lt;/a&gt; |
         &lt;a href="#contact"&gt;Contact&lt;/a&gt;
     &lt;/nav&gt;
 
     &lt;h1&gt;My Mini-Site&lt;/h1&gt;
-    &lt;p&gt;Welcome! I built this in Computing class.&lt;/p&gt;
+    &lt;p&gt;Welcome!&lt;/p&gt;
 
     &lt;footer&gt;
         &lt;p&gt;(c) 2026 Your Name&lt;/p&gt;
     &lt;/footer&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-    </div>
-
-    <div class="step s2">
-      <div class="step-head"><span class="step-num">2</span> Step 2 &mdash; Add image, list, table, form</div>
-      <p class="step-task">Now add the content blocks: an image, a list, a small table, and a contact form.</p>
-<pre class="code-ref">&lt;h2 id="about"&gt;About Me&lt;/h2&gt;
+<pre class="code-ref" data-section="11" data-step="2" hidden>&lt;h2 id="about"&gt;About Me&lt;/h2&gt;
 &lt;img src="https://picsum.photos/id/1025/300/200"
-     alt="A friendly dog"
-     width="240"&gt;
-&lt;p&gt;A short paragraph about who you are.&lt;/p&gt;
+     alt="A friendly dog" width="240"&gt;
+&lt;p&gt;Hi! I am in Year 9.&lt;/p&gt;
 
 &lt;h2 id="stuff"&gt;Stuff I Like&lt;/h2&gt;
 &lt;ul&gt;
@@ -2051,45 +1829,25 @@ footer {
 
 &lt;h2&gt;This Week&lt;/h2&gt;
 &lt;table border="1"&gt;
-    &lt;tr&gt;
-        &lt;th&gt;Day&lt;/th&gt;
-        &lt;th&gt;Plan&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Mon&lt;/td&gt;
-        &lt;td&gt;Coding&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Tue&lt;/td&gt;
-        &lt;td&gt;Basketball&lt;/td&gt;
-    &lt;/tr&gt;
+    &lt;tr&gt;&lt;th&gt;Day&lt;/th&gt;&lt;th&gt;Plan&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Mon&lt;/td&gt;&lt;td&gt;Coding&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Tue&lt;/td&gt;&lt;td&gt;Sport&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 
 &lt;h2 id="contact"&gt;Contact&lt;/h2&gt;
 &lt;form&gt;
     &lt;label&gt;Name:
-        &lt;input type="text" name="name"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-    &lt;label&gt;Message:&lt;br&gt;
-        &lt;textarea rows="3" cols="30"&gt;&lt;/textarea&gt;
+        &lt;input type="text"&gt;
     &lt;/label&gt;&lt;br&gt;&lt;br&gt;
     &lt;input type="submit" value="Send"&gt;
 &lt;/form&gt;</pre>
-    </div>
-
-    <div class="step s3">
-      <div class="step-head"><span class="step-num">3</span> Step 3 &mdash; Style it your way</div>
-      <p class="step-task">Add a <code>&lt;style&gt;</code> block. Use your colours from your plan (Section 9). Make it yours!</p>
-      <button class="hint-toggle" onclick="toggleHint('hint-11-3')">Show example</button>
-      <div class="hint-pane" id="hint-11-3" hidden>
-<pre class="code-ref">&lt;style&gt;
+<pre class="code-ref" data-section="11" data-step="3" hidden>&lt;style&gt;
     body {
-        font-family: "Segoe UI", Arial, sans-serif;
+        font-family: "Segoe UI", Arial;
         max-width: 760px;
         margin: 0 auto;
         padding: 20px;
         background: #f4f6fb;
-        color: #1f2937;
     }
     nav {
         background: #1f3a68;
@@ -2110,10 +1868,7 @@ footer {
         padding-bottom: 4px;
     }
     img { border-radius: 8px; }
-    table {
-        border-collapse: collapse;
-        margin: 10px 0;
-    }
+    table { border-collapse: collapse; }
     th, td { padding: 6px 14px; }
     th { background: #eef2ff; }
     form {
@@ -2125,40 +1880,43 @@ footer {
     }
     footer {
         margin-top: 30px;
-        color: #6b7280;
+        color: grey;
         font-size: 12px;
         text-align: center;
     }
 &lt;/style&gt;</pre>
-      </div>
-      <p style="margin-top:10px; font-size:13px; color:#6b7280;"><strong>Checklist for full marks:</strong> heading (h1+h2), paragraph, nav menu, image with alt, bullet list, table with th, form with input + textarea + submit, CSS styling, footer.</p>
     </div>
 
-  </div>
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-11" data-section="11" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(11)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(11)">Clear</button>
+      </div>
+    </div>
 
-  <div class="reflection">
-    <h4>Reflection</h4>
-    <div class="ref-grid">
-      <div>
-        <label for="learnt-11">What I learnt building this</label>
-        <textarea id="learnt-11" data-save="learnt-11" placeholder="What was the trickiest part?"></textarea>
-      </div>
-      <div>
-        <label for="stuck-11">What would I improve next time</label>
-        <textarea id="stuck-11" data-save="stuck-11" placeholder="One thing you'd do differently."></textarea>
-      </div>
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-11" title="Section 11 preview"></iframe>
     </div>
   </div>
 
-  <div class="done-row" id="done-row-11">
-    <input type="checkbox" id="done-11" data-save="done-11" onchange="updateDoneStyle(11)">
-    <label for="done-11">I finished my Mini-Site Challenge</label>
-  </div>
-
-  <div class="jump-nav">
-    <a href="#sec-10">&lt; Back: Section 10</a>
-    <a href="#" class="top-link" onclick="scrollToTop();return false;">^ Top</a>
-    <a href="#" onclick="submitWork();return false;" style="background:#fde68a; color:#78350f;">Submit My Work &gt;</a>
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt building this</label><textarea id="learnt-11" data-save="learnt-11"></textarea></div>
+        <div><label>What would I improve next time</label><textarea id="stuck-11" data-save="stuck-11"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-11">
+      <div class="done-row">
+        <input type="checkbox" id="done-11" data-save="done-11" onchange="updateDoneStyle(11)">
+        <label for="done-11">I finished my Mini-Site Challenge</label>
+      </div>
+      <div class="next-link"><a href="#" onclick="submitWork();return false;" style="background:#fde68a; color:#78350f; border-color:#f59e0b;">Submit My Work &rarr;</a></div>
+    </div>
   </div>
 </section>
 
@@ -2184,7 +1942,7 @@ footer {
       <li>Click <strong>"Hand In"</strong></li>
     </ol>
     <p style="background:#fffaf0; padding:10px; border-radius:6px; font-size:13.5px;">
-      <strong>Tip:</strong> If you want a PDF instead, click <strong>"Print to PDF"</strong> at the top of the worksheet and choose "Save as PDF".
+      <strong>Tip:</strong> Need a PDF instead? Click <strong>Print to PDF</strong> at the top.
     </p>
     <div class="modal-actions">
       <button class="ok-btn" onclick="closeModal()">Got it</button>
@@ -2194,18 +1952,14 @@ footer {
 
 <!-- ============================================================
      JAVASCRIPT
-     - Tier config (edit this each lesson)
-     - Auto-save / load
-     - Run code in iframe
-     - Submit work as downloadable HTML
      ============================================================ -->
 <script>
 /* ====================================================
-   TIER CONFIG - edit this each lesson, no other changes needed
-   Rotation example over a unit:
-     Lesson 1:  must=1-5, could=6-7, should=8-9, plus 10-11 as "should" (super-extension)
-     Lesson 2:  must=6-7, could=8-9, should=10-11
-     Lesson 3:  must=8-9, could=10-11, should=(add 12-13)
+   TIER CONFIG - edit this each lesson, no other changes needed.
+   Rotation example:
+     Lesson 1: must=1-5, could=6-7, should=8-9, plus 10-11 super-extension
+     Lesson 2: must=6-7, could=8-9, should=10-11
+     Lesson 3: must=8-9, could=10-11, should=(add new)
    ==================================================== */
 const TIER_CONFIG = {
   1: "must",
@@ -2222,20 +1976,20 @@ const TIER_CONFIG = {
 };
 
 const SECTION_TITLES = {
-  1: "Your First Web Page",
-  2: "Headings & Paragraphs",
-  3: "Lists & Links",
-  4: "Forms",
-  5: "Tables",
-  6: "Colours & CSS",
-  7: "Fonts & Borders",
-  8: "Multi-page Site",
-  9: "Plan Your GTPA",
-  10: "Add Images",
-  11: "Mini-Site Challenge"
+  1:  "First Page",
+  2:  "Headings",
+  3:  "Lists & Links",
+  4:  "Forms",
+  5:  "Tables",
+  6:  "Colours",
+  7:  "Fonts & Borders",
+  8:  "Multi-page",
+  9:  "Plan GTPA",
+  10: "Images",
+  11: "Challenge"
 };
 
-const STORAGE_KEY = "cotyc-workshop-v1";
+const STORAGE_KEY = "cotyc-workshop-v2";
 const TOTAL_SECTIONS = 11;
 let saveTimer = null;
 
@@ -2243,35 +1997,96 @@ let saveTimer = null;
    APPLY TIER CONFIG ON LOAD
    ==================================================== */
 function applyTiers() {
+  // Apply tier class + ribbon text to each section
   for (const num in TIER_CONFIG) {
     const tier = TIER_CONFIG[num];
     const sec = document.querySelector('section.lab[data-section="' + num + '"]');
     if (sec) sec.setAttribute("data-tier", tier);
-
     const ribbon = document.querySelector('[data-ribbon="' + num + '"]');
     if (ribbon) {
       ribbon.className = "tier-ribbon " + tier;
       ribbon.textContent = tier.toUpperCase() + " DO";
     }
   }
-  buildNavList();
+  // Build the tier-bar pills
+  buildTierBar();
 }
 
-function buildNavList() {
-  const list = document.getElementById("navList");
-  if (!list) return;
-  list.innerHTML = "";
+function buildTierBar() {
+  const zones = { must: [], could: [], should: [] };
   for (let i = 1; i <= TOTAL_SECTIONS; i++) {
-    const tier = TIER_CONFIG[i] || "should";
-    const title = SECTION_TITLES[i] || ("Section " + i);
-    const li = document.createElement("li");
-    li.innerHTML =
-      '<a href="#sec-' + i + '">' +
-      '<span class="nav-num">' + i + '</span>' +
-      '<span>' + title + '</span>' +
-      '<span class="mini-badge ' + tier + '">' + tier.toUpperCase() + '</span>' +
-      '</a>';
-    list.appendChild(li);
+    const tier = TIER_CONFIG[i];
+    if (zones[tier]) zones[tier].push(i);
+  }
+  for (const tier in zones) {
+    const wrap = document.getElementById("pills-" + tier);
+    if (!wrap) continue;
+    wrap.innerHTML = "";
+    zones[tier].forEach(n => {
+      const a = document.createElement("a");
+      a.href = "#sec-" + n;
+      a.className = "pill " + tier;
+      a.id = "pill-" + n;
+      a.innerHTML = '<span class="num">' + n + '</span>' +
+                    '<span class="ttl">' + (SECTION_TITLES[n] || ("Section " + n)) + '</span>';
+      wrap.appendChild(a);
+    });
+  }
+}
+
+/* ====================================================
+   STEP TABS - switch which reference is shown
+   ==================================================== */
+const STEP_TASKS = {
+  1: ["Type the code on the left into the editor. Click Run.",
+      "Replace the name with your own. Add a second paragraph.",
+      "Make one word bold and one word italic."],
+  2: ["Type the code with three headings.",
+      "Add a third h2 about your school.",
+      "Pick one h2 and add an h3 sub-heading under it."],
+  3: ["Build a bullet list of 3 things you like.",
+      "Build a numbered list (ol) of your top 5.",
+      "Add a link to a website you like."],
+  4: ["Build a form with one name box and a Submit button.",
+      "Add email, password, and a big message box (textarea).",
+      "Add a select dropdown and a checkbox."],
+  5: ["Build a 2-row table with td. Add border=\"1\".",
+      "Add a heading row using th.",
+      "Build a 4-column school timetable: Period, Subject, Room, Teacher."],
+  6: ["Make all paragraphs red.",
+      "Change the body background and style h1.",
+      "Style links, h1, h2, p, body all together."],
+  7: ["Pick a font and a size for your text.",
+      "Add a blue border around your h1.",
+      "Build a 'card' look with border, padding, background, and border-radius."],
+  8: ["Build a Home page with a menu of 3 links.",
+      "Style the menu so it looks like a real nav bar.",
+      "Add a footer at the bottom."],
+  9: ["Fill in the plan below.", "", ""],
+  10: ["Add one image with alt description.",
+       "Add 3 images, each with width and height.",
+       "Style images with CSS (rounded corners, border)."],
+  11: ["Build the skeleton: nav, h1, paragraph, footer.",
+       "Add image, list, table, form.",
+       "Add a <style> block to make it look good."]
+};
+
+function showStep(sectionNum, stepNum) {
+  // Hide / show code-refs by step
+  document.querySelectorAll('.code-ref[data-section="' + sectionNum + '"]').forEach(el => {
+    el.hidden = el.dataset.step !== String(stepNum);
+  });
+  // Active tab styling
+  document.querySelectorAll('.step-tab[data-step]').forEach(tab => {
+    const sec = tab.closest('section.lab');
+    if (!sec || sec.dataset.section !== String(sectionNum)) return;
+    tab.classList.toggle('active', tab.dataset.step === String(stepNum));
+  });
+  // Update task text
+  const taskEl = document.getElementById('task-' + sectionNum);
+  const tasks = STEP_TASKS[sectionNum] || [];
+  if (taskEl && tasks[stepNum - 1]) {
+    taskEl.innerHTML = tasks[stepNum - 1];
   }
 }
 
@@ -2288,11 +2103,7 @@ function gatherState() {
   };
   document.querySelectorAll("[data-save]").forEach(el => {
     const key = el.getAttribute("data-save");
-    if (el.type === "checkbox") {
-      state.fields[key] = el.checked;
-    } else {
-      state.fields[key] = el.value;
-    }
+    state.fields[key] = el.type === "checkbox" ? el.checked : el.value;
   });
   return state;
 }
@@ -2308,7 +2119,7 @@ function saveNow() {
     document.getElementById("saveStatus").textContent = "Saved at " + hh + ":" + mm + ":" + ss;
     updateProgress();
   } catch (err) {
-    document.getElementById("saveStatus").textContent = "Could not save - browser storage full";
+    document.getElementById("saveStatus").textContent = "Save failed (storage full)";
   }
 }
 
@@ -2333,28 +2144,27 @@ function loadState() {
     if (el.type === "checkbox") el.checked = !!state.fields[key];
     else el.value = state.fields[key];
   }
-
-  // Re-render all "done" rows and previews
   for (let i = 1; i <= TOTAL_SECTIONS; i++) {
     updateDoneStyle(i);
-    runSection(i, true); // silent run so result iframes are populated
+    runSection(i, true);
   }
   updateProgress();
-
   if (state.timestamp) {
-    document.getElementById("saveStatus").textContent =
-      "Loaded from your last save";
+    document.getElementById("saveStatus").textContent = "Loaded from last save";
   }
 }
 
 /* ====================================================
-   PROGRESS BAR
+   PROGRESS BAR + DONE STYLE
    ==================================================== */
 function updateProgress() {
   let done = 0;
   for (let i = 1; i <= TOTAL_SECTIONS; i++) {
     const cb = document.getElementById("done-" + i);
     if (cb && cb.checked) done++;
+    // Mark pill done
+    const pill = document.getElementById("pill-" + i);
+    if (pill) pill.classList.toggle("is-done", !!(cb && cb.checked));
   }
   const pct = Math.round((done / TOTAL_SECTIONS) * 100);
   document.getElementById("progressFill").style.width = pct + "%";
@@ -2362,10 +2172,10 @@ function updateProgress() {
 }
 
 function updateDoneStyle(num) {
-  const row = document.getElementById("done-row-" + num);
+  const card = document.getElementById("done-card-" + num);
   const cb = document.getElementById("done-" + num);
-  if (!row || !cb) return;
-  row.classList.toggle("is-done", cb.checked);
+  if (!card || !cb) return;
+  card.classList.toggle("is-done", cb.checked);
   saveSoon();
 }
 
@@ -2376,50 +2186,28 @@ function runSection(num, silent) {
   const editor = document.querySelector('.code-editor[data-section="' + num + '"]');
   const iframe = document.getElementById("output-" + num);
   if (!editor || !iframe) return;
-  const code = editor.value || "<p style='color:#999;font-family:Arial;padding:12px;'>Type some code in the editor on the left, then click Run.</p>";
+  const code = editor.value || '<p style="color:#999;font-family:Arial;padding:12px;">Type some code on the left in column 2, then click Run.</p>';
   iframe.srcdoc = code;
   if (!silent) saveSoon();
 }
 
 function clearEditor(num) {
-  if (!confirm("Clear the editor for Section " + num + "? Your saved work will update.")) return;
+  if (!confirm("Clear the editor for Section " + num + "?")) return;
   const editor = document.querySelector('.code-editor[data-section="' + num + '"]');
-  if (editor) {
-    editor.value = "";
-    runSection(num);
-  }
+  if (editor) { editor.value = ""; runSection(num); }
 }
 
-/* ====================================================
-   HINTS
-   ==================================================== */
-function toggleHint(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.hidden = !el.hidden;
-}
-
-/* ====================================================
-   NAV / SCROLL
-   ==================================================== */
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-/* ====================================================
-   RESET
-   ==================================================== */
 function confirmReset() {
-  if (!confirm("Are you sure? This will erase ALL your work and start over.")) return;
+  if (!confirm("Are you sure? This erases ALL your work.")) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
 }
 
 /* ====================================================
-   SUBMIT - generate self-contained HTML file
+   SUBMIT WORK - generate a self-contained HTML download
    ==================================================== */
 function escapeHTML(s) {
-  return String(s || "")
+  return String(s == null ? "" : s)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -2430,7 +2218,6 @@ function buildSubmissionHTML(state) {
   const name = state.studentName || "Unnamed Student";
   const cls  = state.studentClass || "9 COTYB or 9 COTYC";
   const date = state.studentDate || new Date().toISOString().slice(0,10);
-
   let body = "";
   for (let i = 1; i <= TOTAL_SECTIONS; i++) {
     const tier = TIER_CONFIG[i];
@@ -2439,14 +2226,11 @@ function buildSubmissionHTML(state) {
     const learnt = state.fields["learnt-" + i] || "";
     const stuck  = state.fields["stuck-" + i]  || "";
     const done   = state.fields["done-" + i] ? "Yes" : "Not yet";
-
     let section = '<section class="seg t-' + tier + '">';
     section += '<h2><span class="num">' + i + '</span> ' + escapeHTML(title) +
                ' <span class="rib ' + tier + '">' + tier.toUpperCase() + '</span></h2>';
     section += '<p class="meta"><b>Finished:</b> ' + done + '</p>';
-
     if (i === 9) {
-      // Plan section - show all plan fields
       section += '<h3>Plan</h3><div class="plan">';
       section += '<p><b>About:</b> ' + escapeHTML(state.fields["plan-topic"]) + '</p>';
       section += '<p><b>Audience:</b> ' + escapeHTML(state.fields["plan-audience"]) + '</p>';
@@ -2474,25 +2258,18 @@ function buildSubmissionHTML(state) {
       section += '<pre class="code">' + escapeHTML(code) + '</pre>';
       section += '<h3>What I learnt</h3><div class="learn">' + escapeHTML(learnt) + '</div>';
       section += '<h3>I am stuck on</h3><div class="stuck">' + escapeHTML(stuck) + '</div>';
-
-      // Also include a live preview of the student's code
       if (code.trim()) {
         section += '<h3>How it looks (preview)</h3>';
         section += '<iframe class="preview" sandbox srcdoc="' + escapeHTML(code) + '"></iframe>';
       }
     }
-
     section += '<div class="teacher-box"><b>Teacher feedback:</b><br><br><br><br></div>';
     section += '</section>';
     body += section;
   }
-
   const today = new Date().toLocaleString("en-AU");
-
   return `<!DOCTYPE html>
-<html lang="en-AU">
-<head>
-<meta charset="UTF-8">
+<html lang="en-AU"><head><meta charset="UTF-8">
 <title>${escapeHTML(name)} - HTML &amp; CSS Workshop Submission</title>
 <style>
   body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto;
@@ -2503,8 +2280,7 @@ function buildSubmissionHTML(state) {
   header p { margin: 2px 0; opacity: 0.95; font-size: 14px; }
   section.seg { background: white; border: 1px solid #e5e7eb;
                 border-radius: 10px; padding: 16px 20px; margin-bottom: 16px;
-                border-left: 8px solid #1f3a68;
-                page-break-inside: avoid; }
+                border-left: 8px solid #1f3a68; page-break-inside: avoid; }
   section.t-must   { border-left-color: #10b981; }
   section.t-could  { border-left-color: #7c3aed; }
   section.t-should { border-left-color: #1f3a68; }
@@ -2533,15 +2309,9 @@ function buildSubmissionHTML(state) {
   .teacher-box { background: #fffaf0; border: 2px dashed #f59e0b;
                  border-radius: 6px; padding: 10px 14px; margin-top: 12px;
                  font-size: 14px; min-height: 80px; }
-  footer { text-align: center; font-size: 12px; color: #6b7280;
-           margin-top: 20px; }
-  @media print {
-    .preview { display: none; }
-    section.seg { break-inside: avoid; }
-  }
-</style>
-</head>
-<body>
+  footer { text-align: center; font-size: 12px; color: #6b7280; margin-top: 20px; }
+  @media print { .preview { display: none; } section.seg { break-inside: avoid; } }
+</style></head><body>
   <header>
     <h1>HTML &amp; CSS Workshop &mdash; Submission</h1>
     <p><b>Name:</b> ${escapeHTML(name)}</p>
@@ -2550,11 +2320,8 @@ function buildSubmissionHTML(state) {
     <p><b>Submitted at:</b> ${escapeHTML(today)}</p>
   </header>
   ${body}
-  <footer>
-    Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; Term 2 2026
-  </footer>
-</body>
-</html>`;
+  <footer>9 COTYB &amp; 9 COTYC &middot; Year 9 Computing Technology &middot; Term 2 2026</footer>
+</body></html>`;
 }
 
 function submitWork() {
@@ -2576,8 +2343,6 @@ function submitWork() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-
-  // Show modal with upload instructions
   document.getElementById("submitModal").classList.add("is-open");
 }
 
@@ -2596,32 +2361,30 @@ document.addEventListener("DOMContentLoaded", function() {
   const dateEl = document.getElementById("studentDate");
   if (!dateEl.value) {
     const t = new Date();
-    const iso = t.getFullYear() + "-" +
-                String(t.getMonth()+1).padStart(2,"0") + "-" +
-                String(t.getDate()).padStart(2,"0");
-    dateEl.value = iso;
+    dateEl.value = t.getFullYear() + "-" +
+                   String(t.getMonth()+1).padStart(2,"0") + "-" +
+                   String(t.getDate()).padStart(2,"0");
   }
 
-  // Wire up auto-save on every input
-  document.querySelectorAll("input, textarea").forEach(el => {
+  // Auto-save listeners
+  document.querySelectorAll("input, textarea, select").forEach(el => {
     el.addEventListener("input", saveSoon);
     el.addEventListener("change", saveSoon);
   });
 
-  // Close modal on background click
+  // Modal click-outside
   document.getElementById("submitModal").addEventListener("click", function(e) {
     if (e.target === this) closeModal();
   });
 
-  // Tab key inserts spaces in code editors
+  // Tab key inserts 4 spaces in code editors
   document.querySelectorAll(".code-editor").forEach(ta => {
     ta.addEventListener("keydown", function(e) {
       if (e.key === "Tab") {
         e.preventDefault();
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        this.value = this.value.substring(0, start) + "    " + this.value.substring(end);
-        this.selectionStart = this.selectionEnd = start + 4;
+        const s = this.selectionStart, en = this.selectionEnd;
+        this.value = this.value.substring(0, s) + "    " + this.value.substring(en);
+        this.selectionStart = this.selectionEnd = s + 4;
       }
     });
   });
