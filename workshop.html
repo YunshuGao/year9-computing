@@ -128,6 +128,64 @@ body {
 .toolbar button.danger:hover { background: #fecaca; }
 
 /* ============================================================
+   WELCOME BACK BANNER - shown on return visits via localStorage
+   ============================================================ */
+.welcome-back {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 2px solid #10b981;
+  border-radius: 12px;
+  margin: 14px 20px 0 20px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  animation: wbSlideIn 0.4s ease-out;
+}
+@keyframes wbSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.welcome-back .wb-icon {
+  flex: 0 0 auto;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #10b981;
+  color: white;
+  font-size: 22px; font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+}
+.welcome-back .wb-body {
+  flex: 1 1 auto;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.welcome-back .wb-body strong {
+  color: #065f46; font-size: 16px;
+}
+.welcome-back .wb-body span {
+  color: #064e3b; font-size: 13px;
+}
+.welcome-back .wb-continue {
+  background: #1f3a68; color: white;
+  border: none; border-radius: 8px;
+  padding: 8px 14px; font-weight: 600; font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.welcome-back .wb-continue:hover { background: #2c5598; }
+.welcome-back .wb-close {
+  background: transparent; border: none;
+  color: #065f46; font-size: 24px; line-height: 1;
+  cursor: pointer; padding: 0 6px;
+  opacity: 0.7;
+}
+.welcome-back .wb-close:hover { opacity: 1; }
+@media (max-width: 900px) {
+  .welcome-back { flex-wrap: wrap; }
+  .welcome-back .wb-continue { width: 100%; }
+}
+
+/* ============================================================
    BIG TIER BAR - the headline navigation
    Three colour-coded zones; each section is a number+title pill.
    ============================================================ */
@@ -898,7 +956,7 @@ section.lab.today-focus::before {
   <div class="progress-row">
     <span>Progress:</span>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    <span id="progressText">0 of 11 done</span>
+    <span id="progressText">0 of 9 done</span>
     <span id="saveStatus">Not saved yet</span>
   </div>
   <div class="toolbar">
@@ -909,6 +967,19 @@ section.lab.today-focus::before {
 </header>
 
 <!-- ============================================================
+     WELCOME BACK BANNER - only shown when auto-save restored work
+     ============================================================ -->
+<div id="welcomeBack" class="welcome-back" hidden>
+  <div class="wb-icon" aria-hidden="true">&#10004;</div>
+  <div class="wb-body">
+    <strong id="wbHeading">Welcome back!</strong>
+    <span id="wbDetail">Your work from last time has been restored.</span>
+  </div>
+  <button type="button" id="wbContinueBtn" class="wb-continue">Jump to my next section</button>
+  <button type="button" class="wb-close" onclick="dismissWelcomeBack()" aria-label="Dismiss">&times;</button>
+</div>
+
+<!-- ============================================================
      BIG TIER BAR - "at a glance, what to do today"
      ============================================================ -->
 <nav class="tier-bar" aria-label="Section navigation by tier">
@@ -916,13 +987,13 @@ section.lab.today-focus::before {
     <div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">today's focus</span></div>
     <div class="pills" id="pills-must"></div>
   </div>
+  <div class="tier-zone should">
+    <div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">today's challenge</span></div>
+    <div class="pills" id="pills-should"></div>
+  </div>
   <div class="tier-zone could">
     <div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">bonus</span></div>
     <div class="pills" id="pills-could"></div>
-  </div>
-  <div class="tier-zone should">
-    <div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">extra challenge</span></div>
-    <div class="pills" id="pills-should"></div>
   </div>
 </nav>
 
@@ -2331,7 +2402,74 @@ function loadState() {
   updateProgress();
   if (state.timestamp) {
     document.getElementById("saveStatus").textContent = "Loaded from last save";
+    showWelcomeBack(state);
   }
+}
+
+/* ====================================================
+   WELCOME-BACK BANNER - reassure students their work was restored
+   ==================================================== */
+function showWelcomeBack(state) {
+  const banner = document.getElementById("welcomeBack");
+  if (!banner) return;
+
+  // Count completed sections
+  let doneCount = 0;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const cb = document.getElementById("done-" + i);
+    if (cb && cb.checked) doneCount++;
+  }
+
+  // Find the next section the student should jump to
+  // (first section that is NOT marked done; if all done, use last section)
+  let nextSection = 1;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const cb = document.getElementById("done-" + i);
+    if (!cb || !cb.checked) { nextSection = i; break; }
+    nextSection = i; // all done case
+  }
+
+  // Friendly heading using their name if we have it
+  const name = (state.studentName || "").trim();
+  const headingEl = document.getElementById("wbHeading");
+  headingEl.textContent = name
+    ? "Welcome back, " + name + "!"
+    : "Welcome back!";
+
+  // Detail line: when they last saved + progress
+  const detailEl = document.getElementById("wbDetail");
+  let lastSeen = "";
+  if (state.timestamp) {
+    const t = new Date(state.timestamp);
+    const now = new Date();
+    const diffMin = Math.round((now - t) / 60000);
+    if (diffMin < 2)       lastSeen = "just now";
+    else if (diffMin < 60) lastSeen = diffMin + " min ago";
+    else if (diffMin < 24 * 60) lastSeen = Math.round(diffMin / 60) + " hr ago";
+    else                   lastSeen = t.toLocaleDateString();
+  }
+  detailEl.textContent =
+    "You finished " + doneCount + " of " + TOTAL_SECTIONS + " sections" +
+    (lastSeen ? " (saved " + lastSeen + ")" : "") +
+    ". Your code is exactly where you left it.";
+
+  // Wire the "Jump to my next section" button
+  const btn = document.getElementById("wbContinueBtn");
+  btn.textContent = (doneCount >= TOTAL_SECTIONS)
+    ? "Review my work →"
+    : "Jump to Section " + nextSection + " →";
+  btn.onclick = function() {
+    const target = document.getElementById("sec-" + nextSection);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    dismissWelcomeBack();
+  };
+
+  banner.hidden = false;
+}
+
+function dismissWelcomeBack() {
+  const banner = document.getElementById("welcomeBack");
+  if (banner) banner.hidden = true;
 }
 
 /* ====================================================
