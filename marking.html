@@ -509,44 +509,19 @@ const RULES = {
     ]
   },
   2: {
-    title: "Headings & Paragraphs",
+    title: "Headings & Lists",
     required: [
       { id: "h1",     label: "Uses <h1>",                       test: c => /<h1[^>]*>/i.test(c) },
       { id: "h2",     label: "Uses <h2>",                       test: c => /<h2[^>]*>/i.test(c) },
-      { id: "p-multi",label: "Multiple paragraphs (2+)",        test: c => (c.match(/<p[^>]*>/gi) || []).length >= 2 },
+      { id: "list",   label: "Uses <ul> or <ol>",               test: c => /<(ul|ol)[^>]*>/i.test(c) },
+      { id: "li",     label: "Has <li> items",                  test: c => /<li[^>]*>/i.test(c) },
     ],
     bonus: [
+      { id: "both",   label: "Both <ul> AND <ol> (nested)",     test: c => /<ul[^>]*>/i.test(c) && /<ol[^>]*>/i.test(c) },
       { id: "h3",     label: "Uses <h3>",                       test: c => /<h3[^>]*>/i.test(c) },
-      { id: "h2-3",   label: "3+ <h2> topics",                  test: c => (c.match(/<h2[^>]*>/gi) || []).length >= 3 },
     ]
   },
   3: {
-    title: "Lists, Links & Images",
-    required: [
-      { id: "list",   label: "Uses <ul> or <ol>",               test: c => /<(ul|ol)[^>]*>/i.test(c) },
-      { id: "li3",    label: "3+ <li> items",                   test: c => (c.match(/<li[^>]*>/gi) || []).length >= 3 },
-      { id: "img",    label: "Uses <img>",                      test: c => /<img[^>]*src/i.test(c) },
-    ],
-    bonus: [
-      { id: "both",   label: "Both <ul> AND <ol>",              test: c => /<ul[^>]*>/i.test(c) && /<ol[^>]*>/i.test(c) },
-      { id: "link",   label: "Uses <a href>",                   test: c => /<a\s+[^>]*href=/i.test(c) },
-      { id: "alt",    label: "Image has alt attribute (a11y)",  test: c => /<img[^>]*alt=/i.test(c) },
-    ]
-  },
-  4: {
-    title: "Forms",
-    required: [
-      { id: "form",   label: "Has <form>",                      test: c => /<form[^>]*>/i.test(c) },
-      { id: "input",  label: "Uses <input>",                    test: c => /<input[^>]*>/i.test(c) },
-      { id: "submit", label: "Has submit button",               test: c => /type=["']?submit/i.test(c) },
-    ],
-    bonus: [
-      { id: "textarea",label: "Uses <textarea>",                test: c => /<textarea/i.test(c) },
-      { id: "select", label: "Uses <select>",                   test: c => /<select/i.test(c) },
-      { id: "label",  label: "Uses <label> (accessibility)",    test: c => /<label/i.test(c) },
-    ]
-  },
-  5: {
     title: "Tables",
     required: [
       { id: "table",  label: "Has <table>",                     test: c => /<table[^>]*>/i.test(c) },
@@ -554,8 +529,37 @@ const RULES = {
       { id: "td",     label: "Has <td> cells",                  test: c => /<td[^>]*>/i.test(c) },
     ],
     bonus: [
-      { id: "th",     label: "Uses <th> heading cells",         test: c => /<th[^>]*>/i.test(c) },
       { id: "rows3",  label: "3+ rows",                         test: c => (c.match(/<tr[^>]*>/gi) || []).length >= 3 },
+      { id: "cols3",  label: "3+ columns",                      test: c => {
+        const m = c.match(/<tr[^>]*>([\s\S]*?)<\/tr>/i);
+        return m && (m[1].match(/<td[^>]*>/gi) || []).length >= 3;
+      }},
+      { id: "imgcell",label: "Image inside a cell",             test: c => /<td[^>]*>[\s\S]*?<img/i.test(c) },
+    ]
+  },
+  4: {
+    title: "More Tables",
+    required: [
+      { id: "table",  label: "Has <table>",                     test: c => /<table[^>]*>/i.test(c) },
+      { id: "th",     label: "Uses <th> heading cells",         test: c => /<th[^>]*>/i.test(c) },
+      { id: "td",     label: "Has <td> data cells",             test: c => /<td[^>]*>/i.test(c) },
+    ],
+    bonus: [
+      { id: "cols4",  label: "4+ columns",                      test: c => (c.match(/<th[^>]*>/gi) || []).length >= 4 },
+      { id: "rows3",  label: "3+ rows of data",                 test: c => (c.match(/<tr[^>]*>/gi) || []).length >= 4 },
+    ]
+  },
+  5: {
+    title: "Forms",
+    required: [
+      { id: "form",   label: "Has <form>",                      test: c => /<form[^>]*>/i.test(c) },
+      { id: "input",  label: "Uses <input>",                    test: c => /<input[^>]*>/i.test(c) },
+      { id: "submit", label: "Has submit button",               test: c => /type=["']?submit/i.test(c) },
+    ],
+    bonus: [
+      { id: "pwd",    label: "Has password field",              test: c => /type=["']?password/i.test(c) },
+      { id: "multi",  label: "3+ input fields",                 test: c => (c.match(/<input[^>]*>/gi) || []).length >= 3 },
+      { id: "checkbox",label: "Has checkbox",                   test: c => /type=["']?checkbox/i.test(c) },
     ]
   },
   6: {

@@ -896,24 +896,23 @@ section.lab.today-focus::before {
 <main>
 
 <!-- ============================================================
-     SECTION 1 - Your First Web Page
+     SECTION 1 - First Page
      ============================================================ -->
 <section class="lab" id="sec-1" data-section="1">
   <div class="sec-head">
     <span class="sec-num">1</span>
-    <h2>Your First Web Page</h2>
+    <h2>First Page</h2>
+    
     <span class="tier-ribbon" data-ribbon="1">MUST DO</span>
   </div>
-  <p class="sec-intro">
-    Every web page is built from <strong>tags</strong>. A tag looks like <code>&lt;h1&gt;</code>. Tags come in pairs.
-  </p>
+  <p class="sec-intro">Every web page starts with the same skeleton. Build it. Add an image. Add a link.</p>
 
   <div class="step-tabs" data-section="1">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(1,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(1,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(1,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-1"><span class="task-text">Type the code on the left into the editor. Click <strong>Run</strong>.</span><button type="button" class="next-step-btn" onclick="advanceStep(1)" id="advance-1">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-1"><span class="task-text">Build a page with title "All About Me", a heading, and one paragraph.</span><button type="button" class="next-step-btn" onclick="advanceStep(1)" id="advance-1">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
@@ -924,35 +923,42 @@ section.lab.today-focus::before {
 &lt;/head&gt;
 &lt;body&gt;
     &lt;h1&gt;All About Me&lt;/h1&gt;
-    &lt;p&gt;Hi! My name is _____.&lt;/p&gt;
+    &lt;p&gt;My name is _____.
+       I am _____ years old.
+       I go to high school.&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="1" data-step="2" hidden>&lt;html&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="1" data-step="2" hidden>&lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;All About Me&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
     &lt;h1&gt;All About Me&lt;/h1&gt;
-    &lt;p&gt;Hi! My name is Sam.&lt;/p&gt;
-    &lt;p&gt;I love basketball.&lt;/p&gt;
+    &lt;p&gt;My name is _____.&lt;/p&gt;
+
+    &lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"
+         width="200"&gt;
+    &lt;hr&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="1" data-step="3" hidden>&lt;html&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="1" data-step="3" hidden>&lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;All About Me&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
     &lt;h1&gt;All About Me&lt;/h1&gt;
-    &lt;p&gt;Hi! My name is &lt;strong&gt;Sam&lt;/strong&gt;.&lt;/p&gt;
-    &lt;p&gt;I love &lt;em&gt;basketball&lt;/em&gt;.&lt;/p&gt;
+    &lt;p&gt;My name is _____.&lt;/p&gt;
+
+    &lt;p&gt;
+        &lt;a href="https://www.nba.com"&gt;
+            My favourite website
+        &lt;/a&gt;
+    &lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
     </div>
 
     <div class="col col-type">
       <div class="col-label"><span class="col-num">2</span> Type here</div>
-      <textarea class="code-editor" data-save="code-1" data-section="1"
-                spellcheck="false" placeholder="Type the code from the left into here..."></textarea>
+      <textarea class="code-editor" data-save="code-1" data-section="1" spellcheck="false"></textarea>
       <div class="run-row">
         <button type="button" class="run-btn" onclick="runSection(1)">Run</button>
         <button type="button" class="clear-btn" onclick="clearEditor(1)">Clear</button>
@@ -967,16 +973,10 @@ section.lab.today-focus::before {
 
   <div class="bottom-row">
     <div class="reflection">
-      <h4>Reflection (for your teacher)</h4>
+      <h4>Reflection</h4>
       <div class="ref-grid">
-        <div>
-          <label for="learnt-1">What I learnt</label>
-          <textarea id="learnt-1" data-save="learnt-1" placeholder="One short sentence."></textarea>
-        </div>
-        <div>
-          <label for="stuck-1">I am stuck on</label>
-          <textarea id="stuck-1" data-save="stuck-1" placeholder="One sentence (or 'nothing')."></textarea>
-        </div>
+        <div><label>What I learnt</label><textarea id="learnt-1" data-save="learnt-1"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-1" data-save="stuck-1"></textarea></div>
       </div>
     </div>
     <div class="done-card" id="done-card-1">
@@ -984,75 +984,77 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-1" data-save="done-1" onchange="updateDoneStyle(1)">
         <label for="done-1">I finished Section 1</label>
       </div>
-      <div class="next-link"><a href="#sec-2">Next: Section 2 &mdash; Headings &rarr;</a></div>
+      <div class="next-link"><a href="#sec-2">Next: Section 2 &mdash; Headings &amp; Lists &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 2 - Headings & Paragraphs
+     SECTION 2 - Headings &amp; Lists
      ============================================================ -->
 <section class="lab" id="sec-2" data-section="2">
   <div class="sec-head">
     <span class="sec-num">2</span>
-    <h2>Headings &amp; Paragraphs</h2>
+    <h2>Headings &amp; Lists</h2>
+    
     <span class="tier-ribbon" data-ribbon="2">MUST DO</span>
   </div>
-  <p class="sec-intro">
-    Headings break your page into parts. <code>&lt;h1&gt;</code> is biggest, then <code>&lt;h2&gt;</code>, then <code>&lt;h3&gt;</code>.
-  </p>
+  <p class="sec-intro">Headings break a page into parts: <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>. Lists show items: <code>&lt;ul&gt;</code> + <code>&lt;li&gt;</code>, or <code>&lt;ol&gt;</code> for numbers.</p>
 
   <div class="step-tabs" data-section="2">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(2,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(2,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(2,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-2"><span class="task-text">Type the code on the left. Notice how each heading is a different size.</span><button type="button" class="next-step-btn" onclick="advanceStep(2)" id="advance-2">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-2"><span class="task-text">Build a page with two h2 sections and a paragraph under each.</span><button type="button" class="next-step-btn" onclick="advanceStep(2)" id="advance-2">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="2" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;Page 2&lt;/title&gt;
+    &lt;title&gt;My second web page&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;My Page&lt;/h1&gt;
+    &lt;h1&gt;My second web page&lt;/h1&gt;
 
     &lt;h2&gt;What this is&lt;/h2&gt;
-    &lt;p&gt;A page built with HTML.&lt;/p&gt;
+    &lt;p&gt;A simple page put together using HTML&lt;/p&gt;
 
-    &lt;h2&gt;Why I'm here&lt;/h2&gt;
-    &lt;p&gt;To learn how websites work.&lt;/p&gt;
+    &lt;h2&gt;Why this is&lt;/h2&gt;
+    &lt;p&gt;To learn HTML&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="2" data-step="2" hidden>&lt;body&gt;
-    &lt;h1&gt;My Page&lt;/h1&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="2" data-step="2" hidden>&lt;h1&gt;My third web page&lt;/h1&gt;
 
-    &lt;h2&gt;What this is&lt;/h2&gt;
-    &lt;p&gt;A page built with HTML.&lt;/p&gt;
+&lt;h2&gt;What this is&lt;/h2&gt;
+&lt;p&gt;A simple page with a list&lt;/p&gt;
 
-    &lt;h2&gt;Why I'm here&lt;/h2&gt;
-    &lt;p&gt;To learn how websites work.&lt;/p&gt;
+&lt;h2&gt;Why this is&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li&gt;To learn HTML&lt;/li&gt;
+    &lt;li&gt;To show off&lt;/li&gt;
+    &lt;li&gt;Because I am enjoying coding&lt;/li&gt;
+&lt;/ul&gt;</pre><pre class="code-ref" data-section="2" data-step="3" hidden>&lt;h1&gt;My fourth web page&lt;/h1&gt;
+&lt;h2&gt;Why this is&lt;/h2&gt;
 
-    &lt;h2&gt;About my school&lt;/h2&gt;
-    &lt;p&gt;I go to high school in Parramatta.&lt;/p&gt;
-&lt;/body&gt;</pre>
-<pre class="code-ref" data-section="2" data-step="3" hidden>&lt;h2&gt;About my school&lt;/h2&gt;
-&lt;p&gt;I go to high school in Parramatta.&lt;/p&gt;
-
-&lt;h3&gt;My favourite subject&lt;/h3&gt;
-&lt;p&gt;I really like Computing.&lt;/p&gt;
-
-&lt;h3&gt;Best lunch&lt;/h3&gt;
-&lt;p&gt;Hot food on Wednesdays.&lt;/p&gt;</pre>
+&lt;ul&gt;
+    &lt;li&gt;To learn HTML&lt;/li&gt;
+    &lt;li&gt;
+        To show off
+        &lt;ol&gt;
+            &lt;li&gt;To my friends&lt;/li&gt;
+            &lt;li&gt;To my family&lt;/li&gt;
+            &lt;li&gt;To my cat&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Because I love computers&lt;/li&gt;
+&lt;/ul&gt;</pre>
     </div>
 
     <div class="col col-type">
       <div class="col-label"><span class="col-num">2</span> Type here</div>
-      <textarea class="code-editor" data-save="code-2" data-section="2"
-                spellcheck="false" placeholder="Type the code from the left."></textarea>
+      <textarea class="code-editor" data-save="code-2" data-section="2" spellcheck="false"></textarea>
       <div class="run-row">
         <button type="button" class="run-btn" onclick="runSection(2)">Run</button>
         <button type="button" class="clear-btn" onclick="clearEditor(2)">Clear</button>
@@ -1078,67 +1080,80 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-2" data-save="done-2" onchange="updateDoneStyle(2)">
         <label for="done-2">I finished Section 2</label>
       </div>
-      <div class="next-link"><a href="#sec-3">Next: Section 3 &mdash; Lists &amp; Links &rarr;</a></div>
+      <div class="next-link"><a href="#sec-3">Next: Section 3 &mdash; Tables &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 3 - Lists, Links & Images
+     SECTION 3 - Tables
      ============================================================ -->
 <section class="lab" id="sec-3" data-section="3">
   <div class="sec-head">
     <span class="sec-num">3</span>
-    <h2>Lists, Links &amp; Images</h2>
+    <h2>Tables</h2>
+    
     <span class="tier-ribbon" data-ribbon="3">MUST DO</span>
   </div>
-  <p class="sec-intro">
-    Bullet list: <code>&lt;ul&gt;</code>. Numbered list: <code>&lt;ol&gt;</code>. Link: <code>&lt;a href="..."&gt;</code>. Image: <code>&lt;img src="..." alt="..."&gt;</code>.
-  </p>
+  <p class="sec-intro">Tables show information in rows and columns. <code>&lt;table&gt;</code> wraps it. <code>&lt;tr&gt;</code> is a row. <code>&lt;td&gt;</code> is a cell.</p>
 
   <div class="step-tabs" data-section="3">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(3,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(3,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(3,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-3"><span class="task-text">Build a bullet list of 3 things you like.</span><button type="button" class="next-step-btn" onclick="advanceStep(3)" id="advance-3">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-3"><span class="task-text">Build a basic table: 2 rows x 2 columns. Use border="1" so you can see the cells.</span><button type="button" class="next-step-btn" onclick="advanceStep(3)" id="advance-3">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="3" data-step="1">&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Things I Like&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Things I Like&lt;/h1&gt;
-    &lt;ul&gt;
-        &lt;li&gt;Basketball&lt;/li&gt;
-        &lt;li&gt;Pizza&lt;/li&gt;
-        &lt;li&gt;Music&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="3" data-step="2" hidden>&lt;h2&gt;My Top 5&lt;/h2&gt;
-&lt;ol&gt;
-    &lt;li&gt;First favourite&lt;/li&gt;
-    &lt;li&gt;Second favourite&lt;/li&gt;
-    &lt;li&gt;Third favourite&lt;/li&gt;
-    &lt;li&gt;Fourth favourite&lt;/li&gt;
-    &lt;li&gt;Fifth favourite&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Watch matches at
-    &lt;a href="https://www.nba.com"&gt;NBA.com&lt;/a&gt;
-&lt;/p&gt;</pre>
-<pre class="code-ref" data-section="3" data-step="3" hidden>&lt;h2&gt;A picture I like&lt;/h2&gt;
-
-&lt;p&gt;
-    &lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"
-         alt="LeBron James in a Lakers jersey"
-         width="240"&gt;
-&lt;/p&gt;</pre>
+<pre class="code-ref" data-section="3" data-step="1">&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 1, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 1, cell 2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 2, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 2, cell 2&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</pre><pre class="code-ref" data-section="3" data-step="2" hidden>&lt;h1&gt;My fifth web page&lt;/h1&gt;
+&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 1, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 1, cell 2&lt;/td&gt;
+        &lt;td&gt;Row 1, cell 3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 2, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 2, cell 2&lt;/td&gt;
+        &lt;td&gt;Row 2, cell 3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 3, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 3, cell 2&lt;/td&gt;
+        &lt;td&gt;Row 3, cell 3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 4, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 4, cell 2&lt;/td&gt;
+        &lt;td&gt;Row 4, cell 3&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</pre><pre class="code-ref" data-section="3" data-step="3" hidden>&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 1, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 1, cell 2&lt;/td&gt;
+        &lt;td&gt;Row 1, cell 3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Row 2, cell 1&lt;/td&gt;
+        &lt;td&gt;Row 2, cell 2&lt;/td&gt;
+        &lt;td&gt;
+            &lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"
+                 width="120"&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1169,83 +1184,87 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-3" data-save="done-3" onchange="updateDoneStyle(3)">
         <label for="done-3">I finished Section 3</label>
       </div>
-      <div class="next-link"><a href="#sec-4">Next: Section 4 &mdash; Forms &rarr;</a></div>
+      <div class="next-link"><a href="#sec-4">Next: Section 4 &mdash; More Tables &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 4 - Forms
+     SECTION 4 - More Tables
      ============================================================ -->
 <section class="lab" id="sec-4" data-section="4">
   <div class="sec-head">
     <span class="sec-num">4</span>
-    <h2>Forms &mdash; let people type in</h2>
+    <h2>More Tables</h2>
+    
     <span class="tier-ribbon" data-ribbon="4">MUST DO</span>
   </div>
-  <p class="sec-intro">
-    A form lets people fill in answers. <code>&lt;form&gt;</code> wraps it; <code>&lt;input&gt;</code> is each box.
-  </p>
+  <p class="sec-intro"><code>&lt;th&gt;</code> = heading cell. It shows up bold and centred. Use it for the top row to label the columns.</p>
 
   <div class="step-tabs" data-section="4">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(4,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(4,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(4,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-4"><span class="task-text">Build a form with one name box and a Submit button.</span><button type="button" class="next-step-btn" onclick="advanceStep(4)" id="advance-4">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-4"><span class="task-text">Add a heading row using th. Then 2 data rows with td.</span><button type="button" class="next-step-btn" onclick="advanceStep(4)" id="advance-4">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="4" data-step="1">&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Sign Up&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Sign Up&lt;/h1&gt;
-    &lt;form&gt;
-        &lt;label&gt;Name:
-            &lt;input type="text" name="name"&gt;
-        &lt;/label&gt;
-        &lt;br&gt;&lt;br&gt;
-        &lt;input type="submit" value="Submit"&gt;
-    &lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="4" data-step="2" hidden>&lt;form&gt;
-    &lt;label&gt;Name:
-        &lt;input type="text" name="name"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;label&gt;Email:
-        &lt;input type="email" name="email"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;label&gt;Password:
-        &lt;input type="password" name="pw"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;label&gt;Your message:&lt;br&gt;
-        &lt;textarea name="msg"
-                  rows="4" cols="40"&gt;&lt;/textarea&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;input type="submit" value="Send"&gt;
-&lt;/form&gt;</pre>
-<pre class="code-ref" data-section="4" data-step="3" hidden>&lt;label&gt;Favourite subject:
-    &lt;select name="subject"&gt;
-        &lt;option&gt;Computing&lt;/option&gt;
-        &lt;option&gt;Maths&lt;/option&gt;
-        &lt;option&gt;PE&lt;/option&gt;
-        &lt;option&gt;Art&lt;/option&gt;
-    &lt;/select&gt;
-&lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-&lt;label&gt;
-    &lt;input type="checkbox" name="news"&gt;
-    Send me updates
-&lt;/label&gt;</pre>
+<pre class="code-ref" data-section="4" data-step="1">&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;First Name&lt;/th&gt;
+        &lt;th&gt;Last Name&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Sam&lt;/td&gt;
+        &lt;td&gt;Smith&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Maya&lt;/td&gt;
+        &lt;td&gt;Lee&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</pre><pre class="code-ref" data-section="4" data-step="2" hidden>&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Heading 1&lt;/th&gt;
+        &lt;th&gt;Heading 2&lt;/th&gt;
+        &lt;th&gt;Heading 3&lt;/th&gt;
+        &lt;th&gt;Heading 4&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Data 1&lt;/td&gt;
+        &lt;td&gt;Data 2&lt;/td&gt;
+        &lt;td&gt;Data 3&lt;/td&gt;
+        &lt;td&gt;Data 4&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</pre><pre class="code-ref" data-section="4" data-step="3" hidden>&lt;h1&gt;My Timetable&lt;/h1&gt;
+&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Period&lt;/th&gt;
+        &lt;th&gt;Subject&lt;/th&gt;
+        &lt;th&gt;Room&lt;/th&gt;
+        &lt;th&gt;Teacher&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;Computing&lt;/td&gt;
+        &lt;td&gt;12&lt;/td&gt;
+        &lt;td&gt;Ms Lee&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;2&lt;/td&gt;
+        &lt;td&gt;Maths&lt;/td&gt;
+        &lt;td&gt;8&lt;/td&gt;
+        &lt;td&gt;Mr Smith&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;3&lt;/td&gt;
+        &lt;td&gt;PE&lt;/td&gt;
+        &lt;td&gt;Hall&lt;/td&gt;
+        &lt;td&gt;Ms Jones&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1276,93 +1295,76 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-4" data-save="done-4" onchange="updateDoneStyle(4)">
         <label for="done-4">I finished Section 4</label>
       </div>
-      <div class="next-link"><a href="#sec-5">Next: Section 5 &mdash; Tables &rarr;</a></div>
+      <div class="next-link"><a href="#sec-5">Next: Section 5 &mdash; Forms &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 5 - Tables
+     SECTION 5 - Forms
      ============================================================ -->
 <section class="lab" id="sec-5" data-section="5">
   <div class="sec-head">
     <span class="sec-num">5</span>
-    <h2>Tables &mdash; rows and columns</h2>
+    <h2>Forms</h2>
+    
     <span class="tier-ribbon" data-ribbon="5">MUST DO</span>
   </div>
-  <p class="sec-intro">
-    <code>&lt;table&gt;</code> wraps the table. <code>&lt;tr&gt;</code> is a row. <code>&lt;td&gt;</code> is a cell. <code>&lt;th&gt;</code> is a heading cell.
-  </p>
+  <p class="sec-intro">A form lets people fill in answers. <code>&lt;form&gt;</code> wraps it. <code>&lt;input type="text"&gt;</code> is a typing box. <code>&lt;input type="submit"&gt;</code> is the submit button.</p>
 
   <div class="step-tabs" data-section="5">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(5,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(5,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(5,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-5"><span class="task-text">Build a 2-row table. Add <code>border="1"</code> so you can see the cells.</span><button type="button" class="next-step-btn" onclick="advanceStep(5)" id="advance-5">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-5"><span class="task-text">Build a form with one Name box and a Submit button.</span><button type="button" class="next-step-btn" onclick="advanceStep(5)" id="advance-5">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="5" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;My Table&lt;/title&gt;
+    &lt;title&gt;Sign Up&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;Fruit Table&lt;/h1&gt;
-    &lt;table border="1"&gt;
-        &lt;tr&gt;
-            &lt;td&gt;Apple&lt;/td&gt;
-            &lt;td&gt;Red&lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;td&gt;Banana&lt;/td&gt;
-            &lt;td&gt;Yellow&lt;/td&gt;
-        &lt;/tr&gt;
-    &lt;/table&gt;
+    &lt;h1&gt;Sign Up&lt;/h1&gt;
+    &lt;form&gt;
+        Name:
+        &lt;input type="text" name="name1"&gt;
+        &lt;input type="submit" name="Submit"&gt;
+    &lt;/form&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="5" data-step="2" hidden>&lt;table border="1"&gt;
-    &lt;tr&gt;
-        &lt;th&gt;Fruit&lt;/th&gt;
-        &lt;th&gt;Colour&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Apple&lt;/td&gt;
-        &lt;td&gt;Red&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;Banana&lt;/td&gt;
-        &lt;td&gt;Yellow&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/table&gt;</pre>
-<pre class="code-ref" data-section="5" data-step="3" hidden>&lt;table border="1"&gt;
-    &lt;tr&gt;
-        &lt;th&gt;Period&lt;/th&gt;
-        &lt;th&gt;Subject&lt;/th&gt;
-        &lt;th&gt;Room&lt;/th&gt;
-        &lt;th&gt;Teacher&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;1&lt;/td&gt;
-        &lt;td&gt;Computing&lt;/td&gt;
-        &lt;td&gt;12&lt;/td&gt;
-        &lt;td&gt;Ms Lee&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;2&lt;/td&gt;
-        &lt;td&gt;Maths&lt;/td&gt;
-        &lt;td&gt;8&lt;/td&gt;
-        &lt;td&gt;Mr Smith&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;3&lt;/td&gt;
-        &lt;td&gt;PE&lt;/td&gt;
-        &lt;td&gt;Hall&lt;/td&gt;
-        &lt;td&gt;Ms Jones&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/table&gt;</pre>
+&lt;/html&gt;</pre><pre class="code-ref" data-section="5" data-step="2" hidden>&lt;form&gt;
+    Name:
+    &lt;input type="text" name="name1"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    Address:
+    &lt;input type="text" name="address"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    Phone:
+    &lt;input type="text" name="phone"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;input type="submit" name="Submit"&gt;
+&lt;/form&gt;</pre><pre class="code-ref" data-section="5" data-step="3" hidden>&lt;h1&gt;Login&lt;/h1&gt;
+&lt;form&gt;
+    Username:
+    &lt;input type="text" name="username"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    Password:
+    &lt;input type="password" name="password"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    Remember me?
+    &lt;input type="checkbox" name="remember"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;input type="submit" name="Submit"&gt;
+&lt;/form&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1393,93 +1395,81 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-5" data-save="done-5" onchange="updateDoneStyle(5)">
         <label for="done-5">I finished Section 5</label>
       </div>
-      <div class="next-link"><a href="#sec-6">Next: Section 6 &mdash; Colours &amp; CSS &rarr;</a></div>
+      <div class="next-link"><a href="#sec-6">Next: Section 6 &mdash; Colours &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 6 - Colours & CSS
+     SECTION 6 - Colours &amp; CSS
      ============================================================ -->
 <section class="lab" id="sec-6" data-section="6">
   <div class="sec-head">
     <span class="sec-num">6</span>
     <h2>Colours &amp; CSS</h2>
+    
     <span class="tier-ribbon" data-ribbon="6">COULD DO</span>
   </div>
-  <p class="sec-intro">
-    Real designers build with <strong>colour systems</strong>, not random reds. Try a coordinated theme, an image background, and a dark mode.
-  </p>
+  <p class="sec-intro">CSS goes inside <code>&lt;style&gt;</code> in the head. Each rule: selector + property + value.</p>
 
   <div class="step-tabs" data-section="6">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(6,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(6,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(6,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-6"><span class="task-text">Style 4 elements with a coordinated colour theme (body / h1 / h2 / p / a).</span><button type="button" class="next-step-btn" onclick="advanceStep(6)" id="advance-6">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-6"><span class="task-text">Style paragraphs red and links aqua, using a style block.</span><button type="button" class="next-step-btn" onclick="advanceStep(6)" id="advance-6">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="6" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;Colour Theme&lt;/title&gt;
+    &lt;title&gt;Lorem Ipsum&lt;/title&gt;
     &lt;style&gt;
-        body {
-            background-color: #f0f4ff;
-            color: #1f2937;
-        }
-        h1 { color: #1f3a68; }
-        h2 { color: #14b8a6; }
-        p  { color: #374151; }
-        a  { color: #f59e0b; }
+        p { color: red; }
+        a { color: aqua; }
     &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;My Themed Page&lt;/h1&gt;
-    &lt;h2&gt;A subtitle&lt;/h2&gt;
-    &lt;p&gt;Body text in soft grey.
-       Here is a &lt;a href="#"&gt;link&lt;/a&gt; in amber.&lt;/p&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet,
+       consectetur adipiscing elit.&lt;/p&gt;
+    &lt;p&gt;Go to
+       &lt;a href="https://www.w3schools.com"&gt;
+           w3schools
+       &lt;/a&gt;
+       to learn more.&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="6" data-step="2" hidden>&lt;style&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="6" data-step="2" hidden>&lt;style&gt;
     body {
-        background-image:
-          url("https://yunshugao.github.io/year9-computing/pic.jpg");
-        background-size: cover;
-        background-position: center;
-        color: white;
-        font-family: Arial;
+        background-color: lightyellow;
     }
-    h1 {
-        background-color: rgba(0,0,0,0.6);
-        padding: 16px;
-        display: inline-block;
-    }
-    p {
-        background-color: rgba(0,0,0,0.7);
-        padding: 12px;
-        border-radius: 8px;
-    }
-&lt;/style&gt;</pre>
-<pre class="code-ref" data-section="6" data-step="3" hidden>&lt;style&gt;
-    body {
-        background-color: #1a1a1a;
-        color: #e0e0e0;
-        font-family: Arial;
-    }
-    h1 { color: #4dc4ff; }
-    h2 { color: #ff6b9d; }
-    p  { color: #cccccc; }
-    a  { color: #ffd166; }
+    p { color: navy; }
+    h1 { color: darkred; }
+    a { color: orange; }
 &lt;/style&gt;
 
-&lt;h1&gt;Dark Mode&lt;/h1&gt;
-&lt;h2&gt;Easy on the eyes&lt;/h2&gt;
-&lt;p&gt;Background is dark.
-   Text is light.
-   Check the contrast.&lt;/p&gt;</pre>
+&lt;h1&gt;My Coloured Page&lt;/h1&gt;
+&lt;p&gt;The page has a light yellow background.
+   The text is navy.&lt;/p&gt;
+&lt;p&gt;&lt;a href="#"&gt;An orange link&lt;/a&gt;&lt;/p&gt;</pre><pre class="code-ref" data-section="6" data-step="3" hidden>&lt;style&gt;
+    body {
+        background-image:
+            url("https://yunshugao.github.io/year9-computing/pic.jpg");
+        font-family: "Arial";
+        font-size: 16px;
+        color: white;
+    }
+    p {
+        background-color: rgba(0,0,0,0.6);
+        padding: 10px;
+    }
+&lt;/style&gt;
+
+&lt;h1&gt;Background image&lt;/h1&gt;
+&lt;p&gt;Text on top of an image.
+   The dark background behind the text
+   makes it readable.&lt;/p&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1510,111 +1500,92 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-6" data-save="done-6" onchange="updateDoneStyle(6)">
         <label for="done-6">I finished Section 6</label>
       </div>
-      <div class="next-link"><a href="#sec-7">Next: Section 7 &mdash; Fonts &amp; Borders &rarr;</a></div>
+      <div class="next-link"><a href="#sec-7">Next: Section 7 &mdash; More CSS &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 7 - Fonts & Borders
+     SECTION 7 - More CSS
      ============================================================ -->
 <section class="lab" id="sec-7" data-section="7">
   <div class="sec-head">
     <span class="sec-num">7</span>
-    <h2>Fonts &amp; Borders</h2>
+    <h2>More CSS</h2>
+    
     <span class="tier-ribbon" data-ribbon="7">COULD DO</span>
   </div>
-  <p class="sec-intro">
-    Three design exercises. Pair fonts. Build a card. Make a callout box. These are the building blocks of modern web design.
-  </p>
+  <p class="sec-intro">Combine many properties. Move some to body (inheritance). Add borders. CSS rule = selector { property: value; }.</p>
 
   <div class="step-tabs" data-section="7">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(7,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(7,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(7,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-7"><span class="task-text">Use TWO different fonts: one for headings, another for body text.</span><button type="button" class="next-step-btn" onclick="advanceStep(7)" id="advance-7">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-7"><span class="task-text">Style p with five properties at once: color, background-color, font-size, font-weight, font-family.</span><button type="button" class="next-step-btn" onclick="advanceStep(7)" id="advance-7">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="7" data-step="1">&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Two Fonts&lt;/title&gt;
-    &lt;style&gt;
-        body {
-            font-family: Georgia, serif;
-            font-size: 17px;
-            line-height: 1.6;
-        }
-        h1, h2 {
-            font-family: "Arial Black", sans-serif;
-            letter-spacing: 1px;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Magazine Style&lt;/h1&gt;
-    &lt;h2&gt;A neat headline&lt;/h2&gt;
-    &lt;p&gt;The body uses a serif font (Georgia).
-       Headings use a sans-serif font
-       (Arial Black). Two fonts = visual rhythm.&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="7" data-step="2" hidden>&lt;style&gt;
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f6fb;
-        padding: 20px;
+<pre class="code-ref" data-section="7" data-step="1">&lt;style&gt;
+    p {
+        color: white;
+        background-color: black;
+        font-size: 14px;
+        font-weight: normal;
+        font-family: "Calibri", "Arial",
+                     "Helvetica";
     }
-    .card {
-        border: 2px solid #1f3a68;
-        border-radius: 12px;
-        padding: 20px 24px;
-        margin: 16px 0;
-        max-width: 320px;
-        background-color: white;
-    }
-    .card h2 {
-        margin-top: 0;
-        color: #1f3a68;
-    }
+    a { color: aqua; }
 &lt;/style&gt;
 
-&lt;div class="card"&gt;
-    &lt;h2&gt;My Card&lt;/h2&gt;
-    &lt;p&gt;Cards are everywhere.
-       Twitter posts, Instagram, news sites.
-       All cards.&lt;/p&gt;
-&lt;/div&gt;</pre>
-<pre class="code-ref" data-section="7" data-step="3" hidden>&lt;style&gt;
+&lt;p&gt;A paragraph with white text on black,
+   in a sans-serif font.&lt;/p&gt;
+&lt;p&gt;Go to &lt;a href="#"&gt;w3schools&lt;/a&gt;.&lt;/p&gt;</pre><pre class="code-ref" data-section="7" data-step="2" hidden>&lt;style&gt;
     body {
-        font-family: Arial;
-        padding: 20px;
+        color: white;
+        background-color: black;
     }
-    .note {
-        border-left: 5px solid #f59e0b;
-        background: #fffbeb;
-        padding: 14px 18px;
-        margin: 16px 0;
-        border-radius: 4px;
+    p {
+        font-size: 14px;
+        font-weight: normal;
+        font-family: "Calibri", "Arial";
+        border-width: thick;
+        border-style: solid;
+        border-color: blue;
+        text-decoration: overline;
     }
-    .note h3 {
-        margin: 0 0 6px 0;
-        color: #92400e;
-    }
-    .note p {
-        margin: 0;
-        color: #78350f;
-    }
+    a { color: aqua; }
 &lt;/style&gt;
 
-&lt;div class="note"&gt;
-    &lt;h3&gt;Important note&lt;/h3&gt;
-    &lt;p&gt;Remember to submit your work
-       before the bell.&lt;/p&gt;
-&lt;/div&gt;</pre>
+&lt;p&gt;A paragraph with a thick blue border.&lt;/p&gt;
+&lt;p&gt;Try changing the border style:
+   dotted, dashed, double.&lt;/p&gt;</pre><pre class="code-ref" data-section="7" data-step="3" hidden>&lt;style&gt;
+    body {
+        background-color: lightblue;
+        font-family: "Times New Roman";
+        color: navy;
+    }
+    h1 {
+        color: white;
+        background-color: navy;
+        padding: 10px;
+        font-family: "Arial";
+    }
+    p {
+        font-size: 16px;
+        border-style: dotted;
+        border-color: grey;
+        border-width: medium;
+        padding: 5px;
+    }
+    a { color: orange; }
+&lt;/style&gt;
+
+&lt;h1&gt;A Final Style&lt;/h1&gt;
+&lt;p&gt;A paragraph with a dotted grey border.&lt;/p&gt;
+&lt;p&gt;Visit &lt;a href="#"&gt;a website&lt;/a&gt;.&lt;/p&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1972,12 +1943,12 @@ const TIER_CONFIG = {
 
 const SECTION_TITLES = {
   1:  "First Page",
-  2:  "Headings",
-  3:  "Lists, Links & Images",
-  4:  "Forms",
-  5:  "Tables",
+  2:  "Headings & Lists",
+  3:  "Tables",
+  4:  "More Tables",
+  5:  "Forms",
   6:  "Colours",
-  7:  "Fonts & Borders",
+  7:  "More CSS",
   8:  "Forms & Dropdown",
   9:  "Final Challenge"
 };
@@ -2037,27 +2008,27 @@ function buildTierBar() {
    STEP TABS - switch which reference is shown
    ==================================================== */
 const STEP_TASKS = {
-  1: ["Type the code on the left into the editor. Click Run.",
-      "Replace the name with your own. Add a second paragraph.",
-      "Make one word bold and one word italic."],
-  2: ["Type the code with three headings.",
-      "Add a third h2 about your school.",
-      "Pick one h2 and add an h3 sub-heading under it."],
-  3: ["Build a bullet list of 3 things you like.",
-      "Build a numbered list with a link inside.",
-      "Add an image with &lt;img&gt; and an alt description."],
-  4: ["Build a form with one name box and a Submit button.",
-      "Add email, password, and a big message box (textarea).",
-      "Add a select dropdown and a checkbox."],
-  5: ["Build a 2-row table with td. Add border=\"1\".",
-      "Add a heading row using th.",
-      "Build a 4-column school timetable: Period, Subject, Room, Teacher."],
-  6: ["Style 4 elements with a coordinated colour theme (body / h1 / h2 / p / a).",
-      "Add a background image. Make text readable on top.",
-      "Design a DARK MODE page. Dark background, light text, accent colour."],
-  7: ["Use TWO different fonts: one for headings, another for body text.",
-      "Build a styled CARD: border, padding, rounded corners, background.",
-      "Design a NOTE BOX (a coloured callout for an important message)."],
+  1: ["Build a page with title 'All About Me', a heading, and one paragraph.",
+      "Add an image with &lt;img&gt;. Add a horizontal line with &lt;hr&gt;.",
+      "Add a link with &lt;a href='...'&gt; to your favourite website."],
+  2: ["Build a page with two h2 sections and a paragraph under each.",
+      "Add a bullet list (ul) of 3 things you like.",
+      "Add a numbered list (ol) inside one of the bullet items - nested."],
+  3: ["Build a basic table: 2 rows x 2 columns. Use border=\"1\".",
+      "Build a bigger table: 3 columns x 4 rows.",
+      "Add an &lt;img&gt; inside one of the table cells."],
+  4: ["Build a table with a heading row (th) and 2 data rows (td).",
+      "Build a 4-column table with th + td.",
+      "Build a school timetable: Period, Subject, Room, Teacher."],
+  5: ["Build a form with one Name box and a Submit button.",
+      "Add more inputs: Name, Address, Phone.",
+      "Build a Login form with username + password + remember me checkbox."],
+  6: ["Style paragraphs red and links aqua, using a &lt;style&gt; block.",
+      "Add a body background colour. Style h1, p, a all together.",
+      "Add a background image + Arial font + text on top with dark overlay."],
+  7: ["Style p with five properties: color, background-color, font-size, font-weight, font-family.",
+      "Move some properties to body (inheritance). Add a border to p.",
+      "Combine it all: body styles + h1 styles + p borders + a colour."],
   8: ["Build a simple form: Name input + Submit button.",
       "Build a feedback form: name + email + message textarea.",
       "Build a login form: username + password.",
