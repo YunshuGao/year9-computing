@@ -6,6 +6,8 @@
    h1 {color:navy;}
    h2 {color:navy;}
    table,td,th {border-style:solid; border-color:navy; border-width:2px;}
+   form {background: white; padding: 16px 20px; border-radius: 8px; max-width: 420px; margin-top: 14px;}
+   form input[type="submit"] {background: navy; color: white; padding: 8px 18px; border: 0; border-radius: 4px; cursor: pointer; font-weight: bold;}
 </style>
 </head>
 
@@ -31,9 +33,21 @@
      <tr><td>Hawks vs Lions</td><td>76</td></tr>
   </table>
   <p><img src="pic.jpg"> </p>
+
+  <h2>Join my fan club</h2>
   <form>
-     Name: <input type="text">
-     <input type="submit">
+     Name: <input type="text"><br><br>
+     Email: <input type="email"><br><br>
+     Favourite player:
+     <select>
+        <option>LeBron James</option>
+        <option>Stephen Curry</option>
+        <option>Ja Morant</option>
+     </select><br><br>
+     Comments:<br>
+     <textarea rows="3" cols="35"></textarea><br><br>
+     <input type="checkbox"> Send me updates<br><br>
+     <input type="submit" value="Join">
   </form>
 </body>
 </html>

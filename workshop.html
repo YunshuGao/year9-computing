@@ -1344,59 +1344,80 @@ section.lab.today-focus::before {
     
     <span class="tier-ribbon" data-ribbon="5">MUST DO</span>
   </div>
-  <p class="sec-intro">A form lets people fill in answers. <code>&lt;form&gt;</code> wraps it. <code>&lt;input type="text"&gt;</code> is a typing box. <code>&lt;input type="submit"&gt;</code> is the submit button.</p>
+  <p class="sec-intro">Forms collect information. Five common types: <strong>simple</strong>, <strong>sign-up</strong>, <strong>contact</strong>, <strong>login</strong>, <strong>survey</strong>.</p>
 
   <div class="step-tabs" data-section="5">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(5,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(5,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(5,3)"><span class="num-dot">3</span></button>
+    <button type="button" class="step-tab" data-step="4" onclick="showStep(5,4)"><span class="num-dot">4</span></button>
+    <button type="button" class="step-tab" data-step="5" onclick="showStep(5,5)"><span class="num-dot">5</span></button>
   </div>
-  <div class="step-task" id="task-5"><span class="task-text">Build a form with one Name box and a Submit button.</span><button type="button" class="next-step-btn" onclick="advanceStep(5)" id="advance-5">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-5"><span class="task-text">Build a simple form: one Name box and a Submit button.</span><button type="button" class="next-step-btn" onclick="advanceStep(5)" id="advance-5">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="5" data-step="1">&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Sign Up&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Sign Up&lt;/h1&gt;
-    &lt;form&gt;
-        Name:
-        &lt;input type="text" name="name1"&gt;
-        &lt;input type="submit" name="Submit"&gt;
-    &lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre><pre class="code-ref" data-section="5" data-step="2" hidden>&lt;form&gt;
-    Name:
-    &lt;input type="text" name="name1"&gt;
+<pre class="code-ref" data-section="5" data-step="1">&lt;form&gt;
+    Name: &lt;input type="text" name="name"&gt;
     &lt;br&gt;&lt;br&gt;
-
-    Address:
-    &lt;input type="text" name="address"&gt;
-    &lt;br&gt;&lt;br&gt;
-
-    Phone:
-    &lt;input type="text" name="phone"&gt;
-    &lt;br&gt;&lt;br&gt;
-
-    &lt;input type="submit" name="Submit"&gt;
-&lt;/form&gt;</pre><pre class="code-ref" data-section="5" data-step="3" hidden>&lt;h1&gt;Login&lt;/h1&gt;
+    &lt;input type="submit" value="Send"&gt;
+&lt;/form&gt;</pre><pre class="code-ref" data-section="5" data-step="2" hidden>&lt;h1&gt;Sign Up&lt;/h1&gt;
 &lt;form&gt;
-    Username:
-    &lt;input type="text" name="username"&gt;
-    &lt;br&gt;&lt;br&gt;
+    Name:
+    &lt;input type="text" name="name"&gt;&lt;br&gt;&lt;br&gt;
+
+    Email:
+    &lt;input type="email" name="email"&gt;&lt;br&gt;&lt;br&gt;
 
     Password:
-    &lt;input type="password" name="password"&gt;
-    &lt;br&gt;&lt;br&gt;
+    &lt;input type="password" name="pw"&gt;&lt;br&gt;&lt;br&gt;
 
-    Remember me?
+    &lt;input type="submit" value="Sign Up"&gt;
+&lt;/form&gt;</pre><pre class="code-ref" data-section="5" data-step="3" hidden>&lt;h1&gt;Contact Us&lt;/h1&gt;
+&lt;form&gt;
+    Name:
+    &lt;input type="text" name="name"&gt;&lt;br&gt;&lt;br&gt;
+
+    Email:
+    &lt;input type="email" name="email"&gt;&lt;br&gt;&lt;br&gt;
+
+    Your message:&lt;br&gt;
+    &lt;textarea name="msg"
+              rows="4" cols="40"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;input type="submit" value="Send"&gt;
+&lt;/form&gt;</pre><pre class="code-ref" data-section="5" data-step="4" hidden>&lt;h1&gt;Login&lt;/h1&gt;
+&lt;form&gt;
+    Username:
+    &lt;input type="text" name="user"&gt;&lt;br&gt;&lt;br&gt;
+
+    Password:
+    &lt;input type="password" name="pw"&gt;&lt;br&gt;&lt;br&gt;
+
     &lt;input type="checkbox" name="remember"&gt;
-    &lt;br&gt;&lt;br&gt;
+    Remember me&lt;br&gt;&lt;br&gt;
 
-    &lt;input type="submit" name="Submit"&gt;
+    &lt;input type="submit" value="Log in"&gt;
+&lt;/form&gt;</pre><pre class="code-ref" data-section="5" data-step="5" hidden>&lt;h1&gt;Quick Survey&lt;/h1&gt;
+&lt;form&gt;
+    Favourite subject?&lt;br&gt;
+    &lt;input type="radio" name="sub"&gt; Computing&lt;br&gt;
+    &lt;input type="radio" name="sub"&gt; Maths&lt;br&gt;
+    &lt;input type="radio" name="sub"&gt; PE&lt;br&gt;&lt;br&gt;
+
+    What do you enjoy?&lt;br&gt;
+    &lt;input type="checkbox"&gt; Games&lt;br&gt;
+    &lt;input type="checkbox"&gt; Music&lt;br&gt;
+    &lt;input type="checkbox"&gt; Sport&lt;br&gt;&lt;br&gt;
+
+    Year:
+    &lt;select&gt;
+        &lt;option&gt;Year 9&lt;/option&gt;
+        &lt;option&gt;Year 10&lt;/option&gt;
+    &lt;/select&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;input type="submit"&gt;
 &lt;/form&gt;</pre>
     </div>
 
@@ -1428,81 +1449,104 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-5" data-save="done-5" onchange="updateDoneStyle(5)">
         <label for="done-5">I finished Section 5</label>
       </div>
-      <div class="next-link"><a href="#sec-6">Next: Section 6 &mdash; Colours &rarr;</a></div>
+      <div class="next-link"><a href="#sec-6">Next: Section 6 &mdash; Multi-page Menu &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 6 - Colours &amp; CSS
+     SECTION 6 - Multi-page Menu
      ============================================================ -->
 <section class="lab" id="sec-6" data-section="6">
   <div class="sec-head">
     <span class="sec-num">6</span>
-    <h2>Colours &amp; CSS</h2>
+    <h2>Multi-page Menu</h2>
     
     <span class="tier-ribbon" data-ribbon="6">COULD DO</span>
   </div>
-  <p class="sec-intro">CSS goes inside <code>&lt;style&gt;</code> in the head. Each rule: selector + property + value.</p>
+  <p class="sec-intro">Real websites have many pages linked by a <strong>menu</strong>. Use <code>&lt;nav&gt;</code> + <code>&lt;a href&gt;</code> links. The same menu appears on every page.</p>
 
   <div class="step-tabs" data-section="6">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(6,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(6,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(6,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-6"><span class="task-text">Style paragraphs red and links aqua, using a style block.</span><button type="button" class="next-step-btn" onclick="advanceStep(6)" id="advance-6">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-6"><span class="task-text">Build a basic nav menu with 3 links: Home, About, Contact.</span><button type="button" class="next-step-btn" onclick="advanceStep(6)" id="advance-6">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="6" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;Lorem Ipsum&lt;/title&gt;
-    &lt;style&gt;
-        p { color: red; }
-        a { color: aqua; }
-    &lt;/style&gt;
+    &lt;title&gt;Home&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;p&gt;Lorem ipsum dolor sit amet,
-       consectetur adipiscing elit.&lt;/p&gt;
-    &lt;p&gt;Go to
-       &lt;a href="https://www.w3schools.com"&gt;
-           w3schools
-       &lt;/a&gt;
-       to learn more.&lt;/p&gt;
+    &lt;nav&gt;
+        &lt;a href="index.html"&gt;Home&lt;/a&gt; |
+        &lt;a href="about.html"&gt;About&lt;/a&gt; |
+        &lt;a href="contact.html"&gt;Contact&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;hr&gt;
+
+    &lt;h1&gt;Welcome&lt;/h1&gt;
+    &lt;p&gt;Click the menu above to look around.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre><pre class="code-ref" data-section="6" data-step="2" hidden>&lt;style&gt;
     body {
-        background-color: lightyellow;
+        font-family: Arial;
+        margin: 0;
     }
-    p { color: navy; }
-    h1 { color: darkred; }
-    a { color: orange; }
-&lt;/style&gt;
-
-&lt;h1&gt;My Coloured Page&lt;/h1&gt;
-&lt;p&gt;The page has a light yellow background.
-   The text is navy.&lt;/p&gt;
-&lt;p&gt;&lt;a href="#"&gt;An orange link&lt;/a&gt;&lt;/p&gt;</pre><pre class="code-ref" data-section="6" data-step="3" hidden>&lt;style&gt;
-    body {
-        background-image:
-            url("https://yunshugao.github.io/year9-computing/pic.jpg");
-        font-family: "Arial";
-        font-size: 16px;
+    nav {
+        background: navy;
+        padding: 14px 22px;
+    }
+    nav a {
         color: white;
+        text-decoration: none;
+        padding: 6px 14px;
+        font-weight: bold;
     }
-    p {
-        background-color: rgba(0,0,0,0.6);
-        padding: 10px;
+    nav a:hover {
+        background: orange;
+        border-radius: 4px;
     }
+    h1, p { padding: 0 22px; }
 &lt;/style&gt;
 
-&lt;h1&gt;Background image&lt;/h1&gt;
-&lt;p&gt;Text on top of an image.
-   The dark background behind the text
-   makes it readable.&lt;/p&gt;</pre>
+&lt;nav&gt;
+    &lt;a href="index.html"&gt;Home&lt;/a&gt;
+    &lt;a href="about.html"&gt;About&lt;/a&gt;
+    &lt;a href="contact.html"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;h1&gt;Welcome&lt;/h1&gt;
+&lt;p&gt;A styled menu.&lt;/p&gt;</pre><pre class="code-ref" data-section="6" data-step="3" hidden>&lt;!-- One page with multiple sections.
+     In real life you would build
+     index.html, about.html, contact.html
+     each with this same &lt;nav&gt; at top. --&gt;
+
+&lt;nav&gt;
+    &lt;a href="#home"&gt;Home&lt;/a&gt; |
+    &lt;a href="#about"&gt;About&lt;/a&gt; |
+    &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+&lt;hr&gt;
+
+&lt;section id="home"&gt;
+    &lt;h1&gt;Home&lt;/h1&gt;
+    &lt;p&gt;Welcome to my site!&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section id="about"&gt;
+    &lt;h2&gt;About me&lt;/h2&gt;
+    &lt;p&gt;I'm a Year 9 student.&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section id="contact"&gt;
+    &lt;h2&gt;Contact&lt;/h2&gt;
+    &lt;p&gt;Email me: sam@example.com&lt;/p&gt;
+&lt;/section&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1533,92 +1577,70 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-6" data-save="done-6" onchange="updateDoneStyle(6)">
         <label for="done-6">I finished Section 6</label>
       </div>
-      <div class="next-link"><a href="#sec-7">Next: Section 7 &mdash; More CSS &rarr;</a></div>
+      <div class="next-link"><a href="#sec-7">Next: Section 7 &mdash; Dropdown Menu &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 7 - More CSS
+     SECTION 7 - Dropdown Menu
      ============================================================ -->
-<section class="lab" id="sec-7" data-section="7">
+<section class="lab today-focus" id="sec-7" data-section="7">
   <div class="sec-head">
     <span class="sec-num">7</span>
-    <h2>More CSS</h2>
-    
+    <h2>Dropdown Menu</h2>
+    <span class="today-badge">&#9733; TODAY</span>
     <span class="tier-ribbon" data-ribbon="7">COULD DO</span>
   </div>
-  <p class="sec-intro">Combine many properties. Move some to body (inheritance). Add borders. CSS rule = selector { property: value; }.</p>
+  <p class="sec-intro">A dropdown shows or hides content when clicked. Just <strong>two tags</strong>: <code>&lt;details&gt;</code> wraps it, <code>&lt;summary&gt;</code> is what you click. <strong>No JavaScript needed.</strong></p>
 
   <div class="step-tabs" data-section="7">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(7,1)"><span class="num-dot">1</span></button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(7,2)"><span class="num-dot">2</span></button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(7,3)"><span class="num-dot">3</span></button>
   </div>
-  <div class="step-task" id="task-7"><span class="task-text">Style p with five properties at once: color, background-color, font-size, font-weight, font-family.</span><button type="button" class="next-step-btn" onclick="advanceStep(7)" id="advance-7">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-7"><span class="task-text">Build a basic dropdown using <details> and <summary>.</span><button type="button" class="next-step-btn" onclick="advanceStep(7)" id="advance-7">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="7" data-step="1">&lt;style&gt;
-    p {
-        color: white;
-        background-color: black;
-        font-size: 14px;
-        font-weight: normal;
-        font-family: "Calibri", "Arial",
-                     "Helvetica";
-    }
-    a { color: aqua; }
-&lt;/style&gt;
+<pre class="code-ref" data-section="7" data-step="1">&lt;h1&gt;Help&lt;/h1&gt;
 
-&lt;p&gt;A paragraph with white text on black,
-   in a sans-serif font.&lt;/p&gt;
-&lt;p&gt;Go to &lt;a href="#"&gt;w3schools&lt;/a&gt;.&lt;/p&gt;</pre><pre class="code-ref" data-section="7" data-step="2" hidden>&lt;style&gt;
-    body {
-        color: white;
-        background-color: black;
-    }
-    p {
-        font-size: 14px;
-        font-weight: normal;
-        font-family: "Calibri", "Arial";
-        border-width: thick;
-        border-style: solid;
-        border-color: blue;
-        text-decoration: overline;
-    }
-    a { color: aqua; }
-&lt;/style&gt;
+&lt;details&gt;
+    &lt;summary&gt;Click to open&lt;/summary&gt;
+    &lt;p&gt;This is the hidden content.
+       It only shows when you click
+       the summary above.&lt;/p&gt;
+&lt;/details&gt;</pre><pre class="code-ref" data-section="7" data-step="2" hidden>&lt;h1&gt;Frequently Asked Questions&lt;/h1&gt;
 
-&lt;p&gt;A paragraph with a thick blue border.&lt;/p&gt;
-&lt;p&gt;Try changing the border style:
-   dotted, dashed, double.&lt;/p&gt;</pre><pre class="code-ref" data-section="7" data-step="3" hidden>&lt;style&gt;
-    body {
-        background-color: lightblue;
-        font-family: "Times New Roman";
-        color: navy;
-    }
-    h1 {
-        color: white;
-        background-color: navy;
-        padding: 10px;
-        font-family: "Arial";
-    }
-    p {
-        font-size: 16px;
-        border-style: dotted;
-        border-color: grey;
-        border-width: medium;
-        padding: 5px;
-    }
-    a { color: orange; }
-&lt;/style&gt;
+&lt;details&gt;
+    &lt;summary&gt;How do I sign up?&lt;/summary&gt;
+    &lt;p&gt;Fill in the form. Click Send.&lt;/p&gt;
+&lt;/details&gt;
 
-&lt;h1&gt;A Final Style&lt;/h1&gt;
-&lt;p&gt;A paragraph with a dotted grey border.&lt;/p&gt;
-&lt;p&gt;Visit &lt;a href="#"&gt;a website&lt;/a&gt;.&lt;/p&gt;</pre>
+&lt;details&gt;
+    &lt;summary&gt;Is my data safe?&lt;/summary&gt;
+    &lt;p&gt;Yes - we never share it.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;Where do answers go?&lt;/summary&gt;
+    &lt;p&gt;To the website owner.&lt;/p&gt;
+&lt;/details&gt;</pre><pre class="code-ref" data-section="7" data-step="3" hidden>&lt;nav&gt;
+    &lt;a href="#"&gt;Home&lt;/a&gt;
+
+    &lt;details&gt;
+        &lt;summary&gt;Photos&lt;/summary&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Sport&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;School&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Family&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/details&gt;
+
+    &lt;a href="#"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1649,25 +1671,28 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-7" data-save="done-7" onchange="updateDoneStyle(7)">
         <label for="done-7">I finished Section 7</label>
       </div>
-      <div class="next-link"><a href="#sec-8">Next: Section 8 &mdash; Today's focus &rarr;</a></div>
+      <div class="next-link"><a href="#sec-8">Next: Section 8 &mdash; Final Challenge &rarr;</a></div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SECTION 8 - TODAY'S FOCUS - Forms (x4) & Dropdown
+     SECTION 8 - Final Challenge &mdash; All About Sam
      ============================================================ -->
-<section class="lab today-focus" id="sec-8" data-section="8">
+<section class="lab" id="sec-8" data-section="8">
   <div class="sec-head">
     <span class="sec-num">8</span>
-    <h2>Forms &amp; Dropdown</h2>
-    <span class="today-badge">&#9733; TODAY</span>
+    <h2>Final Challenge &mdash; All About Sam</h2>
+    
     <span class="tier-ribbon" data-ribbon="8">SHOULD DO</span>
   </div>
-  <p class="sec-intro">
-    Four different forms. Then one dropdown. Each step adds ONE new thing.
-  </p>
+  <p class="sec-intro">Recreate the webpage from your pre-test. This version has a <strong>harder form</strong>: Name + Email + favourite-player dropdown + Comments + checkbox. Build it piece by piece. Compare to the target.</p>
+  <div class="target-preview">
+    <div class="target-label">&#9733; This is what you're building</div>
+    <iframe class="target-frame" src="target.html" title="Target preview"></iframe>
+    <p class="target-help">Compare your result on the right to this target as you build.</p>
+  </div>
 
   <div class="step-tabs" data-section="8">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(8,1)"><span class="num-dot">1</span></button>
@@ -1676,109 +1701,100 @@ section.lab.today-focus::before {
     <button type="button" class="step-tab" data-step="4" onclick="showStep(8,4)"><span class="num-dot">4</span></button>
     <button type="button" class="step-tab" data-step="5" onclick="showStep(8,5)"><span class="num-dot">5</span></button>
   </div>
-  <div class="step-task" id="task-8"><span class="task-text">Build a simple form: Name input + Submit button.</span><button type="button" class="next-step-btn" onclick="advanceStep(8)" id="advance-8">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-8"><span class="task-text">Structure: title 'All about Sam', h1, h2 'My Favourite Things', intro paragraph.</span><button type="button" class="next-step-btn" onclick="advanceStep(8)" id="advance-8">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="8" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;Sign Up&lt;/title&gt;
+    &lt;title&gt;All about Sam&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;Sign Up&lt;/h1&gt;
-    &lt;form&gt;
-        &lt;label&gt;Name:
-            &lt;input type="text" name="name"&gt;
-        &lt;/label&gt;
-        &lt;br&gt;&lt;br&gt;
-        &lt;input type="submit" value="Submit"&gt;
-    &lt;/form&gt;
+    &lt;h1&gt;All About Sam&lt;/h1&gt;
+    &lt;h2&gt;My Favourite Things&lt;/h2&gt;
+    &lt;p&gt;Hey, I'm Sam! I'm in Year 9
+       and basketball is pretty much
+       my whole life. I train twice a week.&lt;/p&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="2" hidden>&lt;h1&gt;Contact Us&lt;/h1&gt;
-&lt;form&gt;
-    &lt;label&gt;Name:
-        &lt;input type="text" name="name"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="8" data-step="2" hidden>&lt;body&gt;
+    &lt;h1&gt;All About Sam&lt;/h1&gt;
+    &lt;h2&gt;My Favourite Things&lt;/h2&gt;
+    &lt;p&gt;Hey, I'm Sam!...&lt;/p&gt;
 
-    &lt;label&gt;Email:
-        &lt;input type="email" name="email"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+    &lt;ul&gt;
+        &lt;li&gt;dribbling drills&lt;/li&gt;
+        &lt;li&gt;free throws&lt;/li&gt;
+        &lt;li&gt;watching the NBA&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/body&gt;</pre><pre class="code-ref" data-section="8" data-step="3" hidden>    &lt;ul&gt;
+        &lt;li&gt;dribbling drills&lt;/li&gt;
+        &lt;li&gt;free throws&lt;/li&gt;
+        &lt;li&gt;watching the NBA&lt;/li&gt;
+    &lt;/ul&gt;
 
-    &lt;label&gt;Your message:&lt;br&gt;
-        &lt;textarea name="msg"
-                  rows="4" cols="40"&gt;&lt;/textarea&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+    &lt;h2&gt;My Top 3 Players&lt;/h2&gt;
+    &lt;ol&gt;
+        &lt;li&gt;LeBron James&lt;/li&gt;
+        &lt;li&gt;Stephen Curry&lt;/li&gt;
+        &lt;li&gt;Ja Morant&lt;/li&gt;
+    &lt;/ol&gt;</pre><pre class="code-ref" data-section="8" data-step="4" hidden>    &lt;table&gt;
+        &lt;tr&gt;&lt;th&gt;Game&lt;/th&gt;&lt;th&gt;Points&lt;/th&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Eagles vs Tigers&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;Hawks vs Lions&lt;/td&gt;&lt;td&gt;76&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
 
-    &lt;input type="submit" value="Send"&gt;
-&lt;/form&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;h1&gt;Login&lt;/h1&gt;
-&lt;form&gt;
-    &lt;label&gt;Username:
-        &lt;input type="text" name="user"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+    &lt;p&gt;&lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"&gt;&lt;/p&gt;
 
-    &lt;label&gt;Password:
-        &lt;input type="password" name="pw"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;input type="submit" value="Log in"&gt;
-&lt;/form&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="4" hidden>&lt;h1&gt;Quick Survey&lt;/h1&gt;
-&lt;form&gt;
-    &lt;p&gt;Favourite subject?&lt;/p&gt;
-    &lt;label&gt;&lt;input type="radio"
-                  name="sub" value="comp"&gt;
-           Computing&lt;/label&gt;&lt;br&gt;
-    &lt;label&gt;&lt;input type="radio"
-                  name="sub" value="math"&gt;
-           Maths&lt;/label&gt;&lt;br&gt;
-    &lt;label&gt;&lt;input type="radio"
-                  name="sub" value="art"&gt;
-           Art&lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;p&gt;What do you enjoy?&lt;/p&gt;
-    &lt;label&gt;&lt;input type="checkbox"&gt;
-           Games&lt;/label&gt;&lt;br&gt;
-    &lt;label&gt;&lt;input type="checkbox"&gt;
-           Music&lt;/label&gt;&lt;br&gt;
-    &lt;label&gt;&lt;input type="checkbox"&gt;
-           Sport&lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;label&gt;Year level:
-        &lt;select name="year"&gt;
-            &lt;option&gt;Year 7&lt;/option&gt;
-            &lt;option&gt;Year 8&lt;/option&gt;
-            &lt;option&gt;Year 9&lt;/option&gt;
-            &lt;option&gt;Year 10&lt;/option&gt;
-        &lt;/select&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;input type="submit" value="Submit"&gt;
-&lt;/form&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="5" hidden>&lt;h1&gt;Help &amp; FAQ&lt;/h1&gt;
-
-&lt;details&gt;
-    &lt;summary&gt;How do I sign up?&lt;/summary&gt;
-    &lt;p&gt;Fill in the form. Click Send.&lt;/p&gt;
-&lt;/details&gt;
-
-&lt;details&gt;
-    &lt;summary&gt;Where do my answers go?&lt;/summary&gt;
-    &lt;p&gt;To the website owner.&lt;/p&gt;
-&lt;/details&gt;
-
-&lt;details&gt;
-    &lt;summary&gt;Is my data safe?&lt;/summary&gt;
-    &lt;p&gt;Yes - we never share it.&lt;/p&gt;
-&lt;/details&gt;</pre>
+    &lt;h2&gt;Join my fan club&lt;/h2&gt;
+    &lt;form&gt;
+        Name: &lt;input type="text"&gt;&lt;br&gt;&lt;br&gt;
+        Email: &lt;input type="email"&gt;&lt;br&gt;&lt;br&gt;
+        Favourite player:
+        &lt;select&gt;
+            &lt;option&gt;LeBron James&lt;/option&gt;
+            &lt;option&gt;Stephen Curry&lt;/option&gt;
+            &lt;option&gt;Ja Morant&lt;/option&gt;
+        &lt;/select&gt;&lt;br&gt;&lt;br&gt;
+        Comments:&lt;br&gt;
+        &lt;textarea rows="3" cols="35"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;
+        &lt;input type="checkbox"&gt; Send me updates&lt;br&gt;&lt;br&gt;
+        &lt;input type="submit" value="Join"&gt;
+    &lt;/form&gt;</pre><pre class="code-ref" data-section="8" data-step="5" hidden>&lt;head&gt;
+    &lt;title&gt;All about Sam&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            background-color: lightblue;
+            font-family: Arial;
+        }
+        h1, h2 { color: navy; }
+        table, td, th {
+            border-style: solid;
+            border-color: navy;
+            border-width: 2px;
+        }
+        form {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            max-width: 420px;
+        }
+        input[type="submit"] {
+            background: navy;
+            color: white;
+            padding: 8px 18px;
+            border: 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;</pre>
     </div>
 
     <div class="col col-type">
       <div class="col-label"><span class="col-num">2</span> Type here</div>
-      <textarea class="code-editor" data-save="code-8" data-section="8"
-                spellcheck="false" placeholder="Type the code from the left."></textarea>
+      <textarea class="code-editor" data-save="code-8" data-section="8" spellcheck="false"></textarea>
       <div class="run-row">
         <button type="button" class="run-btn" onclick="runSection(8)">Run</button>
         <button type="button" class="clear-btn" onclick="clearEditor(8)">Clear</button>
@@ -1804,29 +1820,22 @@ section.lab.today-focus::before {
         <input type="checkbox" id="done-8" data-save="done-8" onchange="updateDoneStyle(8)">
         <label for="done-8">I finished Section 8</label>
       </div>
-      <div class="next-link"><a href="#sec-9">Next: Section 9 &mdash; Final Challenge &rarr;</a></div>
+      <div class="next-link"><a href="#sec-9">Next: Section 9 &mdash; Multi-page Project &rarr;</a></div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SECTION 9 - FINAL CHALLENGE - Build "All About Sam"
+     SECTION 9 - Multi-page Project
      ============================================================ -->
 <section class="lab" id="sec-9" data-section="9">
   <div class="sec-head">
     <span class="sec-num">9</span>
-    <h2>Final Challenge &mdash; All About Sam</h2>
+    <h2>Multi-page Project</h2>
+    
     <span class="tier-ribbon" data-ribbon="9">SHOULD DO</span>
   </div>
-  <p class="sec-intro">
-    Recreate the webpage from your pre-test. Build it piece by piece. Compare your work to the target below as you go.
-  </p>
-
-  <div class="target-preview">
-    <div class="target-label">&#9733; This is what you're building</div>
-    <iframe class="target-frame" src="target.html" title="Target: All About Sam page"></iframe>
-    <p class="target-help">Open this in a new tab if you want to see it bigger - or just keep comparing to your result on the right.</p>
-  </div>
+  <p class="sec-intro">Your final project. Build a <strong>3-page site</strong> with a shared <strong>nav menu</strong> and a <strong>dropdown</strong> in the menu. Use a contact form on the last page.</p>
 
   <div class="step-tabs" data-section="9">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(9,1)"><span class="num-dot">1</span></button>
@@ -1835,82 +1844,96 @@ section.lab.today-focus::before {
     <button type="button" class="step-tab" data-step="4" onclick="showStep(9,4)"><span class="num-dot">4</span></button>
     <button type="button" class="step-tab" data-step="5" onclick="showStep(9,5)"><span class="num-dot">5</span></button>
   </div>
-  <div class="step-task" id="task-9"><span class="task-text">Structure: title 'All about Sam', h1, h2 'My Favourite Things', intro paragraph.</span><button type="button" class="next-step-btn" onclick="advanceStep(9)" id="advance-9">Done &mdash; next &rarr;</button></div>
+  <div class="step-task" id="task-9"><span class="task-text">Build the Home page with a nav menu of 3 links.</span><button type="button" class="next-step-btn" onclick="advanceStep(9)" id="advance-9">Done &mdash; next &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="9" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;All about Sam&lt;/title&gt;
+    &lt;title&gt;My Site&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;All About Sam&lt;/h1&gt;
-    &lt;h2&gt;My Favourite Things&lt;/h2&gt;
-    &lt;p&gt;Hey, I'm Sam! I'm in Year 9
-       and basketball is pretty much my whole life.
-       I train twice a week.&lt;/p&gt;
+    &lt;nav&gt;
+        &lt;a href="#home"&gt;Home&lt;/a&gt; |
+        &lt;a href="#about"&gt;About&lt;/a&gt; |
+        &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;hr&gt;
+
+    &lt;section id="home"&gt;
+        &lt;h1&gt;Welcome&lt;/h1&gt;
+        &lt;p&gt;This is my site.&lt;/p&gt;
+    &lt;/section&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="9" data-step="2" hidden>&lt;body&gt;
-    &lt;h1&gt;All About Sam&lt;/h1&gt;
-    &lt;h2&gt;My Favourite Things&lt;/h2&gt;
-    &lt;p&gt;Hey, I'm Sam! I'm in Year 9
-       and basketball is pretty much
-       my whole life. I train twice a week.&lt;/p&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="9" data-step="2" hidden>    &lt;section id="about"&gt;
+        &lt;h2&gt;About me&lt;/h2&gt;
+        &lt;p&gt;I'm a Year 9 student
+           at high school.&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li&gt;I love coding&lt;/li&gt;
+            &lt;li&gt;I play basketball&lt;/li&gt;
+            &lt;li&gt;I love music&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/section&gt;</pre><pre class="code-ref" data-section="9" data-step="3" hidden>    &lt;section id="contact"&gt;
+        &lt;h2&gt;Contact me&lt;/h2&gt;
+        &lt;form&gt;
+            Name:
+            &lt;input type="text"&gt;&lt;br&gt;&lt;br&gt;
 
-    &lt;ul&gt;
-        &lt;li&gt;dribbling drills&lt;/li&gt;
-        &lt;li&gt;free throws&lt;/li&gt;
-        &lt;li&gt;watching the NBA&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/body&gt;</pre>
-<pre class="code-ref" data-section="9" data-step="3" hidden>    &lt;ul&gt;
-        &lt;li&gt;dribbling drills&lt;/li&gt;
-        &lt;li&gt;free throws&lt;/li&gt;
-        &lt;li&gt;watching the NBA&lt;/li&gt;
-    &lt;/ul&gt;
+            Email:
+            &lt;input type="email"&gt;&lt;br&gt;&lt;br&gt;
 
-    &lt;h2&gt;My Top 3 Players&lt;/h2&gt;
-    &lt;ol&gt;
-        &lt;li&gt;LeBron James&lt;/li&gt;
-        &lt;li&gt;Stephen Curry&lt;/li&gt;
-        &lt;li&gt;Ja Morant&lt;/li&gt;
-    &lt;/ol&gt;</pre>
-<pre class="code-ref" data-section="9" data-step="4" hidden>    &lt;ol&gt;
-        &lt;li&gt;LeBron James&lt;/li&gt;
-        &lt;li&gt;Stephen Curry&lt;/li&gt;
-        &lt;li&gt;Ja Morant&lt;/li&gt;
-    &lt;/ol&gt;
+            Message:&lt;br&gt;
+            &lt;textarea rows="3"
+                      cols="35"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;
 
-    &lt;table&gt;
-        &lt;tr&gt;&lt;th&gt;Game&lt;/th&gt;&lt;th&gt;Points&lt;/th&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Eagles vs Tigers&lt;/td&gt;&lt;td&gt;82&lt;/td&gt;&lt;/tr&gt;
-        &lt;tr&gt;&lt;td&gt;Hawks vs Lions&lt;/td&gt;&lt;td&gt;76&lt;/td&gt;&lt;/tr&gt;
-    &lt;/table&gt;
+            &lt;input type="submit"&gt;
+        &lt;/form&gt;
+    &lt;/section&gt;</pre><pre class="code-ref" data-section="9" data-step="4" hidden>&lt;nav&gt;
+    &lt;a href="#home"&gt;Home&lt;/a&gt;
 
-    &lt;p&gt;&lt;img src="https://yunshugao.github.io/year9-computing/pic.jpg"&gt;&lt;/p&gt;
+    &lt;details&gt;
+        &lt;summary&gt;About&lt;/summary&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#about-me"&gt;About me&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#hobbies"&gt;Hobbies&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#school"&gt;School&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/details&gt;
 
-    &lt;form&gt;
-        Name: &lt;input type="text"&gt;
-        &lt;input type="submit"&gt;
-    &lt;/form&gt;</pre>
-<pre class="code-ref" data-section="9" data-step="5" hidden>&lt;head&gt;
-    &lt;title&gt;All about Sam&lt;/title&gt;
-    &lt;style&gt;
-        body {
-            background-color: lightblue;
-            font-family: Arial;
-        }
-        h1 { color: navy; }
-        h2 { color: navy; }
-        table, td, th {
-            border-style: solid;
-            border-color: navy;
-            border-width: 2px;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;</pre>
+    &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;</pre><pre class="code-ref" data-section="9" data-step="5" hidden>&lt;style&gt;
+    body {
+        font-family: Arial;
+        margin: 0;
+    }
+    nav {
+        background: navy;
+        padding: 14px 22px;
+    }
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 6px 14px;
+        font-weight: bold;
+    }
+    nav details summary {
+        color: white;
+        cursor: pointer;
+        display: inline;
+        padding: 6px 14px;
+    }
+    nav a:hover { color: orange; }
+    section { padding: 20px 28px; }
+    h1, h2 { color: navy; }
+    form {
+        background: #f0f4ff;
+        padding: 16px;
+        border-radius: 8px;
+        max-width: 400px;
+    }
+&lt;/style&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1932,14 +1955,14 @@ section.lab.today-focus::before {
     <div class="reflection">
       <h4>Reflection</h4>
       <div class="ref-grid">
-        <div><label>What I learnt building this</label><textarea id="learnt-9" data-save="learnt-9"></textarea></div>
-        <div><label>What I would improve next time</label><textarea id="stuck-9" data-save="stuck-9"></textarea></div>
+        <div><label>What I learnt</label><textarea id="learnt-9" data-save="learnt-9"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-9" data-save="stuck-9"></textarea></div>
       </div>
     </div>
     <div class="done-card" id="done-card-9">
       <div class="done-row">
         <input type="checkbox" id="done-9" data-save="done-9" onchange="updateDoneStyle(9)">
-        <label for="done-9">I finished the Final Challenge</label>
+        <label for="done-9">I finished Section 9</label>
       </div>
       <div class="next-link"><a href="#" onclick="submitWork();return false;" style="background:#fde68a; color:#78350f; border-color:#f59e0b;">Submit My Work &rarr;</a></div>
     </div>
@@ -2005,10 +2028,10 @@ const SECTION_TITLES = {
   3:  "Tables",
   4:  "More Tables",
   5:  "Forms",
-  6:  "Colours",
-  7:  "More CSS",
-  8:  "Forms & Dropdown",
-  9:  "Final Challenge"
+  6:  "Multi-page Menu",
+  7:  "Dropdown Menu",
+  8:  "Final Challenge",
+  9:  "Multi-page Project"
 };
 
 const STORAGE_KEY = "cotyc-workshop-v2";
@@ -2053,7 +2076,7 @@ function buildTierBar() {
     zones[tier].forEach(n => {
       const a = document.createElement("a");
       a.href = "#sec-" + n;
-      a.className = "pill " + tier + (n === 8 ? " is-today" : "");
+      a.className = "pill " + tier + (n === 7 ? " is-today" : "");
       a.id = "pill-" + n;
       a.innerHTML = '<span class="num">' + n + '</span>' +
                     '<span class="ttl">' + (SECTION_TITLES[n] || ("Section " + n)) + '</span>';
@@ -2078,25 +2101,27 @@ const STEP_TASKS = {
   4: ["Build a table with a heading row (th) and 2 data rows (td).",
       "Build a 4-column table with th + td.",
       "Build a school timetable: Period, Subject, Room, Teacher."],
-  5: ["Build a form with one Name box and a Submit button.",
-      "Add more inputs: Name, Address, Phone.",
-      "Build a Login form with username + password + remember me checkbox."],
-  6: ["Style paragraphs red and links aqua, using a &lt;style&gt; block.",
-      "Add a body background colour. Style h1, p, a all together.",
-      "Add a background image + Arial font + text on top with dark overlay."],
-  7: ["Style p with five properties: color, background-color, font-size, font-weight, font-family.",
-      "Move some properties to body (inheritance). Add a border to p.",
-      "Combine it all: body styles + h1 styles + p borders + a colour."],
-  8: ["Build a simple form: Name input + Submit button.",
-      "Build a feedback form: name + email + message textarea.",
-      "Build a login form: username + password.",
-      "Build a survey form: radio buttons + checkboxes + dropdown.",
-      "Build an FAQ dropdown using &lt;details&gt; and &lt;summary&gt;."],
-  9: ["Structure: title 'All about Sam', h1, h2 'My Favourite Things', intro paragraph.",
+  5: ["Build a simple form: one Name box and a Submit button.",
+      "Build a Sign-up form: Name + Email + Password + Submit.",
+      "Build a Contact form with Email + a big &lt;textarea&gt; for messages.",
+      "Build a Login form: Username + Password + 'Remember me' checkbox.",
+      "Build a Survey form: radio buttons + checkboxes + select dropdown."],
+  6: ["Build a basic nav menu with 3 links: Home, About, Contact.",
+      "Style the nav menu with CSS: navy bar, white links, orange hover.",
+      "Build a multi-section page where the menu jumps to sections."],
+  7: ["Build a basic dropdown using &lt;details&gt; and &lt;summary&gt;.",
+      "Build an FAQ with 3 dropdowns (each answers a question).",
+      "Put a dropdown INSIDE a nav menu (mega-menu pattern)."],
+  8: ["Structure: title 'All about Sam', h1, h2 'My Favourite Things', intro paragraph.",
       "Add the bullet list (ul): dribbling drills, free throws, watching the NBA.",
       "Add h2 'My Top 3 Players' and numbered list: LeBron, Curry, Ja Morant.",
-      "Add the table (Game/Points), the image, and a Name + Submit form.",
-      "Add the CSS in &lt;head&gt;: lightblue background, Arial font, navy h1+h2, navy table borders."]
+      "Add the table (Game/Points), the image, and the HARDER form (name/email/dropdown/comments/checkbox).",
+      "Add the CSS in &lt;head&gt;: lightblue background, Arial, navy h1+h2, navy table borders, styled form."],
+  9: ["Build the Home page with a nav menu of 3 links: Home, About, Contact.",
+      "Add the About section: heading + paragraph + a list of your interests.",
+      "Add the Contact section with a form: Name + Email + Message + Submit.",
+      "Replace the About link with a DROPDOWN menu using &lt;details&gt;/&lt;summary&gt;.",
+      "Add CSS: navy nav bar, white links, orange hover, styled sections + form."]
 };
 
 function showStep(sectionNum, stepNum) {

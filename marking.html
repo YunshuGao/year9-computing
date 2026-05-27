@@ -550,53 +550,65 @@ const RULES = {
     ]
   },
   5: {
-    title: "Forms",
+    title: "Forms (5 types)",
     required: [
-      { id: "form",   label: "Has <form>",                      test: c => /<form[^>]*>/i.test(c) },
-      { id: "input",  label: "Uses <input>",                    test: c => /<input[^>]*>/i.test(c) },
-      { id: "submit", label: "Has submit button",               test: c => /type=["']?submit/i.test(c) },
+      { id: "form",     label: "Has <form>",                    test: c => /<form[^>]*>/i.test(c) },
+      { id: "input",    label: "Uses <input type='text'>",      test: c => /<input[^>]*type=["']?text/i.test(c) || /<input(?![^>]*type)[^>]*>/i.test(c) },
+      { id: "submit",   label: "Has submit button",             test: c => /type=["']?submit/i.test(c) },
+      { id: "password", label: "Has password field",            test: c => /type=["']?password/i.test(c) },
     ],
     bonus: [
-      { id: "pwd",    label: "Has password field",              test: c => /type=["']?password/i.test(c) },
-      { id: "multi",  label: "3+ input fields",                 test: c => (c.match(/<input[^>]*>/gi) || []).length >= 3 },
-      { id: "checkbox",label: "Has checkbox",                   test: c => /type=["']?checkbox/i.test(c) },
+      { id: "textarea", label: "Uses <textarea>",               test: c => /<textarea/i.test(c) },
+      { id: "select",   label: "Uses <select>",                 test: c => /<select/i.test(c) },
+      { id: "checkbox", label: "Has checkbox",                  test: c => /type=["']?checkbox/i.test(c) },
+      { id: "radio",    label: "Has radio button",              test: c => /type=["']?radio/i.test(c) },
+      { id: "email",    label: "Has email field",               test: c => /type=["']?email/i.test(c) },
     ]
   },
   6: {
-    title: "Colours & CSS",
+    title: "Multi-page Menu",
     required: [
-      { id: "style",  label: "Has <style> block",               test: c => /<style[^>]*>[\s\S]*?<\/style>/i.test(c) },
-      { id: "color",  label: "Uses color: property",            test: c => /[^-]color\s*:/i.test(c) },
-      { id: "bg",     label: "Uses background-color",           test: c => /background(-color)?\s*:/i.test(c) },
+      { id: "nav",    label: "Uses <nav> tag",                  test: c => /<nav[^>]*>/i.test(c) },
+      { id: "links3", label: "3+ <a href> links",               test: c => (c.match(/<a\s+[^>]*href=/gi) || []).length >= 3 },
     ],
     bonus: [
-      { id: "multi",  label: "2+ selectors styled",             test: c => {
-        const m = c.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
-        return m && (m[1].match(/\{/g) || []).length >= 2;
-      }},
+      { id: "navcss", label: "Styles the menu (nav { } or nav a { })", test: c => /nav\s*\{|nav\s+a\s*\{/i.test(c) },
+      { id: "hover",  label: "Uses :hover effect",              test: c => /:hover/i.test(c) },
+      { id: "sections",label: "Multiple <section> tags",        test: c => (c.match(/<section[^>]*>/gi) || []).length >= 2 },
     ]
   },
   7: {
-    title: "Fonts & Borders",
+    title: "Dropdown Menu",
     required: [
-      { id: "ff",     label: "Uses font-family",                test: c => /font-family\s*:/i.test(c) },
-      { id: "fs",     label: "Uses font-size",                  test: c => /font-size\s*:/i.test(c) },
-      { id: "border", label: "Uses border",                     test: c => /border\s*:|border-(width|style|color)\s*:/i.test(c) },
+      { id: "details", label: "Uses <details>",                 test: c => /<details[^>]*>/i.test(c) },
+      { id: "summary", label: "Uses <summary>",                 test: c => /<summary[^>]*>/i.test(c) },
     ],
     bonus: [
-      { id: "padding",label: "Uses padding",                    test: c => /padding\s*:/i.test(c) },
-      { id: "radius", label: "Uses border-radius",              test: c => /border-radius\s*:/i.test(c) },
+      { id: "multi",   label: "2+ dropdowns",                   test: c => (c.match(/<details[^>]*>/gi) || []).length >= 2 },
+      { id: "in_nav",  label: "Dropdown inside <nav>",          test: c => /<nav[^>]*>[\s\S]*?<details/i.test(c) },
     ]
   },
   8: {
-    title: "Multi-page Site",
+    title: "Final Challenge (All About Sam, harder form)",
     required: [
-      { id: "links3", label: "3+ menu links",                   test: c => (c.match(/<a\s+[^>]*href=/gi) || []).length >= 3 },
+      { id: "h1",       label: "Has <h1>",                        test: c => /<h1[^>]*>/i.test(c) },
+      { id: "h2",       label: "Has <h2> (2+)",                   test: c => (c.match(/<h2[^>]*>/gi) || []).length >= 2 },
+      { id: "p",        label: "Has paragraph(s)",                test: c => /<p[^>]*>/i.test(c) },
+      { id: "ul",       label: "Has <ul>",                        test: c => /<ul[^>]*>/i.test(c) },
+      { id: "ol",       label: "Has <ol>",                        test: c => /<ol[^>]*>/i.test(c) },
+      { id: "table",    label: "Has <table> with <th>",           test: c => /<table[^>]*>[\s\S]*?<th[^>]*>[\s\S]*?<\/table>/i.test(c) },
+      { id: "img",      label: "Has <img>",                       test: c => /<img[^>]*src/i.test(c) },
+      { id: "form",     label: "Has <form>",                      test: c => /<form[^>]*>/i.test(c) },
+      { id: "select",   label: "Form has <select> dropdown",      test: c => /<select/i.test(c) },
+      { id: "textarea", label: "Form has <textarea>",             test: c => /<textarea/i.test(c) },
+      { id: "checkbox", label: "Form has checkbox",               test: c => /type=["']?checkbox/i.test(c) },
+      { id: "style",    label: "Has <style> block",               test: c => /<style[^>]*>[\s\S]{15,}<\/style>/i.test(c) },
     ],
     bonus: [
-      { id: "nav",    label: "Uses <nav> semantic tag",         test: c => /<nav[^>]*>/i.test(c) },
-      { id: "navcss", label: "Styles the menu",                 test: c => /nav\s+a|nav\s*\{/i.test(c) },
-      { id: "footer", label: "Has <footer>",                    test: c => /<footer[^>]*>/i.test(c) },
+      { id: "lightblue",label: "lightblue background",            test: c => /background[-\w]*\s*:\s*lightblue/i.test(c) },
+      { id: "navy",     label: "navy colour used",                test: c => /color\s*:\s*navy/i.test(c) },
+      { id: "arial",    label: "Arial font",                      test: c => /font-family\s*:\s*[^;]*Arial/i.test(c) },
+      { id: "tbborder", label: "Table border styled in CSS",      test: c => /(table|td|th)[^{]*\{[^}]*border/i.test(c) },
     ]
   },
   9: {
