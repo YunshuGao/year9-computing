@@ -684,6 +684,72 @@ footer {
   padding: 24px 20px 50px 20px;
 }
 
+
+/* Per-step done indicator */
+.step-tab.is-done {
+  background: #d1fae5;
+}
+.step-tab.is-done::after {
+  content: " v";
+  display: inline-block;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.step-tab.is-done .num-dot { opacity: 0.6; }
+
+/* "Next step" guidance button */
+.step-task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.step-task .task-text { flex: 1; min-width: 200px; }
+.next-step-btn {
+  padding: 8px 16px;
+  background: #1f3a68;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(31,58,104,0.25);
+}
+.next-step-btn:hover { background: #14b8a6; }
+.next-step-btn.finish-section {
+  background: #10b981;
+  font-size: 14px;
+  padding: 10px 18px;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.35);
+}
+.next-step-btn.finish-section:hover { background: #047857; }
+.next-step-btn.is-done {
+  background: #d1fae5;
+  color: #047857;
+  box-shadow: none;
+}
+
+/* Visual nudge when all 3 steps done */
+.done-card.nudge {
+  animation: nudge-pulse 1.2s ease 1;
+}
+@keyframes nudge-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50%  { box-shadow: 0 0 0 14px rgba(16,185,129,0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
   .tier-bar { grid-template-columns: 1fr; }
@@ -779,15 +845,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(1,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(1,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-1">Type the code on the left into the editor. Click <strong>Run</strong>.</div>
+  <div class="step-task" id="task-1"><span class="task-text">Type the code on the left into the editor. Click <strong>Run</strong>.</span><button type="button" class="next-step-btn" onclick="advanceStep(1)" id="advance-1">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="1" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="1" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;All About Me&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -795,10 +859,8 @@ footer {
     &lt;p&gt;Hi! My name is _____.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<pre class="code-ref" data-section="1" data-step="2" hidden>&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="1" data-step="2" hidden>&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;All About Me&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -807,10 +869,8 @@ footer {
     &lt;p&gt;I love basketball.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<pre class="code-ref" data-section="1" data-step="3" hidden>&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="1" data-step="3" hidden>&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;All About Me&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -880,15 +940,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(2,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(2,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-2">Type the code on the left. Notice how each heading is a different size.</div>
+  <div class="step-task" id="task-2"><span class="task-text">Type the code on the left. Notice how each heading is a different size.</span><button type="button" class="next-step-btn" onclick="advanceStep(2)" id="advance-2">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="2" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="2" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;Page 2&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -976,15 +1034,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(3,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(3,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-3">Build a bullet list of 3 things you like.</div>
+  <div class="step-task" id="task-3"><span class="task-text">Build a bullet list of 3 things you like.</span><button type="button" class="next-step-btn" onclick="advanceStep(3)" id="advance-3">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="3" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="3" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;Things I Like&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1065,15 +1121,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(4,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(4,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-4">Build a form with one name box and a Submit button.</div>
+  <div class="step-task" id="task-4"><span class="task-text">Build a form with one name box and a Submit button.</span><button type="button" class="next-step-btn" onclick="advanceStep(4)" id="advance-4">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="4" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="4" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;Sign Up&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1174,15 +1228,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(5,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(5,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-5">Build a 2-row table. Add <code>border="1"</code> so you can see the cells.</div>
+  <div class="step-task" id="task-5"><span class="task-text">Build a 2-row table. Add <code>border="1"</code> so you can see the cells.</span><button type="button" class="next-step-btn" onclick="advanceStep(5)" id="advance-5">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="5" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="5" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;My Table&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1293,15 +1345,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(6,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(6,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-6">Make all paragraphs red.</div>
+  <div class="step-task" id="task-6"><span class="task-text">Make all paragraphs red.</span><button type="button" class="next-step-btn" onclick="advanceStep(6)" id="advance-6">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="6" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="6" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;Colours&lt;/title&gt;
     &lt;style&gt;
         p {
@@ -1387,15 +1437,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(7,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(7,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-7">Pick a font and a size for your text.</div>
+  <div class="step-task" id="task-7"><span class="task-text">Pick a font and a size for your text.</span><button type="button" class="next-step-btn" onclick="advanceStep(7)" id="advance-7">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="7" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="7" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;Fonts&lt;/title&gt;
     &lt;style&gt;
         body {
@@ -1494,15 +1542,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(8,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(8,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-8">Build a Home page with a menu linking to two other pages.</div>
+  <div class="step-task" id="task-8"><span class="task-text">Build a Home page with a menu linking to two other pages.</span><button type="button" class="next-step-btn" onclick="advanceStep(8)" id="advance-8">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="8" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="8" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;Home&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1534,13 +1580,27 @@ footer {
     }
     h1, p { padding: 0 20px; }
 &lt;/style&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;footer&gt;
-    &lt;hr&gt;
-    &lt;p style="text-align:center;
-              color:grey;"&gt;
-        (c) 2026 by Your Name
-    &lt;/p&gt;
-&lt;/footer&gt;</pre>
+<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;!-- A dropdown menu using &lt;details&gt; --&gt;
+&lt;nav&gt;
+    &lt;a href="index.html"&gt;Home&lt;/a&gt;
+
+    &lt;details&gt;
+        &lt;summary&gt;Photos&lt;/summary&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="sport.html"&gt;Sport&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="school.html"&gt;School&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="family.html"&gt;Family&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/details&gt;
+
+    &lt;details&gt;
+        &lt;summary&gt;About&lt;/summary&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="about.html"&gt;About Me&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/details&gt;
+&lt;/nav&gt;</pre>
     </div>
 
     <div class="col col-type">
@@ -1571,7 +1631,7 @@ footer {
         <input type="checkbox" id="done-8" data-save="done-8" onchange="updateDoneStyle(8)">
         <label for="done-8">I finished Section 8</label>
       </div>
-      <div class="next-link"><a href="#sec-9">Next: Section 9 &mdash; Plan Your GTPA &rarr;</a></div>
+      <div class="next-link"><a href="#sec-9">Next: Section 9 &mdash; Plan Your Site &rarr;</a></div>
     </div>
   </div>
 </section>
@@ -1583,11 +1643,11 @@ footer {
 <section class="lab" id="sec-9" data-section="9">
   <div class="sec-head">
     <span class="sec-num">9</span>
-    <h2>Plan Your GTPA Website</h2>
+    <h2>Plan Your Website</h2>
     <span class="tier-ribbon" data-ribbon="9">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Time to plan <strong>your own</strong> website. Answer the questions below. Good plans make coding much easier.
+    Time to plan <strong>your own</strong> website. Answer the questions below. A good plan makes coding much easier later.
   </p>
 
   <div class="plan-grid">
@@ -1695,15 +1755,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(10,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(10,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-10">Add one image with an <code>alt</code> description.</div>
+  <div class="step-task" id="task-10"><span class="task-text">Add one image with an <code>alt</code> description.</span><button type="button" class="next-step-btn" onclick="advanceStep(10)" id="advance-10">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="10" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="10" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;My Photos&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1781,7 +1839,7 @@ footer {
     <span class="tier-ribbon" data-ribbon="11">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    The big one. Use <strong>everything</strong> in one page. This is practice for your real GTPA project.
+    The big one. Use <strong>everything</strong> in one page. This is practice for your real website project.
   </p>
 
   <div class="step-tabs" data-section="11">
@@ -1789,15 +1847,13 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(11,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(11,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-11">Start with a heading, a paragraph, a nav menu and a footer.</div>
+  <div class="step-task" id="task-11"><span class="task-text">Start with a heading, a paragraph, a nav menu and a footer.</span><button type="button" class="next-step-btn" onclick="advanceStep(11)" id="advance-11">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="11" data-step="1">&lt;!DOCTYPE html&gt;
-&lt;html lang="en-AU"&gt;
+<pre class="code-ref" data-section="11" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
     &lt;title&gt;My Mini-Site&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1984,7 +2040,7 @@ const SECTION_TITLES = {
   6:  "Colours",
   7:  "Fonts & Borders",
   8:  "Multi-page",
-  9:  "Plan GTPA",
+  9:  "Plan My Site",
   10: "Images",
   11: "Challenge"
 };
@@ -2061,7 +2117,7 @@ const STEP_TASKS = {
       "Build a 'card' look with border, padding, background, and border-radius."],
   8: ["Build a Home page with a menu of 3 links.",
       "Style the menu so it looks like a real nav bar.",
-      "Add a footer at the bottom."],
+      "Add a dropdown menu using &lt;details&gt; and &lt;summary&gt;."],
   9: ["Fill in the plan below.", "", ""],
   10: ["Add one image with alt description.",
        "Add 3 images, each with width and height.",
@@ -2082,12 +2138,70 @@ function showStep(sectionNum, stepNum) {
     if (!sec || sec.dataset.section !== String(sectionNum)) return;
     tab.classList.toggle('active', tab.dataset.step === String(stepNum));
   });
-  // Update task text
+  // Update task text inside the .task-text span (preserves the next-step button)
   const taskEl = document.getElementById('task-' + sectionNum);
   const tasks = STEP_TASKS[sectionNum] || [];
-  if (taskEl && tasks[stepNum - 1]) {
-    taskEl.innerHTML = tasks[stepNum - 1];
+  if (taskEl) {
+    const textEl = taskEl.querySelector('.task-text');
+    if (textEl && tasks[stepNum - 1]) {
+      textEl.innerHTML = tasks[stepNum - 1];
+    }
   }
+  // Update the next-step button label based on which step is active
+  updateAdvanceButton(sectionNum, stepNum);
+}
+
+function updateAdvanceButton(sectionNum, stepNum) {
+  const btn = document.getElementById('advance-' + sectionNum);
+  if (!btn) return;
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  const tab = section ? section.querySelector('.step-tab[data-step="' + stepNum + '"]') : null;
+  const isDone = tab && tab.classList.contains('is-done');
+  btn.classList.remove('finish-section', 'is-done');
+  if (stepNum < 3) {
+    btn.innerHTML = (isDone ? '&#x2713; Step ' + stepNum + ' done &mdash; show me Step ' + (stepNum + 1) + ' &rarr;'
+                            : 'Done &mdash; show me Step ' + (stepNum + 1) + ' &rarr;');
+  } else {
+    btn.classList.add('finish-section');
+    btn.innerHTML = (isDone ? '&#x2713; Step 3 done &mdash; finish Section ' + sectionNum + ' &darr;'
+                            : 'Done &mdash; finish Section ' + sectionNum + ' &darr;');
+  }
+  if (isDone) btn.classList.add('is-done');
+}
+
+function advanceStep(sectionNum) {
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  if (!section) return;
+  const activeTab = section.querySelector('.step-tab.active');
+  if (!activeTab) return;
+  const currentStep = parseInt(activeTab.dataset.step);
+  // Mark current step as done
+  markStepDone(sectionNum, currentStep, true);
+  if (currentStep < 3) {
+    // Move to next step
+    showStep(sectionNum, currentStep + 1);
+    // Scroll the workspace into view a touch so they see the new step
+    const ws = section.querySelector('.workspace3');
+    if (ws) ws.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    // On step 3 - flash the "I finished" card to draw attention
+    const card = document.getElementById('done-card-' + sectionNum);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('nudge');
+      setTimeout(() => card.classList.remove('nudge'), 1300);
+    }
+  }
+}
+
+function markStepDone(sectionNum, stepNum, done) {
+  const tab = document.querySelector('section.lab[data-section="' + sectionNum + '"] .step-tab[data-step="' + stepNum + '"]');
+  if (tab) tab.classList.toggle('is-done', !!done);
+  // Refresh advance button label (in case the active step was the one we just marked)
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  const activeTab = section ? section.querySelector('.step-tab.active') : null;
+  if (activeTab) updateAdvanceButton(sectionNum, parseInt(activeTab.dataset.step));
+  saveSoon();
 }
 
 /* ====================================================
@@ -2104,6 +2218,13 @@ function gatherState() {
   document.querySelectorAll("[data-save]").forEach(el => {
     const key = el.getAttribute("data-save");
     state.fields[key] = el.type === "checkbox" ? el.checked : el.value;
+  });
+  // Capture per-step done states (stored on .step-tab elements)
+  document.querySelectorAll('.step-tab[data-step]').forEach(tab => {
+    const sec = tab.closest('section.lab');
+    if (!sec) return;
+    const key = 'step-' + sec.dataset.section + '-' + tab.dataset.step;
+    state.fields[key] = tab.classList.contains('is-done');
   });
   return state;
 }
@@ -2147,6 +2268,18 @@ function loadState() {
   for (let i = 1; i <= TOTAL_SECTIONS; i++) {
     updateDoneStyle(i);
     runSection(i, true);
+    // Apply per-step done state from saved fields
+    for (let step = 1; step <= 3; step++) {
+      const key = 'step-' + i + '-' + step;
+      if (state.fields && state.fields[key]) {
+        const tab = document.querySelector('section.lab[data-section="' + i + '"] .step-tab[data-step="' + step + '"]');
+        if (tab) tab.classList.add('is-done');
+      }
+    }
+    // Make sure the active step's advance button has the right label
+    const section = document.querySelector('section.lab[data-section="' + i + '"]');
+    const activeTab = section ? section.querySelector('.step-tab.active') : null;
+    if (activeTab) updateAdvanceButton(i, parseInt(activeTab.dataset.step));
   }
   updateProgress();
   if (state.timestamp) {
@@ -2186,7 +2319,11 @@ function runSection(num, silent) {
   const editor = document.querySelector('.code-editor[data-section="' + num + '"]');
   const iframe = document.getElementById("output-" + num);
   if (!editor || !iframe) return;
-  const code = editor.value || '<p style="color:#999;font-family:Arial;padding:12px;">Type some code on the left in column 2, then click Run.</p>';
+  let code = editor.value || '<p style="color:#999;font-family:Arial;padding:12px;">Type some code on the left in column 2, then click Run.</p>';
+  // Auto-add DOCTYPE if student didn't type it (they haven't been taught it yet)
+  if (!/<!DOCTYPE/i.test(code)) {
+    code = '<!DOCTYPE html>\n' + code;
+  }
   iframe.srcdoc = code;
   if (!silent) saveSoon();
 }
@@ -2364,6 +2501,14 @@ document.addEventListener("DOMContentLoaded", function() {
     dateEl.value = t.getFullYear() + "-" +
                    String(t.getMonth()+1).padStart(2,"0") + "-" +
                    String(t.getDate()).padStart(2,"0");
+  }
+
+
+  // Initialise the next-step button labels on first load (Step 1 by default)
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    if (document.getElementById('advance-' + i)) {
+      updateAdvanceButton(i, 1);
+    }
   }
 
   // Auto-save listeners
