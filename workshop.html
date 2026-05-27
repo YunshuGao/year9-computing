@@ -302,10 +302,10 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   font-size: 15.5px;
   color: #374151;
   line-height: 1.55;
-  background: #fbfdff;
+  background: #f9fafb;
   padding: 12px 16px;
   border-radius: 8px;
-  border-left: 4px solid #14b8a6;
+  border-left: 4px solid #d1d5db;
 }
 .sec-intro code {
   background: #1f3a68;
@@ -352,9 +352,6 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   color: white;
   font-weight: 800;
 }
-.step-tab[data-step="1"] .num-dot { background: #14b8a6; }
-.step-tab[data-step="2"] .num-dot { background: #f59e0b; }
-.step-tab[data-step="3"] .num-dot { background: #ef4444; }
 .step-tab.active {
   background: white;
   color: #111;
@@ -362,7 +359,27 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   border-bottom: 2px solid white;
   z-index: 1;
 }
-.step-tab:hover:not(.active) { background: #e5e7eb; color: #1f2937; }
+.step-tab.active .num-dot { background: #1f3a68; }
+.step-tab:hover:not(.active):not(.is-locked) {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+/* LOCKED step - can't click until previous step is done */
+.step-tab.is-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.step-tab.is-locked .num-dot::after {
+  content: " ";
+}
+.step-tab.is-locked::before {
+  content: "[locked] ";
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+  margin-right: 4px;
+}
 .step-task {
   background: white;
   border: 2px solid #e5e7eb;
@@ -411,9 +428,9 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   font-weight: 800;
   font-size: 12px;
 }
-.col-read   .col-num { background: #14b8a6; }
-.col-type   .col-num { background: #f59e0b; }
-.col-result .col-num { background: #10b981; }
+.col-read   .col-num { background: #1f3a68; }
+.col-type   .col-num { background: #1f3a68; }
+.col-result .col-num { background: #1f3a68; }
 
 /* code reference (left column) */
 .code-ref {
@@ -446,18 +463,17 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   font-size: 13.5px;
   line-height: 1.6;
   padding: 12px 14px;
-  border: 2px solid #f59e0b;
+  border: 2px solid #d1d5db;
   border-radius: 8px;
-  background: #fffbeb;
+  background: #ffffff;
   color: #111;
   tab-size: 4;
   -moz-tab-size: 4;
 }
 .code-editor:focus {
   outline: none;
-  border-color: #d97706;
-  box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
-  background: white;
+  border-color: #1f3a68;
+  box-shadow: 0 0 0 3px rgba(31,58,104,0.12);
 }
 
 .run-row {
@@ -472,13 +488,13 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
   font-weight: 800;
   border: 0;
   border-radius: 10px;
-  background: #10b981;
+  background: #1f3a68;
   color: white;
   cursor: pointer;
-  box-shadow: 0 3px 8px rgba(16,185,129,0.35);
+  box-shadow: 0 2px 6px rgba(31,58,104,0.20);
   letter-spacing: 0.5px;
 }
-.run-btn:hover { background: #047857; }
+.run-btn:hover { background: #14b8a6; }
 .run-btn::before { content: "> "; font-weight: 800; }
 .clear-btn {
   padding: 10px 14px;
@@ -496,7 +512,7 @@ section.lab[data-tier="should"] .sec-num { background: #1f3a68; }
 .output {
   width: 100%;
   height: 360px;
-  border: 2px solid #10b981;
+  border: 2px solid #d1d5db;
   border-radius: 8px;
   background: white;
 }
@@ -685,12 +701,9 @@ footer {
 }
 
 
-/* Per-step done indicator */
-.step-tab.is-done {
-  background: #d1fae5;
-}
+/* Per-step done indicator (subtle - just a green check, no full background) */
 .step-tab.is-done::after {
-  content: " v";
+  content: "v";
   display: inline-block;
   background: #10b981;
   color: white;
@@ -704,7 +717,7 @@ footer {
   margin-left: 6px;
   vertical-align: middle;
 }
-.step-tab.is-done .num-dot { opacity: 0.6; }
+.step-tab.is-done .num-dot { background: #10b981; }
 
 /* "Next step" guidance button */
 .step-task {
@@ -1976,6 +1989,128 @@ footer {
   </div>
 </section>
 
+
+<!-- ============================================================
+     SECTION 12 - Forms Review + Dropdown (tomorrow's focus)
+     ============================================================ -->
+<section class="lab" id="sec-12" data-section="12">
+  <div class="sec-head">
+    <span class="sec-num">12</span>
+    <h2>Forms &amp; Dropdown</h2>
+    <span class="tier-ribbon" data-ribbon="12">COULD DO</span>
+  </div>
+  <p class="sec-intro">
+    Review what you learnt about <strong>forms</strong>, then build a <strong>dropdown menu</strong>
+    using <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>. No JavaScript needed - the browser handles it.
+  </p>
+
+  <div class="step-tabs" data-section="12">
+    <button type="button" class="step-tab active" data-step="1" onclick="showStep(12,1)"><span class="num-dot">1</span>Step 1</button>
+    <button type="button" class="step-tab" data-step="2" onclick="showStep(12,2)"><span class="num-dot">2</span>Step 2</button>
+    <button type="button" class="step-tab" data-step="3" onclick="showStep(12,3)"><span class="num-dot">3</span>Step 3</button>
+  </div>
+  <div class="step-task" id="task-12"><span class="task-text">Build a simple feedback form (Name + Email + Submit).</span><button type="button" class="next-step-btn" onclick="advanceStep(12)" id="advance-12">Done &mdash; show me Step 2 &rarr;</button></div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="12" data-step="1">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Feedback&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Feedback&lt;/h1&gt;
+    &lt;form&gt;
+        &lt;label&gt;Name:
+            &lt;input type="text" name="name"&gt;
+        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+        &lt;label&gt;Email:
+            &lt;input type="email" name="email"&gt;
+        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+        &lt;input type="submit" value="Send"&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<pre class="code-ref" data-section="12" data-step="2" hidden>&lt;form&gt;
+    &lt;label&gt;Name:
+        &lt;input type="text" name="name"&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;label&gt;Your message:&lt;br&gt;
+        &lt;textarea name="msg"
+                  rows="4" cols="40"&gt;&lt;/textarea&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;label&gt;Favourite subject:
+        &lt;select name="subject"&gt;
+            &lt;option&gt;Computing&lt;/option&gt;
+            &lt;option&gt;Maths&lt;/option&gt;
+            &lt;option&gt;Art&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;label&gt;
+        &lt;input type="checkbox" name="news"&gt;
+        Email me updates
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;input type="submit" value="Send"&gt;
+&lt;/form&gt;</pre>
+<pre class="code-ref" data-section="12" data-step="3" hidden>&lt;!-- A dropdown using &lt;details&gt; --&gt;
+&lt;h1&gt;Help &amp; FAQ&lt;/h1&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;How do I sign up?&lt;/summary&gt;
+    &lt;p&gt;Fill in the form above and click Send.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;Where do my answers go?&lt;/summary&gt;
+    &lt;p&gt;They are sent to the website owner.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;Is my data safe?&lt;/summary&gt;
+    &lt;p&gt;Yes - we never share it.&lt;/p&gt;
+&lt;/details&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-12" data-section="12"
+                spellcheck="false" placeholder="Type the code from the left."></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(12)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(12)">Clear</button>
+      </div>
+    </div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-12" title="Section 12 preview"></iframe>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-12" data-save="learnt-12"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-12" data-save="stuck-12"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-12">
+      <div class="done-row">
+        <input type="checkbox" id="done-12" data-save="done-12" onchange="updateDoneStyle(12)">
+        <label for="done-12">I finished Section 12</label>
+      </div>
+      <div class="next-link"><a href="#" onclick="submitWork();return false;" style="background:#fde68a; color:#78350f; border-color:#f59e0b;">Submit My Work &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
@@ -2028,7 +2163,8 @@ const TIER_CONFIG = {
   8: "should",
   9: "should",
   10: "should",
-  11: "should"
+  11: "should",
+  12: "could"
 };
 
 const SECTION_TITLES = {
@@ -2042,11 +2178,12 @@ const SECTION_TITLES = {
   8:  "Multi-page",
   9:  "Plan My Site",
   10: "Images",
-  11: "Challenge"
+  11: "Challenge",
+  12: "Forms & Dropdown"
 };
 
 const STORAGE_KEY = "cotyc-workshop-v2";
-const TOTAL_SECTIONS = 11;
+const TOTAL_SECTIONS = 12;
 let saveTimer = null;
 
 /* ====================================================
@@ -2124,10 +2261,19 @@ const STEP_TASKS = {
        "Style images with CSS (rounded corners, border)."],
   11: ["Build the skeleton: nav, h1, paragraph, footer.",
        "Add image, list, table, form.",
-       "Add a <style> block to make it look good."]
+       "Add a <style> block to make it look good."],
+  12: ["Build a simple feedback form (Name + Email + Submit).",
+       "Add more form fields - textarea, select dropdown, checkbox.",
+       "Add a dropdown menu using &lt;details&gt; and &lt;summary&gt;."]
 };
 
 function showStep(sectionNum, stepNum) {
+  // Block clicks on locked tabs
+  const targetTab = document.querySelector(
+    'section.lab[data-section="' + sectionNum + '"] .step-tab[data-step="' + stepNum + '"]'
+  );
+  if (targetTab && targetTab.classList.contains('is-locked')) return;
+
   // Hide / show code-refs by step
   document.querySelectorAll('.code-ref[data-section="' + sectionNum + '"]').forEach(el => {
     el.hidden = el.dataset.step !== String(stepNum);
@@ -2197,11 +2343,49 @@ function advanceStep(sectionNum) {
 function markStepDone(sectionNum, stepNum, done) {
   const tab = document.querySelector('section.lab[data-section="' + sectionNum + '"] .step-tab[data-step="' + stepNum + '"]');
   if (tab) tab.classList.toggle('is-done', !!done);
+  // Update which steps are unlocked
+  applyStepLocks(sectionNum);
   // Refresh advance button label (in case the active step was the one we just marked)
   const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
   const activeTab = section ? section.querySelector('.step-tab.active') : null;
   if (activeTab) updateAdvanceButton(sectionNum, parseInt(activeTab.dataset.step));
   saveSoon();
+}
+
+/* Step locks: Step 2 only available after Step 1 done; Step 3 only after Step 2 done */
+function applyStepLocks(sectionNum) {
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  if (!section) return;
+  const tabs = {};
+  section.querySelectorAll('.step-tab[data-step]').forEach(t => {
+    tabs[t.dataset.step] = t;
+  });
+  if (!tabs['1'] || !tabs['2'] || !tabs['3']) return;
+  // Step 1 always unlocked
+  tabs['1'].classList.remove('is-locked');
+  tabs['1'].removeAttribute('title');
+  // Step 2 unlocked iff Step 1 done
+  if (tabs['1'].classList.contains('is-done')) {
+    tabs['2'].classList.remove('is-locked');
+    tabs['2'].removeAttribute('title');
+  } else {
+    tabs['2'].classList.add('is-locked');
+    tabs['2'].setAttribute('title', 'Finish Step 1 first');
+  }
+  // Step 3 unlocked iff Step 2 done
+  if (tabs['2'].classList.contains('is-done')) {
+    tabs['3'].classList.remove('is-locked');
+    tabs['3'].removeAttribute('title');
+  } else {
+    tabs['3'].classList.add('is-locked');
+    tabs['3'].setAttribute('title', 'Finish Step 2 first');
+  }
+}
+
+function applyAllStepLocks() {
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    applyStepLocks(i);
+  }
 }
 
 /* ====================================================
@@ -2280,6 +2464,8 @@ function loadState() {
     const section = document.querySelector('section.lab[data-section="' + i + '"]');
     const activeTab = section ? section.querySelector('.step-tab.active') : null;
     if (activeTab) updateAdvanceButton(i, parseInt(activeTab.dataset.step));
+    // Apply step locks (re-evaluates which steps are unlocked)
+    applyStepLocks(i);
   }
   updateProgress();
   if (state.timestamp) {
@@ -2493,6 +2679,7 @@ function closeModal() {
 document.addEventListener("DOMContentLoaded", function() {
   applyTiers();
   loadState();
+  applyAllStepLocks();
 
   // Set today's date if blank
   const dateEl = document.getElementById("studentDate");
