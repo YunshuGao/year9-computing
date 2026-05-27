@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 5 - Live Demo Tool</title>
+<style>
+  /* ==============================================================
+     LIVE DEMO TOOL - Lesson 5: Forms, Menu, Dropdown
+     ============================================================== */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, sans-serif; background: #f3f4f6;
+         color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ===== TOP BAR ===== */
+  header { background: linear-gradient(135deg, #333399, #2d2d8a);
+           color: white; padding: 14px 22px;
+           display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  header .title { font-size: 18px; font-weight: bold; }
+  header .step-pill { background: rgba(255,255,255,0.2);
+                       padding: 6px 14px; border-radius: 999px;
+                       font-size: 14px; font-weight: 600; }
+  header .spacer { flex: 1; }
+  header .help-btn { background: white; color: #333399;
+                      border: none; padding: 6px 14px;
+                      border-radius: 8px; font-weight: bold; cursor: pointer;
+                      font-size: 13px; }
+  header .help-btn:hover { background: #fef3c7; }
+
+  /* ===== STEP NAVIGATOR (sub-bar) ===== */
+  .step-nav { background: white; border-bottom: 1px solid #e5e7eb;
+              padding: 10px 22px; display: flex; gap: 8px; flex-wrap: wrap;
+              align-items: center; }
+  .step-nav .step-btn {
+    background: #f3f4f6; border: 2px solid #e5e7eb;
+    padding: 6px 14px; border-radius: 8px; cursor: pointer;
+    font-size: 13px; font-weight: 600; color: #4b5563;
+    transition: all 0.15s;
+  }
+  .step-nav .step-btn:hover { border-color: #333399; color: #333399; }
+  .step-nav .step-btn.active { background: #333399; color: white;
+                                border-color: #333399; }
+
+  /* ===== ACTION BAR ===== */
+  .actions { background: #fafafa; padding: 12px 22px;
+             display: flex; gap: 10px; align-items: center;
+             border-bottom: 1px solid #e5e7eb; flex-wrap: wrap; }
+  .actions button {
+    padding: 10px 18px; font-size: 14px; font-weight: bold;
+    border-radius: 8px; cursor: pointer; border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .actions .reset    { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+  .actions .reset:hover    { background: #fca5a5; color: white; }
+  .actions .next     { background: #10b981; color: white; }
+  .actions .next:hover     { background: #059669; }
+  .actions .all      { background: #f59e0b; color: white; }
+  .actions .all:hover      { background: #d97706; }
+  .actions .nav-btn  { background: #e5e7eb; color: #1f2937; }
+  .actions .nav-btn:hover  { background: #d1d5db; }
+  .actions .progress { margin-left: 6px; font-size: 13px; color: #4b5563;
+                       background: white; padding: 6px 12px;
+                       border-radius: 999px; border: 1px solid #e5e7eb; }
+
+  /* ===== MAIN: two columns ===== */
+  main { flex: 1; display: grid; grid-template-columns: 1fr 1fr;
+         gap: 16px; padding: 16px 22px; min-height: 0; }
+  .pane { background: white; border: 1px solid #e5e7eb;
+          border-radius: 12px; padding: 14px;
+          display: flex; flex-direction: column; min-height: 0; }
+  .pane h3 { margin: 0 0 8px 0; font-size: 14px;
+             color: #6b7280; text-transform: uppercase; letter-spacing: 1px; }
+  .code-editor {
+    flex: 1; width: 100%;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 20px; line-height: 1.5;
+    padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px;
+    background: #1e1e2e; color: #f8f8f2; resize: none;
+    tab-size: 2; outline: none; min-height: 320px;
+  }
+  .code-editor:focus { border-color: #333399; }
+  .preview-frame {
+    flex: 1; width: 100%; border: 1px solid #e5e7eb;
+    border-radius: 8px; background: white; min-height: 320px;
+  }
+
+  /* ===== TALKING POINT (below the editor) ===== */
+  .talking {
+    background: #fef3c7; border-left: 5px solid #f59e0b;
+    padding: 12px 16px; margin: 12px 22px;
+    font-size: 16px; color: #78350f;
+    border-radius: 6px;
+  }
+  .talking strong { color: #b45309; }
+
+  /* ===== HELP MODAL ===== */
+  .modal {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+    z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal.open { display: flex; }
+  .modal-box {
+    background: white; border-radius: 12px;
+    padding: 28px 32px; max-width: 600px; width: 90%;
+    max-height: 80vh; overflow-y: auto;
+  }
+  .modal-box h2 { margin: 0 0 14px 0; color: #333399; }
+  .modal-box h3 { margin: 18px 0 8px 0; color: #2d2d8a; font-size: 16px; }
+  .modal-box kbd {
+    background: #f3f4f6; border: 1px solid #d1d5db;
+    border-radius: 4px; padding: 2px 8px;
+    font-family: Consolas, monospace; font-size: 13px;
+    box-shadow: 0 1px 0 #d1d5db;
+  }
+  .modal-box ul { line-height: 1.7; }
+  .modal-box .close-btn {
+    margin-top: 18px; padding: 10px 22px;
+    background: #333399; color: white; border: none;
+    border-radius: 8px; cursor: pointer; font-weight: bold;
+  }
+  .modal-box pre {
+    background: #1e1e2e; color: #f8f8f2; padding: 14px;
+    border-radius: 8px; overflow-x: auto;
+    font-family: Consolas, monospace; font-size: 13px;
+  }
+
+  /* ===== CONFIDENCE FOOTER (small, encouraging) ===== */
+  footer { text-align: center; padding: 10px;
+           color: #9ca3af; font-size: 12px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1100px) {
+    main { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="title">Live Demo Tool</span>
+  <span class="step-pill" id="stepPill">Step 1 of 6</span>
+  <span class="title" id="stepTitle" style="font-weight: 400;">Form Part 1</span>
+  <span class="spacer"></span>
+  <button class="help-btn" onclick="openModal('plan')">Plan B / Cheat Sheet</button>
+  <button class="help-btn" onclick="openModal('help')">Shortcuts ?</button>
+</header>
+
+<nav class="step-nav" id="stepNav">
+  <!-- step buttons injected by JS -->
+</nav>
+
+<div class="actions">
+  <button class="nav-btn" onclick="prevStep()">&larr; Prev step</button>
+  <button class="reset" onclick="resetCurrent()">Reset</button>
+  <button class="next" onclick="nextLine()">&darr; Next line</button>
+  <button class="all"  onclick="showAll()">Show all lines</button>
+  <button class="nav-btn" onclick="nextStep()">Next step &rarr;</button>
+  <span class="progress" id="lineProgress">Line 0 of 0</span>
+</div>
+
+<main>
+  <div class="pane">
+    <h3>Code (the editor IS editable - type any extra you want)</h3>
+    <textarea class="code-editor" id="codeEditor" spellcheck="false"
+              oninput="renderPreview()"></textarea>
+  </div>
+  <div class="pane">
+    <h3>Live preview</h3>
+    <iframe class="preview-frame" id="previewFrame"
+            sandbox="allow-same-origin"></iframe>
+  </div>
+</main>
+
+<div class="talking" id="talking">
+  <strong>What to say:</strong> <span id="talkingText">Press "Next line" to reveal the first line of code.</span>
+</div>
+
+<footer>You've got this. Press the green button to reveal one line at a time.</footer>
+
+<!-- =================== HELP MODAL =================== -->
+<div class="modal" id="helpModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-box">
+    <h2>Keyboard Shortcuts</h2>
+    <ul>
+      <li><kbd>Space</kbd> or <kbd>&rarr;</kbd> &mdash; Next line</li>
+      <li><kbd>&larr;</kbd> &mdash; Previous line</li>
+      <li><kbd>Enter</kbd> &mdash; Next step</li>
+      <li><kbd>Shift + Enter</kbd> &mdash; Previous step</li>
+      <li><kbd>R</kbd> &mdash; Reset current step</li>
+      <li><kbd>A</kbd> &mdash; Show all lines</li>
+      <li><kbd>?</kbd> &mdash; This help</li>
+    </ul>
+    <h3>How to use this tool in class</h3>
+    <ul>
+      <li>Open this page on the projector before students arrive.</li>
+      <li>Click a step button at the top, then press <kbd>Space</kbd> to reveal each line.</li>
+      <li>Pause after each line - read it out, point to what changes in the preview.</li>
+      <li>If you make a mistake, hit <kbd>R</kbd> to reset just the current step.</li>
+      <li>The code editor IS editable - you can type extra examples live.</li>
+    </ul>
+    <button class="close-btn" onclick="closeModal()">Got it</button>
+  </div>
+</div>
+
+<!-- =================== PLAN B / CHEAT SHEET =================== -->
+<div class="modal" id="planModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-box">
+    <h2>Cheat Sheet - the WHOLE lesson</h2>
+    <p style="color:#6b7280;font-size:13px;">If you lose your place or panic, here's the entire demo content. Glance at this off-projector.</p>
+    <div id="cheatSheet"></div>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   DEMO STEPS - one per teaching beat
+   Each step has: id, title, say (1-line summary), lines[], talking[]
+   lines[] is what appears in the editor (joined with newlines).
+   talking[] is what to SAY when each line appears (1:1 with lines[]).
+   ================================================================ */
+const DEMO_STEPS = [
+  {
+    id: 1,
+    title: "Form Part 1 — <form> + 3 text inputs",
+    say: "First we wrap everything in <form>, then add 3 inputs.",
+    lines: [
+      '<form>',
+      '  Name:',
+      '  <input type="text">',
+      '',
+      '  Email:',
+      '  <input type="email">',
+      '',
+      '  Password:',
+      '  <input type="password">',
+      '</form>'
+    ],
+    talking: [
+      'This is the wrapper. EVERY form starts with <form>.',
+      'Plain text - this is just the label the user reads.',
+      '<input type="text"> = one-line typing box. Notice nothing closes it - inputs are self-closing.',
+      'Blank line just for breathing room.',
+      'Another label - "Email:"',
+      '<input type="email"> - looks the same, but the browser checks for an @ sign.',
+      '',
+      'Third label - "Password:"',
+      '<input type="password"> - same shape, but it HIDES what you type with dots.',
+      'Always close with </form>! Slash means "end".'
+    ]
+  },
+  {
+    id: 2,
+    title: "Form Part 2 — add dropdown, checkbox, submit",
+    say: "Now we add Country (dropdown), a checkbox, and a Submit button.",
+    lines: [
+      '<form>',
+      '  Name:    <input type="text">',
+      '  Email:   <input type="email">',
+      '  Password:<input type="password">',
+      '',
+      '  Country:',
+      '  <select>',
+      '    <option>Australia</option>',
+      '    <option>China</option>',
+      '    <option>India</option>',
+      '  </select>',
+      '',
+      '  <input type="checkbox">',
+      '  Send me updates',
+      '',
+      '  <input type="submit" value="Sign Up">',
+      '</form>'
+    ],
+    talking: [
+      'Start with our <form> again.',
+      'Compressed: Name input.',
+      'Email input.',
+      'Password input. Now we add NEW stuff below.',
+      '',
+      'New label - "Country:"',
+      '<select> is a DROPDOWN. It wraps a list of choices.',
+      'Each choice is an <option>. First option is "Australia".',
+      'Second option - "China".',
+      'Third option - "India".',
+      'Close the dropdown with </select>.',
+      '',
+      '<input type="checkbox"> = a tick box.',
+      'Text next to it is just the label users see.',
+      '',
+      '<input type="submit" value="Sign Up"> = the BUTTON. The value="..." is what shows ON the button.',
+      'Close the form. Done!'
+    ]
+  },
+  {
+    id: 3,
+    title: "Menu Part 1 — <nav> + <a href> links",
+    say: "Build a simple menu with three clickable links.",
+    lines: [
+      '<nav>',
+      '  <a href="index.html">Home</a>',
+      '  |',
+      '  <a href="about.html">About</a>',
+      '  |',
+      '  <a href="contact.html">Contact</a>',
+      '</nav>'
+    ],
+    talking: [
+      '<nav> tells the browser "this part is a navigation menu".',
+      '<a href="..."> is a link. href="" is the FILE it jumps to. The text between tags is what users CLICK on.',
+      'The | (pipe symbol) just separates the links visually.',
+      'Second link - "About". href points to about.html.',
+      'Another separator.',
+      'Third link - "Contact".',
+      'Close the <nav> with </nav>.'
+    ]
+  },
+  {
+    id: 4,
+    title: "Menu Part 2 — add CSS to style it navy",
+    say: "Wrap it in <style> + <nav> to give it a real navy bar look.",
+    lines: [
+      '<style>',
+      '  nav {',
+      '    background: navy;',
+      '    padding: 14px 22px;',
+      '  }',
+      '  nav a {',
+      '    color: white;',
+      '    text-decoration: none;',
+      '    font-weight: bold;',
+      '    padding: 6px 14px;',
+      '  }',
+      '  nav a:hover {',
+      '    color: orange;',
+      '  }',
+      '</style>',
+      '',
+      '<nav>',
+      '  <a href="#">Home</a> |',
+      '  <a href="#">About</a> |',
+      '  <a href="#">Contact</a>',
+      '</nav>'
+    ],
+    talking: [
+      'CSS goes inside <style> tags in the <head>. We\'ll put it at the top here.',
+      'Target the <nav> element.',
+      'background: navy makes the bar dark blue.',
+      'padding: 14px 22px gives breathing room INSIDE the bar.',
+      'Close the rule with }.',
+      'Now target all the links INSIDE nav.',
+      'color: white makes the link text white.',
+      'text-decoration: none removes the ugly underline.',
+      'font-weight: bold makes them stand out.',
+      'padding: 6px 14px spaces them out.',
+      'Close.',
+      'NEW: nav a:hover means "when the mouse is over the link..."',
+      'Change colour to orange. (Try hovering on the preview!)',
+      'Close hover.',
+      'Close <style>.',
+      'Blank line.',
+      'Now the HTML for the menu itself.',
+      'Home link - href="#" means "stay on this page".',
+      'About link.',
+      'Contact link.',
+      'Close nav. Hover the links in the preview!'
+    ]
+  },
+  {
+    id: 5,
+    title: "Dropdown — <details> + <summary>",
+    say: "TODAY'S NEW BIT. Just two tags. Click to open and close.",
+    lines: [
+      '<details>',
+      '  <summary>Photos</summary>',
+      '  <ul>',
+      '    <li>Sport</li>',
+      '    <li>School</li>',
+      '    <li>Family</li>',
+      '  </ul>',
+      '</details>'
+    ],
+    talking: [
+      '<details> wraps the WHOLE dropdown - both the clickable label AND the hidden content.',
+      '<summary> is the clickable label - always FIRST inside <details>. "Photos" is what users see.',
+      'After <summary>, everything else is HIDDEN until you click. Let\'s add a list.',
+      'First hidden item - "Sport".',
+      'Second - "School".',
+      'Third - "Family".',
+      'Close the list.',
+      'Close </details>. Click the "Photos" label in the preview to see it open!'
+    ]
+  },
+  {
+    id: 6,
+    title: "BONUS: a full mini-site with nav + dropdown + form",
+    say: "All three combined. This is roughly what Section 9 looks like.",
+    lines: [
+      '<style>',
+      '  body { font-family: Arial; }',
+      '  nav { background: navy; padding: 12px; }',
+      '  nav a { color: white; text-decoration: none;',
+      '          padding: 8px 14px; font-weight: bold; }',
+      '  nav a:hover { color: orange; }',
+      '  section { padding: 20px; }',
+      '  form { background: #f3f4f6; padding: 16px; max-width: 400px; }',
+      '</style>',
+      '',
+      '<nav>',
+      '  <a href="#home">Home</a>',
+      '  <details><summary>About</summary>',
+      '    <ul><li><a href="#bio">Bio</a></li>',
+      '        <li><a href="#hobbies">Hobbies</a></li></ul>',
+      '  </details>',
+      '  <a href="#contact">Contact</a>',
+      '</nav>',
+      '',
+      '<section id="home"><h2>Home</h2><p>Welcome to my site!</p></section>',
+      '<section id="bio"><h2>About me</h2><p>I love basketball.</p></section>',
+      '<section id="contact">',
+      '  <h2>Contact</h2>',
+      '  <form>',
+      '    Name: <input type="text"><br><br>',
+      '    Message: <textarea rows="3"></textarea><br><br>',
+      '    <input type="submit" value="Send">',
+      '  </form>',
+      '</section>'
+    ],
+    talking: [
+      'Open the style block.',
+      'Body uses Arial.',
+      'Navy nav bar.',
+      'White, padded links.',
+      'Continued...',
+      'Hover turns orange.',
+      'Sections get padding.',
+      'Form has a light background.',
+      'Close style.',
+      '',
+      'The menu.',
+      'Home link.',
+      'A DROPDOWN inside the nav! <details>+<summary>="About".',
+      'List of sub-links inside the dropdown.',
+      'Bio + Hobbies.',
+      'Close the dropdown.',
+      'Contact link.',
+      'Close nav.',
+      '',
+      'Home section.',
+      'Bio section.',
+      'Contact section.',
+      '',
+      'Form inside Contact.',
+      'Name input.',
+      'Textarea for the message.',
+      'Submit button.',
+      'Close form + section.'
+    ]
+  }
+];
+
+/* ================================================================
+   STATE
+   ================================================================ */
+let stepIndex = 0;
+let lineCount = 0;   // how many lines of the current step are revealed
+
+/* ================================================================
+   RENDERING
+   ================================================================ */
+function buildStepNav() {
+  const nav = document.getElementById("stepNav");
+  nav.innerHTML = "";
+  DEMO_STEPS.forEach((step, i) => {
+    const btn = document.createElement("button");
+    btn.className = "step-btn" + (i === stepIndex ? " active" : "");
+    btn.textContent = (i + 1) + ". " + step.title.split(" — ")[0];
+    btn.onclick = () => goToStep(i);
+    nav.appendChild(btn);
+  });
+}
+
+function updateUI() {
+  const step = DEMO_STEPS[stepIndex];
+  document.getElementById("stepPill").textContent = "Step " + (stepIndex + 1) + " of " + DEMO_STEPS.length;
+  document.getElementById("stepTitle").textContent = step.title;
+  document.getElementById("lineProgress").textContent = "Line " + lineCount + " of " + step.lines.length;
+
+  // Show talking point for the LAST revealed line (or pre-amble if 0)
+  const tk = document.getElementById("talkingText");
+  if (lineCount === 0) {
+    tk.textContent = step.say + ' (Press Space or "Next line" to begin.)';
+  } else if (lineCount > step.lines.length) {
+    tk.textContent = 'All lines shown. Press "Next step →" or pick another step above.';
+  } else {
+    const idx = lineCount - 1;
+    const talk = step.talking[idx];
+    tk.textContent = talk && talk.length ? talk : '(continuing previous line...)';
+  }
+
+  // Update code editor with the revealed lines
+  const editor = document.getElementById("codeEditor");
+  editor.value = step.lines.slice(0, lineCount).join("\n");
+  renderPreview();
+
+  // Re-build step nav to update active state
+  buildStepNav();
+}
+
+function renderPreview() {
+  const code = document.getElementById("codeEditor").value;
+  const iframe = document.getElementById("previewFrame");
+  // Wrap in DOCTYPE if missing (so it always renders cleanly)
+  let html = code;
+  if (!/<!DOCTYPE/i.test(html)) html = "<!DOCTYPE html>\n" + html;
+  iframe.srcdoc = html;
+}
+
+/* ================================================================
+   ACTIONS
+   ================================================================ */
+function nextLine() {
+  const step = DEMO_STEPS[stepIndex];
+  if (lineCount < step.lines.length) {
+    lineCount++;
+    updateUI();
+  } else {
+    // already at end - hint to move on
+    document.getElementById("talkingText").textContent =
+      'All lines shown! Press "Next step →" to continue.';
+  }
+}
+
+function prevLine() {
+  if (lineCount > 0) { lineCount--; updateUI(); }
+}
+
+function showAll() {
+  const step = DEMO_STEPS[stepIndex];
+  lineCount = step.lines.length;
+  updateUI();
+}
+
+function resetCurrent() {
+  lineCount = 0;
+  updateUI();
+}
+
+function goToStep(i) {
+  if (i < 0 || i >= DEMO_STEPS.length) return;
+  stepIndex = i;
+  lineCount = 0;
+  updateUI();
+}
+function nextStep() { goToStep(stepIndex + 1); }
+function prevStep() { goToStep(stepIndex - 1); }
+
+/* ================================================================
+   MODAL
+   ================================================================ */
+function openModal(which) {
+  if (which === "help") document.getElementById("helpModal").classList.add("open");
+  if (which === "plan") {
+    document.getElementById("planModal").classList.add("open");
+    buildCheatSheet();
+  }
+}
+function closeModal() {
+  document.querySelectorAll(".modal").forEach(m => m.classList.remove("open"));
+}
+
+function buildCheatSheet() {
+  const target = document.getElementById("cheatSheet");
+  let html = "";
+  DEMO_STEPS.forEach((step, i) => {
+    html += '<h3>' + (i + 1) + '. ' + step.title + '</h3>';
+    html += '<p style="color:#6b7280;margin:0 0 6px 0;">' + step.say + '</p>';
+    html += '<pre>' + step.lines.join("\n")
+              .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</pre>';
+  });
+  target.innerHTML = html;
+}
+
+/* ================================================================
+   KEYBOARD SHORTCUTS
+   ================================================================ */
+document.addEventListener("keydown", function(e) {
+  // Don't capture if user is typing in the code editor
+  if (document.activeElement && document.activeElement.id === "codeEditor") return;
+  if (document.querySelector(".modal.open") && e.key !== "Escape") return;
+
+  switch (e.key) {
+    case " ":
+    case "ArrowRight":
+      e.preventDefault(); nextLine(); break;
+    case "ArrowLeft":
+      e.preventDefault(); prevLine(); break;
+    case "Enter":
+      e.preventDefault();
+      e.shiftKey ? prevStep() : nextStep();
+      break;
+    case "r": case "R":
+      resetCurrent(); break;
+    case "a": case "A":
+      showAll(); break;
+    case "?":
+      openModal("help"); break;
+    case "Escape":
+      closeModal(); break;
+  }
+});
+
+/* ================================================================
+   INIT
+   ================================================================ */
+buildStepNav();
+updateUI();
+</script>
+</body>
+</html>
