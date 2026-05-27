@@ -808,6 +808,13 @@ section.lab.today-focus::before {
   letter-spacing: 1.5px;
 }
 
+
+/* When a section has many step tabs, slightly tighten them so they fit */
+.step-tabs { flex-wrap: wrap; }
+@media (max-width: 1100px) {
+  .step-tab { padding: 8px 12px; font-size: 13px; }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
   .tier-bar { grid-template-columns: 1fr; }
@@ -1587,7 +1594,7 @@ section.lab.today-focus::before {
 
 
 <!-- ============================================================
-     SECTION 8 - TODAY'S FOCUS - Forms & Dropdown
+     SECTION 8 - TODAY'S FOCUS - Forms (x4) & Dropdown
      ============================================================ -->
 <section class="lab today-focus" id="sec-8" data-section="8">
   <div class="sec-head">
@@ -1597,41 +1604,44 @@ section.lab.today-focus::before {
     <span class="tier-ribbon" data-ribbon="8">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Build a <strong>form</strong>. Add a <strong>dropdown</strong> using <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>. No JavaScript needed.
+    Four different forms. Then one dropdown. Each step adds ONE new thing.
   </p>
 
   <div class="step-tabs" data-section="8">
     <button type="button" class="step-tab active" data-step="1" onclick="showStep(8,1)"><span class="num-dot">1</span>Step 1</button>
     <button type="button" class="step-tab" data-step="2" onclick="showStep(8,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(8,3)"><span class="num-dot">3</span>Step 3</button>
+    <button type="button" class="step-tab" data-step="4" onclick="showStep(8,4)"><span class="num-dot">4</span>Step 4</button>
+    <button type="button" class="step-tab" data-step="5" onclick="showStep(8,5)"><span class="num-dot">5</span>Step 5</button>
   </div>
-  <div class="step-task" id="task-8"><span class="task-text">Build a simple feedback form (Name + Email + Submit).</span><button type="button" class="next-step-btn" onclick="advanceStep(8)" id="advance-8">Done &mdash; show me Step 2 &rarr;</button></div>
+  <div class="step-task" id="task-8"><span class="task-text">Build a simple form: Name input + Submit button.</span><button type="button" class="next-step-btn" onclick="advanceStep(8)" id="advance-8">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="8" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;Feedback&lt;/title&gt;
+    &lt;title&gt;Sign Up&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;Feedback&lt;/h1&gt;
+    &lt;h1&gt;Sign Up&lt;/h1&gt;
     &lt;form&gt;
         &lt;label&gt;Name:
             &lt;input type="text" name="name"&gt;
-        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-        &lt;label&gt;Email:
-            &lt;input type="email" name="email"&gt;
-        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-        &lt;input type="submit" value="Send"&gt;
+        &lt;/label&gt;
+        &lt;br&gt;&lt;br&gt;
+        &lt;input type="submit" value="Submit"&gt;
     &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="2" hidden>&lt;form&gt;
+<pre class="code-ref" data-section="8" data-step="2" hidden>&lt;h1&gt;Contact Us&lt;/h1&gt;
+&lt;form&gt;
     &lt;label&gt;Name:
         &lt;input type="text" name="name"&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;label&gt;Email:
+        &lt;input type="email" name="email"&gt;
     &lt;/label&gt;&lt;br&gt;&lt;br&gt;
 
     &lt;label&gt;Your message:&lt;br&gt;
@@ -1639,22 +1649,53 @@ section.lab.today-focus::before {
                   rows="4" cols="40"&gt;&lt;/textarea&gt;
     &lt;/label&gt;&lt;br&gt;&lt;br&gt;
 
-    &lt;label&gt;Favourite subject:
-        &lt;select name="subject"&gt;
-            &lt;option&gt;Computing&lt;/option&gt;
-            &lt;option&gt;Maths&lt;/option&gt;
-            &lt;option&gt;Art&lt;/option&gt;
+    &lt;input type="submit" value="Send"&gt;
+&lt;/form&gt;</pre>
+<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;h1&gt;Login&lt;/h1&gt;
+&lt;form&gt;
+    &lt;label&gt;Username:
+        &lt;input type="text" name="user"&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;label&gt;Password:
+        &lt;input type="password" name="pw"&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;input type="submit" value="Log in"&gt;
+&lt;/form&gt;</pre>
+<pre class="code-ref" data-section="8" data-step="4" hidden>&lt;h1&gt;Quick Survey&lt;/h1&gt;
+&lt;form&gt;
+    &lt;p&gt;Favourite subject?&lt;/p&gt;
+    &lt;label&gt;&lt;input type="radio"
+                  name="sub" value="comp"&gt;
+           Computing&lt;/label&gt;&lt;br&gt;
+    &lt;label&gt;&lt;input type="radio"
+                  name="sub" value="math"&gt;
+           Maths&lt;/label&gt;&lt;br&gt;
+    &lt;label&gt;&lt;input type="radio"
+                  name="sub" value="art"&gt;
+           Art&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;p&gt;What do you enjoy?&lt;/p&gt;
+    &lt;label&gt;&lt;input type="checkbox"&gt;
+           Games&lt;/label&gt;&lt;br&gt;
+    &lt;label&gt;&lt;input type="checkbox"&gt;
+           Music&lt;/label&gt;&lt;br&gt;
+    &lt;label&gt;&lt;input type="checkbox"&gt;
+           Sport&lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;label&gt;Year level:
+        &lt;select name="year"&gt;
+            &lt;option&gt;Year 7&lt;/option&gt;
+            &lt;option&gt;Year 8&lt;/option&gt;
+            &lt;option&gt;Year 9&lt;/option&gt;
+            &lt;option&gt;Year 10&lt;/option&gt;
         &lt;/select&gt;
     &lt;/label&gt;&lt;br&gt;&lt;br&gt;
 
-    &lt;label&gt;
-        &lt;input type="checkbox" name="news"&gt;
-        Email me updates
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;input type="submit" value="Send"&gt;
+    &lt;input type="submit" value="Submit"&gt;
 &lt;/form&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;h1&gt;Help &amp; FAQ&lt;/h1&gt;
+<pre class="code-ref" data-section="8" data-step="5" hidden>&lt;h1&gt;Help &amp; FAQ&lt;/h1&gt;
 
 &lt;details&gt;
     &lt;summary&gt;How do I sign up?&lt;/summary&gt;
@@ -1890,6 +1931,12 @@ let saveTimer = null;
 /* ====================================================
    APPLY TIER CONFIG ON LOAD
    ==================================================== */
+function getStepCount(sectionNum) {
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  if (!section) return 0;
+  return section.querySelectorAll('.step-tab[data-step]').length;
+}
+
 function applyTiers() {
   // Apply tier class + ribbon text to each section
   for (const num in TIER_CONFIG) {
@@ -1953,9 +2000,11 @@ const STEP_TASKS = {
   7: ["Pick a font and a size for your text.",
       "Add a blue border around your h1.",
       "Build a 'card' look with border, padding, background, and border-radius."],
-  8: ["Build a simple feedback form (Name + Email + Submit).",
-      "Add more form fields - textarea, dropdown, checkbox.",
-      "Add a dropdown using &lt;details&gt; and &lt;summary&gt;."],
+  8: ["Build a simple form: Name input + Submit button.",
+      "Build a feedback form: name + email + message textarea.",
+      "Build a login form: username + password.",
+      "Build a survey form: radio buttons + checkboxes + dropdown.",
+      "Build an FAQ dropdown using &lt;details&gt; and &lt;summary&gt;."],
   9: ["Build the page structure: title, h1, h2, paragraph.",
       "Add the lists, table, image and form.",
       "Add the CSS to make it look like the target."]
@@ -1994,16 +2043,17 @@ function showStep(sectionNum, stepNum) {
 function updateAdvanceButton(sectionNum, stepNum) {
   const btn = document.getElementById('advance-' + sectionNum);
   if (!btn) return;
+  const totalSteps = getStepCount(sectionNum) || 3;
   const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
   const tab = section ? section.querySelector('.step-tab[data-step="' + stepNum + '"]') : null;
   const isDone = tab && tab.classList.contains('is-done');
   btn.classList.remove('finish-section', 'is-done');
-  if (stepNum < 3) {
+  if (stepNum < totalSteps) {
     btn.innerHTML = (isDone ? '&#x2713; Step ' + stepNum + ' done &mdash; show me Step ' + (stepNum + 1) + ' &rarr;'
                             : 'Done &mdash; show me Step ' + (stepNum + 1) + ' &rarr;');
   } else {
     btn.classList.add('finish-section');
-    btn.innerHTML = (isDone ? '&#x2713; Step 3 done &mdash; finish Section ' + sectionNum + ' &darr;'
+    btn.innerHTML = (isDone ? '&#x2713; Step ' + stepNum + ' done &mdash; finish Section ' + sectionNum + ' &darr;'
                             : 'Done &mdash; finish Section ' + sectionNum + ' &darr;');
   }
   if (isDone) btn.classList.add('is-done');
@@ -2015,16 +2065,17 @@ function advanceStep(sectionNum) {
   const activeTab = section.querySelector('.step-tab.active');
   if (!activeTab) return;
   const currentStep = parseInt(activeTab.dataset.step);
+  const totalSteps = getStepCount(sectionNum) || 3;
   // Mark current step as done
   markStepDone(sectionNum, currentStep, true);
-  if (currentStep < 3) {
+  if (currentStep < totalSteps) {
     // Move to next step
     showStep(sectionNum, currentStep + 1);
     // Scroll the workspace into view a touch so they see the new step
     const ws = section.querySelector('.workspace3');
     if (ws) ws.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
-    // On step 3 - flash the "I finished" card to draw attention
+    // On the FINAL step - flash the "I finished" card to draw attention
     const card = document.getElementById('done-card-' + sectionNum);
     if (card) {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2046,7 +2097,7 @@ function markStepDone(sectionNum, stepNum, done) {
   saveSoon();
 }
 
-/* Step locks: Step 2 only available after Step 1 done; Step 3 only after Step 2 done */
+/* Step locks: each step N+1 unlocked only after step N is done. Works for ANY number of steps. */
 function applyStepLocks(sectionNum) {
   const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
   if (!section) return;
@@ -2054,25 +2105,26 @@ function applyStepLocks(sectionNum) {
   section.querySelectorAll('.step-tab[data-step]').forEach(t => {
     tabs[t.dataset.step] = t;
   });
-  if (!tabs['1'] || !tabs['2'] || !tabs['3']) return;
+  const totalSteps = Object.keys(tabs).length;
+  if (totalSteps === 0) return;
+
   // Step 1 always unlocked
-  tabs['1'].classList.remove('is-locked');
-  tabs['1'].removeAttribute('title');
-  // Step 2 unlocked iff Step 1 done
-  if (tabs['1'].classList.contains('is-done')) {
-    tabs['2'].classList.remove('is-locked');
-    tabs['2'].removeAttribute('title');
-  } else {
-    tabs['2'].classList.add('is-locked');
-    tabs['2'].setAttribute('title', 'Finish Step 1 first');
+  if (tabs['1']) {
+    tabs['1'].classList.remove('is-locked');
+    tabs['1'].removeAttribute('title');
   }
-  // Step 3 unlocked iff Step 2 done
-  if (tabs['2'].classList.contains('is-done')) {
-    tabs['3'].classList.remove('is-locked');
-    tabs['3'].removeAttribute('title');
-  } else {
-    tabs['3'].classList.add('is-locked');
-    tabs['3'].setAttribute('title', 'Finish Step 2 first');
+  // Each subsequent step unlocks only when previous is done
+  for (let n = 2; n <= totalSteps; n++) {
+    const prev = tabs[String(n - 1)];
+    const curr = tabs[String(n)];
+    if (!curr) continue;
+    if (prev && prev.classList.contains('is-done')) {
+      curr.classList.remove('is-locked');
+      curr.removeAttribute('title');
+    } else {
+      curr.classList.add('is-locked');
+      curr.setAttribute('title', 'Finish Step ' + (n - 1) + ' first');
+    }
   }
 }
 
@@ -2146,8 +2198,9 @@ function loadState() {
   for (let i = 1; i <= TOTAL_SECTIONS; i++) {
     updateDoneStyle(i);
     runSection(i, true);
-    // Apply per-step done state from saved fields
-    for (let step = 1; step <= 3; step++) {
+    // Apply per-step done state from saved fields - dynamic step count per section
+    const stepCount_i = getStepCount(i) || 3;
+    for (let step = 1; step <= stepCount_i; step++) {
       const key = 'step-' + i + '-' + step;
       if (state.fields && state.fields[key]) {
         const tab = document.querySelector('section.lab[data-section="' + i + '"] .step-tab[data-step="' + step + '"]');
