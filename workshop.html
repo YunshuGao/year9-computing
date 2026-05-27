@@ -763,6 +763,51 @@ footer {
   100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
 }
 
+
+/* TODAY'S FOCUS - Section 8 visual override (subtle, not garish) */
+section.lab.today-focus::before {
+  background: linear-gradient(180deg, #f59e0b 0%, #1f3a68 100%);
+  width: 10px;
+}
+.today-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f59e0b;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+/* Tier-bar pill highlight for today's focus */
+.pill.is-today {
+  outline: 3px solid #f59e0b;
+  outline-offset: 3px;
+}
+.pill.is-today .ttl::before {
+  content: "\2605 ";
+  color: #fde68a;
+}
+
+/* LARGER, calmer instruction text - reduces reading load */
+.step-task {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 14px 18px;
+}
+.step-task .task-text {
+  line-height: 1.5;
+}
+.sec-intro {
+  font-size: 17px;
+  line-height: 1.6;
+}
+.col-label {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
   .tier-bar { grid-template-columns: 1fr; }
@@ -1538,16 +1583,17 @@ footer {
 
 
 <!-- ============================================================
-     SECTION 8 - Multi-page Site & Menu
+     SECTION 8 - TODAY'S FOCUS - Forms & Dropdown
      ============================================================ -->
-<section class="lab" id="sec-8" data-section="8">
+<section class="lab today-focus" id="sec-8" data-section="8">
   <div class="sec-head">
     <span class="sec-num">8</span>
-    <h2>Multi-page Site with a Menu</h2>
+    <h2>Forms &amp; Dropdown</h2>
+    <span class="today-badge">&#9733; TODAY</span>
     <span class="tier-ribbon" data-ribbon="8">SHOULD DO</span>
   </div>
   <p class="sec-intro">
-    Real websites have many pages. A <strong>menu</strong> is a list of <code>&lt;a&gt;</code> links shared by every page.
+    Build a <strong>form</strong>. Add a <strong>dropdown</strong> using <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>. No JavaScript needed.
   </p>
 
   <div class="step-tabs" data-section="8">
@@ -1555,70 +1601,77 @@ footer {
     <button type="button" class="step-tab" data-step="2" onclick="showStep(8,2)"><span class="num-dot">2</span>Step 2</button>
     <button type="button" class="step-tab" data-step="3" onclick="showStep(8,3)"><span class="num-dot">3</span>Step 3</button>
   </div>
-  <div class="step-task" id="task-8"><span class="task-text">Build a Home page with a menu linking to two other pages.</span><button type="button" class="next-step-btn" onclick="advanceStep(8)" id="advance-8">Done &mdash; show me Step 2 &rarr;</button></div>
+  <div class="step-task" id="task-8"><span class="task-text">Build a simple feedback form (Name + Email + Submit).</span><button type="button" class="next-step-btn" onclick="advanceStep(8)" id="advance-8">Done &mdash; show me Step 2 &rarr;</button></div>
 
   <div class="workspace3">
     <div class="col col-read">
       <div class="col-label"><span class="col-num">1</span> Read this code</div>
 <pre class="code-ref" data-section="8" data-step="1">&lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;Home&lt;/title&gt;
+    &lt;title&gt;Feedback&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;nav&gt;
-        &lt;a href="index.html"&gt;Home&lt;/a&gt; |
-        &lt;a href="about.html"&gt;About&lt;/a&gt; |
-        &lt;a href="contact.html"&gt;Contact&lt;/a&gt;
-    &lt;/nav&gt;
-    &lt;hr&gt;
-    &lt;h1&gt;Welcome to My Site&lt;/h1&gt;
-    &lt;p&gt;Use the menu above to look around.&lt;/p&gt;
+    &lt;h1&gt;Feedback&lt;/h1&gt;
+    &lt;form&gt;
+        &lt;label&gt;Name:
+            &lt;input type="text" name="name"&gt;
+        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+        &lt;label&gt;Email:
+            &lt;input type="email" name="email"&gt;
+        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+        &lt;input type="submit" value="Send"&gt;
+    &lt;/form&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="2" hidden>&lt;style&gt;
-    body { font-family: Arial; margin: 0; }
-    nav {
-        background: #1f3a68;
-        padding: 12px 20px;
-    }
-    nav a {
-        color: white;
-        text-decoration: none;
-        padding: 6px 14px;
-        font-weight: bold;
-    }
-    nav a:hover {
-        background: #14b8a6;
-        border-radius: 4px;
-    }
-    h1, p { padding: 0 20px; }
-&lt;/style&gt;</pre>
-<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;!-- A dropdown menu using &lt;details&gt; --&gt;
-&lt;nav&gt;
-    &lt;a href="index.html"&gt;Home&lt;/a&gt;
+<pre class="code-ref" data-section="8" data-step="2" hidden>&lt;form&gt;
+    &lt;label&gt;Name:
+        &lt;input type="text" name="name"&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
 
-    &lt;details&gt;
-        &lt;summary&gt;Photos&lt;/summary&gt;
-        &lt;ul&gt;
-            &lt;li&gt;&lt;a href="sport.html"&gt;Sport&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="school.html"&gt;School&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="family.html"&gt;Family&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/details&gt;
+    &lt;label&gt;Your message:&lt;br&gt;
+        &lt;textarea name="msg"
+                  rows="4" cols="40"&gt;&lt;/textarea&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
 
-    &lt;details&gt;
-        &lt;summary&gt;About&lt;/summary&gt;
-        &lt;ul&gt;
-            &lt;li&gt;&lt;a href="about.html"&gt;About Me&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/details&gt;
-&lt;/nav&gt;</pre>
+    &lt;label&gt;Favourite subject:
+        &lt;select name="subject"&gt;
+            &lt;option&gt;Computing&lt;/option&gt;
+            &lt;option&gt;Maths&lt;/option&gt;
+            &lt;option&gt;Art&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;label&gt;
+        &lt;input type="checkbox" name="news"&gt;
+        Email me updates
+    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
+
+    &lt;input type="submit" value="Send"&gt;
+&lt;/form&gt;</pre>
+<pre class="code-ref" data-section="8" data-step="3" hidden>&lt;h1&gt;Help &amp; FAQ&lt;/h1&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;How do I sign up?&lt;/summary&gt;
+    &lt;p&gt;Fill in the form. Click Send.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;Where do my answers go?&lt;/summary&gt;
+    &lt;p&gt;To the website owner.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;Is my data safe?&lt;/summary&gt;
+    &lt;p&gt;Yes - we never share it.&lt;/p&gt;
+&lt;/details&gt;</pre>
     </div>
 
     <div class="col col-type">
       <div class="col-label"><span class="col-num">2</span> Type here</div>
-      <textarea class="code-editor" data-save="code-8" data-section="8" spellcheck="false"></textarea>
+      <textarea class="code-editor" data-save="code-8" data-section="8"
+                spellcheck="false" placeholder="Type the code from the left."></textarea>
       <div class="run-row">
         <button type="button" class="run-btn" onclick="runSection(8)">Run</button>
         <button type="button" class="clear-btn" onclick="clearEditor(8)">Clear</button>
@@ -1989,128 +2042,6 @@ footer {
   </div>
 </section>
 
-
-<!-- ============================================================
-     SECTION 12 - Forms Review + Dropdown (tomorrow's focus)
-     ============================================================ -->
-<section class="lab" id="sec-12" data-section="12">
-  <div class="sec-head">
-    <span class="sec-num">12</span>
-    <h2>Forms &amp; Dropdown</h2>
-    <span class="tier-ribbon" data-ribbon="12">COULD DO</span>
-  </div>
-  <p class="sec-intro">
-    Review what you learnt about <strong>forms</strong>, then build a <strong>dropdown menu</strong>
-    using <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>. No JavaScript needed - the browser handles it.
-  </p>
-
-  <div class="step-tabs" data-section="12">
-    <button type="button" class="step-tab active" data-step="1" onclick="showStep(12,1)"><span class="num-dot">1</span>Step 1</button>
-    <button type="button" class="step-tab" data-step="2" onclick="showStep(12,2)"><span class="num-dot">2</span>Step 2</button>
-    <button type="button" class="step-tab" data-step="3" onclick="showStep(12,3)"><span class="num-dot">3</span>Step 3</button>
-  </div>
-  <div class="step-task" id="task-12"><span class="task-text">Build a simple feedback form (Name + Email + Submit).</span><button type="button" class="next-step-btn" onclick="advanceStep(12)" id="advance-12">Done &mdash; show me Step 2 &rarr;</button></div>
-
-  <div class="workspace3">
-    <div class="col col-read">
-      <div class="col-label"><span class="col-num">1</span> Read this code</div>
-<pre class="code-ref" data-section="12" data-step="1">&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Feedback&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Feedback&lt;/h1&gt;
-    &lt;form&gt;
-        &lt;label&gt;Name:
-            &lt;input type="text" name="name"&gt;
-        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-        &lt;label&gt;Email:
-            &lt;input type="email" name="email"&gt;
-        &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-        &lt;input type="submit" value="Send"&gt;
-    &lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-<pre class="code-ref" data-section="12" data-step="2" hidden>&lt;form&gt;
-    &lt;label&gt;Name:
-        &lt;input type="text" name="name"&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;label&gt;Your message:&lt;br&gt;
-        &lt;textarea name="msg"
-                  rows="4" cols="40"&gt;&lt;/textarea&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;label&gt;Favourite subject:
-        &lt;select name="subject"&gt;
-            &lt;option&gt;Computing&lt;/option&gt;
-            &lt;option&gt;Maths&lt;/option&gt;
-            &lt;option&gt;Art&lt;/option&gt;
-        &lt;/select&gt;
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;label&gt;
-        &lt;input type="checkbox" name="news"&gt;
-        Email me updates
-    &lt;/label&gt;&lt;br&gt;&lt;br&gt;
-
-    &lt;input type="submit" value="Send"&gt;
-&lt;/form&gt;</pre>
-<pre class="code-ref" data-section="12" data-step="3" hidden>&lt;!-- A dropdown using &lt;details&gt; --&gt;
-&lt;h1&gt;Help &amp; FAQ&lt;/h1&gt;
-
-&lt;details&gt;
-    &lt;summary&gt;How do I sign up?&lt;/summary&gt;
-    &lt;p&gt;Fill in the form above and click Send.&lt;/p&gt;
-&lt;/details&gt;
-
-&lt;details&gt;
-    &lt;summary&gt;Where do my answers go?&lt;/summary&gt;
-    &lt;p&gt;They are sent to the website owner.&lt;/p&gt;
-&lt;/details&gt;
-
-&lt;details&gt;
-    &lt;summary&gt;Is my data safe?&lt;/summary&gt;
-    &lt;p&gt;Yes - we never share it.&lt;/p&gt;
-&lt;/details&gt;</pre>
-    </div>
-
-    <div class="col col-type">
-      <div class="col-label"><span class="col-num">2</span> Type here</div>
-      <textarea class="code-editor" data-save="code-12" data-section="12"
-                spellcheck="false" placeholder="Type the code from the left."></textarea>
-      <div class="run-row">
-        <button type="button" class="run-btn" onclick="runSection(12)">Run</button>
-        <button type="button" class="clear-btn" onclick="clearEditor(12)">Clear</button>
-      </div>
-    </div>
-
-    <div class="col col-result">
-      <div class="col-label"><span class="col-num">3</span> Your result</div>
-      <iframe class="output" id="output-12" title="Section 12 preview"></iframe>
-    </div>
-  </div>
-
-  <div class="bottom-row">
-    <div class="reflection">
-      <h4>Reflection</h4>
-      <div class="ref-grid">
-        <div><label>What I learnt</label><textarea id="learnt-12" data-save="learnt-12"></textarea></div>
-        <div><label>I am stuck on</label><textarea id="stuck-12" data-save="stuck-12"></textarea></div>
-      </div>
-    </div>
-    <div class="done-card" id="done-card-12">
-      <div class="done-row">
-        <input type="checkbox" id="done-12" data-save="done-12" onchange="updateDoneStyle(12)">
-        <label for="done-12">I finished Section 12</label>
-      </div>
-      <div class="next-link"><a href="#" onclick="submitWork();return false;" style="background:#fde68a; color:#78350f; border-color:#f59e0b;">Submit My Work &rarr;</a></div>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer>
@@ -2163,8 +2094,7 @@ const TIER_CONFIG = {
   8: "should",
   9: "should",
   10: "should",
-  11: "should",
-  12: "could"
+  11: "should"
 };
 
 const SECTION_TITLES = {
@@ -2175,15 +2105,14 @@ const SECTION_TITLES = {
   5:  "Tables",
   6:  "Colours",
   7:  "Fonts & Borders",
-  8:  "Multi-page",
+  8:  "Forms & Dropdown",
   9:  "Plan My Site",
   10: "Images",
-  11: "Challenge",
-  12: "Forms & Dropdown"
+  11: "Challenge"
 };
 
 const STORAGE_KEY = "cotyc-workshop-v2";
-const TOTAL_SECTIONS = 12;
+const TOTAL_SECTIONS = 11;
 let saveTimer = null;
 
 /* ====================================================
@@ -2218,7 +2147,7 @@ function buildTierBar() {
     zones[tier].forEach(n => {
       const a = document.createElement("a");
       a.href = "#sec-" + n;
-      a.className = "pill " + tier;
+      a.className = "pill " + tier + (n === 8 ? " is-today" : "");
       a.id = "pill-" + n;
       a.innerHTML = '<span class="num">' + n + '</span>' +
                     '<span class="ttl">' + (SECTION_TITLES[n] || ("Section " + n)) + '</span>';
@@ -2252,19 +2181,16 @@ const STEP_TASKS = {
   7: ["Pick a font and a size for your text.",
       "Add a blue border around your h1.",
       "Build a 'card' look with border, padding, background, and border-radius."],
-  8: ["Build a Home page with a menu of 3 links.",
-      "Style the menu so it looks like a real nav bar.",
-      "Add a dropdown menu using &lt;details&gt; and &lt;summary&gt;."],
+  8: ["Build a simple feedback form (Name + Email + Submit).",
+      "Add more form fields - textarea, dropdown, checkbox.",
+      "Add a dropdown using &lt;details&gt; and &lt;summary&gt;."],
   9: ["Fill in the plan below.", "", ""],
   10: ["Add one image with alt description.",
        "Add 3 images, each with width and height.",
        "Style images with CSS (rounded corners, border)."],
   11: ["Build the skeleton: nav, h1, paragraph, footer.",
        "Add image, list, table, form.",
-       "Add a <style> block to make it look good."],
-  12: ["Build a simple feedback form (Name + Email + Submit).",
-       "Add more form fields - textarea, select dropdown, checkbox.",
-       "Add a dropdown menu using &lt;details&gt; and &lt;summary&gt;."]
+       "Add a <style> block to make it look good."]
 };
 
 function showStep(sectionNum, stepNum) {
