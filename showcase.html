@@ -202,12 +202,44 @@
     border-radius: 8px; cursor: pointer; font-weight: bold;
   }
 
+  /* ===== RECREATE SCENE ===== */
+  .recreate-scene {
+    flex: 1; display: flex; flex-direction: column;
+    gap: 14px; padding: 14px 22px; min-height: 0;
+  }
+  .recreate-previews {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; min-height: 280px;
+  }
+  .recreate-editor-wrap {
+    background: #1e1e2e; color: #f8f8f2;
+    border-radius: 12px; padding: 14px;
+    display: flex; flex-direction: column; min-height: 240px;
+  }
+  .recreate-editor-wrap h2 {
+    margin: 0 0 10px 0; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .recreate-editor {
+    flex: 1; width: 100%;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 22px; line-height: 1.55;
+    padding: 14px; border: 2px solid #334155; border-radius: 8px;
+    background: #0f172a; color: #f8f8f2;
+    resize: none; outline: none; tab-size: 2;
+    min-height: 180px;
+  }
+  .recreate-editor:focus { border-color: #f59e0b; }
+  /* Pulse the target so the volunteer's eye goes there first */
+  .recreate-previews .pane:first-child h2 { color: #f59e0b; }
+
   /* ===== BIG SCREEN MODE ===== */
   body.big-screen .controls { display: none; }
   body.big-screen .tabs { display: none; }
   body.big-screen .tip-strip { display: none; }
   body.big-screen .pane h2 { display: none; }
   body.big-screen main { padding: 8px 22px 22px 22px; }
+  body.big-screen .recreate-editor-wrap h2 { display: none; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 980px) {
@@ -230,13 +262,14 @@
   <button class="tab active" data-tab="form"    onclick="switchTab('form')"><span class="num">1</span>FORM</button>
   <button class="tab"        data-tab="menu"    onclick="switchTab('menu')"><span class="num">2</span>MENU</button>
   <button class="tab"        data-tab="dropdown"onclick="switchTab('dropdown')"><span class="num">3</span>DROPDOWN</button>
+  <button class="tab"        data-tab="recreate"onclick="switchTab('recreate')"><span class="num">4</span>RECREATE &#9733;</button>
 </nav>
 
 <div class="tip-strip" id="tipStrip">
   <strong>Try this:</strong> <span id="tipText">Tick the boxes below to add parts to the form. Watch both panels update together.</span>
 </div>
 
-<main>
+<main id="mainScene">
   <div class="pane">
     <h2>Live preview <span class="hint">(students see this)</span></h2>
     <iframe class="preview-frame" id="preview" sandbox="allow-same-origin allow-forms"></iframe>
@@ -246,6 +279,25 @@
     <div class="code-area" id="codeArea"></div>
   </div>
 </main>
+
+<!-- ============ RECREATE SCENE - student-at-the-board challenge ============ -->
+<section class="recreate-scene" id="recreateScene" hidden>
+  <div class="recreate-previews">
+    <div class="pane">
+      <h2>&#9733; TARGET &mdash; recreate this form</h2>
+      <iframe class="preview-frame" id="targetPreview" sandbox="allow-same-origin allow-forms"></iframe>
+    </div>
+    <div class="pane">
+      <h2>Your form &mdash; live preview</h2>
+      <iframe class="preview-frame" id="studentPreview" sandbox="allow-same-origin allow-forms"></iframe>
+    </div>
+  </div>
+  <div class="recreate-editor-wrap">
+    <h2 style="color:#94a3b8;">&#9888; Volunteer: type the HTML here. Press Tab for indenting.</h2>
+    <textarea id="studentCode" class="recreate-editor" spellcheck="false"
+              placeholder="Start with <h1>...</h1>  - look at the target on the left for hints"></textarea>
+  </div>
+</section>
 
 <!-- =========== CONTROLS - one set visible at a time =========== -->
 <div class="controls" id="formControls">
@@ -312,6 +364,44 @@
   </div>
 </div>
 
+<div class="controls" id="recreateControls" hidden>
+  <div class="control-group">
+    <h3>Volunteer support</h3>
+    <div class="control-row">
+      <button class="control-btn btn-all"   onclick="recreateHint()">&#128161; Hint (add a starter line)</button>
+      <button class="control-btn btn-open"  onclick="showModelAnswer()">&#128064; Show model answer</button>
+      <button class="control-btn btn-reset" onclick="recreateClear()">Clear editor</button>
+    </div>
+  </div>
+  <div class="control-group" style="flex:1;min-width:280px;">
+    <h3>Suggested flow (2-3 min)</h3>
+    <div style="color:#cbd5e1;font-size:13px;line-height:1.6;">
+      1. Ask: "Who wants to come and type?"<br>
+      2. Volunteer reads the target, types their attempt.<br>
+      3. Class compares the two previews. Applaud effort.<br>
+      4. Reveal model answer if needed. Reset for next student.
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODEL ANSWER MODAL ============ -->
+<div class="modal" id="modelModal" onclick="if(event.target===this) closeModelModal()">
+  <div class="modal-box" style="max-width:720px;">
+    <h2>Model answer</h2>
+    <p style="color:#6b7280;font-size:13px;margin:0 0 10px 0;">
+      Show this to the volunteer ONLY if they're stuck. The whiteboard version had some HTML mistakes
+      (<code>text="V"</code> isn't a real attribute) - this is the corrected version.
+    </p>
+    <pre style="background:#1e1e2e;color:#f8f8f2;padding:14px;border-radius:8px;
+                font-family:Consolas,monospace;font-size:13px;overflow-x:auto;
+                white-space:pre;line-height:1.5;" id="modelAnswerPre"></pre>
+    <div style="display:flex;gap:10px;margin-top:14px;">
+      <button class="close-btn" onclick="copyModelToEditor()" style="background:#10b981;">Copy into editor</button>
+      <button class="close-btn" onclick="closeModelModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- =========== HELP MODAL =========== -->
 <div class="modal" id="helpModal" onclick="if(event.target===this) closeModal()">
   <div class="modal-box">
@@ -370,8 +460,33 @@ const STATE = {
 const TIPS = {
   form:     'Tick the boxes below to add parts to the form. Watch both panels update together.',
   menu:     'Untick links to remove them. Tick "Add CSS" to transform the plain list into a navy bar.',
-  dropdown: 'A dropdown is just two tags. Click "Show OPEN state" to demo the click-to-open behaviour.'
+  dropdown: 'A dropdown is just two tags. Click "Show OPEN state" to demo the click-to-open behaviour.',
+  recreate: 'REVIEW: a volunteer comes to the front and types HTML to match the target on the left.'
 };
+
+/* Model answer for the RECREATE challenge (from the whiteboard) */
+const MODEL_ANSWER =
+'<h1>MY EXAMPLE FORM</h1>\n\n' +
+'<form>\n\n' +
+'  <h2>Name:\n' +
+'    <input type="text">\n' +
+'  </h2>\n\n' +
+'  <h2>Date:\n' +
+'    <input type="text">\n' +
+'    <input type="text">\n' +
+'    <input type="text">\n' +
+'  </h2>\n\n' +
+'  <h2>Age:\n' +
+'    <select>\n' +
+'      <option>0</option>\n' +
+'    </select>\n' +
+'  </h2>\n\n' +
+'  <input type="button" value="✓">\n' +
+'  <input type="button" value="✗">\n' +
+'  <input type="button" value="?">\n\n' +
+'  <p>© Example</p>\n' +
+'  <p>&lt;&lt;  &gt;&gt;</p>\n\n' +
+'</form>';
 
 /* ================================================================
    RENDER - per scene
@@ -581,10 +696,19 @@ function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => {
     t.classList.toggle('active', t.dataset.tab === name);
   });
+  // Toggle main vs recreate scenes
+  const isRecreate = (name === 'recreate');
+  document.getElementById('mainScene').hidden     = isRecreate;
+  document.getElementById('recreateScene').hidden = !isRecreate;
+
   document.getElementById('formControls').hidden    = (name !== 'form');
   document.getElementById('menuControls').hidden    = (name !== 'menu');
   document.getElementById('dropdownControls').hidden= (name !== 'dropdown');
-  render();
+  document.getElementById('recreateControls').hidden= (name !== 'recreate');
+
+  if (isRecreate) renderRecreate();
+  else render();
+  document.getElementById('tipText').textContent = TIPS[name];
 }
 
 /* ================================================================
@@ -625,6 +749,68 @@ function dropdownInsideMenu() {
   render();
 }
 
+/* ================================================================
+   RECREATE scene - student-at-the-board challenge
+   ================================================================ */
+function wrapHtmlBody(body) {
+  // Render any HTML snippet inside a tidy default page
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+       + '<style>body{font-family:Arial;margin:0;padding:14px;font-size:16px;}'
+       + 'h1{color:#1f3a68;}h2{color:#333;}input,select{margin:2px;padding:4px;}'
+       + '</style></head><body>' + body + '</body></html>';
+}
+
+function renderRecreate() {
+  // Target shows the model answer (the "what to build" reference)
+  document.getElementById('targetPreview').srcdoc = wrapHtmlBody(MODEL_ANSWER);
+  // Student preview updates from whatever's in the textarea
+  renderStudent();
+}
+
+function renderStudent() {
+  const code = document.getElementById('studentCode').value;
+  const body = code.trim()
+    ? code
+    : '<p style="color:#9ca3af;font-style:italic;padding:14px;">Your form will appear here as you type.</p>';
+  document.getElementById('studentPreview').srcdoc = wrapHtmlBody(body);
+}
+
+function recreateClear() {
+  document.getElementById('studentCode').value = '';
+  renderStudent();
+  document.getElementById('studentCode').focus();
+}
+
+function recreateHint() {
+  const ta = document.getElementById('studentCode');
+  if (!ta.value.includes('<h1>')) {
+    ta.value = '<h1>MY EXAMPLE FORM</h1>\n\n<form>\n  ' + ta.value;
+  } else if (!ta.value.includes('Name:')) {
+    ta.value += '\n  <h2>Name: <input type="text"></h2>';
+  } else if (!ta.value.includes('Date:')) {
+    ta.value += '\n  <h2>Date: <input type="text"> <input type="text"> <input type="text"></h2>';
+  } else if (!ta.value.includes('Age:')) {
+    ta.value += '\n  <h2>Age: <select><option>0</option></select></h2>';
+  } else if (!ta.value.includes('</form>')) {
+    ta.value += '\n</form>';
+  }
+  renderStudent();
+  ta.focus();
+}
+
+function showModelAnswer() {
+  document.getElementById('modelAnswerPre').textContent = MODEL_ANSWER;
+  document.getElementById('modelModal').classList.add('open');
+}
+function closeModelModal() {
+  document.getElementById('modelModal').classList.remove('open');
+}
+function copyModelToEditor() {
+  document.getElementById('studentCode').value = MODEL_ANSWER;
+  renderStudent();
+  closeModelModal();
+}
+
 /* sync checkboxes after a state reset */
 function syncCheckboxes(group) {
   const attr = 'data-' + group;
@@ -657,6 +843,19 @@ document.querySelectorAll('[data-dd]').forEach(cb => {
   });
 });
 
+/* RECREATE textarea wiring - live preview + Tab inserts spaces */
+document.getElementById('studentCode').addEventListener('input', renderStudent);
+document.getElementById('studentCode').addEventListener('keydown', function(e) {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const ta = this;
+    const start = ta.selectionStart, end = ta.selectionEnd;
+    ta.value = ta.value.slice(0, start) + '  ' + ta.value.slice(end);
+    ta.selectionStart = ta.selectionEnd = start + 2;
+    renderStudent();
+  }
+});
+
 /* ================================================================
    MODALS + BIG SCREEN
    ================================================================ */
@@ -674,10 +873,12 @@ document.addEventListener('keydown', e => {
     case '1': switchTab('form');     break;
     case '2': switchTab('menu');     break;
     case '3': switchTab('dropdown'); break;
+    case '4': switchTab('recreate'); break;
     case 'r': case 'R':
-      if (STATE.scene === 'form')     formReset();
-      else if (STATE.scene === 'menu')menuReset();
-      else                            dropdownReset();
+      if (STATE.scene === 'form')          formReset();
+      else if (STATE.scene === 'menu')     menuReset();
+      else if (STATE.scene === 'dropdown') dropdownReset();
+      else if (STATE.scene === 'recreate') recreateClear();
       break;
     case 'a': case 'A':
       if (STATE.scene === 'form') formAll();
@@ -685,7 +886,10 @@ document.addEventListener('keydown', e => {
       break;
     case 'f': case 'F': toggleBigScreen(); break;
     case '?': openHelp(); break;
-    case 'Escape': closeModal(); break;
+    case 'Escape':
+      closeModal();
+      closeModelModal();
+      break;
   }
 });
 
