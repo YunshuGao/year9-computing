@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 5 - Live Showcase</title>
+<style>
+  /* ==============================================================
+     SHOWCASE TOOL - visual, toggle-driven, colour-coded
+     Teacher clicks toggles - students see preview + code change together.
+     Each form part has a colour; the code shares that colour.
+     ============================================================== */
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: Arial, sans-serif;
+    background: #0f172a; color: #e5e7eb;
+    min-height: 100vh; display: flex; flex-direction: column;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #333399, #2d2d8a);
+    color: white; padding: 12px 22px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  header .brand { font-size: 18px; font-weight: bold; }
+  header .spacer { flex: 1; }
+  header button {
+    background: white; color: #333399; border: none;
+    padding: 6px 14px; border-radius: 8px; cursor: pointer;
+    font-weight: bold; font-size: 13px;
+  }
+  header button:hover { background: #fef3c7; }
+
+  /* ===== TABS ===== */
+  .tabs { background: #1e293b; padding: 0 22px; display: flex; gap: 4px; }
+  .tab {
+    background: transparent; color: #94a3b8;
+    border: none; padding: 14px 26px; font-size: 16px;
+    font-weight: bold; cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: all 0.15s; letter-spacing: 0.5px;
+  }
+  .tab:hover { color: #e5e7eb; }
+  .tab.active {
+    color: white;
+    border-bottom-color: #f59e0b;
+    background: rgba(255,255,255,0.05);
+  }
+  .tab .num {
+    display: inline-block;
+    background: #475569; color: white;
+    width: 22px; height: 22px; line-height: 22px;
+    border-radius: 50%; text-align: center;
+    font-size: 12px; margin-right: 6px;
+  }
+  .tab.active .num { background: #f59e0b; color: #0f172a; }
+
+  /* ===== MAIN GRID ===== */
+  main {
+    flex: 1; display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px; padding: 14px 22px; min-height: 0;
+  }
+  .pane {
+    background: white; color: #111827;
+    border-radius: 12px; padding: 14px;
+    display: flex; flex-direction: column; min-height: 0;
+    overflow: hidden;
+  }
+  .pane h2 {
+    margin: 0 0 10px 0; font-size: 13px;
+    color: #64748b; text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .pane h2 .hint { color: #f59e0b; font-weight: normal;
+                   text-transform: none; letter-spacing: 0; margin-left: 8px;}
+
+  /* ===== PREVIEW iframe ===== */
+  .preview-frame {
+    flex: 1; width: 100%; border: 1px solid #e5e7eb;
+    border-radius: 8px; background: white;
+    min-height: 340px;
+  }
+
+  /* ===== CODE PANE ===== */
+  .code-pane { background: #1e1e2e; color: #f8f8f2;
+               border-radius: 12px; }
+  .code-pane h2 { color: #94a3b8; }
+  .code-pane h2 .hint { color: #f59e0b; }
+  .code-area {
+    flex: 1; overflow-y: auto;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 17px; line-height: 1.55;
+    padding: 14px; border-radius: 8px;
+    background: #1e1e2e; white-space: pre;
+  }
+  .code-area .line { padding: 1px 8px; border-radius: 4px;
+                     border-left: 4px solid transparent; }
+  /* colour classes for code line highlights */
+  .code-area .c-name     { border-left-color:#10b981;
+                            background:rgba(16,185,129,.10); }
+  .code-area .c-email    { border-left-color:#2563eb;
+                            background:rgba(37,99,235,.12); }
+  .code-area .c-password { border-left-color:#7c3aed;
+                            background:rgba(124,58,237,.14); }
+  .code-area .c-country  { border-left-color:#f59e0b;
+                            background:rgba(245,158,11,.13); }
+  .code-area .c-subscribe{ border-left-color:#ec4899;
+                            background:rgba(236,72,153,.13); }
+  .code-area .c-submit   { border-left-color:#1f3a68;
+                            background:rgba(31,58,104,.18); }
+  .code-area .c-home     { border-left-color:#10b981;
+                            background:rgba(16,185,129,.10); }
+  .code-area .c-about    { border-left-color:#2563eb;
+                            background:rgba(37,99,235,.12); }
+  .code-area .c-contact  { border-left-color:#f59e0b;
+                            background:rgba(245,158,11,.13); }
+  .code-area .c-styled   { border-left-color:#ec4899;
+                            background:rgba(236,72,153,.10); }
+  .code-area .c-summary  { border-left-color:#2563eb;
+                            background:rgba(37,99,235,.12); }
+  .code-area .c-item     { border-left-color:#10b981;
+                            background:rgba(16,185,129,.10); }
+  .code-area .c-wrap     { border-left-color:#94a3b8;
+                            background:rgba(148,163,184,.08); color:#cbd5e1; }
+
+  /* ===== CONTROLS BAR (bottom) ===== */
+  .controls {
+    background: #1e293b; color: #e5e7eb;
+    padding: 14px 22px; border-top: 1px solid #334155;
+    display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;
+  }
+  .controls h3 {
+    margin: 0 0 8px 0; font-size: 13px;
+    color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .control-group { display: flex; flex-direction: column; gap: 6px; min-width: 220px; }
+  .control-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .toggle {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; background: #334155; border-radius: 8px;
+    cursor: pointer; user-select: none; font-size: 14px;
+    border-left: 4px solid transparent;
+    transition: all 0.15s;
+  }
+  .toggle:hover { background: #475569; }
+  .toggle input { width: 18px; height: 18px; cursor: pointer; }
+  .toggle.on { background: #0f3a68; }
+  /* coloured borders matching the code highlights */
+  .toggle.c-name     { border-left-color:#10b981; }
+  .toggle.c-email    { border-left-color:#2563eb; }
+  .toggle.c-password { border-left-color:#7c3aed; }
+  .toggle.c-country  { border-left-color:#f59e0b; }
+  .toggle.c-subscribe{ border-left-color:#ec4899; }
+  .toggle.c-submit   { border-left-color:#1f3a68; }
+  .toggle.c-home     { border-left-color:#10b981; }
+  .toggle.c-about    { border-left-color:#2563eb; }
+  .toggle.c-contact  { border-left-color:#f59e0b; }
+  .toggle.c-styled   { border-left-color:#ec4899; }
+  .toggle.c-item     { border-left-color:#10b981; }
+  .control-btn {
+    padding: 8px 16px; border-radius: 8px; border: none;
+    cursor: pointer; font-weight: bold; font-size: 14px;
+  }
+  .btn-reset  { background: #fee2e2; color: #b91c1c; }
+  .btn-reset:hover { background: #fca5a5; color: white; }
+  .btn-all    { background: #10b981; color: white; }
+  .btn-all:hover { background: #059669; }
+  .btn-open   { background: #f59e0b; color: #1f2937; }
+  .btn-open:hover { background: #d97706; color: white; }
+
+  /* ===== TIP STRIP (top of controls) ===== */
+  .tip-strip {
+    background: #fef3c7; color: #78350f;
+    padding: 8px 22px; font-size: 14px;
+    border-left: 6px solid #f59e0b;
+  }
+  .tip-strip strong { color: #b45309; }
+
+  /* ===== HELP MODAL ===== */
+  .modal {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(0,0,0,.6);
+    z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal.open { display: flex; }
+  .modal-box {
+    background: white; color: #111827;
+    border-radius: 12px; padding: 28px 32px;
+    max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;
+  }
+  .modal-box h2 { margin: 0 0 14px 0; color: #333399; }
+  .modal-box kbd {
+    background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px;
+    padding: 2px 8px; font-family: Consolas, monospace; font-size: 13px;
+  }
+  .modal-box ul li { margin-bottom: 6px; }
+  .modal-box .close-btn {
+    margin-top: 18px; padding: 10px 22px;
+    background: #333399; color: white; border: none;
+    border-radius: 8px; cursor: pointer; font-weight: bold;
+  }
+
+  /* ===== BIG SCREEN MODE ===== */
+  body.big-screen .controls { display: none; }
+  body.big-screen .tabs { display: none; }
+  body.big-screen .tip-strip { display: none; }
+  body.big-screen .pane h2 { display: none; }
+  body.big-screen main { padding: 8px 22px 22px 22px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 980px) {
+    main { grid-template-columns: 1fr; }
+    .code-area { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="brand">Lesson 5 Showcase</span>
+  <span style="opacity:.85;font-size:13px">Forms · Menu · Dropdown</span>
+  <span class="spacer"></span>
+  <button onclick="toggleBigScreen()">Big Screen Mode</button>
+  <button onclick="openHelp()">? Help</button>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="form"    onclick="switchTab('form')"><span class="num">1</span>FORM</button>
+  <button class="tab"        data-tab="menu"    onclick="switchTab('menu')"><span class="num">2</span>MENU</button>
+  <button class="tab"        data-tab="dropdown"onclick="switchTab('dropdown')"><span class="num">3</span>DROPDOWN</button>
+</nav>
+
+<div class="tip-strip" id="tipStrip">
+  <strong>Try this:</strong> <span id="tipText">Tick the boxes below to add parts to the form. Watch both panels update together.</span>
+</div>
+
+<main>
+  <div class="pane">
+    <h2>Live preview <span class="hint">(students see this)</span></h2>
+    <iframe class="preview-frame" id="preview" sandbox="allow-same-origin allow-forms"></iframe>
+  </div>
+  <div class="pane code-pane">
+    <h2>HTML code <span class="hint">(same colour as the part it makes)</span></h2>
+    <div class="code-area" id="codeArea"></div>
+  </div>
+</main>
+
+<!-- =========== CONTROLS - one set visible at a time =========== -->
+<div class="controls" id="formControls">
+  <div class="control-group">
+    <h3>Form pieces</h3>
+    <div class="control-row">
+      <label class="toggle c-name on">      <input type="checkbox" data-form="name"      checked> Name</label>
+      <label class="toggle c-email on">     <input type="checkbox" data-form="email"     checked> Email</label>
+      <label class="toggle c-password">     <input type="checkbox" data-form="password"        > Password</label>
+      <label class="toggle c-country">      <input type="checkbox" data-form="country"         > Country dropdown</label>
+      <label class="toggle c-subscribe">    <input type="checkbox" data-form="subscribe"       > Subscribe checkbox</label>
+      <label class="toggle c-submit on">    <input type="checkbox" data-form="submit"    checked> Submit button</label>
+    </div>
+  </div>
+  <div class="control-group">
+    <h3>Quick actions</h3>
+    <div class="control-row">
+      <button class="control-btn btn-all"   onclick="formAll()">Show all 6</button>
+      <button class="control-btn btn-reset" onclick="formReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="controls" id="menuControls" hidden>
+  <div class="control-group">
+    <h3>Menu links</h3>
+    <div class="control-row">
+      <label class="toggle c-home on">    <input type="checkbox" data-menu="home"    checked> Home link</label>
+      <label class="toggle c-about on">   <input type="checkbox" data-menu="about"   checked> About link</label>
+      <label class="toggle c-contact on"> <input type="checkbox" data-menu="contact" checked> Contact link</label>
+    </div>
+  </div>
+  <div class="control-group">
+    <h3>Style it</h3>
+    <div class="control-row">
+      <label class="toggle c-styled">     <input type="checkbox" data-menu="styled" > Add CSS (navy bar + white links)</label>
+      <label class="toggle">              <input type="checkbox" data-menu="hover"  > Add :hover effect (orange)</label>
+    </div>
+  </div>
+  <div class="control-group">
+    <h3>Reset</h3>
+    <div class="control-row">
+      <button class="control-btn btn-reset" onclick="menuReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="controls" id="dropdownControls" hidden>
+  <div class="control-group">
+    <h3>Dropdown items</h3>
+    <div class="control-row">
+      <label class="toggle c-item on"> <input type="checkbox" data-dd="sport"  checked> Sport</label>
+      <label class="toggle c-item on"> <input type="checkbox" data-dd="school" checked> School</label>
+      <label class="toggle c-item on"> <input type="checkbox" data-dd="family" checked> Family</label>
+    </div>
+  </div>
+  <div class="control-group">
+    <h3>Demonstrate open/closed</h3>
+    <div class="control-row">
+      <button class="control-btn btn-open" onclick="dropdownToggleOpen()" id="openBtn">Show OPEN state</button>
+      <button class="control-btn btn-all"  onclick="dropdownInsideMenu()">Put inside menu (advanced)</button>
+      <button class="control-btn btn-reset" onclick="dropdownReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========== HELP MODAL =========== -->
+<div class="modal" id="helpModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-box">
+    <h2>How to use this tool</h2>
+    <p>This tool is for LIVE demonstration in front of students. Each tab covers one teaching beat: Form, Menu, Dropdown.</p>
+    <h3 style="color:#333399;margin:18px 0 6px 0;">In each tab</h3>
+    <ul>
+      <li>Tick checkboxes at the bottom to add pieces to the preview.</li>
+      <li>The matching code lines appear on the right with the SAME colour as the toggle.</li>
+      <li>Students can SEE which code makes which piece - that's the whole point.</li>
+      <li><strong>Reset</strong> clears the demo. <strong>Show all</strong> reveals everything at once.</li>
+    </ul>
+    <h3 style="color:#333399;margin:18px 0 6px 0;">Keyboard shortcuts</h3>
+    <ul>
+      <li><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> &mdash; switch to Form / Menu / Dropdown tab</li>
+      <li><kbd>R</kbd> &mdash; reset current tab</li>
+      <li><kbd>A</kbd> &mdash; show all pieces of current tab</li>
+      <li><kbd>F</kbd> &mdash; toggle Big Screen Mode (hides controls for screen-sharing)</li>
+      <li><kbd>?</kbd> &mdash; this help</li>
+    </ul>
+    <h3 style="color:#333399;margin:18px 0 6px 0;">Suggested lesson flow</h3>
+    <ol>
+      <li>Start on FORM tab with just Name + Email + Submit (default).</li>
+      <li>Ask students: "What if I want a password too?" Then tick Password.</li>
+      <li>Same for Country, Subscribe. Each tick gets a "wow" reaction.</li>
+      <li>Switch to MENU tab. Show 3 plain links. Then click "Add CSS" - the menu transforms.</li>
+      <li>Switch to DROPDOWN tab. Show closed, then click "Show OPEN state".</li>
+      <li>Click "Put inside menu" to show the combined pattern from Section 9.</li>
+    </ol>
+    <button class="close-btn" onclick="closeModal()">Got it</button>
+  </div>
+</div>
+
+<script>
+/* ================================================================
+   STATE
+   ================================================================ */
+const STATE = {
+  scene: 'form',
+  form: {
+    name: true, email: true, password: false,
+    country: false, subscribe: false, submit: true
+  },
+  menu: {
+    home: true, about: true, contact: true,
+    styled: false, hover: false
+  },
+  dropdown: {
+    open: false,
+    sport: true, school: true, family: true,
+    insideMenu: false
+  }
+};
+
+/* Tip text per scene */
+const TIPS = {
+  form:     'Tick the boxes below to add parts to the form. Watch both panels update together.',
+  menu:     'Untick links to remove them. Tick "Add CSS" to transform the plain list into a navy bar.',
+  dropdown: 'A dropdown is just two tags. Click "Show OPEN state" to demo the click-to-open behaviour.'
+};
+
+/* ================================================================
+   RENDER - per scene
+   ================================================================ */
+function renderForm() {
+  const f = STATE.form;
+  // ----- HTML for the preview iframe -----
+  let body = '<form style="font-family:Arial;max-width:380px;padding:14px;">';
+  if (f.name)      body += '<div style="border-left:5px solid #10b981;padding:8px 12px;margin:6px 0;">Name: <input type="text" style="padding:6px;width:60%;"></div>';
+  if (f.email)     body += '<div style="border-left:5px solid #2563eb;padding:8px 12px;margin:6px 0;">Email: <input type="email" style="padding:6px;width:60%;"></div>';
+  if (f.password)  body += '<div style="border-left:5px solid #7c3aed;padding:8px 12px;margin:6px 0;">Password: <input type="password" style="padding:6px;width:60%;"></div>';
+  if (f.country)   body += '<div style="border-left:5px solid #f59e0b;padding:8px 12px;margin:6px 0;">Country: <select style="padding:6px;"><option>Australia</option><option>China</option><option>India</option></select></div>';
+  if (f.subscribe) body += '<div style="border-left:5px solid #ec4899;padding:8px 12px;margin:6px 0;"><input type="checkbox"> Send me updates</div>';
+  if (f.submit)    body += '<div style="border-left:5px solid #1f3a68;padding:8px 12px;margin:6px 0;"><input type="submit" value="Sign Up" style="background:#1f3a68;color:white;border:none;padding:8px 18px;border-radius:4px;font-weight:bold;cursor:pointer;"></div>';
+  body += '</form>';
+  body += '<p style="font-family:Arial;font-size:11px;color:#9ca3af;padding:0 14px;">(The coloured stripe on each row matches the same-colour code on the right.)</p>';
+  setPreview(body);
+
+  // ----- Code lines -----
+  const lines = [['<form>', 'wrap']];
+  if (f.name)      lines.push(['  Name:', 'name'], ['  <input type="text">', 'name'], ['', null]);
+  if (f.email)     lines.push(['  Email:', 'email'], ['  <input type="email">', 'email'], ['', null]);
+  if (f.password)  lines.push(['  Password:', 'password'], ['  <input type="password">', 'password'], ['', null]);
+  if (f.country)   lines.push(['  Country:', 'country'],
+                              ['  <select>', 'country'],
+                              ['    <option>Australia</option>', 'country'],
+                              ['    <option>China</option>', 'country'],
+                              ['    <option>India</option>', 'country'],
+                              ['  </select>', 'country'],
+                              ['', null]);
+  if (f.subscribe) lines.push(['  <input type="checkbox">', 'subscribe'],
+                              ['  Send me updates', 'subscribe'],
+                              ['', null]);
+  if (f.submit)    lines.push(['  <input type="submit" value="Sign Up">', 'submit']);
+  lines.push(['</form>', 'wrap']);
+  setCode(lines);
+}
+
+function renderMenu() {
+  const m = STATE.menu;
+  // STYLE block conditionally
+  let style = '';
+  if (m.styled) {
+    style += '<style>';
+    style += 'nav{background:navy;padding:14px 22px;}';
+    style += 'nav a{color:white;text-decoration:none;font-weight:bold;padding:6px 14px;}';
+    if (m.hover) style += 'nav a:hover{color:orange;}';
+    style += '</style>';
+  }
+  let nav = '<nav style="font-family:Arial;padding:14px;' +
+            (m.styled ? '' : 'background:#f3f4f6;') + '">';
+  const links = [];
+  if (m.home)    links.push('<a href="#">Home</a>');
+  if (m.about)   links.push('<a href="#">About</a>');
+  if (m.contact) links.push('<a href="#">Contact</a>');
+  nav += links.join(' | ');
+  nav += '</nav>';
+  let body = style + nav;
+  if (m.styled) body += '<p style="font-family:Arial;font-size:12px;color:#6b7280;padding:12px 14px;">Hover the links to see the orange effect.</p>';
+  else          body += '<p style="font-family:Arial;font-size:12px;color:#9ca3af;padding:12px 14px;">Plain - no CSS. Tick "Add CSS" to style it.</p>';
+  setPreview(body);
+
+  // Code lines
+  const lines = [];
+  if (m.styled) {
+    lines.push(['<style>', 'styled']);
+    lines.push(['  nav {', 'styled']);
+    lines.push(['    background: navy;', 'styled']);
+    lines.push(['    padding: 14px 22px;', 'styled']);
+    lines.push(['  }', 'styled']);
+    lines.push(['  nav a {', 'styled']);
+    lines.push(['    color: white;', 'styled']);
+    lines.push(['    text-decoration: none;', 'styled']);
+    lines.push(['    font-weight: bold;', 'styled']);
+    lines.push(['  }', 'styled']);
+    if (m.hover) {
+      lines.push(['  nav a:hover {', 'styled']);
+      lines.push(['    color: orange;', 'styled']);
+      lines.push(['  }', 'styled']);
+    }
+    lines.push(['</style>', 'styled']);
+    lines.push(['', null]);
+  }
+  lines.push(['<nav>', 'wrap']);
+  if (m.home)    lines.push(['  <a href="index.html">Home</a>', 'home']);
+  if (m.home && (m.about || m.contact)) lines.push(['  |', 'wrap']);
+  if (m.about)   lines.push(['  <a href="about.html">About</a>', 'about']);
+  if (m.about && m.contact) lines.push(['  |', 'wrap']);
+  if (m.contact) lines.push(['  <a href="contact.html">Contact</a>', 'contact']);
+  lines.push(['</nav>', 'wrap']);
+  setCode(lines);
+}
+
+function renderDropdown() {
+  const d = STATE.dropdown;
+  const items = [];
+  if (d.sport)  items.push('<li>Sport</li>');
+  if (d.school) items.push('<li>School</li>');
+  if (d.family) items.push('<li>Family</li>');
+
+  let body;
+  if (d.insideMenu) {
+    // Combined: dropdown inside a styled nav
+    body = '<style>nav{background:navy;padding:12px;font-family:Arial;}'
+         + 'nav a{color:white;text-decoration:none;font-weight:bold;padding:6px 14px;}'
+         + 'nav details{display:inline-block;color:white;padding:6px 14px;cursor:pointer;}'
+         + 'nav summary{font-weight:bold;}'
+         + 'nav ul{background:white;color:#111;padding:8px 22px;border-radius:6px;margin-top:8px;}'
+         + 'nav ul li{padding:4px 0;}'
+         + '</style>'
+         + '<nav>'
+         + '<a href="#">Home</a>'
+         + '<details ' + (d.open ? 'open' : '') + '>'
+         + '  <summary>Photos</summary>'
+         + '  <ul>' + items.join('') + '</ul>'
+         + '</details>'
+         + '<a href="#">Contact</a>'
+         + '</nav>';
+  } else {
+    // Standalone dropdown
+    body = '<div style="font-family:Arial;padding:24px;">'
+         + '<details ' + (d.open ? 'open' : '') + ' style="font-size:18px;">'
+         + '<summary style="cursor:pointer;color:#0e6ab8;font-weight:bold;font-size:22px;border-left:5px solid #2563eb;padding:6px 12px;">Photos</summary>'
+         + '<ul style="border-left:5px solid #10b981;padding:6px 12px 6px 32px;margin-top:6px;">'
+         + items.join('') + '</ul>'
+         + '</details>'
+         + '<p style="font-size:12px;color:#9ca3af;margin-top:18px;">'
+         + (d.open ? '(OPEN - hidden content is now visible)' : '(CLOSED - click "Photos" to open, or use the button below)')
+         + '</p>'
+         + '</div>';
+  }
+  setPreview(body);
+
+  // Code lines
+  const lines = [];
+  if (d.insideMenu) {
+    lines.push(['<nav>', 'wrap']);
+    lines.push(['  <a href="#">Home</a>', 'wrap']);
+    lines.push(['  <details' + (d.open ? ' open' : '') + '>', 'wrap']);
+    lines.push(['    <summary>Photos</summary>', 'summary']);
+    lines.push(['    <ul>', 'item']);
+    if (d.sport)  lines.push(['      <li>Sport</li>', 'item']);
+    if (d.school) lines.push(['      <li>School</li>', 'item']);
+    if (d.family) lines.push(['      <li>Family</li>', 'item']);
+    lines.push(['    </ul>', 'item']);
+    lines.push(['  </details>', 'wrap']);
+    lines.push(['  <a href="#">Contact</a>', 'wrap']);
+    lines.push(['</nav>', 'wrap']);
+  } else {
+    lines.push(['<details' + (d.open ? ' open' : '') + '>', 'wrap']);
+    lines.push(['  <summary>Photos</summary>', 'summary']);
+    lines.push(['  <ul>', 'item']);
+    if (d.sport)  lines.push(['    <li>Sport</li>', 'item']);
+    if (d.school) lines.push(['    <li>School</li>', 'item']);
+    if (d.family) lines.push(['    <li>Family</li>', 'item']);
+    lines.push(['  </ul>', 'item']);
+    lines.push(['</details>', 'wrap']);
+  }
+  setCode(lines);
+}
+
+/* ================================================================
+   PREVIEW + CODE writers
+   ================================================================ */
+function setPreview(bodyHTML) {
+  const iframe = document.getElementById('preview');
+  iframe.srcdoc = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+                + '<style>body{margin:0;padding:14px;}</style>'
+                + '</head><body>' + bodyHTML + '</body></html>';
+}
+
+function setCode(lines) {
+  const area = document.getElementById('codeArea');
+  const out = lines.map(([text, cls]) => {
+    const safe = text.replace(/&/g, '&amp;')
+                     .replace(/</g, '&lt;')
+                     .replace(/>/g, '&gt;');
+    return '<div class="line' + (cls ? ' c-' + cls : '') + '">'
+         + (safe || '&nbsp;') + '</div>';
+  }).join('');
+  area.innerHTML = out;
+}
+
+/* ================================================================
+   RENDER dispatch
+   ================================================================ */
+function render() {
+  if      (STATE.scene === 'form')     renderForm();
+  else if (STATE.scene === 'menu')     renderMenu();
+  else if (STATE.scene === 'dropdown') renderDropdown();
+  syncToggleClasses();
+  document.getElementById('tipText').textContent = TIPS[STATE.scene];
+}
+
+/* keep toggle .on class in sync with checkbox state (for visual emphasis) */
+function syncToggleClasses() {
+  document.querySelectorAll('.toggle input').forEach(cb => {
+    cb.parentElement.classList.toggle('on', cb.checked);
+  });
+}
+
+/* ================================================================
+   TAB switching
+   ================================================================ */
+function switchTab(name) {
+  STATE.scene = name;
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === name);
+  });
+  document.getElementById('formControls').hidden    = (name !== 'form');
+  document.getElementById('menuControls').hidden    = (name !== 'menu');
+  document.getElementById('dropdownControls').hidden= (name !== 'dropdown');
+  render();
+}
+
+/* ================================================================
+   ACTIONS
+   ================================================================ */
+function formReset() {
+  STATE.form = { name: true, email: true, password: false,
+                 country: false, subscribe: false, submit: true };
+  syncCheckboxes('form');
+  render();
+}
+function formAll() {
+  Object.keys(STATE.form).forEach(k => STATE.form[k] = true);
+  syncCheckboxes('form');
+  render();
+}
+function menuReset() {
+  STATE.menu = { home: true, about: true, contact: true,
+                 styled: false, hover: false };
+  syncCheckboxes('menu');
+  render();
+}
+function dropdownReset() {
+  STATE.dropdown = { open: false, sport: true, school: true,
+                     family: true, insideMenu: false };
+  syncCheckboxes('dd');
+  document.getElementById('openBtn').textContent = 'Show OPEN state';
+  render();
+}
+function dropdownToggleOpen() {
+  STATE.dropdown.open = !STATE.dropdown.open;
+  document.getElementById('openBtn').textContent =
+    STATE.dropdown.open ? 'Show CLOSED state' : 'Show OPEN state';
+  render();
+}
+function dropdownInsideMenu() {
+  STATE.dropdown.insideMenu = !STATE.dropdown.insideMenu;
+  render();
+}
+
+/* sync checkboxes after a state reset */
+function syncCheckboxes(group) {
+  const attr = 'data-' + group;
+  document.querySelectorAll('[' + attr + ']').forEach(cb => {
+    const key = cb.getAttribute(attr);
+    const stateGroup = group === 'dd' ? STATE.dropdown : STATE[group];
+    cb.checked = !!stateGroup[key];
+  });
+}
+
+/* ================================================================
+   CHECKBOX wiring
+   ================================================================ */
+document.querySelectorAll('[data-form]').forEach(cb => {
+  cb.addEventListener('change', e => {
+    STATE.form[cb.dataset.form] = cb.checked;
+    render();
+  });
+});
+document.querySelectorAll('[data-menu]').forEach(cb => {
+  cb.addEventListener('change', e => {
+    STATE.menu[cb.dataset.menu] = cb.checked;
+    render();
+  });
+});
+document.querySelectorAll('[data-dd]').forEach(cb => {
+  cb.addEventListener('change', e => {
+    STATE.dropdown[cb.dataset.dd] = cb.checked;
+    render();
+  });
+});
+
+/* ================================================================
+   MODALS + BIG SCREEN
+   ================================================================ */
+function openHelp()    { document.getElementById('helpModal').classList.add('open'); }
+function closeModal()  { document.getElementById('helpModal').classList.remove('open'); }
+function toggleBigScreen() { document.body.classList.toggle('big-screen'); }
+
+/* ================================================================
+   KEYBOARD SHORTCUTS
+   ================================================================ */
+document.addEventListener('keydown', e => {
+  if (document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (document.querySelector('.modal.open') && e.key !== 'Escape') return;
+  switch (e.key) {
+    case '1': switchTab('form');     break;
+    case '2': switchTab('menu');     break;
+    case '3': switchTab('dropdown'); break;
+    case 'r': case 'R':
+      if (STATE.scene === 'form')     formReset();
+      else if (STATE.scene === 'menu')menuReset();
+      else                            dropdownReset();
+      break;
+    case 'a': case 'A':
+      if (STATE.scene === 'form') formAll();
+      // menu + dropdown are already "all" by default
+      break;
+    case 'f': case 'F': toggleBigScreen(); break;
+    case '?': openHelp(); break;
+    case 'Escape': closeModal(); break;
+  }
+});
+
+/* ================================================================
+   INIT
+   ================================================================ */
+render();
+</script>
+</body>
+</html>
