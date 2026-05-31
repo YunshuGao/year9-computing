@@ -98,7 +98,12 @@ body {
   transition: width 0.4s ease;
 }
 #progressText { font-weight: 700; min-width: 80px; }
-#saveStatus { opacity: 0.92; margin-left: auto; font-size: 13px; }
+#saveStatus { opacity: 0.92; margin-left: auto; font-size: 13px;
+              padding: 2px 8px; border-radius: 4px; transition: background 0.2s; }
+#saveStatus.is-toast-success { background: #10b981; color: white; opacity: 1;
+                                font-weight: 700; }
+#saveStatus.is-toast-error   { background: #ef4444; color: white; opacity: 1;
+                                font-weight: 700; }
 
 .toolbar {
   display: flex;
@@ -961,6 +966,8 @@ section.lab.today-focus::before {
   </div>
   <div class="toolbar">
     <button class="primary" onclick="submitWork()">Submit My Work</button>
+    <button onclick="document.getElementById('loadFile').click()">&#128194; Load my saved file</button>
+    <input type="file" id="loadFile" accept=".html,text/html" hidden onchange="loadFromFile(this.files[0])">
     <button onclick="window.print()">Print to PDF</button>
     <button class="danger" onclick="confirmReset()">Reset Everything</button>
   </div>
@@ -2643,6 +2650,7 @@ function buildSubmissionHTML(state) {
   </header>
   ${body}
   <footer>9 COTYB &amp; 9 COTYC &middot; Year 9 Computing Technology &middot; Term 2 2026</footer>
+  <script type="application/json" id="kw-saved-state">${JSON.stringify({version:1,savedAt:new Date().toISOString(),studentName:state.studentName||"",studentClass:state.studentClass||"",studentDate:state.studentDate||"",fields:state.fields||{}}).replace(/<\/script/gi,"<\\/script")}<\/script>
 </body></html>`;
 }
 
@@ -2673,6 +2681,156 @@ function closeModal() {
 }
 
 /* ====================================================
+   LOAD MY SAVED FILE  (round-trip resume from a downloaded submission)
+   The submission HTML contains a hidden <script id="kw-saved-state">
+   block of JSON. This reads it back and restores every editor field.
+   ==================================================== */
+let __toastTimer = null;
+function showToast(message, kind) {
+  // kind is "success" or "error"
+  const el = document.getElementById("saveStatus");
+  if (!el) return;
+  el.textContent = message;
+  el.classList.remove("is-toast-success", "is-toast-error");
+  el.classList.add("is-toast-" + kind);
+  if (__toastTimer) clearTimeout(__toastTimer);
+  __toastTimer = setTimeout(function() {
+    el.classList.remove("is-toast-success", "is-toast-error");
+    // Restore the real save-status text by triggering a no-op save
+    try { saveNow(); } catch (e) {}
+  }, 4000);
+}
+
+function checkUnsavedBeforeLoad() {
+  const state = gatherState();
+  // Consider "has unsaved work" if any field has a non-empty value
+  let hasWork = !!(state.studentName || state.studentClass);
+  if (!hasWork) {
+    for (const k in state.fields) {
+      const v = state.fields[k];
+      if (v === true) { hasWork = true; break; }
+      if (typeof v === "string" && v.trim() !== "") { hasWork = true; break; }
+    }
+  }
+  if (!hasWork) return true; // nothing to lose, proceed silently
+  return confirm("You have unsaved work. Loading a file will replace it. Continue?");
+}
+
+function validateState(state) {
+  if (!state || typeof state !== "object") return "not an object";
+  if (state.version !== 1) return "wrong version";
+  if (typeof state.fields !== "object" || state.fields === null) return "missing fields";
+  return null; // ok
+}
+
+function restoreState(state) {
+  const nameEl = document.getElementById("studentName");
+  const classEl = document.getElementById("studentClass");
+  const dateEl = document.getElementById("studentDate");
+  if (nameEl)  nameEl.value  = state.studentName  || "";
+  if (classEl) classEl.value = state.studentClass || "";
+  if (dateEl)  dateEl.value  = state.studentDate  || "";
+
+  let restoredCount = 0;
+  let unknownKeys = [];
+  for (const key in state.fields) {
+    const value = state.fields[key];
+    const el = document.querySelector('[data-save="' + CSS.escape(key) + '"]');
+    if (!el) {
+      // Could be a step-N-M key (those live on .step-tab elements, not data-save)
+      if (key.indexOf("step-") === 0) {
+        // Format: step-{section}-{step}
+        const m = key.match(/^step-(\d+)-(\d+)$/);
+        if (m) {
+          const sec = m[1], step = m[2];
+          const tab = document.querySelector(
+            'section.lab[data-section="' + sec + '"] .step-tab[data-step="' + step + '"]');
+          if (tab) {
+            tab.classList.toggle("is-done", !!value);
+            restoredCount++;
+            continue;
+          }
+        }
+      }
+      unknownKeys.push(key);
+      continue;
+    }
+    if (el.type === "checkbox") {
+      el.checked = !!value;
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    } else {
+      el.value = value == null ? "" : String(value);
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+    restoredCount++;
+  }
+  if (unknownKeys.length) {
+    console.warn("restoreState: ignored unknown keys:", unknownKeys);
+  }
+  // After restoring, run the same UI refreshers loadState() uses
+  try { applyAllStepLocks(); } catch (e) {}
+  try {
+    for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+      if (typeof updateDoneStyle === "function") updateDoneStyle(i);
+    }
+  } catch (e) {}
+  // Persist to localStorage so a refresh keeps the loaded state
+  try { saveNow(); } catch (e) {}
+  return restoredCount;
+}
+
+function loadFromFile(file) {
+  if (!file) return;
+  if (!checkUnsavedBeforeLoad()) {
+    // Reset the input so the same file can be re-picked later
+    const fi = document.getElementById("loadFile");
+    if (fi) fi.value = "";
+    return;
+  }
+  const reader = new FileReader();
+  reader.onerror = function() {
+    showToast("Could not read that file. Try again.", "error");
+  };
+  reader.onload = function(ev) {
+    let parsed;
+    try {
+      const text = String(ev.target.result || "");
+      const doc = new DOMParser().parseFromString(text, "text/html");
+      const script = doc.getElementById("kw-saved-state");
+      if (!script) {
+        showToast("This file is not a saved workshop. Try a different one.", "error");
+        return;
+      }
+      try {
+        parsed = JSON.parse(script.textContent || "{}");
+      } catch (e) {
+        showToast("This save file is corrupted. Try a different one.", "error");
+        return;
+      }
+      const err = validateState(parsed);
+      if (err) {
+        if (err === "wrong version") {
+          showToast("This save is from an older workshop. Ask your teacher.", "error");
+        } else {
+          showToast("This file is not a saved workshop. Try a different one.", "error");
+        }
+        return;
+      }
+      const n = restoreState(parsed);
+      showToast("Work loaded ✓ — keep going! (" + n + " fields restored)", "success");
+    } catch (e) {
+      console.error("loadFromFile error:", e);
+      showToast("Something went wrong loading that file.", "error");
+    } finally {
+      // Always reset so the same file can be re-picked
+      const fi = document.getElementById("loadFile");
+      if (fi) fi.value = "";
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ====================================================
    INIT
    ==================================================== */
 document.addEventListener("DOMContentLoaded", function() {
@@ -2697,8 +2855,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Auto-save listeners
+  // Auto-save listeners — skip the file input used for Load (not student data)
   document.querySelectorAll("input, textarea, select").forEach(el => {
+    if (el.type === "file") return;
     el.addEventListener("input", saveSoon);
     el.addEventListener("change", saveSoon);
   });
