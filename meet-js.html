@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Year 9 JavaScript Lab</title>
+<style>
+/* ============================================================
+   Year 9 JavaScript Lab - 9 COTYB & 9 COTYC
+   Sibling of workshop.html: same engine, same shape, same
+   3-column workspace (READ -> TYPE -> RESULT).
+   Visually distinct: amber + slate palette (JS-themed)
+   instead of workshop's navy + teal HTML palette.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+
+body {
+  font-family: "Segoe UI", Calibri, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  background: #fdf6e3;          /* warm cream - JS theme */
+  color: #1f2937;
+}
+
+/* ===== STICKY HEADER ===== */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #f59e0b 100%);
+  color: white;
+  padding: 14px 22px 12px 22px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+}
+.top-bar h1 {
+  margin: 0 0 4px 0;
+  font-size: 22px;
+  display: flex; align-items: center; gap: 12px;
+}
+.top-bar h1 .js-badge {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  background: #f7df1e;
+  color: #0f172a;
+  border-radius: 6px;
+  font-size: 18px; font-weight: 900;
+  letter-spacing: -1px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  box-shadow: 0 2px 6px rgba(247,223,30,0.4);
+}
+.top-bar .school-line {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  opacity: 0.92;
+}
+
+.student-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.student-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.student-row input,
+.student-row select {
+  background: white;
+  color: #1f2937;
+  border: 0;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 14px;
+  min-width: 120px;
+  font-family: inherit;
+}
+.student-row #studentName { min-width: 200px; }
+.student-row select { cursor: pointer; }
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 13px;
+}
+.progress-track {
+  flex: 1;
+  height: 9px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 5px;
+  overflow: hidden;
+  min-width: 150px;
+  max-width: 320px;
+}
+.progress-fill {
+  height: 100%;
+  background: #f7df1e;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+#progressText { font-weight: 700; min-width: 80px; }
+#saveStatus { opacity: 0.92; margin-left: auto; font-size: 13px;
+              padding: 2px 8px; border-radius: 4px; transition: background 0.2s; }
+#saveStatus.is-toast-success { background: #10b981; color: white; opacity: 1;
+                                font-weight: 700; }
+#saveStatus.is-toast-error   { background: #ef4444; color: white; opacity: 1;
+                                font-weight: 700; }
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.toolbar button {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.toolbar button:hover { background: #fef3c7; }
+.toolbar button.primary {
+  background: #f7df1e;
+  color: #422006;
+  font-size: 15px;
+}
+.toolbar button.primary:hover { background: #fcd34d; }
+.toolbar button.danger { background: #fee2e2; color: #b91c1c; }
+.toolbar button.danger:hover { background: #fecaca; }
+
+/* ============================================================
+   WELCOME BACK BANNER
+   ============================================================ */
+.welcome-back {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+  border-radius: 12px;
+  margin: 14px 20px 0 20px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+  animation: wbSlideIn 0.4s ease-out;
+}
+/* Specificity boost: [hidden] alone (0,0,1,0) ties with .welcome-back, so
+   author CSS wins. This .welcome-back[hidden] selector (0,0,2,0) ensures
+   the banner is truly hidden on first visit. */
+.welcome-back[hidden] { display: none; }
+@keyframes wbSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.welcome-back .wb-icon {
+  flex: 0 0 auto;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #f59e0b;
+  color: white;
+  font-size: 22px; font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+}
+.welcome-back .wb-body { flex: 1 1 auto; display: flex; flex-direction: column; gap: 2px; }
+.welcome-back .wb-body strong { color: #78350f; font-size: 16px; }
+.welcome-back .wb-body span { color: #92400e; font-size: 13px; }
+.welcome-back .wb-continue {
+  background: #0f172a; color: white;
+  border: none; border-radius: 8px;
+  padding: 8px 14px; font-weight: 600; font-size: 13px;
+  cursor: pointer; transition: background 0.15s;
+}
+.welcome-back .wb-continue:hover { background: #1e293b; }
+.welcome-back .wb-close {
+  background: transparent; border: none;
+  color: #78350f; font-size: 24px; line-height: 1;
+  cursor: pointer; padding: 0 6px; opacity: 0.7;
+}
+.welcome-back .wb-close:hover { opacity: 1; }
+@media (max-width: 900px) {
+  .welcome-back { flex-wrap: wrap; }
+  .welcome-back .wb-continue { width: 100%; }
+}
+
+/* ============================================================
+   BIG TIER BAR - the headline navigation
+   ============================================================ */
+.tier-bar {
+  background: white;
+  padding: 18px 20px 14px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.7fr;
+  gap: 14px;
+}
+.tier-zone {
+  border-radius: 12px;
+  padding: 12px 14px 14px 14px;
+}
+.tier-zone.must   { background: #ecfdf5; border: 2px solid #10b981; }
+.tier-zone.should { background: #eef2ff; border: 2px solid #1e3a8a; }
+.tier-zone.could  { background: #f5f3ff; border: 2px solid #7c3aed; }
+.tier-zone.wrapup { background: #fef3c7; border: 2px solid #f59e0b; }
+
+.tier-zone .zone-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.tier-zone h3 {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+}
+.tier-zone.must   h3 { color: #047857; }
+.tier-zone.should h3 { color: #1e3a8a; }
+.tier-zone.could  h3 { color: #5b21b6; }
+.tier-zone.wrapup h3 { color: #b45309; }
+.zone-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+.pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  flex: 0 1 78px;
+  padding: 8px 6px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+.pill .num {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 800;
+}
+.pill .ttl {
+  font-size: 10.5px;
+  line-height: 1.15;
+  margin-top: 5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.pill.must   { background: #10b981; }
+.pill.should { background: #1e3a8a; }
+.pill.could  { background: #7c3aed; }
+.pill.wrapup { background: #f59e0b; color: #422006; }
+.pill.is-done {
+  outline: 3px solid #f7df1e;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 22px 16px 60px 16px;
+}
+
+/* ===== SECTION CARD ===== */
+section.lab {
+  background: white;
+  border-radius: 14px;
+  padding: 22px 26px 24px 26px;
+  margin-bottom: 22px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  scroll-margin-top: 24px;
+  position: relative;
+  overflow: hidden;
+}
+section.lab::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 10px;
+  background: #0f172a;
+}
+section.lab[data-tier="must"]::before   { background: #10b981; }
+section.lab[data-tier="should"]::before { background: #1e3a8a; }
+section.lab[data-tier="could"]::before  { background: #7c3aed; }
+section.lab[data-tier="wrapup"]::before { background: #f59e0b; }
+
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.sec-num {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  background: #0f172a;
+  color: white;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+section.lab[data-tier="must"]   .sec-num { background: #10b981; }
+section.lab[data-tier="should"] .sec-num { background: #1e3a8a; }
+section.lab[data-tier="could"]  .sec-num { background: #7c3aed; }
+section.lab[data-tier="wrapup"] .sec-num { background: #f59e0b; color: #422006; }
+
+.sec-head h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #111;
+  flex: 1;
+  min-width: 200px;
+}
+.tier-ribbon {
+  padding: 7px 16px;
+  border-radius: 999px;
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.tier-ribbon.must   { background: #10b981; }
+.tier-ribbon.should { background: #1e3a8a; }
+.tier-ribbon.could  { background: #7c3aed; }
+.tier-ribbon.wrapup { background: #f59e0b; color: #422006; }
+
+.sec-intro {
+  margin: 10px 0 16px 0;
+  font-size: 17px;
+  color: #374151;
+  line-height: 1.6;
+  background: #f9fafb;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid #f59e0b;
+}
+.sec-intro code {
+  background: #0f172a;
+  color: #f7df1e;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+/* ============================================================
+   STEP TABS (MUST DO / SHOULD DO / COULD DO)
+   Same shape as workshop.html, but tier-coloured so the
+   "copy -> modify -> extend" levels are visible at a glance.
+   ============================================================ */
+.step-tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 0 0;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0;
+  flex-wrap: wrap;
+}
+.step-tab {
+  background: #f3f4f6;
+  border: 2px solid transparent;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #6b7280;
+  cursor: pointer;
+  position: relative;
+  bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  min-width: 110px;
+}
+.step-tab .num-dot {
+  display: inline-block;
+  width: 22px; height: 22px; line-height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 12px;
+  background: #d1d5db;
+  color: white;
+  font-weight: 800;
+}
+.step-tab .tier-label { letter-spacing: 0.5px; }
+.step-tab.active {
+  background: white;
+  color: #111;
+  border-color: #e5e7eb;
+  border-bottom: 2px solid white;
+  z-index: 1;
+}
+/* Tier-coloured dots on step tabs - the visible "must/should/could" cue */
+.step-tab[data-tier="must"]   .num-dot { background: #10b981; }
+.step-tab[data-tier="should"] .num-dot { background: #1e3a8a; }
+.step-tab[data-tier="could"]  .num-dot { background: #7c3aed; }
+.step-tab[data-tier="must"].active   { color: #047857; }
+.step-tab[data-tier="should"].active { color: #1e3a8a; }
+.step-tab[data-tier="could"].active  { color: #5b21b6; }
+.step-tab:hover:not(.active):not(.is-locked) {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+.step-tab.is-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.step-tab.is-locked::before {
+  content: "[locked] ";
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+  margin-right: 4px;
+}
+.step-tab.is-done::after {
+  content: "v";
+  display: inline-block;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  width: 18px; height: 18px; line-height: 18px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.step-tab.is-done .num-dot { background: #10b981 !important; }
+
+.step-task {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  padding: 14px 18px;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.step-task .task-text { flex: 1; min-width: 200px; line-height: 1.5; }
+.step-task .task-text strong { color: #0f172a; }
+.next-step-btn {
+  padding: 8px 16px;
+  background: #0f172a;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(15,23,42,0.25);
+}
+.next-step-btn:hover { background: #f59e0b; color: #0f172a; }
+.next-step-btn.finish-section {
+  background: #10b981;
+  font-size: 14px;
+  padding: 10px 18px;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.35);
+}
+.next-step-btn.finish-section:hover { background: #047857; color: white; }
+.next-step-btn.is-done {
+  background: #d1fae5;
+  color: #047857;
+  box-shadow: none;
+}
+
+/* ============================================================
+   3-COLUMN WORKSPACE: READ | TYPE | RESULT
+   ============================================================ */
+.workspace3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+}
+.col-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+.col-label .col-num {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  background: #0f172a;
+  color: white;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+/* code reference (left column) - JS-themed dark with amber accent */
+.code-ref {
+  background: #0f172a;
+  color: #f7df1e;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow: auto;
+  margin: 0;
+  height: 360px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: default;
+  border: 2px solid transparent;
+}
+.code-ref::selection { background: transparent; color: inherit; }
+.code-ref[hidden] { display: none; }
+
+/* editor (middle column) */
+.code-editor {
+  width: 100%;
+  height: 360px;
+  resize: vertical;
+  min-height: 240px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  padding: 12px 14px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111;
+  tab-size: 4;
+  -moz-tab-size: 4;
+}
+.code-editor:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+}
+
+.run-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.run-btn {
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 800;
+  border: 0;
+  border-radius: 10px;
+  background: #f7df1e;
+  color: #0f172a;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(247,223,30,0.45);
+  letter-spacing: 0.5px;
+}
+.run-btn:hover { background: #fcd34d; }
+.run-btn::before { content: "> "; font-weight: 800; }
+.clear-btn {
+  padding: 10px 14px;
+  font-size: 13px;
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.clear-btn:hover { background: #fee2e2; color: #b91c1c; }
+
+/* result (right column) */
+.output {
+  width: 100%;
+  height: 360px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  background: white;
+}
+
+/* ============================================================
+   REFLECTION + DONE
+   ============================================================ */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+.reflection {
+  background: #fffaf0;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.reflection h4 {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  color: #78350f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.reflection .ref-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.reflection label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #78350f;
+  margin-bottom: 4px;
+}
+.reflection textarea {
+  width: 100%;
+  min-height: 56px;
+  padding: 7px 10px;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-family: inherit;
+  resize: vertical;
+}
+.reflection textarea:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+}
+
+.done-card {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+.done-card.is-done { background: #d1fae5; border-color: #10b981; }
+.done-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.done-row input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: #10b981;
+}
+.done-row label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #065f46;
+  cursor: pointer;
+}
+.done-card.is-done .done-row label::after {
+  content: " - nice work!";
+  color: #047857;
+}
+.done-card .next-link { margin-top: 4px; }
+.done-card .next-link a {
+  display: inline-block;
+  padding: 8px 14px;
+  background: white;
+  color: #047857;
+  border: 2px solid #10b981;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+}
+.done-card .next-link a:hover { background: #10b981; color: white; }
+
+.done-card.nudge { animation: nudge-pulse 1.2s ease 1; }
+@keyframes nudge-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+  50%  { box-shadow: 0 0 0 14px rgba(16,185,129,0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
+/* ============================================================
+   "Watch this" CALLOUT - links to embedded video clips
+   ============================================================ */
+.watch-clip {
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 10px 0 14px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.watch-clip .clip-icon {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #f59e0b;
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800;
+}
+.watch-clip .clip-text { flex: 1; min-width: 180px; color: #78350f; }
+.watch-clip .clip-text b { color: #422006; }
+.watch-clip .clip-video {
+  width: 100%;
+  max-width: 520px;
+  margin-top: 8px;
+  border-radius: 8px;
+  background: #000;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.watch-clip details { width: 100%; margin-top: 6px; }
+.watch-clip summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: #78350f;
+  padding: 4px 0;
+}
+.watch-clip .clip-q {
+  background: white;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: #1f2937;
+}
+.watch-clip .clip-q textarea {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+/* ============================================================
+   QUIZ SECTION
+   ============================================================ */
+.quiz-banner {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #fcd34d;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 16px 0;
+  flex-wrap: wrap;
+}
+.quiz-banner .quiz-banner-text { color: #78350f; font-size: 15px; flex: 1; min-width: 220px; }
+.quiz-banner .quiz-banner-text b { color: #b45309; }
+#quizScore {
+  background: #0f172a; color: #f7df1e;
+  padding: 6px 14px; border-radius: 999px;
+  font-weight: 800; font-size: 14px;
+  letter-spacing: 0.5px;
+}
+#quizScore.perfect { background: #10b981; color: white; }
+.quiz-q {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.quiz-q .q-text {
+  font-size: 16px; font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 10px 0;
+}
+.quiz-q .q-text code {
+  background: #0f172a;
+  color: #f7df1e;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: Consolas, monospace;
+}
+.q-options { display: grid; gap: 8px; }
+.quiz-opt {
+  text-align: left;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14.5px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  color: #1f2937;
+}
+.quiz-opt:hover:not(.correct):not(.wrong) {
+  background: #fef3c7; border-color: #f59e0b;
+}
+.quiz-opt.selected:not(.correct):not(.wrong) {
+  background: #fef3c7; border-color: #f59e0b;
+}
+.quiz-opt.correct {
+  background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700;
+}
+.quiz-opt.wrong {
+  background: #fee2e2; border-color: #ef4444; color: #991b1b;
+}
+.quiz-opt code {
+  background: #fff; border: 1px solid #d1d5db; border-radius: 3px;
+  padding: 1px 6px; font-family: Consolas, monospace; font-size: 13.5px;
+}
+.q-feedback {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  display: none;
+}
+.q-feedback.correct { display: block; background: #ecfdf5; color: #065f46; border-left: 4px solid #10b981; }
+.q-feedback.wrong   { display: block; background: #fef2f2; color: #7f1d1d; border-left: 4px solid #ef4444; }
+
+/* ============================================================
+   SUBMIT MODAL
+   ============================================================ */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+.modal-bg.is-open { display: flex; }
+.modal {
+  background: white;
+  border-radius: 14px;
+  max-width: 540px;
+  width: 100%;
+  padding: 26px 28px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+}
+.modal h2 { margin: 0 0 10px 0; color: #0f172a; font-size: 22px; }
+.modal p { margin: 0 0 12px 0; font-size: 15px; line-height: 1.6; }
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  justify-content: flex-end;
+}
+.modal-actions button {
+  padding: 10px 22px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+}
+.modal-actions .ok-btn { background: #f7df1e; color: #422006; }
+.modal-actions .ok-btn:hover { background: #fcd34d; }
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  color: #6b7280;
+  font-size: 12px;
+  padding: 24px 20px 50px 20px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+  .tier-bar { grid-template-columns: 1fr 1fr; }
+  .step-tab { padding: 8px 12px; font-size: 12.5px; min-width: 96px; }
+}
+@media (max-width: 900px) {
+  .workspace3 { grid-template-columns: 1fr; }
+  .bottom-row { grid-template-columns: 1fr; }
+  .reflection .ref-grid { grid-template-columns: 1fr; }
+  .pill { min-width: 64px; flex: 0 1 64px; }
+  .pill .ttl { font-size: 10px; }
+  .tier-bar { grid-template-columns: 1fr; }
+}
+
+/* ===== PRINT ===== */
+@media print {
+  .top-bar, .tier-bar, .toolbar, .step-tabs, .run-row, .clear-btn,
+  .modal-bg, .done-card .next-link { display: none !important; }
+  body { background: white; }
+  section.lab { box-shadow: none; page-break-inside: avoid; border: 1px solid #ccc; }
+  .workspace3 { grid-template-columns: 1fr; }
+  .code-editor, .output { border: 1px solid #999; }
+  .output { height: 200px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     STICKY HEADER
+     ============================================================ -->
+<header class="top-bar">
+  <h1><span class="js-badge">JS</span> Year 9 JavaScript Lab</h1>
+  <p class="school-line">Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; Make the page DO something</p>
+  <div class="student-row">
+    <label>Name <input type="text" id="studentName" placeholder="Your name" autocomplete="off"></label>
+    <label>Class
+      <select id="studentClass">
+        <option value="">Pick your class...</option>
+        <option value="9 COTYB">9 COTYB</option>
+        <option value="9 COTYC">9 COTYC</option>
+      </select>
+    </label>
+    <label>Date <input type="date" id="studentDate"></label>
+  </div>
+  <div class="progress-row">
+    <span>Progress:</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span id="progressText">0 of 7 done</span>
+    <span id="saveStatus">Not saved yet</span>
+  </div>
+  <div class="toolbar">
+    <button class="primary" onclick="submitWork()">Submit My Work</button>
+    <button onclick="document.getElementById('loadFile').click()">&#128194; Load my saved file</button>
+    <input type="file" id="loadFile" accept=".html,text/html" hidden onchange="loadFromFile(this.files[0])">
+    <button onclick="window.print()">Print to PDF</button>
+    <button class="danger" onclick="confirmReset()">Reset Everything</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     WELCOME BACK BANNER
+     ============================================================ -->
+<div id="welcomeBack" class="welcome-back" hidden>
+  <div class="wb-icon" aria-hidden="true">&#10004;</div>
+  <div class="wb-body">
+    <strong id="wbHeading">Welcome back!</strong>
+    <span id="wbDetail">Your work from last time has been restored.</span>
+  </div>
+  <button type="button" id="wbContinueBtn" class="wb-continue">Jump to my next section</button>
+  <button type="button" class="wb-close" onclick="dismissWelcomeBack()" aria-label="Dismiss">&times;</button>
+</div>
+
+<!-- ============================================================
+     BIG TIER BAR
+     ============================================================ -->
+<nav class="tier-bar" aria-label="Section navigation by tier">
+  <div class="tier-zone must">
+    <div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">everyone finishes these</span></div>
+    <div class="pills" id="pills-must"></div>
+  </div>
+  <div class="tier-zone should">
+    <div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">build interactivity</span></div>
+    <div class="pills" id="pills-should"></div>
+  </div>
+  <div class="tier-zone could">
+    <div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">decision making</span></div>
+    <div class="pills" id="pills-could"></div>
+  </div>
+  <div class="tier-zone wrapup">
+    <div class="zone-head"><h3>WRAP UP</h3><span class="zone-tag">show what you know</span></div>
+    <div class="pills" id="pills-wrapup"></div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     SECTION 1 - Hello! (alert)
+     ============================================================ -->
+<section class="lab" id="sec-1" data-section="1">
+  <div class="sec-head">
+    <span class="sec-num">1</span>
+    <h2>&ldquo;Hello!&rdquo; popup</h2>
+    <span class="tier-ribbon" data-ribbon="1">MUST DO</span>
+  </div>
+  <p class="sec-intro">JavaScript can pop up a message box on the page. The word is <code>alert</code>. Whatever you put inside the brackets in quotes appears in the popup.</p>
+
+  <div class="watch-clip">
+    <span class="clip-icon">&#9658;</span>
+    <span class="clip-text"><b>Watch &amp; answer (90 sec):</b> Mosh types <code>alert('hello')</code> live and shows the popup.
+      <video controls preload="metadata" class="clip-video">
+        <source src="clips/01_alert_demo.mp4" type="video/mp4">
+        Your browser doesn't support HTML5 video. Open the file directly in the clips folder.
+      </video>
+      <details open>
+        <summary>Answer this</summary>
+        <div class="clip-q">
+          What does <code>alert("Hi")</code> do when the page loads?
+          <textarea id="watch-1" data-save="watch-1" placeholder="Write your answer in your own words..."></textarea>
+        </div>
+      </details>
+    </span>
+  </div>
+
+  <div class="step-tabs" data-section="1">
+    <button type="button" class="step-tab active" data-step="1" data-tier="must" onclick="showStep(1,1)"><span class="num-dot">1</span><span class="tier-label">Must do</span></button>
+    <button type="button" class="step-tab" data-step="2" data-tier="should" onclick="showStep(1,2)"><span class="num-dot">2</span><span class="tier-label">Should do</span></button>
+    <button type="button" class="step-tab" data-step="3" data-tier="could" onclick="showStep(1,3)"><span class="num-dot">3</span><span class="tier-label">Could do</span></button>
+  </div>
+  <div class="step-task" id="task-1"><span class="task-text"><strong>MUST DO &mdash;</strong> Copy this exact code into the editor. Click Run. A popup should say &ldquo;Hello!&rdquo;.</span><button type="button" class="next-step-btn" onclick="advanceStep(1)" id="advance-1">Done &mdash; next &rarr;</button></div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="1" data-step="1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    alert("Hello!");
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="1" data-step="2" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    alert("Good morning Year 9!");
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="1" data-step="3" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    alert("Hello!");
+    alert("This is my second popup.");
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-1" data-section="1" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(1)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(1)">Clear</button>
+      </div>
+    </div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-1" title="Section 1 preview"></iframe>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-1" data-save="learnt-1"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-1" data-save="stuck-1"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-1">
+      <div class="done-row">
+        <input type="checkbox" id="done-1" data-save="done-1" onchange="updateDoneStyle(1)">
+        <label for="done-1">I finished Section 1</label>
+      </div>
+      <div class="next-link"><a href="#sec-2">Next: Section 2 &mdash; Remember it &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 2 - Remember it (variables / let)
+     ============================================================ -->
+<section class="lab" id="sec-2" data-section="2">
+  <div class="sec-head">
+    <span class="sec-num">2</span>
+    <h2>Remember it (variables)</h2>
+    <span class="tier-ribbon" data-ribbon="2">MUST DO</span>
+  </div>
+  <p class="sec-intro">A <b>variable</b> is a name for something we want to remember. Use <code>let</code> to make one. Then use the name later. The popup will show what's stored.</p>
+
+  <div class="watch-clip">
+    <span class="clip-icon">&#9658;</span>
+    <span class="clip-text"><b>Watch &amp; answer (90 sec):</b> Mosh creates a variable with <code>let variable1 = 3</code> and uses it.
+      <video controls preload="metadata" class="clip-video">
+        <source src="clips/02_let_demo.mp4" type="video/mp4">
+        Your browser doesn't support HTML5 video.
+      </video>
+      <details open>
+        <summary>Answer this</summary>
+        <div class="clip-q">
+          In <code>let name = "Sam"</code>, what is the VARIABLE and what is the VALUE?
+          <textarea id="watch-2" data-save="watch-2" placeholder="Variable: ...   Value: ..."></textarea>
+        </div>
+      </details>
+    </span>
+  </div>
+
+  <div class="step-tabs" data-section="2">
+    <button type="button" class="step-tab active" data-step="1" data-tier="must" onclick="showStep(2,1)"><span class="num-dot">1</span><span class="tier-label">Must do</span></button>
+    <button type="button" class="step-tab" data-step="2" data-tier="should" onclick="showStep(2,2)"><span class="num-dot">2</span><span class="tier-label">Should do</span></button>
+    <button type="button" class="step-tab" data-step="3" data-tier="could" onclick="showStep(2,3)"><span class="num-dot">3</span><span class="tier-label">Could do</span></button>
+  </div>
+  <div class="step-task" id="task-2"><span class="task-text"><strong>MUST DO &mdash;</strong> Copy this code. Click Run. The popup should show the value stored in <code>name</code>.</span><button type="button" class="next-step-btn" onclick="advanceStep(2)" id="advance-2">Done &mdash; next &rarr;</button></div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="2" data-step="1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    let name = "Sam";
+    alert(name);
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="2" data-step="2" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    let name = "Maya";
+    alert("Hi " + name);
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="2" data-step="3" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    let firstName = "Maya";
+    let lastName  = "Lee";
+    let age       = 15;
+    alert(firstName + " " + lastName + " is " + age);
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-2" data-section="2" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(2)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(2)">Clear</button>
+      </div>
+    </div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-2" title="Section 2 preview"></iframe>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-2" data-save="learnt-2"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-2" data-save="stuck-2"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-2">
+      <div class="done-row">
+        <input type="checkbox" id="done-2" data-save="done-2" onchange="updateDoneStyle(2)">
+        <label for="done-2">I finished Section 2</label>
+      </div>
+      <div class="next-link"><a href="#sec-3">Next: Section 3 &mdash; Ask first &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 3 - Ask first (prompt + concatenation)
+     ============================================================ -->
+<section class="lab" id="sec-3" data-section="3">
+  <div class="sec-head">
+    <span class="sec-num">3</span>
+    <h2>Ask the user</h2>
+    <span class="tier-ribbon" data-ribbon="3">MUST DO</span>
+  </div>
+  <p class="sec-intro"><code>prompt</code> asks the user a question and gives back what they typed. We can <b>join strings</b> together with the <code>+</code> sign.</p>
+
+  <div class="watch-clip">
+    <span class="clip-icon">&#9658;</span>
+    <span class="clip-text"><b>Watch &amp; answer (90 sec):</b> Mosh joins two strings with <code>+</code>: <code>'some' + 'text'</code> becomes <code>'sometext'</code>.
+      <video controls preload="metadata" class="clip-video">
+        <source src="clips/03_strings_concat.mp4" type="video/mp4">
+        Your browser doesn't support HTML5 video.
+      </video>
+      <details open>
+        <summary>Answer this</summary>
+        <div class="clip-q">
+          If the user types <b>Maya</b> in the prompt, what does <code>"Hi " + name</code> become?
+          <textarea id="watch-3" data-save="watch-3" placeholder="It becomes..."></textarea>
+        </div>
+      </details>
+    </span>
+  </div>
+
+  <div class="step-tabs" data-section="3">
+    <button type="button" class="step-tab active" data-step="1" data-tier="must" onclick="showStep(3,1)"><span class="num-dot">1</span><span class="tier-label">Must do</span></button>
+    <button type="button" class="step-tab" data-step="2" data-tier="should" onclick="showStep(3,2)"><span class="num-dot">2</span><span class="tier-label">Should do</span></button>
+    <button type="button" class="step-tab" data-step="3" data-tier="could" onclick="showStep(3,3)"><span class="num-dot">3</span><span class="tier-label">Could do</span></button>
+  </div>
+  <div class="step-task" id="task-3"><span class="task-text"><strong>MUST DO &mdash;</strong> Copy this code. Run it. Type your name in the prompt. Watch the greeting use it.</span><button type="button" class="next-step-btn" onclick="advanceStep(3)" id="advance-3">Done &mdash; next &rarr;</button></div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="3" data-step="1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    let name = prompt("What is your name?");
+    alert("Hi " + name + "!");
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="3" data-step="2" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    let food = prompt("Favourite food?");
+    alert("Yum! I love " + food + " too.");
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="3" data-step="3" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;script&gt;
+    let name = prompt("Your name?");
+    let city = prompt("Your city?");
+    alert(name + " from " + city + ". Cool!");
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-3" data-section="3" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(3)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(3)">Clear</button>
+      </div>
+    </div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-3" title="Section 3 preview"></iframe>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-3" data-save="learnt-3"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-3" data-save="stuck-3"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-3">
+      <div class="done-row">
+        <input type="checkbox" id="done-3" data-save="done-3" onchange="updateDoneStyle(3)">
+        <label for="done-3">I finished Section 3</label>
+      </div>
+      <div class="next-link"><a href="#sec-4">Next: Section 4 &mdash; Change the page &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 4 - Change the page (getElementById + button)
+     ============================================================ -->
+<section class="lab" id="sec-4" data-section="4">
+  <div class="sec-head">
+    <span class="sec-num">4</span>
+    <h2>Change the page</h2>
+    <span class="tier-ribbon" data-ribbon="4">SHOULD DO</span>
+  </div>
+  <p class="sec-intro">Popups are fine, but real apps CHANGE THE PAGE. We give an element an <code>id</code>, find it with <code>document.getElementById</code>, then change its <code>innerHTML</code> when a button is clicked.</p>
+
+  <div class="watch-clip">
+    <span class="clip-icon">&#9658;</span>
+    <span class="clip-text"><b>Watch &amp; answer (2 min):</b> Mosh changes a button on the page from JavaScript. (He uses <code>document.querySelector</code> &mdash; we use <code>document.getElementById</code> &mdash; same idea: find an element, change it.)
+      <video controls preload="metadata" class="clip-video">
+        <source src="clips/04_querySelector.mp4" type="video/mp4">
+        Your browser doesn't support HTML5 video.
+      </video>
+      <details open>
+        <summary>Answer this</summary>
+        <div class="clip-q">
+          Why do we add <code>id="title"</code> to the &lt;h1&gt;? What does JS use that for?
+          <textarea id="watch-4" data-save="watch-4" placeholder="The id is used to..."></textarea>
+        </div>
+      </details>
+    </span>
+  </div>
+
+  <div class="step-tabs" data-section="4">
+    <button type="button" class="step-tab active" data-step="1" data-tier="must" onclick="showStep(4,1)"><span class="num-dot">1</span><span class="tier-label">Must do</span></button>
+    <button type="button" class="step-tab" data-step="2" data-tier="should" onclick="showStep(4,2)"><span class="num-dot">2</span><span class="tier-label">Should do</span></button>
+    <button type="button" class="step-tab" data-step="3" data-tier="could" onclick="showStep(4,3)"><span class="num-dot">3</span><span class="tier-label">Could do</span></button>
+  </div>
+  <div class="step-task" id="task-4"><span class="task-text"><strong>MUST DO &mdash;</strong> Copy this. Click Run, then click the button on the right. The heading should change.</span><button type="button" class="next-step-btn" onclick="advanceStep(4)" id="advance-4">Done &mdash; next &rarr;</button></div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="4" data-step="1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1 id="title"&gt;Hello&lt;/h1&gt;
+&lt;button onclick="change()"&gt;Change it&lt;/button&gt;
+
+&lt;script&gt;
+    function change() {
+        document.getElementById("title").innerHTML = "Changed!";
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="4" data-step="2" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1 id="title"&gt;Click the button&lt;/h1&gt;
+&lt;button onclick="change()"&gt;Make it red&lt;/button&gt;
+
+&lt;script&gt;
+    function change() {
+        document.getElementById("title").innerHTML = "WOW!";
+        document.getElementById("title").style.color = "red";
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="4" data-step="3" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1 id="title"&gt;Hello!&lt;/h1&gt;
+&lt;button onclick="darkMode()"&gt;Dark&lt;/button&gt;
+&lt;button onclick="lightMode()"&gt;Light&lt;/button&gt;
+
+&lt;script&gt;
+    function darkMode() {
+        document.body.style.background = "black";
+        document.getElementById("title").style.color = "yellow";
+    }
+    function lightMode() {
+        document.body.style.background = "white";
+        document.getElementById("title").style.color = "black";
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-4" data-section="4" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(4)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(4)">Clear</button>
+      </div>
+    </div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-4" title="Section 4 preview"></iframe>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-4" data-save="learnt-4"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-4" data-save="stuck-4"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-4">
+      <div class="done-row">
+        <input type="checkbox" id="done-4" data-save="done-4" onchange="updateDoneStyle(4)">
+        <label for="done-4">I finished Section 4</label>
+      </div>
+      <div class="next-link"><a href="#sec-5">Next: Section 5 &mdash; Make a function &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 5 - Make a function
+     ============================================================ -->
+<section class="lab" id="sec-5" data-section="5">
+  <div class="sec-head">
+    <span class="sec-num">5</span>
+    <h2>Make a function</h2>
+    <span class="tier-ribbon" data-ribbon="5">SHOULD DO</span>
+  </div>
+  <p class="sec-intro">A <b>function</b> is a named block of code. Write it once, run it many times. Buttons call functions through <code>onclick</code>.</p>
+
+  <div class="watch-clip">
+    <span class="clip-icon">&#9658;</span>
+    <span class="clip-text"><b>Watch &amp; answer (90 sec):</b> Mosh writes <code>function function1() { ... }</code> and calls it. "A function lets us reuse code."
+      <video controls preload="metadata" class="clip-video">
+        <source src="clips/05_function_demo.mp4" type="video/mp4">
+        Your browser doesn't support HTML5 video.
+      </video>
+      <details open>
+        <summary>Answer this</summary>
+        <div class="clip-q">
+          In <code>function sayHi() { ... }</code>, what's the difference between the NAME and the BODY?
+          <textarea id="watch-5" data-save="watch-5" placeholder="The name is...   The body is..."></textarea>
+        </div>
+      </details>
+    </span>
+  </div>
+
+  <div class="step-tabs" data-section="5">
+    <button type="button" class="step-tab active" data-step="1" data-tier="must" onclick="showStep(5,1)"><span class="num-dot">1</span><span class="tier-label">Must do</span></button>
+    <button type="button" class="step-tab" data-step="2" data-tier="should" onclick="showStep(5,2)"><span class="num-dot">2</span><span class="tier-label">Should do</span></button>
+    <button type="button" class="step-tab" data-step="3" data-tier="could" onclick="showStep(5,3)"><span class="num-dot">3</span><span class="tier-label">Could do</span></button>
+  </div>
+  <div class="step-task" id="task-5"><span class="task-text"><strong>MUST DO &mdash;</strong> Copy this. Click Run, then click the button. The function <code>sayHi()</code> runs.</span><button type="button" class="next-step-btn" onclick="advanceStep(5)" id="advance-5">Done &mdash; next &rarr;</button></div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="5" data-step="1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;button onclick="sayHi()"&gt;Greet me&lt;/button&gt;
+
+&lt;script&gt;
+    function sayHi() {
+        alert("Hi there!");
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="5" data-step="2" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;button onclick="greet('Maya')"&gt;Greet Maya&lt;/button&gt;
+&lt;button onclick="greet('Sam')"&gt;Greet Sam&lt;/button&gt;
+
+&lt;script&gt;
+    function greet(name) {
+        alert("Hi " + name + "!");
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="5" data-step="3" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h2 id="msg"&gt;Pick a mood&lt;/h2&gt;
+&lt;button onclick="happy()"&gt;Happy&lt;/button&gt;
+&lt;button onclick="sad()"&gt;Sad&lt;/button&gt;
+
+&lt;script&gt;
+    function happy() {
+        document.getElementById("msg").innerHTML = "Yay!";
+        document.getElementById("msg").style.color = "green";
+    }
+    function sad() {
+        document.getElementById("msg").innerHTML = "Aww.";
+        document.getElementById("msg").style.color = "blue";
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-5" data-section="5" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(5)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(5)">Clear</button>
+      </div>
+    </div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-5" title="Section 5 preview"></iframe>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-5" data-save="learnt-5"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-5" data-save="stuck-5"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-5">
+      <div class="done-row">
+        <input type="checkbox" id="done-5" data-save="done-5" onchange="updateDoneStyle(5)">
+        <label for="done-5">I finished Section 5</label>
+      </div>
+      <div class="next-link"><a href="#sec-6">Next: Section 6 &mdash; Make a decision &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 6 - Make a decision (if / else)
+     ============================================================ -->
+<section class="lab" id="sec-6" data-section="6">
+  <div class="sec-head">
+    <span class="sec-num">6</span>
+    <h2>Make a decision</h2>
+    <span class="tier-ribbon" data-ribbon="6">COULD DO</span>
+  </div>
+  <p class="sec-intro">JavaScript can make a choice: <code>if</code> something is true, do one thing; <code>else</code>, do another. To compare two numbers we use <code>==</code> (NOT a single <code>=</code>!).</p>
+
+  <div class="watch-clip">
+    <span class="clip-icon">&#9658;</span>
+    <span class="clip-text"><b>Watch &amp; answer (90 sec):</b> Mosh shows <code>if (15 &gt;= 16) { ... } else { ... }</code> &mdash; the syntax rules.
+      <video controls preload="metadata" class="clip-video">
+        <source src="clips/06_if_syntax.mp4" type="video/mp4">
+        Your browser doesn't support HTML5 video.
+      </video>
+      <details open>
+        <summary>Answer this</summary>
+        <div class="clip-q">
+          Why does JS use <code>==</code> to compare, not <code>=</code>?
+          <textarea id="watch-6" data-save="watch-6" placeholder="Because = means..."></textarea>
+        </div>
+      </details>
+    </span>
+  </div>
+
+  <div class="step-tabs" data-section="6">
+    <button type="button" class="step-tab active" data-step="1" data-tier="must" onclick="showStep(6,1)"><span class="num-dot">1</span><span class="tier-label">Must do</span></button>
+    <button type="button" class="step-tab" data-step="2" data-tier="should" onclick="showStep(6,2)"><span class="num-dot">2</span><span class="tier-label">Should do</span></button>
+    <button type="button" class="step-tab" data-step="3" data-tier="could" onclick="showStep(6,3)"><span class="num-dot">3</span><span class="tier-label">Could do</span></button>
+  </div>
+  <div class="step-task" id="task-6"><span class="task-text"><strong>MUST DO &mdash;</strong> Copy this. Click Run. The page should say &ldquo;Big&rdquo; because 10 is greater than 5.</span><button type="button" class="next-step-btn" onclick="advanceStep(6)" id="advance-6">Done &mdash; next &rarr;</button></div>
+
+  <div class="workspace3">
+    <div class="col col-read">
+      <div class="col-label"><span class="col-num">1</span> Read this code</div>
+<pre class="code-ref" data-section="6" data-step="1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1 id="result"&gt;...&lt;/h1&gt;
+
+&lt;script&gt;
+    let n = 10;
+    if (n &gt; 5) {
+        document.getElementById("result").innerHTML = "Big";
+    } else {
+        document.getElementById("result").innerHTML = "Small";
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="6" data-step="2" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1 id="result"&gt;...&lt;/h1&gt;
+
+&lt;script&gt;
+    let score = 7;
+    if (score &gt;= 8) {
+        document.getElementById("result").innerHTML = "Top marks!";
+    } else if (score &gt;= 5) {
+        document.getElementById("result").innerHTML = "Good job";
+    } else {
+        document.getElementById("result").innerHTML = "Keep going";
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre><pre class="code-ref" data-section="6" data-step="3" hidden>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1 id="result"&gt;Hello&lt;/h1&gt;
+&lt;button onclick="check()"&gt;Guess my number&lt;/button&gt;
+
+&lt;script&gt;
+    function check() {
+        let guess = Number(prompt("Pick 1-10"));
+        let secret = 7;
+        if (guess == secret) {
+            document.getElementById("result").innerHTML = "Got it!";
+        } else if (guess &lt; secret) {
+            document.getElementById("result").innerHTML = "Too low";
+        } else {
+            document.getElementById("result").innerHTML = "Too high";
+        }
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="col col-type">
+      <div class="col-label"><span class="col-num">2</span> Type here</div>
+      <textarea class="code-editor" data-save="code-6" data-section="6" spellcheck="false"></textarea>
+      <div class="run-row">
+        <button type="button" class="run-btn" onclick="runSection(6)">Run</button>
+        <button type="button" class="clear-btn" onclick="clearEditor(6)">Clear</button>
+      </div>
+    </div>
+
+    <div class="col col-result">
+      <div class="col-label"><span class="col-num">3</span> Your result</div>
+      <iframe class="output" id="output-6" title="Section 6 preview"></iframe>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>Reflection</h4>
+      <div class="ref-grid">
+        <div><label>What I learnt</label><textarea id="learnt-6" data-save="learnt-6"></textarea></div>
+        <div><label>I am stuck on</label><textarea id="stuck-6" data-save="stuck-6"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-6">
+      <div class="done-row">
+        <input type="checkbox" id="done-6" data-save="done-6" onchange="updateDoneStyle(6)">
+        <label for="done-6">I finished Section 6</label>
+      </div>
+      <div class="next-link"><a href="#sec-7">Next: Section 7 &mdash; Wrap-up Quiz &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 7 - Wrap-up Quiz (no editor)
+     ============================================================ -->
+<section class="lab" id="sec-7" data-section="7">
+  <div class="sec-head">
+    <span class="sec-num">7</span>
+    <h2>Wrap-up Quiz</h2>
+    <span class="tier-ribbon" data-ribbon="7">WRAP UP</span>
+  </div>
+  <p class="sec-intro">8 quick questions on what you've just learnt. Click an answer for instant feedback. You can change your answer.</p>
+
+  <div class="quiz-banner">
+    <div class="quiz-banner-text">
+      <b>Show what you know.</b> No editor for this section &mdash; just read each question and pick the best answer.
+    </div>
+    <div id="quizScore">Score: 0 / 8</div>
+  </div>
+
+  <div class="quiz-q" id="q1">
+    <p class="q-text">1. What does <code>alert("Hello")</code> do?</p>
+    <input type="hidden" id="q1-answer" data-save="q1-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(1,'A',this)">A. Prints &ldquo;Hello&rdquo; to the console</button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(1,'B',this)">B. Pops up a message box</button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(1,'C',this)">C. Saves &ldquo;Hello&rdquo; to a file</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(1,'D',this)">D. Sends &ldquo;Hello&rdquo; to a server</button>
+    </div>
+    <div class="q-feedback" id="q1-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q2">
+    <p class="q-text">2. <code>let name = prompt("Your name?");</code> &mdash; if the user types <b>Maya</b>, what is <code>name</code>?</p>
+    <input type="hidden" id="q2-answer" data-save="q2-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(2,'A',this)">A. <code>"prompt"</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(2,'B',this)">B. <code>"Maya"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(2,'C',this)">C. Nothing</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(2,'D',this)">D. <code>"Your name?"</code></button>
+    </div>
+    <div class="q-feedback" id="q2-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q3">
+    <p class="q-text">3. Which is the CORRECT way to check if <code>x</code> equals 5?</p>
+    <input type="hidden" id="q3-answer" data-save="q3-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(3,'A',this)">A. <code>if (x = 5)</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(3,'B',this)">B. <code>if (x == 5)</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(3,'C',this)">C. <code>if x equals 5</code></button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(3,'D',this)">D. <code>if (x &gt;&lt; 5)</code></button>
+    </div>
+    <div class="q-feedback" id="q3-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q4">
+    <p class="q-text">4. What does <code>document.getElementById("title")</code> do?</p>
+    <input type="hidden" id="q4-answer" data-save="q4-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(4,'A',this)">A. Creates a new heading called &ldquo;title&rdquo;</button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(4,'B',this)">B. Finds the element with <code>id="title"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(4,'C',this)">C. Deletes the title</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(4,'D',this)">D. Prints the page title to the screen</button>
+    </div>
+    <div class="q-feedback" id="q4-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q5">
+    <p class="q-text">5. In the editor, you type <code>3 + 5</code> (no quotes). What does JavaScript give you?</p>
+    <input type="hidden" id="q5-answer" data-save="q5-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(5,'A',this)">A. <code>8</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(5,'B',this)">B. <code>"35"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(5,'C',this)">C. Error</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(5,'D',this)">D. <code>53</code></button>
+    </div>
+    <div class="q-feedback" id="q5-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q6">
+    <p class="q-text">6. In the editor, you type <code>"3" + "5"</code> (WITH quotes). What now?</p>
+    <input type="hidden" id="q6-answer" data-save="q6-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(6,'A',this)">A. <code>8</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(6,'B',this)">B. <code>"35"</code> (the text 35)</button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(6,'C',this)">C. Error</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(6,'D',this)">D. <code>15</code></button>
+    </div>
+    <div class="q-feedback" id="q6-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q7">
+    <p class="q-text">7. To MAKE a function called <code>sayHi</code>, which line is right?</p>
+    <input type="hidden" id="q7-answer" data-save="q7-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(7,'A',this)">A. <code>function sayHi() { ... }</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(7,'B',this)">B. <code>sayHi function() { ... }</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(7,'C',this)">C. <code>function() sayHi { ... }</code></button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(7,'D',this)">D. <code>let function = sayHi</code></button>
+    </div>
+    <div class="q-feedback" id="q7-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q8">
+    <p class="q-text">8. To change a heading's text from JavaScript, you write:</p>
+    <input type="hidden" id="q8-answer" data-save="q8-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(8,'A',this)">A. <code>document.getElementById("title").innerHTML = "New"</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(8,'B',this)">B. <code>document.title.innerHTML = "New"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(8,'C',this)">C. <code>change("title", "New")</code></button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(8,'D',this)">D. <code>title.text = "New"</code></button>
+    </div>
+    <div class="q-feedback" id="q8-feedback"></div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="reflection">
+      <h4>One thing I want to remember about JavaScript</h4>
+      <div class="ref-grid">
+        <div><label>The biggest thing I learnt today</label><textarea id="learnt-7" data-save="learnt-7"></textarea></div>
+        <div><label>One question I still have</label><textarea id="stuck-7" data-save="stuck-7"></textarea></div>
+      </div>
+    </div>
+    <div class="done-card" id="done-card-7">
+      <div class="done-row">
+        <input type="checkbox" id="done-7" data-save="done-7" onchange="updateDoneStyle(7)">
+        <label for="done-7">I finished the quiz</label>
+      </div>
+      <div class="next-link"><a href="#sec-1">Back to top &uarr;</a></div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<footer>
+  9 COTYB &amp; 9 COTYC &middot; Year 9 Computing Technology &middot; Term 2 2026 &middot;
+  Your work auto-saves &middot; click <b>Submit My Work</b> to download it for Google Classroom
+</footer>
+
+<!-- ============================================================
+     SUBMIT MODAL
+     ============================================================ -->
+<div class="modal-bg" id="submitModal">
+  <div class="modal">
+    <h2>&#10004; Submitted!</h2>
+    <p>Your file has downloaded. Upload it to Google Classroom now.</p>
+    <p style="color: #6b7280; font-size: 13px;">You can keep working and submit again at any time. Your work also stays saved on this computer.</p>
+    <div class="modal-actions">
+      <button type="button" class="ok-btn" onclick="closeModal()">OK, got it</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ====================================================
+   TIER CONFIG - sections 1-3 must, 4-5 should, 6 could, 7 wrapup
+   ==================================================== */
+const TIER_CONFIG = {
+  1: "must",
+  2: "must",
+  3: "must",
+  4: "should",
+  5: "should",
+  6: "could",
+  7: "wrapup"
+};
+
+const SECTION_TITLES = {
+  1: "Hello! popup",
+  2: "Remember it",
+  3: "Ask the user",
+  4: "Change the page",
+  5: "Make a function",
+  6: "Make a decision",
+  7: "Quick quiz"
+};
+
+const STORAGE_KEY = "cotyc-meetjs-v2";
+const TOTAL_SECTIONS = 7;
+let saveTimer = null;
+
+/* ====================================================
+   QUIZ DATA
+   ==================================================== */
+const QUIZ_ANSWERS = {
+  1: "B", 2: "B", 3: "B", 4: "B",
+  5: "A", 6: "B", 7: "A", 8: "A"
+};
+const QUIZ_EXPLAIN = {
+  1: 'alert() shows a popup dialog box. console.log() prints to the console - they are different.',
+  2: 'prompt() returns whatever the user typed into the box. The text inside the parentheses is just the question.',
+  3: 'A single = is ASSIGN (put a value in). Use == (or ===) to COMPARE two things.',
+  4: 'getElementById looks UP an existing element by its id attribute - it does not create or delete.',
+  5: 'Two numbers + each other = math. 3 + 5 = 8.',
+  6: 'When BOTH sides are strings (quoted), + joins them. "3" + "5" becomes the text "35".',
+  7: 'The pattern is: function (keyword) -> name -> () -> {body}.',
+  8: 'getElementById finds the element; .innerHTML changes its text. This is the standard pattern.'
+};
+
+/* ====================================================
+   STEP COUNT + TIER APPLICATION
+   ==================================================== */
+function getStepCount(sectionNum) {
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  if (!section) return 0;
+  return section.querySelectorAll('.step-tab[data-step]').length;
+}
+
+function applyTiers() {
+  for (const num in TIER_CONFIG) {
+    const tier = TIER_CONFIG[num];
+    const sec = document.querySelector('section.lab[data-section="' + num + '"]');
+    if (sec) sec.setAttribute("data-tier", tier);
+    const ribbon = document.querySelector('[data-ribbon="' + num + '"]');
+    if (ribbon) {
+      ribbon.className = "tier-ribbon " + tier;
+      const label = tier === "wrapup" ? "WRAP UP" : (tier.toUpperCase() + " DO");
+      ribbon.textContent = label;
+    }
+  }
+  buildTierBar();
+}
+
+function buildTierBar() {
+  const zones = { must: [], should: [], could: [], wrapup: [] };
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const tier = TIER_CONFIG[i];
+    if (zones[tier]) zones[tier].push(i);
+  }
+  for (const tier in zones) {
+    const wrap = document.getElementById("pills-" + tier);
+    if (!wrap) continue;
+    wrap.innerHTML = "";
+    zones[tier].forEach(n => {
+      const a = document.createElement("a");
+      a.href = "#sec-" + n;
+      a.className = "pill " + tier;
+      a.id = "pill-" + n;
+      a.innerHTML = '<span class="num">' + n + '</span>' +
+                    '<span class="ttl">' + (SECTION_TITLES[n] || ("Section " + n)) + '</span>';
+      wrap.appendChild(a);
+    });
+  }
+}
+
+/* ====================================================
+   STEP TASKS - the prompt for each step
+   ==================================================== */
+const STEP_TASKS = {
+  1: [
+    "<strong>MUST DO &mdash;</strong> Copy this exact code into the editor. Click Run. A popup should say &ldquo;Hello!&rdquo;.",
+    "<strong>SHOULD DO &mdash;</strong> Change the message inside the quotes to your own greeting. Run it again.",
+    "<strong>COULD DO &mdash;</strong> Add a SECOND <code>alert(...)</code> line after the first. Two popups in a row."
+  ],
+  2: [
+    "<strong>MUST DO &mdash;</strong> Copy this code. Run it. The popup should show the value stored in <code>name</code>.",
+    "<strong>SHOULD DO &mdash;</strong> Change &ldquo;Sam&rdquo; to your own name. Then make the alert say &ldquo;Hi&rdquo; + the name.",
+    "<strong>COULD DO &mdash;</strong> Add THREE variables (first name, last name, age). Show them all in one alert with <code>+</code>."
+  ],
+  3: [
+    "<strong>MUST DO &mdash;</strong> Copy this code. Run it. Type your name into the prompt. The greeting should use it.",
+    "<strong>SHOULD DO &mdash;</strong> Change the question to ask about something else (favourite food, sport, ...) and change the greeting.",
+    "<strong>COULD DO &mdash;</strong> Ask TWO prompt questions, store both answers, then combine into one alert."
+  ],
+  4: [
+    "<strong>MUST DO &mdash;</strong> Copy this. Click Run, then click the button in the preview. The heading should change.",
+    "<strong>SHOULD DO &mdash;</strong> Add a line to change the colour too: <code>document.getElementById(&quot;title&quot;).style.color = &quot;red&quot;;</code>",
+    "<strong>COULD DO &mdash;</strong> Two buttons: one switches the page to dark mode, the other back to light."
+  ],
+  5: [
+    "<strong>MUST DO &mdash;</strong> Copy this. Click Run, click the button. The function <code>sayHi()</code> runs and pops up a message.",
+    "<strong>SHOULD DO &mdash;</strong> Make a function that takes a NAME (<code>function greet(name)</code>). Add two buttons that pass different names.",
+    "<strong>COULD DO &mdash;</strong> Build a mood picker: a Happy button and a Sad button each change a heading's text and colour."
+  ],
+  6: [
+    "<strong>MUST DO &mdash;</strong> Copy this. Click Run. The page should say &ldquo;Big&rdquo; (because 10 &gt; 5).",
+    "<strong>SHOULD DO &mdash;</strong> Add a third option with <code>else if</code>: top marks / good job / keep going based on a score.",
+    "<strong>COULD DO &mdash;</strong> Use <code>prompt</code> to ask the user for a guess, then say &ldquo;Too low&rdquo; / &ldquo;Got it!&rdquo; / &ldquo;Too high&rdquo;."
+  ]
+};
+
+function showStep(sectionNum, stepNum) {
+  const targetTab = document.querySelector(
+    'section.lab[data-section="' + sectionNum + '"] .step-tab[data-step="' + stepNum + '"]'
+  );
+  if (targetTab && targetTab.classList.contains('is-locked')) return;
+
+  document.querySelectorAll('.code-ref[data-section="' + sectionNum + '"]').forEach(el => {
+    el.hidden = el.dataset.step !== String(stepNum);
+  });
+  document.querySelectorAll('.step-tab[data-step]').forEach(tab => {
+    const sec = tab.closest('section.lab');
+    if (!sec || sec.dataset.section !== String(sectionNum)) return;
+    tab.classList.toggle('active', tab.dataset.step === String(stepNum));
+  });
+  const taskEl = document.getElementById('task-' + sectionNum);
+  const tasks = STEP_TASKS[sectionNum] || [];
+  if (taskEl) {
+    const textEl = taskEl.querySelector('.task-text');
+    if (textEl && tasks[stepNum - 1]) {
+      textEl.innerHTML = tasks[stepNum - 1];
+    }
+  }
+  updateAdvanceButton(sectionNum, stepNum);
+}
+
+function updateAdvanceButton(sectionNum, stepNum) {
+  const btn = document.getElementById('advance-' + sectionNum);
+  if (!btn) return;
+  const totalSteps = getStepCount(sectionNum) || 3;
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  const tab = section ? section.querySelector('.step-tab[data-step="' + stepNum + '"]') : null;
+  const isDone = tab && tab.classList.contains('is-done');
+  btn.classList.remove('finish-section', 'is-done');
+  if (stepNum < totalSteps) {
+    btn.innerHTML = (isDone ? '&#x2713; Done &mdash; next &rarr;'
+                            : 'Done &mdash; next &rarr;');
+  } else {
+    btn.classList.add('finish-section');
+    btn.innerHTML = (isDone ? '&#x2713; Done &mdash; finish section &darr;'
+                            : 'Done &mdash; finish section &darr;');
+  }
+  if (isDone) btn.classList.add('is-done');
+}
+
+function advanceStep(sectionNum) {
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  if (!section) return;
+  const activeTab = section.querySelector('.step-tab.active');
+  if (!activeTab) return;
+  const currentStep = parseInt(activeTab.dataset.step);
+  const totalSteps = getStepCount(sectionNum) || 3;
+  markStepDone(sectionNum, currentStep, true);
+  if (currentStep < totalSteps) {
+    showStep(sectionNum, currentStep + 1);
+    const ws = section.querySelector('.workspace3');
+    if (ws) ws.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    const card = document.getElementById('done-card-' + sectionNum);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('nudge');
+      setTimeout(() => card.classList.remove('nudge'), 1300);
+    }
+  }
+}
+
+function markStepDone(sectionNum, stepNum, done) {
+  const tab = document.querySelector('section.lab[data-section="' + sectionNum + '"] .step-tab[data-step="' + stepNum + '"]');
+  if (tab) tab.classList.toggle('is-done', !!done);
+  applyStepLocks(sectionNum);
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  const activeTab = section ? section.querySelector('.step-tab.active') : null;
+  if (activeTab) updateAdvanceButton(sectionNum, parseInt(activeTab.dataset.step));
+  saveSoon();
+}
+
+function applyStepLocks(sectionNum) {
+  const section = document.querySelector('section.lab[data-section="' + sectionNum + '"]');
+  if (!section) return;
+  const tabs = {};
+  section.querySelectorAll('.step-tab[data-step]').forEach(t => {
+    tabs[t.dataset.step] = t;
+  });
+  const totalSteps = Object.keys(tabs).length;
+  if (totalSteps === 0) return;
+  if (tabs['1']) {
+    tabs['1'].classList.remove('is-locked');
+    tabs['1'].removeAttribute('title');
+  }
+  for (let n = 2; n <= totalSteps; n++) {
+    const prev = tabs[String(n - 1)];
+    const curr = tabs[String(n)];
+    if (!curr) continue;
+    if (prev && prev.classList.contains('is-done')) {
+      curr.classList.remove('is-locked');
+      curr.removeAttribute('title');
+    } else {
+      curr.classList.add('is-locked');
+      curr.setAttribute('title', 'Finish step ' + (n - 1) + ' first');
+    }
+  }
+}
+
+function applyAllStepLocks() {
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) applyStepLocks(i);
+}
+
+/* ====================================================
+   AUTO-SAVE
+   ==================================================== */
+function gatherState() {
+  const state = {
+    studentName: document.getElementById("studentName").value || "",
+    studentClass: document.getElementById("studentClass").value || "",
+    studentDate: document.getElementById("studentDate").value || "",
+    timestamp: new Date().toISOString(),
+    fields: {}
+  };
+  document.querySelectorAll("[data-save]").forEach(el => {
+    const key = el.getAttribute("data-save");
+    state.fields[key] = el.type === "checkbox" ? el.checked : el.value;
+  });
+  document.querySelectorAll('.step-tab[data-step]').forEach(tab => {
+    const sec = tab.closest('section.lab');
+    if (!sec) return;
+    const key = 'step-' + sec.dataset.section + '-' + tab.dataset.step;
+    state.fields[key] = tab.classList.contains('is-done');
+  });
+  return state;
+}
+
+function saveNow() {
+  try {
+    const state = gatherState();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const t = new Date();
+    const hh = String(t.getHours()).padStart(2, "0");
+    const mm = String(t.getMinutes()).padStart(2, "0");
+    const ss = String(t.getSeconds()).padStart(2, "0");
+    const el = document.getElementById("saveStatus");
+    if (el && !el.classList.contains("is-toast-success") &&
+        !el.classList.contains("is-toast-error")) {
+      el.textContent = "Saved at " + hh + ":" + mm + ":" + ss;
+    }
+    updateProgress();
+  } catch (err) {
+    const el = document.getElementById("saveStatus");
+    if (el) el.textContent = "Save failed (storage full)";
+  }
+}
+
+function saveSoon() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNow, 400);
+}
+
+function loadState() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  let state;
+  try { state = JSON.parse(raw); } catch (e) { return; }
+
+  document.getElementById("studentName").value = state.studentName || "";
+  document.getElementById("studentClass").value = state.studentClass || "";
+  document.getElementById("studentDate").value = state.studentDate || "";
+
+  for (const key in (state.fields || {})) {
+    const el = document.querySelector('[data-save="' + key + '"]');
+    if (!el) continue;
+    if (el.type === "checkbox") el.checked = !!state.fields[key];
+    else el.value = state.fields[key];
+  }
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    updateDoneStyle(i);
+    if (i <= 6) runSection(i, true);    // section 7 has no editor
+    const stepCount_i = getStepCount(i) || 3;
+    for (let step = 1; step <= stepCount_i; step++) {
+      const key = 'step-' + i + '-' + step;
+      if (state.fields && state.fields[key]) {
+        const tab = document.querySelector('section.lab[data-section="' + i + '"] .step-tab[data-step="' + step + '"]');
+        if (tab) tab.classList.add('is-done');
+      }
+    }
+    const section = document.querySelector('section.lab[data-section="' + i + '"]');
+    const activeTab = section ? section.querySelector('.step-tab.active') : null;
+    if (activeTab) updateAdvanceButton(i, parseInt(activeTab.dataset.step));
+    applyStepLocks(i);
+  }
+  rehydrateQuiz();
+  updateProgress();
+  if (state.timestamp) {
+    document.getElementById("saveStatus").textContent = "Loaded from last save";
+    showWelcomeBack(state);
+  }
+}
+
+/* ====================================================
+   WELCOME BACK
+   ==================================================== */
+function showWelcomeBack(state) {
+  const banner = document.getElementById("welcomeBack");
+  if (!banner) return;
+  let doneCount = 0;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const cb = document.getElementById("done-" + i);
+    if (cb && cb.checked) doneCount++;
+  }
+  let nextSection = 1;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const cb = document.getElementById("done-" + i);
+    if (!cb || !cb.checked) { nextSection = i; break; }
+    nextSection = i;
+  }
+  const name = (state.studentName || "").trim();
+  const headingEl = document.getElementById("wbHeading");
+  headingEl.textContent = name
+    ? "Welcome back, " + name + "!"
+    : "Welcome back!";
+  const detailEl = document.getElementById("wbDetail");
+  let lastSeen = "";
+  if (state.timestamp) {
+    const t = new Date(state.timestamp);
+    const now = new Date();
+    const diffMin = Math.round((now - t) / 60000);
+    if (diffMin < 2)       lastSeen = "just now";
+    else if (diffMin < 60) lastSeen = diffMin + " min ago";
+    else if (diffMin < 24 * 60) lastSeen = Math.round(diffMin / 60) + " hr ago";
+    else                   lastSeen = t.toLocaleDateString();
+  }
+  detailEl.textContent =
+    "You finished " + doneCount + " of " + TOTAL_SECTIONS + " sections" +
+    (lastSeen ? " (saved " + lastSeen + ")" : "") +
+    ". Your JavaScript is exactly where you left it.";
+  const btn = document.getElementById("wbContinueBtn");
+  btn.textContent = (doneCount >= TOTAL_SECTIONS)
+    ? "Review my work →"
+    : "Jump to Section " + nextSection + " →";
+  btn.onclick = function() {
+    const target = document.getElementById("sec-" + nextSection);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    dismissWelcomeBack();
+  };
+  banner.hidden = false;
+}
+
+function dismissWelcomeBack() {
+  const banner = document.getElementById("welcomeBack");
+  if (banner) banner.hidden = true;
+}
+
+/* ====================================================
+   PROGRESS BAR + DONE STYLE
+   ==================================================== */
+function updateProgress() {
+  let done = 0;
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    const cb = document.getElementById("done-" + i);
+    if (cb && cb.checked) done++;
+    const pill = document.getElementById("pill-" + i);
+    if (pill) pill.classList.toggle("is-done", !!(cb && cb.checked));
+  }
+  const pct = Math.round((done / TOTAL_SECTIONS) * 100);
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressText").textContent = done + " of " + TOTAL_SECTIONS + " done";
+}
+
+function updateDoneStyle(num) {
+  const card = document.getElementById("done-card-" + num);
+  const cb = document.getElementById("done-" + num);
+  if (!card || !cb) return;
+  card.classList.toggle("is-done", cb.checked);
+  saveSoon();
+}
+
+/* ====================================================
+   RUN JS+HTML IN IFRAME
+   ==================================================== */
+function runSection(num, silent) {
+  const editor = document.querySelector('.code-editor[data-section="' + num + '"]');
+  const iframe = document.getElementById("output-" + num);
+  if (!editor || !iframe) return;
+  let code = editor.value || '<p style="color:#999;font-family:Arial;padding:12px;">Type some code on the left in column 2, then click Run.</p>';
+  if (!/<!DOCTYPE/i.test(code)) {
+    code = '<!DOCTYPE html>\n' + code;
+  }
+  iframe.srcdoc = code;
+  if (!silent) saveSoon();
+}
+
+function clearEditor(num) {
+  if (!confirm("Clear the editor for Section " + num + "?")) return;
+  const editor = document.querySelector('.code-editor[data-section="' + num + '"]');
+  if (editor) { editor.value = ""; runSection(num); }
+}
+
+function confirmReset() {
+  if (!confirm("Are you sure? This erases ALL your work in this JS Lab.")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+/* ====================================================
+   QUIZ
+   ==================================================== */
+function pickAnswer(n, choice, btn) {
+  const hidden = document.getElementById("q" + n + "-answer");
+  if (hidden) hidden.value = choice;
+  const qBox = document.getElementById("q" + n);
+  if (!qBox) return;
+  qBox.querySelectorAll(".quiz-opt").forEach(b => {
+    b.classList.remove("selected", "correct", "wrong");
+  });
+  btn.classList.add("selected");
+  const fb = document.getElementById("q" + n + "-feedback");
+  const correct = (choice === QUIZ_ANSWERS[n]);
+  if (correct) {
+    btn.classList.add("correct");
+    fb.className = "q-feedback correct";
+    fb.innerHTML = "<b>&#x2713; Correct!</b> " + QUIZ_EXPLAIN[n];
+  } else {
+    btn.classList.add("wrong");
+    fb.className = "q-feedback wrong";
+    fb.innerHTML = "<b>&#x2717; Not quite.</b> " + QUIZ_EXPLAIN[n] +
+                   ' (The right answer is <b>' + QUIZ_ANSWERS[n] + '</b>.)';
+  }
+  updateQuizScore();
+  saveSoon();
+}
+
+function updateQuizScore() {
+  let correct = 0, answered = 0;
+  for (let n = 1; n <= 8; n++) {
+    const el = document.getElementById("q" + n + "-answer");
+    if (!el) continue;
+    const v = el.value;
+    if (v) {
+      answered++;
+      if (v === QUIZ_ANSWERS[n]) correct++;
+    }
+  }
+  const el = document.getElementById("quizScore");
+  if (!el) return;
+  el.textContent = "Score: " + correct + " / 8" +
+                   (answered === 8 ? "  -  finished" : "  (" + answered + " answered)");
+  el.classList.toggle("perfect", correct === 8);
+}
+
+function rehydrateQuiz() {
+  for (let n = 1; n <= 8; n++) {
+    const hidden = document.getElementById("q" + n + "-answer");
+    if (!hidden || !hidden.value) continue;
+    const btn = document.querySelector(
+      '#q' + n + ' .quiz-opt[data-letter="' + hidden.value + '"]');
+    if (btn) pickAnswer(n, hidden.value, btn);
+  }
+  updateQuizScore();
+}
+
+/* ====================================================
+   SUBMIT WORK
+   ==================================================== */
+function escapeHTML(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function buildSubmissionHTML(state) {
+  const name = state.studentName || "Unnamed Student";
+  const cls  = state.studentClass || "9 COTYB or 9 COTYC";
+  const date = state.studentDate || new Date().toISOString().slice(0,10);
+  const QTEXT = {
+    1: 'What does alert("Hello") do?',
+    2: 'After let name = prompt("Your name?"), if user types Maya, what is name?',
+    3: 'Which is the CORRECT way to check if x equals 5?',
+    4: 'What does document.getElementById("title") do?',
+    5: 'What is 3 + 5 ?',
+    6: 'What is "3" + "5" (with quotes)?',
+    7: 'To make a function called sayHi, the correct line is:',
+    8: 'To change a heading text from JavaScript:'
+  };
+  let body = "";
+  // Sections 1-6 (project sections with editor)
+  for (let i = 1; i <= 6; i++) {
+    const tier = TIER_CONFIG[i];
+    const title = SECTION_TITLES[i];
+    const code = state.fields["code-" + i] || "";
+    const learnt = state.fields["learnt-" + i] || "";
+    const stuck  = state.fields["stuck-" + i]  || "";
+    const watch  = state.fields["watch-" + i] || "";
+    const done   = state.fields["done-" + i] ? "Yes" : "Not yet";
+    let section = '<section class="seg t-' + tier + '">';
+    section += '<h2><span class="num">' + i + '</span> ' + escapeHTML(title) +
+               ' <span class="rib ' + tier + '">' + tier.toUpperCase() + '</span></h2>';
+    section += '<p class="meta"><b>Finished:</b> ' + done + '</p>';
+    if (watch) {
+      section += '<h3>Watch-clip answer</h3><div class="learn">' + escapeHTML(watch) + '</div>';
+    }
+    section += '<h3>My code</h3>';
+    section += '<pre class="code">' + escapeHTML(code) + '</pre>';
+    section += '<h3>What I learnt</h3><div class="learn">' + escapeHTML(learnt) + '</div>';
+    section += '<h3>I am stuck on</h3><div class="stuck">' + escapeHTML(stuck) + '</div>';
+    if (code.trim()) {
+      section += '<h3>How it ran (preview)</h3>';
+      section += '<iframe class="preview" sandbox="allow-scripts" srcdoc="' + escapeHTML(code) + '"></iframe>';
+    }
+    section += '<div class="teacher-box"><b>Teacher feedback:</b><br><br><br><br></div>';
+    section += '</section>';
+    body += section;
+  }
+  // Section 7 - quiz results
+  {
+    const tier = "wrapup";
+    const learnt = state.fields["learnt-7"] || "";
+    const stuck  = state.fields["stuck-7"]  || "";
+    const done   = state.fields["done-7"] ? "Yes" : "Not yet";
+    let section = '<section class="seg t-' + tier + '">';
+    section += '<h2><span class="num">7</span> Wrap-up Quiz <span class="rib ' + tier + '">WRAP UP</span></h2>';
+    section += '<p class="meta"><b>Finished:</b> ' + done + '</p>';
+    let correct = 0, answered = 0;
+    let qList = '<ol class="quiz-list">';
+    for (let q = 1; q <= 8; q++) {
+      const chosen = state.fields["q" + q + "-answer"] || "";
+      const right = QUIZ_ANSWERS[q];
+      const isCorrect = chosen === right;
+      if (chosen) answered++;
+      if (isCorrect) correct++;
+      const tick = isCorrect ? "&#x2713;" : (chosen ? "&#x2717;" : "&middot;");
+      const cls2 = isCorrect ? "qok" : (chosen ? "qbad" : "qskip");
+      qList += '<li class="' + cls2 + '"><b>Q' + q + ':</b> ' + escapeHTML(QTEXT[q]) +
+               ' &mdash; <b>chose:</b> ' + (chosen || "(skipped)") +
+               ' &mdash; <b>right:</b> ' + right + ' ' + tick + '</li>';
+    }
+    qList += '</ol>';
+    section += '<h3>Score</h3><p class="score-line"><b>' + correct + ' / 8 correct</b> (' + answered + ' answered)</p>';
+    section += qList;
+    section += '<h3>The biggest thing I learnt</h3><div class="learn">' + escapeHTML(learnt) + '</div>';
+    section += '<h3>One question I still have</h3><div class="stuck">' + escapeHTML(stuck) + '</div>';
+    section += '<div class="teacher-box"><b>Teacher feedback:</b><br><br><br><br></div>';
+    section += '</section>';
+    body += section;
+  }
+  const today = new Date().toLocaleString("en-AU");
+  return `<!DOCTYPE html>
+<html lang="en-AU"><head><meta charset="UTF-8">
+<title>${escapeHTML(name)} - JavaScript Lab Submission</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto;
+         padding: 20px; color: #1f2937; background: #fdf6e3; }
+  header { background: linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#f59e0b 100%); color: white;
+           padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+  header h1 { margin: 0 0 8px 0; }
+  header p { margin: 2px 0; opacity: 0.95; font-size: 14px; }
+  section.seg { background: white; border: 1px solid #e5e7eb;
+                border-radius: 10px; padding: 16px 20px; margin-bottom: 16px;
+                border-left: 8px solid #0f172a; page-break-inside: avoid; }
+  section.t-must   { border-left-color: #10b981; }
+  section.t-should { border-left-color: #1e3a8a; }
+  section.t-could  { border-left-color: #7c3aed; }
+  section.t-wrapup { border-left-color: #f59e0b; }
+  section.seg h2 { margin: 0 0 6px 0; color: #0f172a; font-size: 18px; }
+  section.seg h3 { margin: 14px 0 4px 0; font-size: 13px;
+                   text-transform: uppercase; letter-spacing: 1px; color: #6b7280; }
+  .num { display: inline-block; width: 28px; height: 28px; line-height: 28px;
+         text-align: center; background: #0f172a; color: white;
+         border-radius: 50%; font-size: 14px; margin-right: 6px; }
+  .rib { float: right; padding: 3px 10px; border-radius: 12px;
+         color: white; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+  .rib.must { background: #10b981; }
+  .rib.should { background: #1e3a8a; }
+  .rib.could { background: #7c3aed; }
+  .rib.wrapup { background: #f59e0b; color: #422006; }
+  .meta { font-size: 13px; color: #6b7280; margin: 0; }
+  .code { background: #0f172a; color: #f7df1e; padding: 10px;
+          border-radius: 6px; font-family: Consolas, monospace;
+          font-size: 12px; white-space: pre; overflow: auto; }
+  .learn, .stuck { background: #f9fafb; border: 1px solid #e5e7eb;
+                   border-radius: 6px; padding: 8px 12px;
+                   font-size: 14px; min-height: 28px; }
+  .preview { width: 100%; height: 220px; border: 1px solid #ccc;
+             border-radius: 6px; background: white; }
+  .teacher-box { background: #fffaf0; border: 2px dashed #f59e0b;
+                 border-radius: 6px; padding: 10px 14px; margin-top: 12px;
+                 font-size: 14px; min-height: 80px; }
+  .score-line { font-size: 17px; margin: 6px 0; color: #0f172a; }
+  ol.quiz-list { padding-left: 24px; }
+  ol.quiz-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.5; }
+  ol.quiz-list li.qok b:last-of-type { color: #047857; }
+  ol.quiz-list li.qbad b:last-of-type { color: #b91c1c; }
+  ol.quiz-list li.qskip { color: #6b7280; }
+  footer { text-align: center; font-size: 12px; color: #6b7280; margin-top: 20px; }
+  @media print { .preview { display: none; } section.seg { break-inside: avoid; } }
+</style></head><body>
+  <header>
+    <h1>JavaScript Lab &mdash; Submission</h1>
+    <p><b>Name:</b> ${escapeHTML(name)}</p>
+    <p><b>Class:</b> ${escapeHTML(cls)}</p>
+    <p><b>Date completed:</b> ${escapeHTML(date)}</p>
+    <p><b>Submitted at:</b> ${escapeHTML(today)}</p>
+  </header>
+  ${body}
+  <footer>9 COTYB &amp; 9 COTYC &middot; Year 9 Computing Technology &middot; Term 2 2026</footer>
+  <script type="application/json" id="kw-saved-state">${JSON.stringify({version:1,worksheet:"meet-js-v2",savedAt:new Date().toISOString(),studentName:state.studentName||"",studentClass:state.studentClass||"",studentDate:state.studentDate||"",fields:state.fields||{}}).replace(/<\/script/gi,"<\\/script")}<\/script>
+</body></html>`;
+}
+
+function submitWork() {
+  saveNow();
+  const state = gatherState();
+  const name = (state.studentName || "Student").trim();
+  if (!name || name.toLowerCase() === "student") {
+    if (!confirm("You haven't typed your name at the top. Submit anyway?")) return;
+  }
+  const html = buildSubmissionHTML(state);
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const safeName = name.replace(/[^a-zA-Z0-9_-]/g, "_") || "Student";
+  const dateStr = new Date().toISOString().slice(0, 10);
+  a.download = safeName + "_Y9_JS_Lab_" + dateStr + ".html";
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  document.getElementById("submitModal").classList.add("is-open");
+}
+
+function closeModal() {
+  document.getElementById("submitModal").classList.remove("is-open");
+}
+
+/* ====================================================
+   LOAD SAVED FILE - round-trip resume from a downloaded submission
+   ==================================================== */
+let __toastTimer = null;
+function showToast(message, kind) {
+  const el = document.getElementById("saveStatus");
+  if (!el) return;
+  el.textContent = message;
+  el.classList.remove("is-toast-success", "is-toast-error");
+  el.classList.add("is-toast-" + kind);
+  if (__toastTimer) clearTimeout(__toastTimer);
+  __toastTimer = setTimeout(function() {
+    el.classList.remove("is-toast-success", "is-toast-error");
+    try { saveNow(); } catch (e) {}
+  }, 4000);
+}
+
+function checkUnsavedBeforeLoad() {
+  const state = gatherState();
+  let hasWork = !!(state.studentName || state.studentClass);
+  if (!hasWork) {
+    for (const k in state.fields) {
+      const v = state.fields[k];
+      if (v === true) { hasWork = true; break; }
+      if (typeof v === "string" && v.trim() !== "") { hasWork = true; break; }
+    }
+  }
+  if (!hasWork) return true;
+  return confirm("You have unsaved work. Loading a file will replace it. Continue?");
+}
+
+function validateState(state) {
+  if (!state || typeof state !== "object") return "not an object";
+  if (state.version !== 1) return "wrong version";
+  if (typeof state.fields !== "object" || state.fields === null) return "missing fields";
+  return null;
+}
+
+function restoreState(state) {
+  const nameEl = document.getElementById("studentName");
+  const classEl = document.getElementById("studentClass");
+  const dateEl = document.getElementById("studentDate");
+  if (nameEl)  nameEl.value  = state.studentName  || "";
+  if (classEl) classEl.value = state.studentClass || "";
+  if (dateEl)  dateEl.value  = state.studentDate  || "";
+  let restoredCount = 0;
+  let unknownKeys = [];
+  for (const key in state.fields) {
+    const value = state.fields[key];
+    const el = document.querySelector('[data-save="' + CSS.escape(key) + '"]');
+    if (!el) {
+      if (key.indexOf("step-") === 0) {
+        const m = key.match(/^step-(\d+)-(\d+)$/);
+        if (m) {
+          const sec = m[1], step = m[2];
+          const tab = document.querySelector(
+            'section.lab[data-section="' + sec + '"] .step-tab[data-step="' + step + '"]');
+          if (tab) {
+            tab.classList.toggle("is-done", !!value);
+            restoredCount++;
+            continue;
+          }
+        }
+      }
+      unknownKeys.push(key);
+      continue;
+    }
+    if (el.type === "checkbox") {
+      el.checked = !!value;
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    } else {
+      el.value = value == null ? "" : String(value);
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+    restoredCount++;
+  }
+  if (unknownKeys.length) {
+    console.warn("restoreState: ignored unknown keys:", unknownKeys);
+  }
+  try { applyAllStepLocks(); } catch (e) {}
+  try {
+    for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+      if (typeof updateDoneStyle === "function") updateDoneStyle(i);
+      if (i <= 6) runSection(i, true);
+    }
+  } catch (e) {}
+  try { rehydrateQuiz(); } catch (e) {}
+  try { saveNow(); } catch (e) {}
+  return restoredCount;
+}
+
+function loadFromFile(file) {
+  if (!file) return;
+  if (!checkUnsavedBeforeLoad()) {
+    const fi = document.getElementById("loadFile");
+    if (fi) fi.value = "";
+    return;
+  }
+  const reader = new FileReader();
+  reader.onerror = function() {
+    showToast("Could not read that file. Try again.", "error");
+  };
+  reader.onload = function(ev) {
+    let parsed;
+    try {
+      const text = String(ev.target.result || "");
+      const doc = new DOMParser().parseFromString(text, "text/html");
+      const script = doc.getElementById("kw-saved-state");
+      if (!script) {
+        showToast("This file is not a saved JS Lab. Try a different one.", "error");
+        return;
+      }
+      try {
+        parsed = JSON.parse(script.textContent || "{}");
+      } catch (e) {
+        showToast("This save file is corrupted. Try a different one.", "error");
+        return;
+      }
+      const err = validateState(parsed);
+      if (err) {
+        if (err === "wrong version") {
+          showToast("This save is from an older worksheet. Ask your teacher.", "error");
+        } else {
+          showToast("This file is not a saved JS Lab. Try a different one.", "error");
+        }
+        return;
+      }
+      const n = restoreState(parsed);
+      showToast("Work loaded ✓ — keep going! (" + n + " fields restored)", "success");
+    } catch (e) {
+      console.error("loadFromFile error:", e);
+      showToast("Something went wrong loading that file.", "error");
+    } finally {
+      const fi = document.getElementById("loadFile");
+      if (fi) fi.value = "";
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ====================================================
+   INIT
+   ==================================================== */
+document.addEventListener("DOMContentLoaded", function() {
+  applyTiers();
+  loadState();
+  applyAllStepLocks();
+
+  const dateEl = document.getElementById("studentDate");
+  if (!dateEl.value) {
+    const t = new Date();
+    dateEl.value = t.getFullYear() + "-" +
+                   String(t.getMonth()+1).padStart(2,"0") + "-" +
+                   String(t.getDate()).padStart(2,"0");
+  }
+
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+    if (document.getElementById('advance-' + i)) {
+      updateAdvanceButton(i, 1);
+    }
+  }
+
+  document.querySelectorAll("input, textarea, select").forEach(el => {
+    if (el.type === "file") return;
+    el.addEventListener("input", saveSoon);
+    el.addEventListener("change", saveSoon);
+  });
+
+  document.getElementById("submitModal").addEventListener("click", function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  document.querySelectorAll(".code-editor").forEach(ta => {
+    ta.addEventListener("keydown", function(e) {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        const s = this.selectionStart, en = this.selectionEnd;
+        this.value = this.value.substring(0, s) + "    " + this.value.substring(en);
+        this.selectionStart = this.selectionEnd = s + 4;
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

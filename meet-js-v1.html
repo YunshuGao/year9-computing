@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meet JavaScript - Year 9 Computing</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Calibri, "Segoe UI", Arial, sans-serif;
+         margin: 0; padding: 0; background: #f4f6fb; color: #1f2937;
+         line-height: 1.5; }
+
+  /* ===== Header ===== */
+  header.app-header {
+    background: linear-gradient(135deg, #1f3a68 0%, #14b8a6 100%);
+    color: white; padding: 16px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  header.app-header h1 { margin: 0; font-size: 26px; }
+  header.app-header .subtitle { margin: 2px 0 0 0; font-size: 14px;
+                                  opacity: 0.92; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 12px;
+              align-items: center; margin-top: 12px; font-size: 14px; }
+  .meta-row label { color: rgba(255,255,255,0.95); }
+  .meta-row input, .meta-row select {
+    padding: 5px 9px; border: 0; border-radius: 4px;
+    font-size: 13px; background: white; color: #1f3a68; font-weight: 500;
+  }
+  #saveStatus { margin-left: auto; font-size: 13px;
+                padding: 3px 9px; border-radius: 4px;
+                transition: background 0.2s; }
+  #saveStatus.is-toast-success { background: #10b981; color: white;
+                                   font-weight: 700; }
+  #saveStatus.is-toast-error   { background: #ef4444; color: white;
+                                   font-weight: 700; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .toolbar button {
+    padding: 9px 16px; border: 0; border-radius: 6px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    background: white; color: #1f3a68;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .toolbar button:hover { background: #e0f7f5; }
+  .toolbar button.primary { background: #fde68a; color: #78350f; }
+  .toolbar button.primary:hover { background: #fcd34d; }
+  .toolbar button.danger { background: #fee2e2; color: #b91c1c; }
+  .toolbar button.danger:hover { background: #fecaca; }
+
+  /* ===== Tab bar ===== */
+  nav.tab-bar { display: flex; flex-wrap: wrap; gap: 6px;
+                background: white; padding: 8px 12px;
+                border-bottom: 1px solid #e5e7eb;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+                position: sticky; top: 0; z-index: 50;
+                overflow-x: auto; }
+  .tab-btn { padding: 9px 14px; background: #f3f4f6; color: #4b5563;
+             border: 0; border-radius: 6px; font-size: 14px;
+             font-weight: 700; cursor: pointer;
+             transition: all 0.15s; min-width: 44px; }
+  .tab-btn.hero { min-width: 90px; }
+  .tab-btn:hover { background: #e0f7f5; color: #1f3a68; }
+  .tab-btn.active { background: #14b8a6; color: white;
+                     box-shadow: 0 2px 8px rgba(20,184,166,0.35); }
+  .tab-btn.must.active   { background: #10b981; }
+  .tab-btn.should.active { background: #1f3a68; }
+  .tab-btn.could.active  { background: #7c3aed; }
+
+  /* ===== Main + sections ===== */
+  main { max-width: 1200px; margin: 0 auto; padding: 18px; }
+  section.lab { background: white; padding: 22px 26px;
+                margin-bottom: 18px; border-radius: 12px;
+                border: 1px solid #e5e7eb;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+                display: none; }
+  section.lab.is-active { display: block; }
+
+  /* ===== Hero (Section 0) ===== */
+  section.hero { padding: 30px 32px; }
+  section.hero h2 { font-size: 32px; color: #1f3a68; margin: 0 0 8px 0; }
+  section.hero .lede { font-size: 17px; color: #4b5563;
+                         margin: 0 0 18px 0; }
+
+  .live-demo-card {
+    display: flex; align-items: center; gap: 16px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 2px dashed #f59e0b; border-radius: 12px;
+    padding: 16px 20px; margin-bottom: 22px;
+  }
+  .live-demo-card .demo-text { flex: 1; }
+  .live-demo-card .demo-text b { color: #78350f; }
+  .live-demo-card button {
+    background: #f59e0b; color: white; border: 0;
+    padding: 14px 24px; font-size: 18px; font-weight: 800;
+    border-radius: 8px; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245,158,11,0.4);
+  }
+  .live-demo-card button:hover { background: #d97706; transform: translateY(-1px); }
+
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr);
+          gap: 14px; margin: 22px 0 24px 0; }
+  .trio .card { padding: 18px 18px 16px 18px; border-radius: 10px;
+                border: 2px solid; }
+  .trio .card.html { border-color: #f97316; background: #fff7ed; }
+  .trio .card.css  { border-color: #3b82f6; background: #eff6ff; }
+  .trio .card.js   { border-color: #7c3aed; background: #f5f3ff; }
+  .trio .icon { font-size: 36px; margin-bottom: 6px; }
+  .trio h3 { margin: 0; font-size: 16px; letter-spacing: 1px;
+             text-transform: uppercase; }
+  .trio .card.html h3 { color: #c2410c; }
+  .trio .card.css h3  { color: #1d4ed8; }
+  .trio .card.js h3   { color: #6d28d9; }
+  .trio .what { font-weight: 700; margin: 4px 0; font-size: 15px; }
+  .trio p { margin: 6px 0 0 0; font-size: 13.5px; color: #374151; }
+
+  .car-metaphor {
+    background: linear-gradient(to right, #fff7ed, #eff6ff, #f5f3ff);
+    padding: 16px 22px; border-radius: 10px; font-size: 16px;
+    margin-bottom: 22px;
+  }
+  .car-metaphor b { color: #1f3a68; }
+  .car-metaphor .stack { display: flex; flex-direction: column; gap: 4px; }
+
+  .homework-callback {
+    background: #ecfdf5; border-left: 4px solid #10b981;
+    padding: 12px 16px; border-radius: 8px;
+    font-size: 14.5px; color: #064e3b; margin-bottom: 18px;
+  }
+  .homework-callback b { color: #047857; }
+
+  .map-card {
+    background: #1f3a68; color: white; padding: 18px 22px;
+    border-radius: 10px; margin-top: 10px;
+  }
+  .map-card h3 { margin: 0 0 10px 0; color: #fde68a; font-size: 14px;
+                  letter-spacing: 1.5px; text-transform: uppercase; }
+  .map-card .row { display: flex; gap: 10px; align-items: center;
+                    margin: 6px 0; font-size: 15px; }
+  .map-card .row .pill { background: rgba(255,255,255,0.18);
+                          padding: 2px 9px; border-radius: 12px;
+                          font-size: 11px; font-weight: 700;
+                          letter-spacing: 1px; }
+  .map-card .row .pill.must   { background: #10b981; }
+  .map-card .row .pill.should { background: #fcd34d; color: #78350f; }
+  .map-card .row .pill.could  { background: #c084fc; }
+
+  /* ===== Numbered sections (projects) ===== */
+  section.lab .sec-head {
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 4px; flex-wrap: wrap;
+  }
+  section.lab h2.sec-title { margin: 0; font-size: 22px; color: #1f3a68; }
+  .tier-pill { padding: 3px 11px; border-radius: 12px;
+               color: white; font-size: 11px; font-weight: 700;
+               letter-spacing: 1.2px; }
+  .tier-pill.must   { background: #10b981; }
+  .tier-pill.should { background: #1f3a68; }
+  .tier-pill.could  { background: #7c3aed; }
+
+  .what-youll-make {
+    background: #f0f9ff; border: 1px solid #bae6fd;
+    padding: 9px 14px; border-radius: 8px;
+    font-size: 14.5px; color: #075985;
+    margin: 8px 0 12px 0;
+  }
+  .what-youll-make b { color: #0c4a6e; }
+
+  .wow-note { background: #fef3c7; border-left: 4px solid #f59e0b;
+              padding: 8px 14px; border-radius: 6px;
+              font-size: 13.5px; color: #78350f;
+              margin: 0 0 14px 0; }
+  .wow-note b { color: #b45309; }
+
+  /* ===== Editor + result side-by-side ===== */
+  .workshop { display: grid; grid-template-columns: 1fr 1fr;
+              gap: 14px; margin-top: 12px; }
+  .pane label { display: block; font-weight: 700; font-size: 11px;
+                color: #1f3a68; text-transform: uppercase;
+                letter-spacing: 0.8px; margin-bottom: 5px; }
+
+  /* Uncopyable reference */
+  pre.code-ref {
+    background: #0d1117; color: #c9e9e8;
+    padding: 12px 14px; border-radius: 6px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px; line-height: 1.5; margin: 0;
+    overflow: auto; max-height: 280px;
+    border: 2px solid #1f3a68;
+    -webkit-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    cursor: default;
+  }
+  pre.code-ref::selection { background: transparent; }
+
+  .code-editor {
+    width: 100%; min-height: 240px; max-height: 480px;
+    resize: vertical;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px; padding: 10px; line-height: 1.5;
+    border: 2px solid #1f3a68; border-radius: 6px;
+    background: #fefefe; color: #1f2937;
+    tab-size: 4; -moz-tab-size: 4;
+  }
+  .code-editor:focus { outline: none; border-color: #14b8a6;
+                       box-shadow: 0 0 0 3px rgba(20,184,166,0.15); }
+
+  .run-btn { margin-top: 8px; padding: 11px 28px;
+             background: #14b8a6; color: white; border: 0;
+             border-radius: 6px; cursor: pointer;
+             font-size: 16px; font-weight: 800;
+             box-shadow: 0 4px 12px rgba(20,184,166,0.35);
+             transition: all 0.15s; }
+  .run-btn:hover { background: #0e9488; transform: translateY(-1px); }
+  .run-btn:active { transform: translateY(1px); }
+
+  iframe.result {
+    width: 100%; height: 280px; background: white;
+    border: 2px solid #1f3a68; border-radius: 6px;
+  }
+
+  .w3-card {
+    margin-top: 14px; background: #fefce8;
+    border: 1px solid #fde047; border-radius: 8px;
+    padding: 10px 14px; font-size: 13.5px; color: #713f12;
+  }
+  .w3-card a { color: #854d0e; font-weight: 700;
+               text-decoration: underline; }
+  .w3-card a:hover { color: #422006; }
+
+  /* ===== Reflection ===== */
+  .reflect { margin-top: 16px; padding: 14px 16px;
+             background: #f9fafb; border: 1px solid #e5e7eb;
+             border-radius: 8px; }
+  .reflect label { font-weight: 700; font-size: 13px; color: #1f3a68; }
+  .reflect textarea {
+    width: 100%; margin-top: 5px; padding: 8px;
+    border: 1px solid #d1d5db; border-radius: 4px;
+    font-family: Calibri, Arial, sans-serif; font-size: 13.5px;
+    min-height: 50px; resize: vertical;
+  }
+  .reflect .done-row { display: flex; align-items: center; gap: 8px;
+                        margin-top: 10px; }
+  .reflect .done-row input[type="checkbox"] {
+    width: 22px; height: 22px; cursor: pointer; accent-color: #10b981; }
+  .reflect .done-row label.done-label {
+    cursor: pointer; font-weight: 700; color: #374151;
+    user-select: none; font-size: 14px; }
+  section.lab.is-done .sec-title::after {
+    content: " ✓"; color: #10b981; }
+
+  /* ===== Section nav ===== */
+  .section-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    background: white; padding: 12px 18px; border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .nav-btn { padding: 10px 22px; background: #14b8a6; color: white;
+             border: 0; border-radius: 6px; font-size: 14px;
+             font-weight: 700; cursor: pointer; }
+  .nav-btn:hover:not(:disabled) { background: #0e9488; }
+  .nav-btn:disabled { background: #e5e7eb; color: #9ca3af;
+                       cursor: not-allowed; }
+  .section-position { font-size: 14px; color: #374151; }
+  .section-position b { color: #1f3a68; }
+
+  /* ===== Submit modal ===== */
+  .modal-back { position: fixed; inset: 0;
+                background: rgba(0,0,0,0.5); display: none;
+                align-items: center; justify-content: center; z-index: 999; }
+  .modal-back.is-open { display: flex; }
+  .modal { background: white; padding: 28px;
+           border-radius: 12px; max-width: 480px;
+           box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
+  .modal h2 { margin: 0 0 12px 0; color: #10b981; }
+  .modal p { font-size: 15px; }
+  .modal button { margin-top: 14px; padding: 10px 22px;
+                  background: #14b8a6; color: white; border: 0;
+                  border-radius: 6px; font-weight: 700; cursor: pointer; }
+
+  /* ===== Quiz section ===== */
+  .tier-pill.quiz { background: #f59e0b; }
+  .quiz-banner { background: linear-gradient(135deg, #fef3c7, #fde68a);
+                  border: 2px solid #f59e0b; border-radius: 10px;
+                  padding: 14px 18px; margin: 12px 0 16px 0;
+                  display: flex; align-items: center; justify-content: space-between;
+                  gap: 16px; flex-wrap: wrap; }
+  .quiz-banner .quiz-banner-text { color: #78350f; font-size: 15px; }
+  .quiz-banner .quiz-banner-text b { color: #b45309; }
+  #quizScore { background: #1f3a68; color: white;
+                padding: 8px 16px; border-radius: 8px;
+                font-weight: 800; font-size: 17px; }
+  #quizScore.perfect { background: #10b981; }
+  .quiz-q { background: white; border: 1px solid #e5e7eb;
+            border-radius: 10px; padding: 14px 18px; margin-bottom: 14px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .quiz-q .q-text { font-size: 16px; font-weight: 700;
+                     color: #1f3a68; margin: 0 0 12px 0; }
+  .quiz-q .q-text code {
+    background: #f3f4f6; padding: 1px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px; color: #5b21b6;
+  }
+  .q-options { display: grid; grid-template-columns: 1fr 1fr;
+                gap: 8px; }
+  .quiz-opt { text-align: left; background: #f9fafb;
+              border: 2px solid #d1d5db; border-radius: 8px;
+              padding: 10px 14px; font-size: 14px;
+              color: #1f2937; cursor: pointer;
+              transition: all 0.12s; font-family: inherit; }
+  .quiz-opt:hover:not(.correct):not(.wrong) {
+    background: #eff6ff; border-color: #3b82f6;
+  }
+  .quiz-opt.selected:not(.correct):not(.wrong) {
+    background: #dbeafe; border-color: #2563eb;
+  }
+  .quiz-opt.correct { background: #d1fae5; border-color: #10b981;
+                       color: #064e3b; font-weight: 700; }
+  .quiz-opt.wrong   { background: #fee2e2; border-color: #ef4444;
+                       color: #7f1d1d; }
+  .quiz-opt code {
+    background: rgba(0,0,0,0.08); padding: 1px 5px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+  }
+  .q-feedback { margin-top: 10px; padding: 9px 12px;
+                 border-radius: 6px; font-size: 13.5px;
+                 display: none; }
+  .q-feedback.correct { display: block; background: #d1fae5;
+                         color: #064e3b; border-left: 4px solid #10b981; }
+  .q-feedback.wrong   { display: block; background: #fee2e2;
+                         color: #7f1d1d; border-left: 4px solid #ef4444; }
+  .q-feedback b { color: inherit; }
+  @media (max-width: 700px) {
+    .q-options { grid-template-columns: 1fr; }
+  }
+
+  footer { text-align: center; color: #6b7280; font-size: 12px;
+           padding: 20px 0; }
+
+  @media (max-width: 800px) {
+    .trio { grid-template-columns: 1fr; }
+    .workshop { grid-template-columns: 1fr; }
+  }
+  @media print {
+    nav.tab-bar, .toolbar { display: none; }
+    section.lab { display: block !important; box-shadow: none;
+                  page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body data-file-label="MeetJS">
+
+<header class="app-header">
+  <h1>Meet JavaScript</h1>
+  <p class="subtitle">Make webpages come ALIVE - Year 9 Computing - 11 June 2026</p>
+  <div class="meta-row">
+    <label>Name: <input type="text" id="studentName" placeholder="Your name"></label>
+    <label>Class:
+      <select id="studentClass">
+        <option value="">-- pick one --</option>
+        <option>9 COTYB</option>
+        <option>9 COTYC</option>
+      </select>
+    </label>
+    <label>Date: <input type="text" id="studentDate" placeholder="2026-06-11"></label>
+    <span id="saveStatus">Not saved yet</span>
+  </div>
+  <div class="toolbar">
+    <button class="primary" onclick="submitWork()">Submit My Work</button>
+    <button onclick="document.getElementById('loadFile').click()">&#128194; Load my saved file</button>
+    <input type="file" id="loadFile" accept=".html,text/html" hidden onchange="loadFromFile(this.files[0])">
+    <button onclick="window.print()">Print</button>
+    <button class="danger" onclick="confirmReset()">Reset</button>
+  </div>
+</header>
+
+<!-- ============ Tab bar ============ -->
+<nav class="tab-bar" aria-label="Sections">
+  <button class="tab-btn hero" data-section="0" onclick="showSection(0)">Why JS</button>
+  <button class="tab-btn must"   data-section="1" onclick="showSection(1)">1</button>
+  <button class="tab-btn must"   data-section="2" onclick="showSection(2)">2</button>
+  <button class="tab-btn must"   data-section="3" onclick="showSection(3)">3</button>
+  <button class="tab-btn should" data-section="4" onclick="showSection(4)">4</button>
+  <button class="tab-btn should" data-section="5" onclick="showSection(5)">5</button>
+  <button class="tab-btn could"  data-section="6" onclick="showSection(6)">6</button>
+  <button class="tab-btn"         data-section="7" onclick="showSection(7)" style="background:#fef3c7;color:#b45309;">Quiz</button>
+</nav>
+
+<main>
+
+<!-- ============ Section 0: HERO / Why JavaScript ============ -->
+<section class="lab hero" data-section="0">
+
+  <h2>Why does TikTok feel ALIVE?</h2>
+  <p class="lede">Every website you've ever used is made of <b>3 things</b>. Today you'll meet the third one.</p>
+
+  <div class="live-demo-card">
+    <div class="demo-text">
+      &#128073; <b>Click the orange button.</b><br>
+      That little pop-up you'll see in 2 seconds? That's JavaScript. By the end of today's lesson, <b>you'll have made 6 things like it.</b>
+    </div>
+    <button onclick="alert('Hi! 👋  That was JavaScript. By the end of today, you will have made 6 things just like this.')">Click me</button>
+  </div>
+
+  <div class="trio">
+    <div class="card html">
+      <div class="icon">&#129521;</div>
+      <h3>HTML</h3>
+      <p class="what">The CONTENT</p>
+      <p>The text, the headings, the images, the buttons themselves. Like the VIDEO file on TikTok.</p>
+    </div>
+    <div class="card css">
+      <div class="icon">&#127912;</div>
+      <h3>CSS</h3>
+      <p class="what">The LOOK</p>
+      <p>The colours, the layout, the fonts, the spacing. Like the UI design of TikTok.</p>
+    </div>
+    <div class="card js">
+      <div class="icon">&#9889;</div>
+      <h3>JavaScript</h3>
+      <p class="what">The ACTION</p>
+      <p>The heart-pop when you tap. The next video sliding in. The comments loading. <b>This is what we're learning.</b></p>
+    </div>
+  </div>
+
+  <div class="car-metaphor">
+    <div class="stack">
+      <div>&#128663; Think of a car:</div>
+      <div><b>HTML = the body of the car</b> (the shape, the seats, the steering wheel)</div>
+      <div><b>CSS = the paint and the seats</b> (how it looks)</div>
+      <div><b>JavaScript = the ENGINE</b> (what makes it MOVE)</div>
+    </div>
+  </div>
+
+  <div class="homework-callback">
+    <b>Quick callback to last week:</b> several of you wrote that &ldquo;memorising the code is hard.&rdquo; Good news &mdash; <b>JavaScript is even SMALLER pieces</b>. Most projects today are 5&ndash;10 lines. You'll get a win every 2 minutes. Trust the pattern. Recognise, don't memorise.
+  </div>
+
+  <div class="map-card">
+    <h3>Today's Map &mdash; 6 mini projects</h3>
+    <div class="row"><span class="pill must">MUST DO</span> 1. &ldquo;Hello!&rdquo; Button &nbsp;&nbsp; 2. Magic Heading &nbsp;&nbsp; 3. Greet Me By Name</div>
+    <div class="row"><span class="pill should">SHOULD DO</span> 4. Rainbow Page &nbsp;&nbsp; 5. Mini Calculator</div>
+    <div class="row"><span class="pill could">COULD DO</span> 6. Quiz Game</div>
+    <p style="margin-top: 12px; opacity: 0.92; font-size: 14px;">
+      <b>Goal for today:</b> finish all 3 MUST DO. If you finish those, try SHOULD. If you finish those, try COULD. Type each one. Click Run. Smile. Move on.
+    </p>
+  </div>
+
+</section>
+
+<!-- ============ Section 1: Hello Button (MUST DO) ============ -->
+<section class="lab" data-section="1">
+
+  <div class="sec-head">
+    <h2 class="sec-title">1. &ldquo;Hello!&rdquo; Button</h2>
+    <span class="tier-pill must">MUST DO</span>
+  </div>
+  <div class="what-youll-make"><b>What you'll make:</b> a button that says hello when you click it.</div>
+  <div class="wow-note"><b>WOW moment:</b> your first time making a webpage <i>respond</i>. Magic.</div>
+
+  <div class="workshop">
+    <div class="pane">
+      <label>REFERENCE (cannot copy &mdash; type it)</label>
+      <pre class="code-ref">&lt;html&gt;
+&lt;body&gt;
+
+  &lt;h1&gt;My JavaScript Page&lt;/h1&gt;
+
+  &lt;button onclick=&quot;alert('Hello!')&quot;&gt;
+    Click me
+  &lt;/button&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+    <div class="pane">
+      <label>EDITOR (type your code here)</label>
+      <textarea class="code-editor" data-save="code-1" data-section="1" spellcheck="false"></textarea>
+      <button class="run-btn" onclick="runSection(1)">&#9658; Run my code</button>
+    </div>
+  </div>
+  <div style="margin-top: 14px;">
+    <label style="display: block; font-weight: 700; font-size: 11px; color: #1f3a68; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;">RESULT</label>
+    <iframe class="result" id="output-1"></iframe>
+  </div>
+
+  <div class="w3-card">
+    &#128218; <b>Want to know more?</b>
+    <a href="https://www.w3schools.com/js/js_output.asp" target="_blank">W3Schools: JS Output (alert and more)</a>
+  </div>
+
+  <div class="reflect">
+    <div class="done-row">
+      <input type="checkbox" id="done-1" data-save="done-1" onchange="updateDoneStyle(1)">
+      <label for="done-1" class="done-label">I finished this project</label>
+    </div>
+    <label style="margin-top: 10px; display: block;">What surprised you? (one sentence)</label>
+    <textarea id="reflect-1" data-save="reflect-1" placeholder="e.g., I didn't know one line of code could pop up a message"></textarea>
+  </div>
+
+</section>
+
+<!-- ============ Section 2: Magic Heading (MUST DO) ============ -->
+<section class="lab" data-section="2">
+
+  <div class="sec-head">
+    <h2 class="sec-title">2. Magic Heading</h2>
+    <span class="tier-pill must">MUST DO</span>
+  </div>
+  <div class="what-youll-make"><b>What you'll make:</b> click a button &rarr; the heading changes COLOUR.</div>
+  <div class="wow-note"><b>WOW moment:</b> you'll change the page itself, in front of your eyes. This is how Instagram, TikTok, every app works.</div>
+
+  <div class="workshop">
+    <div class="pane">
+      <label>REFERENCE (cannot copy &mdash; type it)</label>
+      <pre class="code-ref">&lt;html&gt;
+&lt;body&gt;
+
+  &lt;h1 id=&quot;title&quot;&gt;My Page&lt;/h1&gt;
+
+  &lt;button onclick=&quot;
+    document.getElementById('title').style.color = 'red';
+  &quot;&gt;Make it red&lt;/button&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+    <div class="pane">
+      <label>EDITOR (type your code here)</label>
+      <textarea class="code-editor" data-save="code-2" data-section="2" spellcheck="false"></textarea>
+      <button class="run-btn" onclick="runSection(2)">&#9658; Run my code</button>
+    </div>
+  </div>
+  <div style="margin-top: 14px;">
+    <label style="display: block; font-weight: 700; font-size: 11px; color: #1f3a68; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;">RESULT</label>
+    <iframe class="result" id="output-2"></iframe>
+  </div>
+
+  <div class="w3-card">
+    &#128218; <b>Want to know more?</b>
+    <a href="https://www.w3schools.com/js/js_htmldom_css.asp" target="_blank">W3Schools: Changing CSS with JS</a>
+  </div>
+
+  <div class="reflect">
+    <div class="done-row">
+      <input type="checkbox" id="done-2" data-save="done-2" onchange="updateDoneStyle(2)">
+      <label for="done-2" class="done-label">I finished this project</label>
+    </div>
+    <label style="margin-top: 10px; display: block;">Try changing &lsquo;red&rsquo; to another colour. Which colour did you try?</label>
+    <textarea id="reflect-2" data-save="reflect-2" placeholder="e.g., blue, lavender, hotpink"></textarea>
+  </div>
+
+</section>
+
+<!-- ============ Section 3: Greet Me By Name (MUST DO) ============ -->
+<section class="lab" data-section="3">
+
+  <div class="sec-head">
+    <h2 class="sec-title">3. Greet Me By Name</h2>
+    <span class="tier-pill must">MUST DO</span>
+  </div>
+  <div class="what-youll-make"><b>What you'll make:</b> the page asks for YOUR name, then greets you.</div>
+  <div class="wow-note"><b>WOW moment:</b> the page knows you. It REMEMBERS what you typed. That's a real program, not just a poster.</div>
+
+  <div class="workshop">
+    <div class="pane">
+      <label>REFERENCE (cannot copy &mdash; type it)</label>
+      <pre class="code-ref">&lt;html&gt;
+&lt;body&gt;
+
+  &lt;h1 id=&quot;title&quot;&gt;Click the button below&lt;/h1&gt;
+
+  &lt;button onclick=&quot;greetMe()&quot;&gt;Greet me&lt;/button&gt;
+
+  &lt;script&gt;
+    function greetMe() {
+      let name = prompt(&quot;What is your name?&quot;);
+      document.getElementById('title').innerHTML
+          = &quot;Hello &quot; + name + &quot;! &#128075;&quot;;
+    }
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+    <div class="pane">
+      <label>EDITOR (type your code here)</label>
+      <textarea class="code-editor" data-save="code-3" data-section="3" spellcheck="false"></textarea>
+      <button class="run-btn" onclick="runSection(3)">&#9658; Run my code</button>
+    </div>
+  </div>
+  <div style="margin-top: 14px;">
+    <label style="display: block; font-weight: 700; font-size: 11px; color: #1f3a68; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;">RESULT</label>
+    <iframe class="result" id="output-3"></iframe>
+  </div>
+
+  <div class="w3-card">
+    &#128218; <b>Want to know more?</b>
+    <a href="https://www.w3schools.com/js/js_functions.asp" target="_blank">W3Schools: JS Functions</a> &nbsp;&middot;&nbsp;
+    <a href="https://www.w3schools.com/js/js_variables.asp" target="_blank">W3Schools: Variables (let)</a>
+  </div>
+
+  <div class="reflect">
+    <div class="done-row">
+      <input type="checkbox" id="done-3" data-save="done-3" onchange="updateDoneStyle(3)">
+      <label for="done-3" class="done-label">I finished this project</label>
+    </div>
+    <label style="margin-top: 10px; display: block;">What's a <b>function</b>? Use your own words.</label>
+    <textarea id="reflect-3" data-save="reflect-3" placeholder="e.g., named code that runs when something calls it"></textarea>
+  </div>
+
+</section>
+
+<!-- ============ Section 4: Rainbow Page (SHOULD DO) ============ -->
+<section class="lab" data-section="4">
+
+  <div class="sec-head">
+    <h2 class="sec-title">4. Rainbow Page</h2>
+    <span class="tier-pill should">SHOULD DO</span>
+  </div>
+  <div class="what-youll-make"><b>What you'll make:</b> 5 buttons, each turns the page a different colour.</div>
+  <div class="wow-note"><b>WOW moment:</b> you'll make the WHOLE PAGE change. Test all 5 buttons in a row &mdash; rainbow time.</div>
+
+  <div class="workshop">
+    <div class="pane">
+      <label>REFERENCE (cannot copy &mdash; type it)</label>
+      <pre class="code-ref">&lt;html&gt;
+&lt;body&gt;
+
+  &lt;h1&gt;Pick a colour&lt;/h1&gt;
+
+  &lt;button onclick=&quot;document.body.style.background='lightblue'&quot;&gt;Blue&lt;/button&gt;
+  &lt;button onclick=&quot;document.body.style.background='lightgreen'&quot;&gt;Green&lt;/button&gt;
+  &lt;button onclick=&quot;document.body.style.background='pink'&quot;&gt;Pink&lt;/button&gt;
+  &lt;button onclick=&quot;document.body.style.background='gold'&quot;&gt;Gold&lt;/button&gt;
+  &lt;button onclick=&quot;document.body.style.background='white'&quot;&gt;Reset&lt;/button&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+    <div class="pane">
+      <label>EDITOR (type your code here)</label>
+      <textarea class="code-editor" data-save="code-4" data-section="4" spellcheck="false"></textarea>
+      <button class="run-btn" onclick="runSection(4)">&#9658; Run my code</button>
+    </div>
+  </div>
+  <div style="margin-top: 14px;">
+    <label style="display: block; font-weight: 700; font-size: 11px; color: #1f3a68; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;">RESULT</label>
+    <iframe class="result" id="output-4"></iframe>
+  </div>
+
+  <div class="w3-card">
+    &#128218; <b>Want to know more?</b>
+    <a href="https://www.w3schools.com/js/js_events.asp" target="_blank">W3Schools: JS Events (onclick and friends)</a>
+  </div>
+
+  <div class="reflect">
+    <div class="done-row">
+      <input type="checkbox" id="done-4" data-save="done-4" onchange="updateDoneStyle(4)">
+      <label for="done-4" class="done-label">I finished this project</label>
+    </div>
+    <label style="margin-top: 10px; display: block;">Add a 6th button with a colour you love. Which colour?</label>
+    <textarea id="reflect-4" data-save="reflect-4" placeholder="e.g., crimson, mediumseagreen, navy"></textarea>
+  </div>
+
+</section>
+
+<!-- ============ Section 5: Mini Calculator (SHOULD DO) ============ -->
+<section class="lab" data-section="5">
+
+  <div class="sec-head">
+    <h2 class="sec-title">5. Mini Calculator</h2>
+    <span class="tier-pill should">SHOULD DO</span>
+  </div>
+  <div class="what-youll-make"><b>What you'll make:</b> page asks for 2 numbers, then shows the sum.</div>
+  <div class="wow-note"><b>WOW moment:</b> real maths in your browser. <code>Number()</code> turns the typed text into a real number so <code>3 + 5</code> isn't <code>&quot;35&quot;</code>.</div>
+
+  <div class="workshop">
+    <div class="pane">
+      <label>REFERENCE (cannot copy &mdash; type it)</label>
+      <pre class="code-ref">&lt;html&gt;
+&lt;body&gt;
+
+  &lt;h1 id=&quot;result&quot;&gt;Click to start&lt;/h1&gt;
+
+  &lt;button onclick=&quot;addThem()&quot;&gt;Add 2 numbers&lt;/button&gt;
+
+  &lt;script&gt;
+    function addThem() {
+      let a = Number(prompt(&quot;First number?&quot;));
+      let b = Number(prompt(&quot;Second number?&quot;));
+      let total = a + b;
+      document.getElementById('result').innerHTML
+          = a + &quot; + &quot; + b + &quot; = &quot; + total;
+    }
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+    <div class="pane">
+      <label>EDITOR (type your code here)</label>
+      <textarea class="code-editor" data-save="code-5" data-section="5" spellcheck="false"></textarea>
+      <button class="run-btn" onclick="runSection(5)">&#9658; Run my code</button>
+    </div>
+  </div>
+  <div style="margin-top: 14px;">
+    <label style="display: block; font-weight: 700; font-size: 11px; color: #1f3a68; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;">RESULT</label>
+    <iframe class="result" id="output-5"></iframe>
+  </div>
+
+  <div class="w3-card">
+    &#128218; <b>Want to know more?</b>
+    <a href="https://www.w3schools.com/js/js_operators.asp" target="_blank">W3Schools: JS Operators (+ - * /)</a>
+  </div>
+
+  <div class="reflect">
+    <div class="done-row">
+      <input type="checkbox" id="done-5" data-save="done-5" onchange="updateDoneStyle(5)">
+      <label for="done-5" class="done-label">I finished this project</label>
+    </div>
+    <label style="margin-top: 10px; display: block;">Try removing <code>Number(...)</code>. What happens with <code>3 + 5</code>? (Try it!)</label>
+    <textarea id="reflect-5" data-save="reflect-5" placeholder="e.g., it said 35 instead of 8 because it joined the text"></textarea>
+  </div>
+
+</section>
+
+<!-- ============ Section 6: Quiz Game (COULD DO) ============ -->
+<section class="lab" data-section="6">
+
+  <div class="sec-head">
+    <h2 class="sec-title">6. Quiz Game</h2>
+    <span class="tier-pill could">COULD DO</span>
+  </div>
+  <div class="what-youll-make"><b>What you'll make:</b> asks a quiz question. Says &ldquo;Correct!&rdquo; in green or &ldquo;Try again&rdquo; in red.</div>
+  <div class="wow-note"><b>WOW moment:</b> your first piece of real LOGIC. The code makes a DECISION based on what the user types. This is how every app, game and website thinks.</div>
+
+  <div class="workshop">
+    <div class="pane">
+      <label>REFERENCE (cannot copy &mdash; type it)</label>
+      <pre class="code-ref">&lt;html&gt;
+&lt;body&gt;
+
+  &lt;h1 id=&quot;result&quot;&gt;Quiz!&lt;/h1&gt;
+
+  &lt;button onclick=&quot;quiz()&quot;&gt;Start the quiz&lt;/button&gt;
+
+  &lt;script&gt;
+    function quiz() {
+      let answer = prompt(&quot;What is 2 + 2?&quot;);
+      let result = document.getElementById('result');
+
+      if (answer == &quot;4&quot;) {
+        result.innerHTML = &quot;Correct! &#127881;&quot;;
+        result.style.color = &quot;green&quot;;
+      } else {
+        result.innerHTML = &quot;Try again&quot;;
+        result.style.color = &quot;red&quot;;
+      }
+    }
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+    <div class="pane">
+      <label>EDITOR (type your code here)</label>
+      <textarea class="code-editor" data-save="code-6" data-section="6" spellcheck="false"></textarea>
+      <button class="run-btn" onclick="runSection(6)">&#9658; Run my code</button>
+    </div>
+  </div>
+  <div style="margin-top: 14px;">
+    <label style="display: block; font-weight: 700; font-size: 11px; color: #1f3a68; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;">RESULT</label>
+    <iframe class="result" id="output-6"></iframe>
+  </div>
+
+  <div class="w3-card">
+    &#128218; <b>Want to know more?</b>
+    <a href="https://www.w3schools.com/js/js_if_else.asp" target="_blank">W3Schools: JS If/Else (logic)</a> &nbsp;&middot;&nbsp;
+    <a href="https://www.w3schools.com/js/js_comparisons.asp" target="_blank">W3Schools: Comparisons (==, &gt;, &lt;)</a>
+  </div>
+
+  <div class="reflect">
+    <div class="done-row">
+      <input type="checkbox" id="done-6" data-save="done-6" onchange="updateDoneStyle(6)">
+      <label for="done-6" class="done-label">I finished this project</label>
+    </div>
+    <label style="margin-top: 10px; display: block;">Now change the question to one of your own. What question did you write?</label>
+    <textarea id="reflect-6" data-save="reflect-6" placeholder="e.g., Who is the best NBA player? answer LeBron"></textarea>
+  </div>
+
+</section>
+
+<!-- ============ Section 7: Quick Quiz ============ -->
+<section class="lab" data-section="7">
+
+  <div class="sec-head">
+    <h2 class="sec-title">7. Quick Quiz</h2>
+    <span class="tier-pill quiz">WRAP UP</span>
+  </div>
+
+  <div class="quiz-banner">
+    <div class="quiz-banner-text">
+      <b>Show what you know.</b> 8 quick questions on the JavaScript you just learned. Click an answer for instant feedback. You can change your answer.
+    </div>
+    <div id="quizScore">Score: 0 / 8</div>
+  </div>
+
+  <div class="quiz-q" id="q1">
+    <p class="q-text">1. What does <code>alert("Hello")</code> do?</p>
+    <input type="hidden" id="q1-answer" data-save="q1-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(1,'A',this)">A. Prints &ldquo;Hello&rdquo; to the console</button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(1,'B',this)">B. Pops up a message box</button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(1,'C',this)">C. Saves &ldquo;Hello&rdquo; to a file</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(1,'D',this)">D. Sends &ldquo;Hello&rdquo; to a server</button>
+    </div>
+    <div class="q-feedback" id="q1-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q2">
+    <p class="q-text">2. <code>let name = prompt("Your name?");</code> &mdash; if the user types <b>Maya</b>, what is <code>name</code>?</p>
+    <input type="hidden" id="q2-answer" data-save="q2-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(2,'A',this)">A. <code>"prompt"</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(2,'B',this)">B. <code>"Maya"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(2,'C',this)">C. Nothing</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(2,'D',this)">D. <code>"Your name?"</code></button>
+    </div>
+    <div class="q-feedback" id="q2-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q3">
+    <p class="q-text">3. Which is the CORRECT way to check if <code>x</code> equals 5?</p>
+    <input type="hidden" id="q3-answer" data-save="q3-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(3,'A',this)">A. <code>if (x = 5)</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(3,'B',this)">B. <code>if (x == 5)</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(3,'C',this)">C. <code>if x equals 5</code></button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(3,'D',this)">D. <code>if (x &gt;&lt; 5)</code></button>
+    </div>
+    <div class="q-feedback" id="q3-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q4">
+    <p class="q-text">4. What does <code>document.getElementById("title")</code> do?</p>
+    <input type="hidden" id="q4-answer" data-save="q4-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(4,'A',this)">A. Creates a new heading called &ldquo;title&rdquo;</button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(4,'B',this)">B. Finds the element with <code>id="title"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(4,'C',this)">C. Deletes the title</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(4,'D',this)">D. Prints the page title to the screen</button>
+    </div>
+    <div class="q-feedback" id="q4-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q5">
+    <p class="q-text">5. In the editor, you type <code>3 + 5</code> (no quotes). What does JavaScript give you?</p>
+    <input type="hidden" id="q5-answer" data-save="q5-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(5,'A',this)">A. <code>8</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(5,'B',this)">B. <code>"35"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(5,'C',this)">C. Error</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(5,'D',this)">D. <code>53</code></button>
+    </div>
+    <div class="q-feedback" id="q5-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q6">
+    <p class="q-text">6. In the editor, you type <code>"3" + "5"</code> (WITH quotes). What now?</p>
+    <input type="hidden" id="q6-answer" data-save="q6-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(6,'A',this)">A. <code>8</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(6,'B',this)">B. <code>"35"</code> (the text 35)</button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(6,'C',this)">C. Error</button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(6,'D',this)">D. <code>15</code></button>
+    </div>
+    <div class="q-feedback" id="q6-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q7">
+    <p class="q-text">7. To MAKE a function called <code>sayHi</code>, which line is right?</p>
+    <input type="hidden" id="q7-answer" data-save="q7-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(7,'A',this)">A. <code>function sayHi() { ... }</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(7,'B',this)">B. <code>sayHi function() { ... }</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(7,'C',this)">C. <code>function() sayHi { ... }</code></button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(7,'D',this)">D. <code>let function = sayHi</code></button>
+    </div>
+    <div class="q-feedback" id="q7-feedback"></div>
+  </div>
+
+  <div class="quiz-q" id="q8">
+    <p class="q-text">8. To change a heading's text from JavaScript, you write:</p>
+    <input type="hidden" id="q8-answer" data-save="q8-answer">
+    <div class="q-options">
+      <button class="quiz-opt" data-letter="A" onclick="pickAnswer(8,'A',this)">A. <code>document.getElementById("title").innerHTML = "New"</code></button>
+      <button class="quiz-opt" data-letter="B" onclick="pickAnswer(8,'B',this)">B. <code>document.title.innerHTML = "New"</code></button>
+      <button class="quiz-opt" data-letter="C" onclick="pickAnswer(8,'C',this)">C. <code>change("title", "New")</code></button>
+      <button class="quiz-opt" data-letter="D" onclick="pickAnswer(8,'D',this)">D. <code>title.text = "New"</code></button>
+    </div>
+    <div class="q-feedback" id="q8-feedback"></div>
+  </div>
+
+</section>
+
+</main>
+
+<div class="section-nav" style="max-width: 1200px; margin: 0 auto 18px auto;">
+  <button class="nav-btn btn-prev" onclick="prevSection()">&larr; Previous</button>
+  <span class="section-position">Section <b id="curNum">0</b> of <b>7</b></span>
+  <button class="nav-btn btn-next" onclick="nextSection()">Next &rarr;</button>
+</div>
+
+<footer>
+  Year 9 IST &middot; 9 COTYB &amp; 9 COTYC &middot; Term 2 2026 &middot;
+  Your work auto-saves. Click <b>Submit My Work</b> to hand it in.
+</footer>
+
+<div class="modal-back" id="submitModal">
+  <div class="modal">
+    <h2>&#10004; Submitted!</h2>
+    <p>Your file has downloaded. Upload it to Google Classroom now.</p>
+    <p style="color: #6b7280; font-size: 13px;">You can keep working &mdash; submit again at any time.</p>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+<script>
+/* ===========================================================
+   STATE: gather, save, load, restore (round-trip)
+   =========================================================== */
+const STORAGE_KEY = "ksw-meetjs-v1";
+const TOTAL_SECTIONS = 7;  // 0 is hero, 1-6 are projects, 7 is quiz
+
+/* ---------- Quiz answers + explanations ---------- */
+const QUIZ_ANSWERS = {
+  1: "B",  // alert pops up a box
+  2: "B",  // prompt returns what user typed
+  3: "B",  // == compares
+  4: "B",  // getElementById finds by id
+  5: "A",  // 3 + 5 = 8
+  6: "B",  // "3" + "5" = "35"
+  7: "A",  // function sayHi() { ... }
+  8: "A",  // getElementById().innerHTML
+};
+const QUIZ_EXPLAIN = {
+  1: 'alert() shows a popup dialog. console.log() prints to the console; they are different.',
+  2: 'prompt() returns whatever the user typed. The text inside the parentheses is just the question.',
+  3: 'A single = is ASSIGN. Use == (or ===) to COMPARE.',
+  4: 'It looks UP an existing element by its id attribute - it does not create or delete anything.',
+  5: 'Two numbers + each other = math. So 3 + 5 is 8.',
+  6: 'When BOTH sides are strings (in quotes), + joins them. "3" + "5" becomes "35".',
+  7: 'The pattern is: function (keyword) -> name -> () -> {body}.',
+  8: 'getElementById finds the element; .innerHTML changes its text. This is the standard pattern.',
+};
+
+function gatherState() {
+  const state = {
+    studentName: document.getElementById("studentName").value || "",
+    studentClass: document.getElementById("studentClass").value || "",
+    studentDate: document.getElementById("studentDate").value || "",
+    timestamp: new Date().toISOString(),
+    fields: {}
+  };
+  document.querySelectorAll("[data-save]").forEach(el => {
+    const key = el.getAttribute("data-save");
+    state.fields[key] = el.type === "checkbox" ? el.checked : el.value;
+  });
+  return state;
+}
+
+let saveTimer = null;
+function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 400); }
+function saveNow() {
+  try {
+    const state = gatherState();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2,"0");
+    const mm = String(now.getMinutes()).padStart(2,"0");
+    const ss = String(now.getSeconds()).padStart(2,"0");
+    const el = document.getElementById("saveStatus");
+    if (el && !el.classList.contains("is-toast-success")
+           && !el.classList.contains("is-toast-error")) {
+      el.textContent = "Saved at " + hh + ":" + mm + ":" + ss;
+    }
+  } catch(e) {
+    const el = document.getElementById("saveStatus");
+    if (el) el.textContent = "Save failed (storage full)";
+  }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.studentName) document.getElementById("studentName").value = data.studentName;
+    if (data.studentClass) document.getElementById("studentClass").value = data.studentClass;
+    if (data.studentDate) document.getElementById("studentDate").value = data.studentDate;
+    if (data.fields) {
+      Object.keys(data.fields).forEach(key => {
+        const el = document.querySelector('[data-save="' + key + '"]');
+        if (!el) return;
+        if (el.type === "checkbox") el.checked = !!data.fields[key];
+        else el.value = data.fields[key] == null ? "" : data.fields[key];
+      });
+    }
+    for (let i = 1; i <= TOTAL_SECTIONS; i++) updateDoneStyle(i);
+    rehydrateQuiz();
+    document.getElementById("saveStatus").textContent = "Loaded from last save";
+  } catch(e) {}
+}
+
+/* ===========================================================
+   RUN: render the editor's code in the iframe
+   =========================================================== */
+function runSection(n) {
+  const editor = document.querySelector('.code-editor[data-section="' + n + '"]');
+  const out = document.getElementById("output-" + n);
+  out.srcdoc = editor.value;
+  saveNow();
+}
+
+/* ===========================================================
+   QUIZ: pickAnswer / updateQuizScore / rehydrateQuiz
+   =========================================================== */
+function pickAnswer(n, choice, btn) {
+  // Save the chosen letter into the hidden input (data-save picks it up)
+  const hidden = document.getElementById("q" + n + "-answer");
+  if (hidden) hidden.value = choice;
+  // Mark all option buttons for this question
+  const qBox = document.getElementById("q" + n);
+  if (!qBox) return;
+  qBox.querySelectorAll(".quiz-opt").forEach(b => {
+    b.classList.remove("selected", "correct", "wrong");
+  });
+  btn.classList.add("selected");
+  // Show feedback
+  const fb = document.getElementById("q" + n + "-feedback");
+  const correct = (choice === QUIZ_ANSWERS[n]);
+  if (correct) {
+    btn.classList.add("correct");
+    fb.className = "q-feedback correct";
+    fb.innerHTML = "<b>&#x2713; Correct!</b> " + QUIZ_EXPLAIN[n];
+  } else {
+    btn.classList.add("wrong");
+    fb.className = "q-feedback wrong";
+    fb.innerHTML = "<b>&#x2717; Not quite.</b> " + QUIZ_EXPLAIN[n] +
+                   ' (The right answer is <b>' + QUIZ_ANSWERS[n] + '</b>.)';
+  }
+  updateQuizScore();
+  saveSoon();
+}
+
+function updateQuizScore() {
+  let correct = 0, answered = 0;
+  for (let n = 1; n <= 8; n++) {
+    const el = document.getElementById("q" + n + "-answer");
+    if (!el) continue;
+    const v = el.value;
+    if (v) {
+      answered++;
+      if (v === QUIZ_ANSWERS[n]) correct++;
+    }
+  }
+  const el = document.getElementById("quizScore");
+  if (!el) return;
+  el.textContent = "Score: " + correct + " / 8" +
+                   (answered === 8 ? "  -  finished" : "  (" + answered + " answered)");
+  el.classList.toggle("perfect", correct === 8);
+}
+
+function rehydrateQuiz() {
+  // Called after loadState / restoreState - replay the saved answers visually.
+  for (let n = 1; n <= 8; n++) {
+    const hidden = document.getElementById("q" + n + "-answer");
+    if (!hidden || !hidden.value) continue;
+    const btn = document.querySelector(
+      '#q' + n + ' .quiz-opt[data-letter="' + hidden.value + '"]');
+    if (btn) pickAnswer(n, hidden.value, btn);
+  }
+  updateQuizScore();
+}
+
+/* ===========================================================
+   SECTION NAVIGATION (one at a time)
+   =========================================================== */
+function showSection(n) {
+  n = parseInt(n);
+  if (isNaN(n) || n < 0 || n > TOTAL_SECTIONS) return;
+  document.querySelectorAll("section.lab").forEach(s => {
+    s.classList.toggle("is-active", parseInt(s.dataset.section) === n);
+  });
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    b.classList.toggle("active", parseInt(b.dataset.section) === n);
+  });
+  document.getElementById("curNum").textContent = n;
+  document.querySelector(".btn-prev").disabled = (n <= 0);
+  document.querySelector(".btn-next").disabled = (n >= TOTAL_SECTIONS);
+  history.replaceState(null, "", "#section-" + n);
+  try { localStorage.setItem(STORAGE_KEY + ":lastSection", n); } catch(e){}
+  window.scrollTo({top: 0, behavior: "instant"});
+}
+function prevSection() {
+  const cur = parseInt(document.querySelector(".tab-btn.active").dataset.section);
+  showSection(cur - 1);
+}
+function nextSection() {
+  const cur = parseInt(document.querySelector(".tab-btn.active").dataset.section);
+  showSection(cur + 1);
+}
+document.addEventListener("keydown", function(e) {
+  if (e.target && (e.target.tagName === "TEXTAREA"
+      || e.target.tagName === "INPUT"
+      || e.target.tagName === "SELECT"
+      || e.target.isContentEditable)) return;
+  if (e.key === "ArrowLeft") prevSection();
+  if (e.key === "ArrowRight") nextSection();
+});
+
+/* ===========================================================
+   DONE STYLING + RESET
+   =========================================================== */
+function updateDoneStyle(n) {
+  const cb = document.getElementById("done-" + n);
+  const sec = document.querySelector('section.lab[data-section="' + n + '"]');
+  if (!cb || !sec) return;
+  sec.classList.toggle("is-done", cb.checked);
+}
+function confirmReset() {
+  if (!confirm("This will erase ALL your work in this worksheet. Are you sure?")) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  location.reload();
+}
+
+/* ===========================================================
+   SUBMIT: build a self-contained submission with embedded JSON
+   =========================================================== */
+function escapeHTML(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function buildSubmissionHTML(state) {
+  const name = state.studentName || "Unnamed";
+  const cls  = state.studentClass || "(class missing)";
+  const date = state.studentDate || new Date().toISOString().slice(0,10);
+  const today = new Date().toLocaleString("en-AU");
+  const TITLES = {
+    1: "1. “Hello!” Button",
+    2: "2. Magic Heading",
+    3: "3. Greet Me By Name",
+    4: "4. Rainbow Page",
+    5: "5. Mini Calculator",
+    6: "6. Quiz Game"
+  };
+  const TIERS = {1:"must",2:"must",3:"must",4:"should",5:"should",6:"could"};
+  let body = "";
+  // Projects 1-6 (NOT 7 - that's the wrap-up quiz, rendered separately below)
+  for (let i = 1; i <= 6; i++) {
+    const code = state.fields["code-"+i] || "";
+    const reflect = state.fields["reflect-"+i] || "";
+    const done = state.fields["done-"+i] ? "Yes" : "Not yet";
+    const tier = TIERS[i];
+    body += '<section class="seg t-' + tier + '">';
+    body += '<h2><span class="num">' + i + '</span> ' + escapeHTML(TITLES[i]) +
+            ' <span class="rib ' + tier + '">' + tier.toUpperCase() + '</span></h2>';
+    body += '<p class="meta"><b>Finished:</b> ' + done + '</p>';
+    body += '<h3>My code</h3><pre class="code">' + escapeHTML(code) + '</pre>';
+    body += '<h3>My reflection</h3><div class="learn">' + escapeHTML(reflect) + '</div>';
+    if (code.trim()) {
+      body += '<h3>How it ran (preview)</h3>';
+      body += '<iframe class="preview" sandbox srcdoc="' + escapeHTML(code) + '"></iframe>';
+    }
+    body += '<div class="teacher-box"><b>Teacher feedback:</b><br><br><br><br></div>';
+    body += '</section>';
+  }
+
+  // ---- Wrap-up quiz results ----
+  const QTEXT = {
+    1: 'What does alert("Hello") do?',
+    2: 'After let name = prompt("Your name?"), if user types Maya, what is name?',
+    3: 'Which is the CORRECT way to check if x equals 5?',
+    4: 'What does document.getElementById("title") do?',
+    5: 'What is 3 + 5 ?',
+    6: 'What is "3" + "5" (with quotes)?',
+    7: 'To make a function called sayHi, the correct line is:',
+    8: 'To change a heading’s text from JavaScript:'
+  };
+  let quizCorrect = 0, quizAnswered = 0;
+  let quizRows = "";
+  for (let qn = 1; qn <= 8; qn++) {
+    const chosen = state.fields["q" + qn + "-answer"] || "";
+    const right = QUIZ_ANSWERS[qn];
+    let status = chosen === "" ? "&mdash; not answered &mdash;"
+                : (chosen === right ? "&#x2713; correct"
+                                    : "&#x2717; chose " + chosen + ", correct = " + right);
+    if (chosen !== "") {
+      quizAnswered++;
+      if (chosen === right) quizCorrect++;
+    }
+    quizRows += '<tr><td style="padding:6px 10px;border:1px solid #e5e7eb;">'
+              + qn + '. ' + escapeHTML(QTEXT[qn]) + '</td>'
+              + '<td style="padding:6px 10px;border:1px solid #e5e7eb;width:30%;">'
+              + status + '</td></tr>';
+  }
+  body += '<section class="seg" style="border-left-color:#f59e0b;">'
+        + '<h2>7. Wrap-up Quiz <span class="rib" style="background:#f59e0b;">QUIZ</span></h2>'
+        + '<p class="meta"><b>Score:</b> ' + quizCorrect + ' / 8'
+        + ' &nbsp; <b>Answered:</b> ' + quizAnswered + ' / 8</p>'
+        + '<table style="width:100%;border-collapse:collapse;font-size:13px;">'
+        + quizRows + '</table>'
+        + '<div class="teacher-box"><b>Teacher feedback on quiz:</b><br><br><br></div>'
+        + '</section>';
+  const saveBlob = JSON.stringify({
+    version: 1,
+    savedAt: new Date().toISOString(),
+    studentName: state.studentName || "",
+    studentClass: state.studentClass || "",
+    studentDate: state.studentDate || "",
+    fields: state.fields || {}
+  }).replace(/<\/script/gi, "<\\/script");
+  return `<!DOCTYPE html>
+<html lang="en-AU"><head><meta charset="UTF-8">
+<title>${escapeHTML(name)} - Meet JavaScript Submission</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto;
+         padding: 20px; color: #1f2937; }
+  header { background: linear-gradient(135deg,#1f3a68,#14b8a6); color: white;
+           padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+  header h1 { margin: 0 0 8px 0; }
+  section.seg { background: white; border: 1px solid #e5e7eb;
+                border-radius: 10px; padding: 16px 20px; margin-bottom: 16px;
+                border-left: 8px solid #1f3a68; page-break-inside: avoid; }
+  section.t-must   { border-left-color: #10b981; }
+  section.t-could  { border-left-color: #7c3aed; }
+  section.t-should { border-left-color: #1f3a68; }
+  section.seg h2 { margin: 0 0 6px 0; color: #1f3a68; font-size: 18px; }
+  section.seg h3 { margin: 14px 0 4px 0; font-size: 13px;
+                   text-transform: uppercase; letter-spacing: 1px;
+                   color: #6b7280; }
+  .num { display: inline-block; width: 28px; height: 28px; line-height: 28px;
+         text-align: center; background: #1f3a68; color: white;
+         border-radius: 50%; font-size: 14px; margin-right: 6px; }
+  .rib { float: right; padding: 3px 10px; border-radius: 12px;
+         color: white; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+  .rib.must { background: #10b981; }
+  .rib.could { background: #7c3aed; }
+  .rib.should { background: #1f3a68; }
+  .meta { font-size: 13px; color: #6b7280; margin: 0; }
+  .code { background: #0d1117; color: #e0f7f5; padding: 10px;
+          border-radius: 6px; font-family: Consolas, monospace;
+          font-size: 12px; white-space: pre; overflow: auto; }
+  .learn { background: #f9fafb; border: 1px solid #e5e7eb;
+           border-radius: 6px; padding: 8px 12px; font-size: 14px; min-height: 28px; }
+  .preview { width: 100%; height: 220px; border: 1px solid #ccc;
+             border-radius: 6px; background: white; }
+  .teacher-box { background: #fffaf0; border: 2px dashed #f59e0b;
+                 border-radius: 6px; padding: 10px 14px; margin-top: 12px;
+                 font-size: 14px; min-height: 80px; }
+  footer { text-align: center; font-size: 12px; color: #6b7280; margin-top: 20px; }
+  @media print { .preview { display: none; } section.seg { break-inside: avoid; } }
+</style></head><body>
+  <header>
+    <h1>Meet JavaScript &mdash; Submission</h1>
+    <p><b>Name:</b> ${escapeHTML(name)}</p>
+    <p><b>Class:</b> ${escapeHTML(cls)}</p>
+    <p><b>Date completed:</b> ${escapeHTML(date)}</p>
+    <p><b>Submitted at:</b> ${escapeHTML(today)}</p>
+  </header>
+  ${body}
+  <footer>9 COTYB &amp; 9 COTYC &middot; Year 9 Computing &middot; Term 2 2026</footer>
+  <script type="application/json" id="kw-saved-state">${saveBlob}<\/script>
+</body></html>`;
+}
+
+function submitWork() {
+  saveNow();
+  const state = gatherState();
+  const name = (state.studentName || "Student").trim();
+  if (!name || name === "Student") {
+    if (!confirm("You haven't typed your name at the top. Submit anyway?")) return;
+  }
+  const html = buildSubmissionHTML(state);
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const safeName = name.replace(/[^a-zA-Z0-9_-]/g, "_") || "Student";
+  const dateStr = new Date().toISOString().slice(0, 10);
+  a.download = safeName + "_Y9_MeetJS_" + dateStr + ".html";
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  document.getElementById("submitModal").classList.add("is-open");
+}
+
+function closeModal() {
+  document.getElementById("submitModal").classList.remove("is-open");
+}
+
+/* ===========================================================
+   LOAD MY SAVED FILE (round-trip resume)
+   =========================================================== */
+let __toastTimer = null;
+function showToast(message, kind) {
+  const el = document.getElementById("saveStatus");
+  if (!el) return;
+  el.textContent = message;
+  el.classList.remove("is-toast-success", "is-toast-error");
+  el.classList.add("is-toast-" + kind);
+  if (__toastTimer) clearTimeout(__toastTimer);
+  __toastTimer = setTimeout(function() {
+    el.classList.remove("is-toast-success", "is-toast-error");
+    try { saveNow(); } catch(e){}
+  }, 4000);
+}
+
+function checkUnsavedBeforeLoad() {
+  const s = gatherState();
+  let hasWork = !!(s.studentName || s.studentClass);
+  if (!hasWork) {
+    for (const k in s.fields) {
+      const v = s.fields[k];
+      if (v === true || (typeof v === "string" && v.trim() !== "")) {
+        hasWork = true; break;
+      }
+    }
+  }
+  if (!hasWork) return true;
+  return confirm("You have unsaved work. Loading a file will replace it. Continue?");
+}
+
+function restoreState(state) {
+  document.getElementById("studentName").value = state.studentName || "";
+  document.getElementById("studentClass").value = state.studentClass || "";
+  document.getElementById("studentDate").value = state.studentDate || "";
+  let count = 0;
+  for (const key in state.fields) {
+    const el = document.querySelector('[data-save="' + key + '"]');
+    if (!el) continue;
+    const v = state.fields[key];
+    if (el.type === "checkbox") {
+      el.checked = !!v;
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    } else {
+      el.value = v == null ? "" : String(v);
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+    count++;
+  }
+  for (let i = 1; i <= TOTAL_SECTIONS; i++) updateDoneStyle(i);
+  rehydrateQuiz();
+  try { saveNow(); } catch(e){}
+  return count;
+}
+
+function loadFromFile(file) {
+  if (!file) return;
+  if (!checkUnsavedBeforeLoad()) {
+    document.getElementById("loadFile").value = "";
+    return;
+  }
+  const reader = new FileReader();
+  reader.onerror = function() { showToast("Could not read that file.", "error"); };
+  reader.onload = function(ev) {
+    try {
+      const doc = new DOMParser().parseFromString(String(ev.target.result || ""), "text/html");
+      const script = doc.getElementById("kw-saved-state");
+      if (!script) {
+        showToast("This is not a saved Meet JavaScript file.", "error");
+        return;
+      }
+      const parsed = JSON.parse(script.textContent || "{}");
+      if (!parsed || parsed.version !== 1 || !parsed.fields) {
+        showToast("Save file is unrecognised. Ask your teacher.", "error");
+        return;
+      }
+      const n = restoreState(parsed);
+      showToast("Work loaded ✓ (" + n + " fields restored)", "success");
+    } catch(e) {
+      console.error("loadFromFile error:", e);
+      showToast("Something went wrong loading that file.", "error");
+    } finally {
+      document.getElementById("loadFile").value = "";
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ===========================================================
+   INIT
+   =========================================================== */
+document.addEventListener("DOMContentLoaded", function() {
+  loadState();
+  const dateEl = document.getElementById("studentDate");
+  if (!dateEl.value) {
+    const t = new Date();
+    dateEl.value = t.getFullYear() + "-" +
+                   String(t.getMonth()+1).padStart(2,"0") + "-" +
+                   String(t.getDate()).padStart(2,"0");
+  }
+  // Auto-save on every input (excluding file input)
+  document.querySelectorAll("input, textarea, select").forEach(el => {
+    if (el.type === "file") return;
+    el.addEventListener("input", saveSoon);
+    el.addEventListener("change", saveSoon);
+  });
+  // Tab key in editor = 4 spaces, not focus shift
+  document.querySelectorAll(".code-editor").forEach(ta => {
+    ta.addEventListener("keydown", function(e) {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        const s = this.selectionStart, en = this.selectionEnd;
+        this.value = this.value.substring(0, s) + "    " + this.value.substring(en);
+        this.selectionStart = this.selectionEnd = s + 4;
+      }
+    });
+  });
+  // Modal click-outside-to-close
+  document.getElementById("submitModal").addEventListener("click", function(e) {
+    if (e.target === this) closeModal();
+  });
+  // Reference uncopyable - block context menu + dragstart
+  document.querySelectorAll(".code-ref").forEach(el => {
+    el.setAttribute("tabindex", "-1");
+    el.setAttribute("draggable", "false");
+    el.addEventListener("copy",        e => e.preventDefault());
+    el.addEventListener("cut",         e => e.preventDefault());
+    el.addEventListener("contextmenu", e => e.preventDefault());
+    el.addEventListener("dragstart",   e => e.preventDefault());
+    el.addEventListener("selectstart", e => e.preventDefault());
+  });
+  // Document-level safety net for select-all-then-copy
+  document.addEventListener("copy", function(e) {
+    const sel = window.getSelection();
+    if (!sel || !sel.toString()) return;
+    for (let i = 0; i < sel.rangeCount; i++) {
+      const range = sel.getRangeAt(i);
+      let node = range.commonAncestorContainer;
+      if (node.nodeType === 3) node = node.parentNode;
+      if (node && node.closest && node.closest(".code-ref")) {
+        e.preventDefault();
+        if (e.clipboardData) e.clipboardData.setData("text/plain", "");
+        return;
+      }
+    }
+  });
+  // Start at last-seen section, or 0
+  let start = 0;
+  const m = window.location.hash.match(/^#section-(\d+)$/);
+  if (m) start = parseInt(m[1]);
+  else {
+    try {
+      const v = parseInt(localStorage.getItem(STORAGE_KEY + ":lastSection"));
+      if (!isNaN(v)) start = v;
+    } catch(e){}
+  }
+  showSection(start);
+});
+</script>
+</body>
+</html>
