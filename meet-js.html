@@ -2295,8 +2295,38 @@ function runSection(num, silent) {
   if (!/<!DOCTYPE/i.test(code)) {
     code = '<!DOCTYPE html>\n' + code;
   }
-  iframe.srcdoc = code;
+  // Mirror alert()/prompt() output INTO the result pane, so students can SEE
+  // it (alert is a popup that normally leaves the pane blank). On a real Run we
+  // also show the native popup; on silent reloads (page load) we only paint, so
+  // a page full of saved alerts doesn't pop up all at once.
+  iframe.srcdoc = injectOutputShim(code, !silent);
   if (!silent) saveSoon();
+}
+
+/* ----------------------------------------------------------------
+   injectOutputShim - adds a tiny script that copies alert()/prompt()
+   text into the preview page so it is VISIBLE in the result pane.
+   This is render-only: it never changes saved code or stored data.
+   ---------------------------------------------------------------- */
+function injectOutputShim(code, showPopup) {
+  const shim =
+    '<script>(function(SHOW){' +
+    'function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}' +
+    'function paint(kind,msg){var d=document.createElement("div");' +
+    'd.style.cssText="font-family:Calibri,Arial,sans-serif;margin:10px;padding:11px 14px;border-radius:8px;border:2px solid #f59e0b;background:#fef3c7;color:#78350f;font-size:15px;line-height:1.4;";' +
+    'd.innerHTML="<b>"+kind+"</b> "+esc(msg);(document.body||document.documentElement).appendChild(d);}' +
+    'var ra=window.alert;window.alert=function(m){paint("Popup says:",m);if(SHOW){try{ra.call(window,m);}catch(e){}}};' +
+    'var rp=window.prompt;window.prompt=function(q,d){if(SHOW){var v=rp.call(window,q,d);paint("You typed:",v===null?"(cancelled)":v);return v;}paint("Asks:",q);return d!=null?d:"";};' +
+    '})(' + (showPopup ? 'true' : 'false') + ');<\/script>';
+  // The shim must run BEFORE the student's own <script>. Insert just after the
+  // opening <body> tag (where students put their script); fall back gracefully.
+  if (/<body[^>]*>/i.test(code)) {
+    return code.replace(/(<body[^>]*>)/i, '$1\n' + shim);
+  }
+  if (/<html[^>]*>/i.test(code)) {
+    return code.replace(/(<html[^>]*>)/i, '$1\n' + shim);
+  }
+  return shim + '\n' + code;
 }
 
 function clearEditor(num) {
