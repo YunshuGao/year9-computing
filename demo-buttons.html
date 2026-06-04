@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Demo - Buttons that change the page (9 COTYC)</title>
+<style>
+  :root{
+    --indigo:#3f3399; --slate:#0f172a; --amber:#f59e0b; --amber-br:#f7df1e;
+    --green:#059669; --green-bg:#ecfdf5; --grey:#6b7280; --line:#e5e7eb;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; font-family:"Segoe UI",Calibri,Arial,sans-serif; color:#111827;
+    background:radial-gradient(1200px 600px at 80% -10%, #fef3c7 0%, #f8fafc 45%);
+    padding:26px 30px 22px;
+  }
+  h1.page-title{margin:0; color:var(--indigo); font-size:34px;}
+  .sub{margin:4px 0 18px; color:var(--grey); font-size:17px;}
+  .sub b{color:var(--indigo);}
+
+  .stage{display:grid; grid-template-columns:1.05fr 0.95fr; gap:26px; align-items:start;}
+  @media (max-width:1100px){ .stage{grid-template-columns:1fr;} }
+
+  /* ---- faux browser holding the live page ---- */
+  .browser{border:1px solid var(--line); border-radius:14px; overflow:hidden;
+           box-shadow:0 10px 30px rgba(2,6,23,.10); background:#fff;}
+  .bar{display:flex; align-items:center; gap:10px; padding:11px 14px;
+       background:#f1f5f9; border-bottom:1px solid var(--line);}
+  .dot{width:13px; height:13px; border-radius:50%;}
+  .dot.r{background:#ef4444;} .dot.y{background:#eab308;} .dot.g{background:#22c55e;}
+  .url{flex:1; margin-left:8px; background:#fff; border:1px solid var(--line);
+       border-radius:8px; padding:6px 12px; color:#475569; font-size:14px;
+       font-family:Consolas,monospace;}
+  .reload-ico{font-size:18px; color:#94a3b8;}
+
+  .page{padding:40px 38px 30px; text-align:center; position:relative; min-height:430px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  .loaded{position:absolute; top:14px; left:18px; font-size:13.5px; color:var(--grey);
+          background:#f8fafc; border:1px dashed #cbd5e1; padding:5px 10px; border-radius:8px;}
+  .loaded b{color:#0f172a; font-variant-numeric:tabular-nums;}
+
+  #demoTitle{font-size:92px; line-height:1.05; margin:6px 0 30px; font-weight:800;
+             color:#111827; transition:color .2s;}
+  #demoTitle.changed{color:var(--green);}
+  #demoTitle.pop{animation:pop .5s ease;}
+  @keyframes pop{0%{transform:scale(1)} 35%{transform:scale(1.22)} 100%{transform:scale(1)}}
+
+  .btn-row{display:flex; gap:14px;}
+  .change-btn{font-size:24px; font-weight:800; padding:16px 34px; border:0; cursor:pointer;
+              border-radius:12px; background:var(--amber-br); color:#422006;
+              box-shadow:0 4px 0 #d4a000; transition:transform .06s;}
+  .change-btn:active{transform:translateY(3px); box-shadow:0 1px 0 #d4a000;}
+  .reset-btn{font-size:16px; font-weight:700; padding:14px 20px; border:2px solid var(--line);
+             cursor:pointer; border-radius:12px; background:#fff; color:#475569;}
+  .reset-btn:hover{background:#f8fafc;}
+
+  .counter{margin-top:26px; font-size:15px; color:var(--grey);}
+  .counter b{color:#0f172a; font-variant-numeric:tabular-nums;}
+  .reload-note{margin-top:4px; font-size:13px; color:#94a3b8;}
+
+  /* ---- the code panel ---- */
+  .code-wrap{background:var(--slate); border-radius:14px; padding:18px 20px 22px;
+             box-shadow:0 10px 30px rgba(2,6,23,.18);}
+  .code-wrap h2{margin:0 0 12px; color:var(--amber-br); font-size:18px; letter-spacing:.3px;}
+  pre.code{margin:0; font-family:Consolas,"Courier New",monospace; font-size:17.5px;
+           line-height:1.7; color:#e2e8f0; white-space:pre; overflow-x:auto;}
+  .code .tag{color:#93c5fd;} .code .kw{color:#f0abfc;} .code .str{color:#86efac;}
+  .code .fn{color:#fde68a;} .code .com{color:#64748b;}
+  .code .runline{display:block; border-radius:6px; padding:0 6px; margin:0 -6px;
+                 transition:background .15s, box-shadow .15s;}
+  .code .runline.fire{background:rgba(245,158,11,.30); box-shadow:inset 3px 0 0 var(--amber);}
+  .arrow{color:var(--amber); opacity:0; transition:opacity .15s;}
+  .arrow.show{opacity:1;}
+  .code-hint{margin-top:14px; color:#94a3b8; font-size:14px;}
+  .code-hint b{color:#e2e8f0;}
+
+  /* ---- toast ---- */
+  #toast{position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+         background:var(--green); color:#fff; font-weight:800; font-size:18px;
+         padding:14px 24px; border-radius:12px; box-shadow:0 8px 24px rgba(5,150,105,.4);
+         opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;}
+  #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  .footer{margin-top:18px; color:#94a3b8; font-size:13px;}
+</style>
+</head>
+<body>
+
+  <h1 class="page-title">Buttons that change the page &mdash; live demo</h1>
+  <p class="sub">Click <b>Change it</b> and watch the heading change &mdash; <b>without the page reloading</b>.
+     That's JavaScript.</p>
+
+  <div class="stage">
+
+    <!-- LEFT: the live, clickable "web page" -->
+    <div class="browser">
+      <div class="bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="url">file:///my-web-page.html</span>
+        <span class="reload-ico" title="reload">&#x21bb;</span>
+      </div>
+      <div class="page">
+        <div class="loaded">&#9201; page loaded at <b id="loadedAt">--:--:--</b></div>
+        <h1 id="demoTitle">Hello</h1>
+        <div class="btn-row">
+          <button class="change-btn" onclick="change()">Change it</button>
+          <button class="reset-btn" onclick="resetDemo()">Reset</button>
+        </div>
+        <div class="counter">Button clicked <b id="clicks">0</b> times
+          &middot; page reloaded <b id="reloads">0</b> times</div>
+        <div class="reload-note">(Hit <b>F5</b> to actually reload &mdash; the time + reload count
+          change. Clicking the button never does.)</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: the code that makes it work -->
+    <div class="code-wrap">
+      <h2>The 3 lines of JavaScript that do it</h2>
+<pre class="code"><span class="tag">&lt;h1 id="title"&gt;</span>Hello<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;button onclick="change()"&gt;</span>Change it<span class="tag">&lt;/button&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="kw">function</span> <span class="fn">change</span>() {
+<span class="runline" id="runline">    document.<span class="fn">getElementById</span>(<span class="str">"title"</span>)
+            .innerHTML = <span class="str">"Changed!"</span>;</span>  <span class="arrow" id="arrow">&larr; this just ran!</span>
+  }
+<span class="tag">&lt;/script&gt;</span></pre>
+      <div class="code-hint">Every click runs the <b>change()</b> function &mdash; it <b>finds</b> the heading
+        by its id, and <b>changes</b> its text. Same page. No reload.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">JavaScript: Buttons that change the page &nbsp;&middot;&nbsp; Year 9 Computing &nbsp;&middot;&nbsp; 9 COTYB &amp; 9 COTYC</div>
+
+  <div id="toast">&#10003; The page CHANGED &mdash; but it never reloaded!</div>
+
+<script>
+  // Freeze the load time + count REAL reloads (sessionStorage survives a reload,
+  // not a button click) — concrete proof that clicking != reloading.
+  document.getElementById('loadedAt').textContent = new Date().toLocaleTimeString('en-AU');
+  var reloads = (parseInt(sessionStorage.getItem('demoReloads') || '0', 10)) + 1;
+  sessionStorage.setItem('demoReloads', reloads);
+  document.getElementById('reloads').textContent = reloads;
+
+  var clicks = 0, toastTimer = null;
+
+  function change() {
+    var t = document.getElementById('demoTitle');
+    t.textContent = "Changed!";
+    t.classList.add('changed');
+    // re-trigger the pop animation every click
+    t.classList.remove('pop'); void t.offsetWidth; t.classList.add('pop');
+
+    clicks++; document.getElementById('clicks').textContent = clicks;
+
+    flashCode();
+    showToast();
+  }
+
+  function resetDemo() {
+    var t = document.getElementById('demoTitle');
+    t.textContent = "Hello";
+    t.classList.remove('changed', 'pop');
+  }
+
+  function flashCode() {
+    var rl = document.getElementById('runline'), ar = document.getElementById('arrow');
+    rl.classList.remove('fire'); void rl.offsetWidth; rl.classList.add('fire');
+    ar.classList.add('show');
+    clearTimeout(rl._t);
+    rl._t = setTimeout(function(){ rl.classList.remove('fire'); ar.classList.remove('show'); }, 1400);
+  }
+
+  function showToast() {
+    var el = document.getElementById('toast');
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2000);
+  }
+
+  // bonus: Space / Enter also triggers it (handy on the projector)
+  document.addEventListener('keydown', function(e){
+    if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); change(); }
+  });
+</script>
+</body>
+</html>
