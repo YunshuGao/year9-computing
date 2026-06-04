@@ -21,8 +21,23 @@
   #prog{margin-left:auto;font-weight:800;font-size:12.5px;background:rgba(255,255,255,.16);padding:5px 13px;border-radius:20px;}
   main{max-width:1180px;margin:0 auto;padding:18px 16px 80px;}
 
-  /* compact instruction banner (no explanation) */
-  .intro{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:18px 0 6px;
+  /* toolbar: name/class + saved + submit/load */
+  .toolbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;background:#fff;border:1px solid var(--line);
+    border-radius:14px;padding:12px 16px;margin:18px 0 4px;box-shadow:0 2px 10px rgba(15,23,42,.05);}
+  .toolbar .who{display:flex;gap:12px;flex-wrap:wrap;}
+  .toolbar label{display:flex;flex-direction:column;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#64748b;gap:4px;}
+  .toolbar input,.toolbar select{font-size:14px;padding:8px 11px;border:2px solid var(--line);border-radius:8px;min-width:160px;font-family:inherit;color:#0f172a;background:#fff;}
+  .toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--indigo);}
+  .saved{font-size:13px;font-weight:700;color:#94a3b8;background:#f1f5f9;padding:7px 13px;border-radius:20px;transition:all .2s;white-space:nowrap;}
+  .saved.on{color:#047857;background:#d1fae5;}
+  .acts{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap;align-items:center;}
+  .loadbtn{font-size:13.5px;font-weight:700;padding:9px 15px;border:2px solid var(--line);border-radius:9px;background:#fff;color:#475569;cursor:pointer;}
+  .loadbtn:hover{background:#f8fafc;}
+  .submitbtn{font-size:14.5px;font-weight:800;padding:9px 20px;border:0;border-radius:9px;background:var(--green);color:#fff;cursor:pointer;box-shadow:0 3px 0 #0a8f6a;}
+  .submitbtn:active{transform:translateY(2px);box-shadow:0 1px 0 #0a8f6a;}
+  .submitbtn.big{padding:12px 30px;font-size:16px;}
+
+  .intro{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:12px 0 6px;
     box-shadow:0 4px 16px rgba(15,23,42,.06);border-top:6px solid var(--indigo);}
   .intro h2{margin:0 0 11px;font-size:21px;color:#0f172a;}
   .howto{display:flex;flex-wrap:wrap;gap:8px 10px;}
@@ -30,10 +45,8 @@
     border-radius:9px;padding:7px 13px;font-size:14px;color:#1e293b;font-weight:600;}
   .howto .s b{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--indigo);color:#fff;
     align-items:center;justify-content:center;font-size:12px;}
-  .order{margin:12px 0 0;font-size:14px;color:#475569;}
-  .order b{color:#3730a3;}
+  .order{margin:12px 0 0;font-size:14px;color:#475569;} .order b{color:#3730a3;}
 
-  /* tier header (one-line instruction, no paragraph) */
   .tier{margin:28px 0 6px;border-radius:13px;padding:12px 18px;color:#fff;display:flex;align-items:center;gap:12px;}
   .tier.must{background:linear-gradient(100deg,#059669,#10b981);}
   .tier.should{background:linear-gradient(100deg,#1e3a8a,#2563eb);}
@@ -42,7 +55,6 @@
   .tier h2{margin:0;font-size:21px;letter-spacing:.5px;} .tier-sub{font-size:14px;opacity:.95;font-weight:600;}
   .tier-tag{margin-left:auto;font-size:11.5px;font-weight:800;background:rgba(255,255,255,.2);padding:4px 11px;border-radius:20px;}
 
-  /* exercise card */
   .ex{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px 16px;margin:14px 0;
     box-shadow:0 2px 10px rgba(15,23,42,.05);border-left:8px solid var(--line);}
   .ex.must{border-left-color:var(--green);} .ex.should{border-left-color:var(--navy);} .ex.could{border-left-color:var(--purple);}
@@ -56,7 +68,6 @@
   .done{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#047857;cursor:pointer;user-select:none;}
   .done input{width:18px;height:18px;cursor:pointer;accent-color:var(--green);}
 
-  /* DO strip - the big scannable instruction */
   .do{display:flex;flex-wrap:wrap;gap:7px 8px;align-items:center;margin:11px 0 12px;}
   .do .lab{font-weight:900;color:#3730a3;font-size:13px;letter-spacing:1.5px;margin-right:3px;}
   .do .st{display:inline-flex;align-items:center;gap:8px;background:#eef2ff;border:1px solid #c7d2fe;
@@ -107,7 +118,15 @@
   .reflect label{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#64748b;display:block;margin-bottom:5px;}
   .reflect textarea{width:100%;height:64px;border:2px solid var(--line);border-radius:9px;padding:9px 12px;font-family:inherit;font-size:14px;resize:vertical;}
   .reflect textarea:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,158,11,.16);}
-  .showteacher{margin-top:14px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:11px 15px;font-size:14.5px;color:#3730a3;}
+  .submitrow{margin-top:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--line);}
+  .submitrow span{font-size:13px;color:#6b7280;}
+
+  .modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
+  .modal-bg.on{display:flex;}
+  .modal{background:#fff;border-radius:16px;padding:26px 30px;max-width:430px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4);}
+  .modal h2{margin:0 0 8px;color:#047857;font-size:24px;}
+  .modal p{margin:6px 0;font-size:15px;color:#374151;} .modal .sm{font-size:13px;color:#6b7280;}
+  .okbtn{margin-top:14px;font-size:15px;font-weight:800;padding:10px 28px;border:0;border-radius:9px;background:var(--indigo);color:#fff;cursor:pointer;}
   footer{text-align:center;color:#9ca3af;font-size:12px;padding:24px;}
 </style>
 </head>
@@ -120,6 +139,19 @@
 </header>
 <main>
 
+<div class="toolbar">
+  <div class="who">
+    <label>Your name<input id="studentName" data-save="studentName" placeholder="Type your name" autocomplete="off"></label>
+    <label>Your class<select id="studentClass" data-save="studentClass"><option value="">Choose...</option><option>9 COTYB</option><option>9 COTYC</option></select></label>
+  </div>
+  <span class="saved" id="saveStatus">Work saves automatically</span>
+  <div class="acts">
+    <button type="button" class="loadbtn" onclick="loadPrompt()">Load a saved file</button>
+    <button type="button" class="submitbtn" onclick="submitWork()">Submit my work</button>
+  </div>
+  <input type="file" id="loadFile" accept=".html,text/html" hidden onchange="handleLoadFile(event)">
+</div>
+
 <div class="intro">
   <h2>Make the page react</h2>
   <div class="howto">
@@ -130,7 +162,7 @@
     <span class="s"><b>5</b> do the NOW CHANGE line</span>
     <span class="s"><b>6</b> tick "I can do this"</span>
   </div>
-  <p class="order">Work down the page: <b>MUST</b>, then <b>SHOULD</b>, then <b>COULD</b>. Your work saves on this computer automatically.</p>
+  <p class="order">Work down the page: <b>MUST</b>, then <b>SHOULD</b>, then <b>COULD</b>. When you finish, click <b>Submit my work</b> at the top or bottom.</p>
 </div>
 <section id="must">
   <div class="tier must"><div class="tier-l"><h2>MUST DO</h2><span class="tier-sub">New skill in each box. Type it, Run it, then change it.</span></div>
@@ -400,50 +432,170 @@
     <div><label>One thing to remember</label><textarea data-save="rf-trick" placeholder="Type it here."></textarea></div>
     <div><label>One thing still confusing</label><textarea data-save="rf-stuck" placeholder="Type it here so we can go over it."></textarea></div>
   </div>
-  <div class="showteacher"><b>Finished COULD?</b> Run it, check two things change, then put your hand up and show your teacher.</div>
+  <div class="submitrow"><button type="button" class="submitbtn big" onclick="submitWork()">Submit my work</button>
+    <span>Downloads a file - upload it to Google Classroom. (Put your name at the top first.)</span></div>
 </div>
 
 </main>
+
+<div class="modal-bg" id="submitModal">
+  <div class="modal">
+    <h2>Submitted</h2>
+    <p>Your file has downloaded. Upload it to Google Classroom now.</p>
+    <p class="sm">You can keep working and submit again any time. Your work also stays saved on this computer.</p>
+    <button type="button" class="okbtn" onclick="closeModal()">OK</button>
+  </div>
+</div>
+
 <footer>JavaScript Guided Practice L3 &middot; Yunshu Gao &middot; your work saves on this computer automatically</footer>
 <script>
 const IDS = ["m1", "m2", "m3", "s1", "s2", "s3", "c1", "c2", "c3"];
+const META = [{"id": "m1", "tier": "must", "title": "Change the words", "n": 1}, {"id": "m2", "tier": "must", "title": "Change the colour", "n": 2}, {"id": "m3", "tier": "must", "title": "Change the size", "n": 3}, {"id": "s1", "tier": "should", "title": "Three changes at once", "n": 1}, {"id": "s2", "tier": "should", "title": "Change the whole background", "n": 2}, {"id": "s3", "tier": "should", "title": "Two buttons, two jobs", "n": 3}, {"id": "c1", "tier": "could", "title": "Your hype button", "n": 1}, {"id": "c2", "tier": "could", "title": "Traffic light", "n": 2}, {"id": "c3", "tier": "could", "title": "Make your own", "n": 3}];
+const SELF = {"sc-1": "Change the words with .innerHTML", "sc-2": "Change the colour with .style.color", "sc-3": "Change the size with .style.fontSize", "sc-4": "Change the background with document.body.style.background", "sc-5": "Make two buttons run two functions", "sc-6": "Write a button effect on my own"};
 const SAVE_KEY = "js-gp-l3-v1";
+const WORKSHEET = "practice-l3-v1";
 let saved = {};
 try { saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || {}; } catch (e) { saved = {}; }
+
+let __sv = null;
+function flashSaved(){
+  var el = document.getElementById("saveStatus");
+  if(!el) return;
+  el.textContent = "Saved";
+  el.classList.add("on");
+  clearTimeout(__sv);
+  __sv = setTimeout(function(){ el.classList.remove("on"); el.textContent = "Work saves automatically"; }, 1100);
+}
 function persist(){
-  const s = {};
+  var s = {};
   document.querySelectorAll("[data-save]").forEach(function(el){
     s[el.getAttribute("data-save")] = (el.type === "checkbox") ? el.checked : el.value;
   });
-  try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); } catch (e) {}
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); flashSaved(); } catch (e) {}
 }
 function runEx(id){
-  const ed = document.getElementById("ed-" + id), out = document.getElementById("out-" + id);
+  var ed = document.getElementById("ed-" + id), out = document.getElementById("out-" + id);
   out.srcdoc = ed.value || '<p style="font-family:Arial;color:#94a3b8;padding:12px">Type the code, then click Run.</p>';
   persist();
 }
 function clr(id){ document.getElementById("ed-" + id).value = ""; runEx(id); }
 function toggleSol(id){
-  const b = document.getElementById("solbox-" + id), btn = document.getElementById("solbtn-" + id);
-  const open = b.style.display === "block";
+  var b = document.getElementById("solbox-" + id), btn = document.getElementById("solbtn-" + id);
+  var open = b.style.display === "block";
   b.style.display = open ? "none" : "block";
   btn.textContent = open ? "Reveal a solution" : "Hide solution";
 }
 function progress(){
-  const all = document.querySelectorAll(".ck");
-  let n = 0; all.forEach(function(c){ if (c.checked) n++; });
+  var all = document.querySelectorAll(".ck"), n = 0;
+  all.forEach(function(c){ if (c.checked) n++; });
   document.getElementById("prog").textContent = n + " / " + all.length + " done";
 }
+function escapeHTML(s){
+  return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function gatherState(){
+  var fields = {};
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    var k = el.getAttribute("data-save");
+    if(k==="studentName" || k==="studentClass") return;
+    fields[k] = (el.type==="checkbox") ? el.checked : el.value;
+  });
+  var nm = document.getElementById("studentName"), cl = document.getElementById("studentClass");
+  return { studentName:(nm?nm.value:"")||"", studentClass:(cl?cl.value:"")||"",
+           studentDate:new Date().toISOString().slice(0,10), fields:fields };
+}
+var REPORT_CSS = "body{font-family:Arial,sans-serif;max-width:900px;margin:0 auto;padding:20px;color:#1f2937;background:#fdf6e3;}header{background:linear-gradient(135deg,#0f172a,#1e293b 55%,#7c3aed);color:#fff;padding:18px 20px;border-radius:10px;margin-bottom:18px;}header h1{margin:0 0 8px;}header p{margin:2px 0;font-size:14px;opacity:.95;}section.seg{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 18px;margin-bottom:14px;border-left:8px solid #0f172a;}section.t-must{border-left-color:#10b981;}section.t-should{border-left-color:#1e3a8a;}section.t-could{border-left-color:#7c3aed;}section.t-wrap{border-left-color:#f59e0b;}section.seg h2{margin:0 0 6px;color:#0f172a;font-size:18px;}section.seg h3{margin:12px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#6b7280;}.num{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;background:#0f172a;color:#fff;border-radius:50%;font-size:13px;margin-right:6px;}.rib{float:right;padding:3px 10px;border-radius:12px;color:#fff;font-size:11px;font-weight:bold;letter-spacing:1px;}.rib.must{background:#10b981;}.rib.should{background:#1e3a8a;}.rib.could{background:#7c3aed;}.meta{font-size:13px;color:#6b7280;margin:0;}.code{background:#0f172a;color:#f7df1e;padding:10px;border-radius:6px;font-family:Consolas,monospace;font-size:12px;white-space:pre;overflow:auto;}.learn,.stuck{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:8px 12px;font-size:14px;min-height:26px;}ul.checks{list-style:none;padding-left:0;}ul.checks li{font-size:14px;margin:3px 0;}ul.checks li.qok{color:#047857;}ul.checks li.qskip{color:#9ca3af;}.preview{width:100%;height:200px;border:1px solid #ccc;border-radius:6px;background:#fff;}.teacher-box{background:#fffaf0;border:2px dashed #f59e0b;border-radius:6px;padding:10px 14px;margin-top:12px;font-size:14px;min-height:64px;}footer{text-align:center;font-size:12px;color:#6b7280;margin-top:20px;}@media print{.preview{display:none;}}";
+
+function buildSubmissionHTML(state){
+  var name = state.studentName || "Unnamed Student";
+  var cls = state.studentClass || "9 COTYB or 9 COTYC";
+  var date = state.studentDate;
+  var body = "";
+  META.forEach(function(m){
+    var code = state.fields["ed-"+m.id] || "";
+    var done = state.fields["ck-"+m.id] ? "Yes" : "Not yet";
+    var sec = '<section class="seg t-'+m.tier+'">';
+    sec += '<h2><span class="num">'+m.n+'</span> '+escapeHTML(m.title)+' <span class="rib '+m.tier+'">'+m.tier.toUpperCase()+'</span></h2>';
+    sec += '<p class="meta"><b>I can do this:</b> '+done+'</p>';
+    sec += '<h3>My code</h3><pre class="code">'+escapeHTML(code)+'</pre>';
+    if(code.trim()){
+      sec += '<h3>How it ran</h3><iframe class="preview" sandbox="allow-scripts" srcdoc="'+escapeHTML(code)+'"></iframe>';
+    }
+    sec += '<div class="teacher-box"><b>Teacher feedback:</b></div></section>';
+    body += sec;
+  });
+  var checks = "";
+  Object.keys(SELF).forEach(function(k){
+    var on = state.fields[k] ? "&#x2713;" : "&middot;";
+    checks += '<li class="'+(state.fields[k]?"qok":"qskip")+'">'+on+' '+escapeHTML(SELF[k])+'</li>';
+  });
+  var trick = state.fields["rf-trick"] || "", stk = state.fields["rf-stuck"] || "";
+  body += '<section class="seg t-wrap"><h2><span class="num">*</span> Wrap up</h2>'
+       + '<h3>What I can do</h3><ul class="checks">'+checks+'</ul>'
+       + '<h3>One thing to remember</h3><div class="learn">'+escapeHTML(trick)+'</div>'
+       + '<h3>One thing still confusing</h3><div class="stuck">'+escapeHTML(stk)+'</div>'
+       + '<div class="teacher-box"><b>Teacher feedback:</b></div></section>';
+  var today = new Date().toLocaleString("en-AU");
+  var payload = {version:1,worksheet:WORKSHEET,savedAt:new Date().toISOString(),studentName:state.studentName||"",studentClass:state.studentClass||"",studentDate:state.studentDate||"",fields:state.fields||{}};
+  var json = JSON.stringify(payload).replace(/<\/script/gi,"<\\/script");
+  return '<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8"><title>'+escapeHTML(name)+' - JS Practice L3</title><style>'+REPORT_CSS+'</style></head><body>'
+    + '<header><h1>JavaScript Practice L3 &mdash; Submission</h1><p><b>Name:</b> '+escapeHTML(name)+'</p><p><b>Class:</b> '+escapeHTML(cls)+'</p><p><b>Date:</b> '+escapeHTML(date)+'</p><p><b>Submitted at:</b> '+escapeHTML(today)+'</p></header>'
+    + body
+    + '<footer>9 COTYB &amp; 9 COTYC &middot; Year 9 Computing Technology</footer>'
+    + '<script type="application/json" id="kw-saved-state">'+json+'<\/script></body></html>';
+}
+function submitWork(){
+  persist();
+  var state = gatherState();
+  var name = (state.studentName || "Student").trim();
+  if(!name || name.toLowerCase()==="student"){
+    if(!confirm("You have not typed your name at the top. Submit anyway?")) return;
+  }
+  var html = buildSubmissionHTML(state);
+  var blob = new Blob([html], {type:"text/html;charset=utf-8"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  var safe = name.replace(/[^a-zA-Z0-9_-]/g,"_") || "Student";
+  a.download = safe + "_Y9_JS_Practice_L3_" + new Date().toISOString().slice(0,10) + ".html";
+  a.href = url; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  document.getElementById("submitModal").classList.add("on");
+}
+function closeModal(){ document.getElementById("submitModal").classList.remove("on"); }
+function loadPrompt(){ document.getElementById("loadFile").click(); }
+function handleLoadFile(ev){
+  var f = ev.target.files[0]; if(!f){ return; }
+  var r = new FileReader();
+  r.onload = function(){
+    try{
+      var doc = new DOMParser().parseFromString(r.result, "text/html");
+      var tag = doc.getElementById("kw-saved-state");
+      if(!tag){ alert("That file does not look like a saved Practice L3 file."); return; }
+      var data = JSON.parse(tag.textContent);
+      var fields = data.fields || {};
+      var nm = document.getElementById("studentName"); if(nm) nm.value = data.studentName || "";
+      var cl = document.getElementById("studentClass"); if(cl) cl.value = data.studentClass || "";
+      Object.keys(fields).forEach(function(k){
+        var el = document.querySelector('[data-save="'+k+'"]');
+        if(!el) return;
+        if(el.type==="checkbox") el.checked = !!fields[k]; else el.value = fields[k];
+      });
+      persist();
+      IDS.forEach(function(id){ var ed=document.getElementById("ed-"+id); if(ed&&(ed.value||"").trim()) runEx(id); });
+      progress();
+      alert("Loaded. Welcome back" + (data.studentName ? ", " + data.studentName : "") + "!");
+    } catch(e){ alert("Sorry, that file could not be read."); }
+  };
+  r.readAsText(f);
+  ev.target.value = "";
+}
 document.querySelectorAll("[data-save]").forEach(function(el){
-  const k = el.getAttribute("data-save");
-  if (saved[k] != null){ if (el.type === "checkbox") el.checked = saved[k]; else el.value = saved[k]; }
+  var k = el.getAttribute("data-save");
+  if(saved[k] != null){ if(el.type==="checkbox") el.checked = saved[k]; else el.value = saved[k]; }
   el.addEventListener("input", persist);
   el.addEventListener("change", function(){ persist(); progress(); });
 });
-IDS.forEach(function(id){
-  const ed = document.getElementById("ed-" + id);
-  if (ed && (ed.value || "").trim()) runEx(id);
-});
+IDS.forEach(function(id){ var ed=document.getElementById("ed-"+id); if(ed&&(ed.value||"").trim()) runEx(id); });
 progress();
 </script>
 </body>
