@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript Guided Practice L3 - Make the page react</title>
+<style>
+  :root{--ink:#1f2937;--paper:#fbf7ee;--slate:#0f172a;--amber:#f59e0b;--jsye:#f7df1e;
+        --green:#10b981;--navy:#1e3a8a;--purple:#7c3aed;--grey:#6b7280;--line:#e6e3da;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Segoe UI",Calibri,Arial,sans-serif;color:var(--ink);background:var(--paper);}
+  header.top{position:sticky;top:0;z-index:50;background:linear-gradient(120deg,#0f172a,#1e293b 55%,#3f3399);
+    color:#fff;padding:13px 22px;box-shadow:0 2px 12px rgba(0,0,0,.22);}
+  header.top h1{margin:0;font-size:21px;display:flex;align-items:center;gap:11px;}
+  .badge{width:36px;height:36px;background:var(--jsye);color:#0f172a;border-radius:7px;font-weight:900;
+    display:inline-flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 0 #c9b400;}
+  header.top .sub{margin:5px 0 0;font-size:13px;opacity:.9;}
+  .nav{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap;align-items:center;}
+  .nav a{color:#0f172a;text-decoration:none;font-weight:800;font-size:12.5px;padding:6px 13px;border-radius:8px;transition:transform .08s;}
+  .nav a:hover{transform:translateY(-1px);}
+  .nav a.must{background:#a7f3d0;} .nav a.should{background:#bfdbfe;} .nav a.could{background:#ddd6fe;}
+  #prog{margin-left:auto;font-weight:800;font-size:12.5px;background:rgba(255,255,255,.16);padding:5px 13px;border-radius:20px;}
+  main{max-width:1180px;margin:0 auto;padding:18px 16px 80px;}
+
+  /* intro card */
+  .intro{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 22px;margin:18px 0 6px;
+    box-shadow:0 4px 18px rgba(15,23,42,.06);}
+  .intro h2{margin:0 0 6px;font-size:20px;color:#0f172a;}
+  .intro p{margin:0 0 12px;font-size:15px;line-height:1.5;}
+  .recap{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;}
+  .step2{flex:1;min-width:230px;background:#0f172a;border-radius:12px;padding:14px 16px;color:#e2e8f0;font-size:14px;line-height:1.6;}
+  .step2 .n{display:inline-flex;width:22px;height:22px;border-radius:50%;background:#3f3399;color:#fff;font-weight:800;
+    align-items:center;justify-content:center;font-size:12px;margin-right:7px;}
+  .step2 code{background:#1e293b;}
+  .key{flex:1;min-width:230px;background:#fffaf0;border:1px solid #fde9c8;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.9;}
+  .key b{display:block;margin-bottom:4px;color:#92400e;font-size:12px;text-transform:uppercase;letter-spacing:1px;}
+  .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:middle;}
+  .how{margin-top:13px;font-size:13.5px;color:#475569;background:#f8fafc;border-left:4px solid var(--amber);padding:9px 13px;border-radius:8px;}
+
+  /* tier header + teaching intro */
+  .tier{margin:30px 0 4px;border-radius:13px;padding:12px 18px;color:#fff;display:flex;align-items:center;gap:12px;}
+  .tier.must{background:linear-gradient(100deg,#059669,#10b981);}
+  .tier.should{background:linear-gradient(100deg,#1e3a8a,#2563eb);}
+  .tier.could{background:linear-gradient(100deg,#6d28d9,#9333ea);}
+  .tier-l{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;}
+  .tier h2{margin:0;font-size:21px;letter-spacing:.5px;} .tier-sub{font-size:13.5px;opacity:.92;font-weight:600;}
+  .tier-tag{margin-left:auto;font-size:11.5px;font-weight:800;background:rgba(255,255,255,.2);padding:4px 11px;border-radius:20px;}
+  .sec-intro{margin:10px 2px 4px;font-size:14.5px;line-height:1.55;color:#374151;}
+  .sec-intro code{background:#0f172a;color:var(--jsye);padding:1px 6px;border-radius:4px;font-size:12.5px;}
+  .sec-intro b{color:#3f3399;}
+
+  /* exercise card */
+  .ex{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px 16px;margin:14px 0;
+    box-shadow:0 2px 10px rgba(15,23,42,.05);border-left:8px solid var(--line);}
+  .ex.must{border-left-color:var(--green);} .ex.should{border-left-color:var(--navy);} .ex.could{border-left-color:var(--purple);}
+  .exhd{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .exnum{width:34px;height:34px;border-radius:50%;color:#fff;font-weight:800;display:inline-flex;
+    align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+  .must .exnum{background:var(--green);} .should .exnum{background:var(--navy);} .could .exnum{background:var(--purple);}
+  .exhd h3{margin:0;font-size:17.5px;flex:1;min-width:140px;}
+  .chip{font-family:Consolas,monospace;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:6px;color:#fff;white-space:nowrap;}
+  .must .chip{background:var(--green);} .should .chip{background:var(--navy);} .could .chip{background:var(--purple);}
+  .done{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#047857;cursor:pointer;user-select:none;}
+  .done input{width:18px;height:18px;cursor:pointer;accent-color:var(--green);}
+  .idea{margin:11px 0 12px;font-size:15px;line-height:1.5;background:#f5f3ff;border:1px solid #e9e2fb;padding:10px 14px;border-radius:9px;}
+  .idea .ib{display:inline-block;font-weight:800;color:#6d28d9;margin-right:8px;font-size:12px;text-transform:uppercase;letter-spacing:1px;}
+  .idea b{color:#5b21b6;}
+  code{background:#0f172a;color:var(--jsye);padding:1px 6px;border-radius:3px;font-family:Consolas,monospace;font-size:12.5px;}
+
+  .ws{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  @media(max-width:980px){.ws{grid-template-columns:1fr;}}
+  .col-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#64748b;margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+  .cn{display:inline-flex;width:19px;height:19px;border-radius:50%;background:#e2e8f0;color:#334155;font-size:11px;font-weight:800;align-items:center;justify-content:center;}
+  pre.read{background:#0f172a;color:#cbd5e1;padding:12px 14px;border-radius:10px;font-family:Consolas,"Courier New",monospace;
+    font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:0;min-height:172px;user-select:none;
+    box-shadow:inset 0 0 0 1px #1e293b;}
+  pre.read .c-com{color:#5f7e97;font-style:italic;} pre.read .c-str{color:#addb67;}
+  pre.read .c-tag{color:#ff9e64;} pre.read .c-kw{color:#c792ea;} pre.read .c-dom{color:#82aaff;}
+  .goal{background:#f5f3ff;border:2px dashed var(--purple);border-radius:10px;padding:13px 15px;font-size:14.5px;line-height:1.55;min-height:172px;color:#4c1d95;}
+  .goal b{color:#5b21b6;} .goal code{background:#ede9fe;color:#5b21b6;}
+  textarea.ed{width:100%;height:188px;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.55;
+    padding:11px 13px;border:2px solid var(--line);border-radius:10px;background:#fff;resize:vertical;color:#0f172a;}
+  textarea.ed:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,158,11,.18);}
+  iframe.out{width:100%;height:188px;border:2px solid var(--line);border-radius:10px;background:#fff;}
+  .runrow{display:flex;gap:9px;margin-top:11px;align-items:center;flex-wrap:wrap;}
+  .run{padding:9px 28px;font-size:15px;font-weight:800;border:0;border-radius:9px;background:var(--jsye);color:#422006;cursor:pointer;box-shadow:0 3px 0 #c9b400;}
+  .run:active{transform:translateY(2px);box-shadow:0 1px 0 #c9b400;}
+  .clr{padding:8px 14px;font-size:13px;border:0;border-radius:8px;background:#f1f5f9;color:#64748b;cursor:pointer;font-weight:700;}
+  .sol{margin-left:auto;font-size:13px;font-weight:700;color:var(--purple);background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;padding:8px 13px;cursor:pointer;}
+  pre.solbox{display:none;margin:11px 0 0;}
+
+  .tip{margin:10px 0 0;font-size:14px;line-height:1.5;padding:9px 14px;border-radius:9px;}
+  .tip b{margin-right:5px;}
+  .tip.turn{background:#ecfdf5;border-left:4px solid var(--green);color:#065f46;}
+  .tip.turn b{color:#047857;}
+  .tip.watch{background:#fff7ed;border-left:4px solid var(--amber);color:#9a3412;}
+  .tip.watch b{color:#c2410c;}
+  .tip.hint{background:#f5f3ff;border-left:4px solid var(--purple);color:#5b21b6;}
+
+  /* wrap up */
+  .wrap{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin:34px 0 0;
+    box-shadow:0 4px 18px rgba(15,23,42,.06);border-top:6px solid var(--amber);}
+  .wrap h2{margin:0 0 4px;font-size:20px;color:#0f172a;}
+  .wrap .sc{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px;margin:12px 0 16px;}
+  @media(max-width:700px){.wrap .sc{grid-template-columns:1fr;}}
+  .wrap .sc label{display:flex;align-items:center;gap:9px;font-size:14.5px;cursor:pointer;}
+  .wrap .sc input{width:18px;height:18px;accent-color:var(--green);}
+  .reflect{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:700px){.reflect{grid-template-columns:1fr;}}
+  .reflect label{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#64748b;display:block;margin-bottom:5px;}
+  .reflect textarea{width:100%;height:72px;border:2px solid var(--line);border-radius:9px;padding:9px 12px;font-family:inherit;font-size:14px;resize:vertical;}
+  .reflect textarea:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,158,11,.16);}
+  .showteacher{margin-top:15px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:11px 15px;font-size:14.5px;color:#3730a3;}
+  footer{text-align:center;color:#9ca3af;font-size:12px;padding:24px;}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1><span class="badge">JS</span> Guided Practice L3 &mdash; Make the page react</h1>
+  <p class="sub">Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; buttons that change the page (the DOM)</p>
+  <div class="nav"><a class="must" href="#must">1 &middot; MUST</a><a class="should" href="#should">2 &middot; SHOULD</a>
+    <a class="could" href="#could">3 &middot; COULD</a><span id="prog">0 / 0 done</span></div>
+</header>
+<main>
+
+<div class="intro">
+  <h2>👋 Make the page react</h2>
+  <p>You already know how to <b>build</b> a page. Now you will make it <b>do</b> something when a button is
+     clicked &mdash; change words, colours, sizes and the whole background. Work top to bottom:
+     <b>MUST</b> (learn each power) &rarr; <b>SHOULD</b> (combine them) &rarr; <b>COULD</b> (write your own).</p>
+  <div class="recap">
+    <div class="step2">Every single change is the <b>same two steps</b>:
+      <div style="margin-top:8px"><span class="n">1</span><b>FIND</b> the element &nbsp;<code>document.getElementById("t")</code></div>
+      <div style="margin-top:6px"><span class="n">2</span><b>CHANGE</b> it &nbsp;<code>.innerHTML</code> &middot; <code>.style.color</code> &middot; <code>.style.fontSize</code></div>
+    </div>
+    <div class="key"><b>Reading the code</b>
+      <div><span class="sw" style="background:#ff9e64"></span>orange = HTML tags</div>
+      <div><span class="sw" style="background:#82aaff"></span>blue = JavaScript that finds &amp; changes</div>
+      <div><span class="sw" style="background:#addb67"></span>green = the value you choose (in quotes)</div>
+      <div><span class="sw" style="background:#c792ea"></span>purple = keywords like <code>function</code></div>
+    </div>
+  </div>
+  <div class="how">🔁 <b>How each box works:</b> read the code &rarr; type it into the middle box &rarr; click
+     <b>Run</b> &rarr; click the button in the result &rarr; do the <b>Your turn</b> tweak &rarr; tick
+     <b>“I can do this.”</b> Your work saves on this computer automatically.</div>
+</div>
+<section id="must">
+  <div class="tier must"><div class="tier-l"><h2>MUST DO</h2><span class="tier-sub">Everyone does these</span></div>
+    <span class="tier-tag">3 exercises</span></div>
+  <p class="sec-intro">Three superpowers. Every page change in JavaScript is the same move: <b>FIND</b> an element (we gave it an <code>id</code>, then grab it with <code>document.getElementById</code>), then <b>CHANGE</b> it. Here you meet the three changes you will use the most &mdash; the <b>words</b>, the <b>colour</b>, and the <b>size</b>. Read each one, type it, Run it, then do the small <b>Your turn</b> tweak so it becomes yours.</p>
+  <div class="ex must" id="ex-m1">
+  <div class="exhd"><span class="exnum">1</span>
+    <h3>Reveal a secret message</h3><span class="chip">innerHTML</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-m1" data-save="ck-m1"> I can do this</label></div>
+  <div class="idea"><span class="ib">The idea</span><code>.innerHTML</code> is the <b>words inside</b> an element. Change it and the words on the page change.</div>
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Read this code</div><pre class="read"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;msg&quot;</span>&gt;🔒 Locked<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;reveal()&quot;</span>&gt;Reveal<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> reveal() {
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;msg&quot;</span>).<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;🎉 You found me!&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Type it here</div>
+      <textarea class="ed" id="ed-m1" data-save="ed-m1" spellcheck="false"></textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-m1" title="result m1"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('m1')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('m1')">Clear</button></div>
+  
+  <div class="tip turn"><b>Your turn &rarr;</b> Change the secret message to your own &mdash; your name, a joke, anything.</div><div class="tip watch"><b>Watch out!</b> The name in <code>getElementById("msg")</code> must match <code>id="msg"</code> on the &lt;h1&gt; <b>exactly</b> &mdash; same spelling, same capitals.</div>
+</div><div class="ex must" id="ex-m2">
+  <div class="exhd"><span class="exnum">2</span>
+    <h3>Mood colour</h3><span class="chip">.style.color</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-m2" data-save="ck-m2"> I can do this</label></div>
+  <div class="idea"><span class="ib">The idea</span><code>.style.color</code> changes the <b>text colour</b>. The colour is a name in quotes, like <code>"tomato"</code> or <code>"deepskyblue"</code>.</div>
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Read this code</div><pre class="read"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;t&quot;</span>&gt;How are you today?<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;mood()&quot;</span>&gt;My mood<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> mood() {
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">style</span>.<span class="c-dom">color</span> = <span class="c-str">&quot;deeppink&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Type it here</div>
+      <textarea class="ed" id="ed-m2" data-save="ed-m2" spellcheck="false"></textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-m2" title="result m2"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('m2')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('m2')">Clear</button></div>
+  
+  <div class="tip turn"><b>Your turn &rarr;</b> Swap <code>"deeppink"</code> for your own mood colour &mdash; try <code>"gold"</code>, <code>"teal"</code> or <code>"orangered"</code>.</div><div class="tip watch"><b>Watch out!</b> Colour names go <b>in quotes</b>. <code>color = blue</code> breaks; <code>color = "blue"</code> works.</div>
+</div><div class="ex must" id="ex-m3">
+  <div class="exhd"><span class="exnum">3</span>
+    <h3>Make it SHOUT</h3><span class="chip">.style.fontSize</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-m3" data-save="ck-m3"> I can do this</label></div>
+  <div class="idea"><span class="ib">The idea</span><code>.style.fontSize</code> changes how <b>big</b> the text is. Bigger number, bigger text.</div>
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Read this code</div><pre class="read"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;t&quot;</span>&gt;turn me up<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;shout()&quot;</span>&gt;SHOUT<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> shout() {
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">style</span>.<span class="c-dom">fontSize</span> = <span class="c-str">&quot;80px&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Type it here</div>
+      <textarea class="ed" id="ed-m3" data-save="ed-m3" spellcheck="false"></textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-m3" title="result m3"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('m3')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('m3')">Clear</button></div>
+  
+  <div class="tip turn"><b>Your turn &rarr;</b> Try a bigger number like <code>"120px"</code>. How big is too big to fit?</div><div class="tip watch"><b>Watch out!</b> Keep <code>px</code> inside the quotes: <code>"80px"</code> &mdash; not <code>80px</code> and not <code>"80"</code>.</div>
+</div>
+</section><section id="should">
+  <div class="tier should"><div class="tier-l"><h2>SHOULD DO</h2><span class="tier-sub">Combine the powers</span></div>
+    <span class="tier-tag">3 exercises</span></div>
+  <p class="sec-intro">Now stack them. Real pages change more than one thing at once. Here you put two or three changes in a single function, paint the <b>whole page</b>, and wire up <b>two buttons</b> that do different jobs. Same three powers as MUST &mdash; just working together.</p>
+  <div class="ex should" id="ex-s1">
+  <div class="exhd"><span class="exnum">1</span>
+    <h3>GOOOAL! celebration</h3><span class="chip">text + colour + size</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-s1" data-save="ck-s1"> I can do this</label></div>
+  <div class="idea"><span class="ib">The idea</span>One button, three changes. Stack the <code>.innerHTML</code>, <code>.style.color</code> and <code>.style.fontSize</code> lines inside the <b>same</b> function.</div>
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Read this code</div><pre class="read"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;t&quot;</span>&gt;Kick off...<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;goal()&quot;</span>&gt;Shoot!<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> goal() {
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;⚽ GOOOAL!&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">style</span>.<span class="c-dom">color</span> = <span class="c-str">&quot;green&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">style</span>.<span class="c-dom">fontSize</span> = <span class="c-str">&quot;75px&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Type it here</div>
+      <textarea class="ed" id="ed-s1" data-save="ed-s1" spellcheck="false"></textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-s1" title="result s1"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('s1')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('s1')">Clear</button></div>
+  
+  <div class="tip turn"><b>Your turn &rarr;</b> Make it <b>your</b> team or game &mdash; change the words, the colour and the size to match.</div><div class="tip watch"><b>Watch out!</b> Each change is its own line ending in a semicolon <code>;</code>. Three changes = three lines.</div>
+</div><div class="ex should" id="ex-s2">
+  <div class="exhd"><span class="exnum">2</span>
+    <h3>Night mode</h3><span class="chip">document.body.style.background</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-s2" data-save="ck-s2"> I can do this</label></div>
+  <div class="idea"><span class="ib">The idea</span><code>document.body</code> is the <b>whole page</b>. <code>.style.background</code> paints its background colour.</div>
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Read this code</div><pre class="read"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;t&quot;</span>&gt;☀️ Day<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;night()&quot;</span>&gt;Night mode<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> night() {
+    <span class="c-dom">document</span>.<span class="c-dom">body</span>.<span class="c-dom">style</span>.<span class="c-dom">background</span> = <span class="c-str">&quot;black&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;🌙 Night&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">style</span>.<span class="c-dom">color</span> = <span class="c-str">&quot;white&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Type it here</div>
+      <textarea class="ed" id="ed-s2" data-save="ed-s2" spellcheck="false"></textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-s2" title="result s2"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('s2')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('s2')">Clear</button></div>
+  
+  <div class="tip turn"><b>Your turn &rarr;</b> Pick your own night colours &mdash; midnight blue? dark purple? Keep the heading readable against the background.</div><div class="tip watch"><b>Watch out!</b> If the heading "vanishes", the text colour matches the background. Change one of them so they contrast.</div>
+</div><div class="ex should" id="ex-s3">
+  <div class="exhd"><span class="exnum">3</span>
+    <h3>Like or Nah</h3><span class="chip">two functions</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-s3" data-save="ck-s3"> I can do this</label></div>
+  <div class="idea"><span class="ib">The idea</span>Two buttons, two jobs. Each button calls its <b>own</b> function through its own <code>onclick</code>.</div>
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Read this code</div><pre class="read"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;t&quot;</span>&gt;Rate this lesson<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;like()&quot;</span>&gt;👍 Like<span class="c-tag">&lt;/button</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;nah()&quot;</span>&gt;👎 Nah<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> like() {
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;Thanks! 🙌&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">style</span>.<span class="c-dom">color</span> = <span class="c-str">&quot;green&quot;</span>;
+  }
+  <span class="c-kw">function</span> nah() {
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;Fair enough 😅&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">style</span>.<span class="c-dom">color</span> = <span class="c-str">&quot;crimson&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Type it here</div>
+      <textarea class="ed" id="ed-s3" data-save="ed-s3" spellcheck="false"></textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-s3" title="result s3"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('s3')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('s3')">Clear</button></div>
+  
+  <div class="tip turn"><b>Your turn &rarr;</b> Add a <b>third</b> button and function &mdash; maybe "🤔 Not sure" that turns the text orange.</div><div class="tip watch"><b>Watch out!</b> Each <code>onclick="..."</code> must match a function <b>name</b> exactly, including the <code>()</code>.</div>
+</div>
+</section><section id="could">
+  <div class="tier could"><div class="tier-l"><h2>COULD DO</h2><span class="tier-sub">You write the code</span></div>
+    <span class="tier-tag">3 exercises</span></div>
+  <p class="sec-intro">No code to copy. You have seen how it works &mdash; now <b>you</b> write it. Read the goal, write your code, and Run it. Stuck? Each one has a <b>hint</b>, and on the first two you can reveal a worked solution <i>after</i> you have had a real go.</p>
+  <div class="ex could" id="ex-c1">
+  <div class="exhd"><span class="exnum">1</span>
+    <h3>Your hype button</h3><span class="chip">you write it</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-c1" data-save="ck-c1"> I can do this</label></div>
+  
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Your goal</div><div class="goal">When the button is clicked, make the heading say <b>"JavaScript is awesome!"</b> &mdash; in a colour you like, and <b>bigger</b>. Write your code inside <code>go()</code>.</div></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Write your code</div>
+      <textarea class="ed" id="ed-c1" data-save="ed-c1" spellcheck="false">&lt;h1 id=&quot;msg&quot;&gt;click the button&lt;/h1&gt;
+&lt;button onclick=&quot;go()&quot;&gt;Go&lt;/button&gt;
+
+&lt;script&gt;
+  function go() {
+    // your code here:
+
+
+  }
+&lt;/script&gt;</textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-c1" title="result c1"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('c1')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('c1')">Clear</button><button type="button" class="sol" id="solbtn-c1" onclick="toggleSol('c1')">&#128161; Reveal a solution</button></div>
+  <pre class="solbox read" id="solbox-c1"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;msg&quot;</span>&gt;click the button<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;go()&quot;</span>&gt;Go<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> go() {
+    <span class="c-kw">let</span> m = <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;msg&quot;</span>);
+    m.<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;JavaScript is awesome!&quot;</span>;
+    m.<span class="c-dom">style</span>.<span class="c-dom">color</span> = <span class="c-str">&quot;purple&quot;</span>;
+    m.<span class="c-dom">style</span>.<span class="c-dom">fontSize</span> = <span class="c-str">&quot;60px&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre>
+  <div class="tip hint"><b>Hint</b> Store the element once: <code>let m = document.getElementById("msg");</code> then use <code>m.innerHTML</code>, <code>m.style.color</code> and <code>m.style.fontSize</code>.</div>
+</div><div class="ex could" id="ex-c2">
+  <div class="exhd"><span class="exnum">2</span>
+    <h3>Traffic light</h3><span class="chip">you write it</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-c2" data-save="ck-c2"> I can do this</label></div>
+  
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Your goal</div><div class="goal"><b>Stop</b> turns the page background <b>red</b> and the heading to <b>"STOP"</b>. <b>Go</b> turns it <b>green</b> and the heading to <b>"GO"</b>. Write both functions.</div></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Write your code</div>
+      <textarea class="ed" id="ed-c2" data-save="ed-c2" spellcheck="false">&lt;h1 id=&quot;t&quot;&gt;Wait...&lt;/h1&gt;
+&lt;button onclick=&quot;stop()&quot;&gt;Stop&lt;/button&gt;
+&lt;button onclick=&quot;go()&quot;&gt;Go&lt;/button&gt;
+
+&lt;script&gt;
+  function stop() {
+    // your code:
+
+  }
+  function go() {
+    // your code:
+
+  }
+&lt;/script&gt;</textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-c2" title="result c2"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('c2')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('c2')">Clear</button><button type="button" class="sol" id="solbtn-c2" onclick="toggleSol('c2')">&#128161; Reveal a solution</button></div>
+  <pre class="solbox read" id="solbox-c2"><span class="c-tag">&lt;h1</span> id=<span class="c-str">&quot;t&quot;</span>&gt;Wait...<span class="c-tag">&lt;/h1</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;stop()&quot;</span>&gt;Stop<span class="c-tag">&lt;/button</span>&gt;
+<span class="c-tag">&lt;button</span> <span class="c-dom">onclick</span>=<span class="c-str">&quot;go()&quot;</span>&gt;Go<span class="c-tag">&lt;/button</span>&gt;
+
+<span class="c-tag">&lt;script</span>&gt;
+  <span class="c-kw">function</span> stop() {
+    <span class="c-dom">document</span>.<span class="c-dom">body</span>.<span class="c-dom">style</span>.<span class="c-dom">background</span> = <span class="c-str">&quot;red&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;STOP&quot;</span>;
+  }
+  <span class="c-kw">function</span> go() {
+    <span class="c-dom">document</span>.<span class="c-dom">body</span>.<span class="c-dom">style</span>.<span class="c-dom">background</span> = <span class="c-str">&quot;green&quot;</span>;
+    <span class="c-dom">document</span>.<span class="c-dom">getElementById</span>(<span class="c-str">&quot;t&quot;</span>).<span class="c-dom">innerHTML</span> = <span class="c-str">&quot;GO&quot;</span>;
+  }
+<span class="c-tag">&lt;/script</span>&gt;</pre>
+  <div class="tip hint"><b>Hint</b> You already did "paint the page" in Night mode and "two functions" in Like/Nah &mdash; this is those two skills together.</div>
+</div><div class="ex could" id="ex-c3">
+  <div class="exhd"><span class="exnum">3</span>
+    <h3>Invent your own</h3><span class="chip">invent it!</span>
+    <label class="done"><input type="checkbox" class="ck" id="ck-c3" data-save="ck-c3"> I can do this</label></div>
+  
+  <div class="ws">
+    <div class="col"><div class="col-label"><span class="cn">1</span> Your goal</div><div class="goal"><b>Design your own button.</b> When clicked it must change <b>at least TWO things</b> (words, colour, size or background). Make it yours &mdash; then show your teacher. 🚀</div></div>
+    <div class="col"><div class="col-label"><span class="cn">2</span> Write your code</div>
+      <textarea class="ed" id="ed-c3" data-save="ed-c3" spellcheck="false">&lt;h1 id=&quot;t&quot;&gt;my own button&lt;/h1&gt;
+&lt;button onclick=&quot;surprise()&quot;&gt;Surprise!&lt;/button&gt;
+
+&lt;script&gt;
+  function surprise() {
+    // make TWO things change here:
+
+
+  }
+&lt;/script&gt;</textarea></div>
+    <div class="col"><div class="col-label"><span class="cn">3</span> Result</div><iframe class="out" id="out-c3" title="result c3"></iframe></div>
+  </div>
+  <div class="runrow"><button type="button" class="run" onclick="runEx('c3')">&#9658; Run</button>
+    <button type="button" class="clr" onclick="clr('c3')">Clear</button></div>
+  
+  <div class="tip hint"><b>Hint</b> Out of ideas? A "level up" message, a fake "self-destruct", a hype-man button, a colour randomiser...</div>
+</div>
+</section>
+<div class="wrap">
+  <h2>✅ Wrap up &mdash; what you can now do</h2>
+  <div class="sc">
+    <label><input type="checkbox" class="ck" data-save="sc-1"> Change the <b>words</b> with <code>.innerHTML</code></label>
+    <label><input type="checkbox" class="ck" data-save="sc-2"> Change the <b>colour</b> with <code>.style.color</code></label>
+    <label><input type="checkbox" class="ck" data-save="sc-3"> Change the <b>size</b> with <code>.style.fontSize</code></label>
+    <label><input type="checkbox" class="ck" data-save="sc-4"> Paint the page with <code>document.body.style.background</code></label>
+    <label><input type="checkbox" class="ck" data-save="sc-5"> Make <b>two buttons</b> run two functions</label>
+    <label><input type="checkbox" class="ck" data-save="sc-6"> <b>Write</b> a button effect from scratch</label>
+  </div>
+  <div class="reflect">
+    <div><label>The trick I want to remember</label><textarea data-save="rf-trick" placeholder="e.g. the id in getElementById has to match exactly..."></textarea></div>
+    <div><label>Something still confusing</label><textarea data-save="rf-stuck" placeholder="Write it here so we can go over it."></textarea></div>
+  </div>
+  <div class="showteacher">🚀 <b>Finished the COULD challenge?</b> Run it, make sure two things change, then show your teacher to get signed off.</div>
+</div>
+
+</main>
+<footer>JavaScript Guided Practice L3 &middot; Yunshu Gao &middot; your work saves on this computer automatically</footer>
+<script>
+const IDS = ["m1", "m2", "m3", "s1", "s2", "s3", "c1", "c2", "c3"];
+const SAVE_KEY = "js-gp-l3-v1";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || {}; } catch (e) { saved = {}; }
+
+function persist(){
+  const s = {};
+  document.querySelectorAll("[data-save]").forEach(function(el){
+    s[el.getAttribute("data-save")] = (el.type === "checkbox") ? el.checked : el.value;
+  });
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); } catch (e) {}
+}
+function runEx(id){
+  const ed = document.getElementById("ed-" + id), out = document.getElementById("out-" + id);
+  out.srcdoc = ed.value || '<p style="font-family:Arial;color:#94a3b8;padding:12px">Type some code, then click Run.</p>';
+  persist();
+}
+function clr(id){ document.getElementById("ed-" + id).value = ""; runEx(id); }
+function toggleSol(id){
+  const b = document.getElementById("solbox-" + id), btn = document.getElementById("solbtn-" + id);
+  const open = b.style.display === "block";
+  b.style.display = open ? "none" : "block";
+  btn.innerHTML = open ? "&#128161; Reveal a solution" : "&#128065; Hide solution";
+}
+function progress(){
+  const all = document.querySelectorAll(".ck");
+  let n = 0; all.forEach(function(c){ if (c.checked) n++; });
+  document.getElementById("prog").textContent = n + " / " + all.length + " done";
+}
+// restore everything saved
+document.querySelectorAll("[data-save]").forEach(function(el){
+  const k = el.getAttribute("data-save");
+  if (saved[k] != null){ if (el.type === "checkbox") el.checked = saved[k]; else el.value = saved[k]; }
+  el.addEventListener("input", persist);
+  el.addEventListener("change", function(){ persist(); progress(); });
+});
+// re-run any editor that already has saved code
+IDS.forEach(function(id){
+  const ed = document.getElementById("ed-" + id);
+  if (ed && (ed.value || "").trim()) runEx(id);
+});
+progress();
+</script>
+</body>
+</html>
