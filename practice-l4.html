@@ -69,6 +69,7 @@ body{margin:0;background:#fff;color:var(--ink);font-family:"Segoe UI",system-ui,
 .win .bar i{width:9px;height:9px;border-radius:50%;background:#cfd8e3;font-style:normal}
 .out{width:100%;height:200px;border:0;display:block;background:#fff}
 .ok{display:flex;align-items:center;gap:10px;margin-top:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:11px 14px;font-size:14px;color:#065f46;font-weight:600}
+.ok[hidden]{display:none}
 .ok .tick{flex:none;width:20px;height:20px;border-radius:50%;background:#10b981;position:relative}
 .ok .tick::after{content:"";position:absolute;left:7px;top:4px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .try{margin-top:12px;border-radius:0 10px 10px 0;padding:12px 16px;font-size:14px}
@@ -558,6 +559,7 @@ var OKTX = {"1": "the page now greets the user by name.", "2": "you joined a nam
 var IDS = Object.keys(STARTERS).map(Number);
 var THEME = "gaming";
 var LSKEY = "l4-state-v1";
+var BASE = {};   // per-tile baseline output text (set on first run, before any interaction)
 
 function $(id){return document.getElementById(id);}
 
@@ -570,26 +572,35 @@ function setTheme(t){
 }
 
 function wrap(i, code){
-  return '<!doctype html><html><head><meta charset="utf-8">'
-   + '<style>body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:16px;color:#16202e}'
+  var head='<!doctype html><html><head><meta charset="utf-8"><style>'
+   + 'body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:16px;color:#16202e}'
    + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:6px;background:#e8edf3;cursor:pointer;margin:2px 0}'
    + 'input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid #cbd5e1;border-radius:6px;margin:2px 4px 2px 0}'
-   + 'h1,h2{margin:.3em 0}</style></head><body>'
-   + code
-   + '<scr'+'ipt>(function(){function tx(){return (document.body.innerText||"").trim();}'
+   + 'h1,h2{margin:.3em 0}'
+   + '#__l4err{position:fixed;left:0;right:0;bottom:0;background:#fef2f2;color:#b91c1c;border-top:2px solid #ef4444;font-family:Consolas,monospace;font-size:12.5px;padding:8px 12px;white-space:pre-wrap;z-index:9}'
+   + '</style><scr'+'ipt>window.onerror=function(m){'
+   + 'var b=document.body||document.documentElement;'
+   + 'var e=document.getElementById("__l4err");if(!e){e=document.createElement("div");e.id="__l4err";b.appendChild(e);}'
+   + 'e.textContent="Error: "+m;'
+   + 'try{parent.postMessage({l4:1,id:'+i+',err:String(m)},"*");}catch(_){}return false;};<\/scr'+'ipt></head>';
+  var body='<body><div id="__l4app">'+code+'</div>'
+   + '<scr'+'ipt>(function(){'
+   + 'function tx(){var a=document.getElementById("__l4app");return a?(a.innerText||"").trim():"";}'
    + 'function p(){try{parent.postMessage({l4:1,id:'+i+',text:tx()},"*");}catch(e){}}'
    + 'try{new MutationObserver(p).observe(document.body,{subtree:true,childList:true,characterData:true});}catch(e){}'
-   + 'window.addEventListener("error",function(e){try{parent.postMessage({l4:1,id:'+i+',err:1});}catch(_){}});'
    + 'setTimeout(p,60);})();<\/scr'+'ipt></body></html>';
+  return head+body;
 }
 
 function runEx(i){
-  var code=$("ed"+i).value;
-  $("out"+i).srcdoc = wrap(i, code);
+  delete BASE[i];          // next message becomes the fresh baseline
+  $("ok"+i).hidden=true;
+  $("out"+i).srcdoc = wrap(i, $("ed"+i).value);
 }
 
 function resetEx(i){
   $("ed"+i).value="";
+  delete BASE[i];
   $("out"+i).srcdoc="";
   $("ok"+i).hidden=true;
   persist();
@@ -597,10 +608,13 @@ function resetEx(i){
 
 window.addEventListener("message", function(e){
   var d=e.data; if(!d || d.l4!==1) return;
-  var i=d.id; if(d.err) return;
-  var want=WANT[String(i)];
+  var i=d.id;
+  if(d.err) return;                       // error is shown inside the preview; never auto-tick
   var text=d.text||"";
-  var ok = want ? (text.indexOf(want)>=0) : (text.trim().length>0);
+  if(BASE[i]===undefined){ BASE[i]=text; return; }   // first message after Run = starter baseline
+  var want=WANT[String(i)];
+  var ok = want ? (text.indexOf(want)>=0)             // specific target (e.g. scope bug must show Room: 1.01)
+                : (text!==BASE[i] && text.trim().length>0);  // output actually changed after interaction
   if(ok) showOk(i);
 });
 
