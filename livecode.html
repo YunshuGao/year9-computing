@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Code &middot; Year 9 Computing</title>
+<style>
+:root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#eef2f7;color:var(--ink);
+     font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.5;
+     display:flex;flex-direction:column;padding:14px 18px;gap:12px}
+
+/* ---- top bar ---- */
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+     background:#fff;border:1px solid var(--line);border-radius:14px;
+     padding:10px 16px;box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.bar h1{font-size:18px;margin:0;font-weight:800;letter-spacing:-.3px;white-space:nowrap}
+.bar h1 small{font-weight:600;color:var(--mut);font-size:12.5px;margin-left:8px}
+.bar select{font-family:inherit;font-size:14px;border:1px solid var(--line);
+     border-radius:8px;padding:7px 9px;background:#fff;color:var(--ink)}
+.spacer{flex:1}
+.btn{font-family:inherit;font-weight:700;font-size:14.5px;border:0;cursor:pointer;
+     border-radius:9px;padding:9px 18px}
+.btn.run{background:#10b981;color:#fff;font-size:15.5px;padding:9px 26px}
+.btn.run:hover{background:#0ea271}
+.btn.ghost{background:var(--soft);color:var(--mut);border:1px solid var(--line)}
+.btn.sz{padding:9px 13px;background:var(--soft);color:var(--ink);
+     border:1px solid var(--line);font-size:14px}
+.hint{font-size:12px;color:var(--mut);white-space:nowrap}
+
+/* ---- panes ---- */
+.panes{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px;min-height:0}
+.pane{display:flex;flex-direction:column;min-height:0;border-radius:14px;overflow:hidden;
+      border:1px solid var(--line);background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.pane .head{background:var(--soft);border-bottom:1px solid var(--line);
+      padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--mut);display:flex;gap:8px;align-items:center}
+.pane .head i{width:9px;height:9px;border-radius:50%;background:#cfd8e3;font-style:normal}
+.pane .head .mode{margin-left:auto;font-size:10.5px;letter-spacing:.1em;
+      padding:3px 10px;border-radius:99px;background:#e8edf3;color:var(--mut)}
+.pane .head .mode.page{background:#ecfdf5;color:#047857}
+.pane .head .mode.console{background:#eef2ff;color:#1e3a8a}
+
+#ed{flex:1;width:100%;border:0;outline:none;resize:none;background:var(--code);
+    color:#e9eef6;font-family:Consolas,"Courier New",monospace;
+    font-size:19px;line-height:1.6;padding:16px 18px;tab-size:2}
+
+.outwrap{flex:1;display:flex;flex-direction:column;min-height:0}
+#out{flex:1;width:100%;border:0;background:#fff}
+#cons{max-height:34%;overflow:auto;background:var(--code);color:#d7e3f4;
+      font-family:Consolas,"Courier New",monospace;font-size:17px;line-height:1.6;
+      padding:8px 14px;display:none;border-top:1px solid #2b3950}
+#cons .l{white-space:pre-wrap}
+#cons .l.res{color:#7ce2b3}
+#errline{display:none;background:#fef2f2;color:#b91c1c;border-top:2px solid #ef4444;
+      font-family:Consolas,monospace;font-size:14.5px;padding:9px 14px;white-space:pre-wrap}
+
+@media (max-width:900px){ .panes{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <h1>Live Code<small>Year 9 Computing &middot; teacher demo</small></h1>
+  <select id="preset" title="Load an example">
+    <option value="">Load example&hellip;</option>
+    <option value="hello">Button says hello</option>
+    <option value="sentence">Build a sentence (two prompts)</option>
+    <option value="style">Change the look</option>
+    <option value="vars">Plain JS - variables</option>
+    <option value="ifelse">Plain JS - decision</option>
+    <option value="blank">Blank</option>
+  </select>
+  <span class="spacer"></span>
+  <span class="hint">Ctrl+Enter = Run</span>
+  <button class="btn sz" id="smaller" title="Smaller text">A&minus;</button>
+  <button class="btn sz" id="bigger" title="Bigger text">A+</button>
+  <button class="btn ghost" id="clear">Clear</button>
+  <button class="btn run" id="run">&#9654;&nbsp; Run</button>
+</div>
+
+<div class="panes">
+  <div class="pane">
+    <div class="head">Type code here</div>
+    <textarea id="ed" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+  </div>
+  <div class="pane">
+    <div class="head"><i></i><i></i><i></i> what happens
+      <span class="mode" id="mode" hidden></span></div>
+    <div class="outwrap">
+      <iframe id="out" sandbox="allow-scripts allow-modals"></iframe>
+      <div id="cons"></div>
+      <div id="errline"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var $ = function(id){ return document.getElementById(id); };
+var SIZES = [16, 19, 22, 26, 30];
+var state = { size: 1 };
+
+/* ---- presets ---- */
+var PRESETS = {
+ blank: "",
+ hello: '<h1 id="msg">Press the button</h1>\n<button onclick="hi()">Say hello</button>\n\n<script>\n  function hi() {\n    let name = prompt("Your name?");\n    document.getElementById("msg").innerHTML = "Hello, " + name + "!";\n  }\n<\/script>',
+ sentence: '<h2 id="out"></h2>\n<button onclick="go()">Build it</button>\n\n<script>\n  function go() {\n    let name = prompt("Your name?");\n    let fav = prompt("Favourite subject?");\n    out.innerHTML = name + " loves " + fav;\n  }\n<\/script>',
+ style: '<h1 id="t">Click the button to restyle me</h1>\n<button onclick="paint()">Paint it</button>\n\n<script>\n  function paint() {\n    let el = document.getElementById("t");\n    el.style.color = "white";\n    el.style.background = "#7c3aed";\n    document.body.style.background = "#16202e";\n  }\n<\/script>',
+ vars: 'let name = "Ali";\nlet score = 10;\nconsole.log(name + " scored " + score);\n\nscore + 5',
+ ifelse: 'let n = Number(prompt("Pick a number"));\n\nif (n > 10) {\n  console.log(n + " is BIG");\n} else {\n  console.log(n + " is small");\n}'
+};
+
+/* ---- auto-detect: does it look like markup? ---- */
+function looksLikeHTML(code){
+  return /<\s*(!doctype|html|head|body|h[1-6]|p|div|span|button|input|script|style|img|a|ul|ol|li|table|tr|td|th|form|select|option|br|hr|strong|em|b|i|u|section|header|footer|nav|label|textarea|video|audio|canvas)\b/i.test(code);
+}
+
+/* ---- iframe scaffold: base styles + console/error hooks ---- */
+function scaffold(px){
+  return '<style>body{font-family:"Segoe UI",system-ui,Arial,sans-serif;'
+   + 'padding:14px;font-size:' + px + 'px;line-height:1.5}'
+   + 'button{font-family:inherit;font-size:1em;padding:8px 16px;border:0;'
+   + 'border-radius:8px;background:#e8edf3;cursor:pointer;margin:2px 0}'
+   + 'button:hover{background:#dbe3ec}'
+   + 'input,select{font-family:inherit;font-size:1em;padding:6px 9px}</style>'
+   + '<script>(function(){var log=console.log;'
+   + 'console.log=function(){var s=Array.prototype.map.call(arguments,function(a){'
+   + 'try{return (typeof a==="object"&&a!==null)?JSON.stringify(a):String(a)}'
+   + 'catch(e){return String(a)}}).join(" ");'
+   + 'parent.postMessage({t:"log",v:s},"*");log.apply(console,arguments);};'
+   + 'window.onerror=function(m,s,l){parent.postMessage({t:"err",v:String(m)},"*");};'
+   + '})();<\/script>';
+}
+
+/* ---- run ---- */
+function run(){
+  var code = $("ed").value;
+  $("cons").innerHTML = ""; $("cons").style.display = "none";
+  $("errline").style.display = "none"; $("errline").textContent = "";
+  var px = SIZES[state.size] - 1;
+  var isPage = looksLikeHTML(code);
+  var badge = $("mode");
+  badge.hidden = false;
+  badge.textContent = isPage ? "page" : "console";
+  badge.className = "mode " + (isPage ? "page" : "console");
+  if (isPage){
+    $("out").srcdoc = scaffold(px) + code;
+  } else {
+    $("out").srcdoc = scaffold(px)
+      + '<script>try{var __r=eval(' + JSON.stringify(code).replace(/<\//g, "<\\/") + ');'
+      + 'if(__r!==undefined)parent.postMessage({t:"res",v:String(__r)},"*");}'
+      + 'catch(e){parent.postMessage({t:"err",v:e.message},"*");}<\/script>';
+  }
+}
+
+window.addEventListener("message", function(ev){
+  var d = ev.data || {};
+  if (d.t === "log" || d.t === "res"){
+    var c = $("cons"); c.style.display = "block";
+    var ln = document.createElement("div");
+    ln.className = "l" + (d.t === "res" ? " res" : "");
+    ln.textContent = (d.t === "res" ? "= " : "› ") + d.v;
+    c.appendChild(ln); c.scrollTop = c.scrollHeight;
+  } else if (d.t === "err"){
+    var e = $("errline"); e.style.display = "block";
+    e.textContent = "⚠ " + d.v;
+  }
+});
+
+/* ---- font scaling (editor + console now, iframe on next Run) ---- */
+function applySize(){
+  var px = SIZES[state.size];
+  $("ed").style.fontSize = px + "px";
+  $("cons").style.fontSize = (px - 2) + "px";
+  persist();
+}
+$("bigger").onclick  = function(){ if (state.size < SIZES.length-1){ state.size++; applySize(); } };
+$("smaller").onclick = function(){ if (state.size > 0){ state.size--; applySize(); } };
+
+/* ---- controls ---- */
+$("run").onclick = run;
+$("clear").onclick = function(){
+  $("ed").value = ""; $("out").srcdoc = "";
+  $("cons").innerHTML = ""; $("cons").style.display = "none";
+  $("errline").style.display = "none"; $("mode").hidden = true;
+  persist(); $("ed").focus();
+};
+$("preset").onchange = function(){
+  if (this.value === "") return;
+  $("ed").value = PRESETS[this.value] || "";
+  this.value = "";
+  persist(); $("ed").focus();
+};
+$("ed").addEventListener("keydown", function(e){
+  if (e.key === "Tab"){
+    e.preventDefault();
+    var s = this.selectionStart, t = this.selectionEnd;
+    this.value = this.value.slice(0, s) + "  " + this.value.slice(t);
+    this.selectionStart = this.selectionEnd = s + 2;
+  }
+  if (e.ctrlKey && e.key === "Enter"){ e.preventDefault(); run(); }
+});
+$("ed").addEventListener("input", persist);
+
+/* ---- crash net ---- */
+function persist(){
+  try{ localStorage.setItem("livecode_v1",
+       JSON.stringify({code: $("ed").value, size: state.size})); }catch(e){}
+}
+(function restore(){
+  var s = null;
+  try{ s = JSON.parse(localStorage.getItem("livecode_v1") || "null"); }catch(e){}
+  if (s && typeof s.code === "string" && s.code !== ""){
+    $("ed").value = s.code;
+    if (typeof s.size === "number" && SIZES[s.size]) state.size = s.size;
+  } else {
+    $("ed").value = PRESETS.hello;
+  }
+  applySize();
+})();
+</script>
+</body>
+</html>
