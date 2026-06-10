@@ -99,6 +99,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 /* ---- COULD challenge types ---- */
 .ctype{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 9px;margin-left:6px;vertical-align:middle}
 .ctype.predict{background:#eef2ff;color:#1e3a8a}.ctype.debug{background:#fef2f2;color:#b91c1c}.ctype.create{background:#ecfdf5;color:#047857}
+.ctype.trace{background:#fff7ed;color:#9a3412}.ctype.boss{background:#16202e;color:#fff}
 .editor.short{height:118px}
 .goalbox{background:#f6f9fb;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;color:#37424f;line-height:1.55}
 .goalbox b{color:#16202e}
@@ -109,8 +110,6 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 .reveal[hidden]{display:none}
 .reveal.hint{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
 .reveal.ans{background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a}
-.reveal.sol{background:var(--code);color:#e9eef6;font-family:Consolas,monospace;font-size:12px;line-height:1.55;white-space:pre;overflow:auto}
-.reveal.sol code{background:transparent;color:inherit}
 @media(max-width:1040px){.cols{grid-template-columns:1fr}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
 </style></head><body>
 <div class="wrap">
@@ -124,11 +123,11 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
     <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
     <label>Date <input id="sdate" type="date"></label>
-    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 11 done</span></span>
+    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 15 done</span></span>
     <button class="btn save" onclick="save()">Save my work</button>
   </div>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">everyone finishes these</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">Hello</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">Their number</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">Build a line</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">Profile</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">build interactivity</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">Read a box</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">High score?</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">Pick a path</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">Function</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">challenge yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Predict it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix the bug</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a></div></div></nav>
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">everyone finishes these</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">Hello</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">Their number</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">Build a line</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">Profile</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">build interactivity</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">Read a box</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">High score?</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">Pick a path</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">Function</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">challenge yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Predict it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix the bug</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Trace it</span></a><a class="pill could" href="#ex13"><span class="num">13</span><span class="ttl">Read the error</span></a><a class="pill could" href="#ex14"><span class="num">14</span><span class="ttl">Click counter</span></a><a class="pill could" href="#ex15"><span class="num">15</span><span class="ttl">Boss level</span></a></div></div></nav>
 
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex1">
@@ -511,7 +510,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal create" id="ex11">
     <div class="h"><span class="n">11</span><h3>Build it yourself <span class="ctype create">CREATE</span></h3></div>
-    <p class="lead">No code given this time. Build it from the goal &mdash; only use a hint or reveal a solution if you are stuck.</p>
+    <p class="lead">No code given this time &mdash; and no answer to peek at. Build it from the goal; the hint is there if you are stuck.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
@@ -519,19 +518,8 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
           <div class="eg">Expected: Hi Sam, you like pizza!</div>
           <div class="chal-btns">
             <button class="btn ghost" onclick="showHint(11)">Show a hint</button>
-            <button class="btn ghost" onclick="revealSol(11)">Reveal a solution</button>
           </div>
           <div class="reveal hint" id="hint11" hidden>One <code>function</code>. Two <code>prompt</code>s (two <code>let</code>s). Join them with <code>+</code> into one <code>innerHTML</code>. Do not forget the button&rsquo;s <code>onclick</code>.</div>
-          <pre class="reveal sol" id="sol11" hidden>&lt;button onclick="go()"&gt;Greet me&lt;/button&gt;
-&lt;h2 id="out"&gt;&lt;/h2&gt;
-
-&lt;script&gt;
-  function go() {
-    let name = prompt("Your name?");
-    let fav = prompt("Favourite thing?");
-    out.innerHTML = "Hi " + name + ", you like " + fav + "!";
-  }
-&lt;/script&gt;</pre>
         </div>
       </div>
       <div class="col">
@@ -548,6 +536,142 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
         <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you built your own greeter from scratch.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal predict" id="ex12">
+    <div class="h"><span class="n">12</span><h3>Trace the lines <span class="ctype trace">TRACE</span></h3></div>
+    <p class="lead">Three lines run in order when the button is clicked. Write EXACTLY what the page shows after ONE click &mdash; then check.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code</div>
+        <pre class="code-ref" id="ref12">&lt;button onclick="paint()"&gt;Paint&lt;/button&gt;
+&lt;p id="out"&gt;&lt;/p&gt;
+&lt;script&gt;
+  function paint() {
+    out.innerHTML = "Red";
+    out.innerHTML = "Blue";
+    out.innerHTML = out.innerHTML + " Gold";
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Your prediction</div>
+        <textarea class="editor short" id="ed12" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runPredict(12)">Run &amp; check</button>
+          <button class="btn ghost" onclick="resetEx(12)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done12" onchange="toggleDone(12)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
+        <div class="reveal ans" id="ans12" hidden>It shows <b>Blue Gold</b>. Line 2 <b>replaces</b> "Red" with "Blue" (a plain <code>=</code> wipes what was there). Line 3 keeps the current text and <b>adds</b> " Gold" onto it.</div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; you traced the order &amp;mdash; = replaces, building on the old text adds.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal debug" id="ex13">
+    <div class="h"><span class="n">13</span><h3>Read the error <span class="ctype debug">DEBUG</span></h3></div>
+    <p class="lead">ONE character is wrong. Click Run, click the button, and READ the red error line &mdash; it tells you what could not be found.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">Click the button &mdash; it breaks. Use the red error line to find the ONE wrong character, then fix it.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(13)">Show a hint</button></div>
+          <div class="reveal hint" id="hint13" hidden>The error says it got <code>null</code> &mdash; nothing was FOUND. Ids are CASE-SENSITIVE: <code>"Score"</code> and <code>"score"</code> are different names.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fix it here</div>
+        <textarea class="editor" id="ed13" spellcheck="false">&lt;h1 id="score"&gt;Ready&lt;/h1&gt;
+&lt;button onclick="win()"&gt;Win a point&lt;/button&gt;
+
+&lt;script&gt;
+  function win() {
+    document.getElementById("Score")
+      .innerHTML = "Level up!";
+  }
+&lt;/script&gt;</textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(13)">Run</button>
+          <button class="btn ghost" onclick="resetEx(13)">Reset</button>
+          <label class="donebox"><input type="checkbox" id="done13" onchange="toggleDone(13)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out13" title="result for tile 13"></iframe></div>
+        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; one capital letter &amp;mdash; you read the error and fixed it.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal create" id="ex14">
+    <div class="h"><span class="n">14</span><h3>Click counter <span class="ctype create">CREATE</span></h3></div>
+    <p class="lead">Build it from the goal &mdash; hint only, no answer given. This one needs the page to REMEMBER between clicks.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">A button and a heading. Every click adds 1: the heading shows <b>Clicks: 1</b>, then <b>Clicks: 2</b>, then <b>Clicks: 3</b>...
+          <div class="eg">Expected: Clicks: 7</div>
+          <div class="chal-btns">
+            <button class="btn ghost" onclick="showHint(14)">Show a hint</button>
+          </div>
+          <div class="reveal hint" id="hint14" hidden>Make the variable OUTSIDE the function: <code>let count = 0;</code> &mdash; inside the function: <code>count = count + 1;</code> then show <code>"Clicks: " + count</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
+        <textarea class="editor" id="ed14" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(14)">Run</button>
+          <button class="btn ghost" onclick="resetEx(14)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done14" onchange="toggleDone(14)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out14" title="result for tile 14"></iframe></div>
+        <div class="ok" id="ok14" hidden><span class="tick"></span><span><b>Tile 14 done</b> &mdash; your page REMEMBERS &amp;mdash; a variable outside the function keeps counting.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal create" id="ex15">
+    <div class="h"><span class="n">15</span><h3>Boss level <span class="ctype boss">BOSS</span></h3></div>
+    <p class="lead">Everything from today in one build. No answer given &mdash; you have all the pieces.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">ONE heading, TWO buttons. The <b>Morning</b> button shows &ldquo;Good morning, [their name]&rdquo;; the <b>Night</b> button shows &ldquo;Good night, [their name]&rdquo;. Ask the name with <code>prompt</code>.
+          <div class="eg">Expected: Good morning, Sam</div>
+          <div class="chal-btns">
+            <button class="btn ghost" onclick="showHint(15)">Show a hint</button>
+          </div>
+          <div class="reveal hint" id="hint15" hidden>TWO functions with two different names. TWO buttons, each <code>onclick</code> calling ONE of them. Both functions change the SAME id.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
+        <textarea class="editor" id="ed15" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(15)">Run</button>
+          <button class="btn ghost" onclick="resetEx(15)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done15" onchange="toggleDone(15)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out15" title="result for tile 15"></iframe></div>
+        <div class="ok" id="ok15" hidden><span class="tick"></span><span><b>Tile 15 done</b> &mdash; two buttons, two functions, one page &amp;mdash; that is a real interface.</span></div>
       </div>
     </div>
   </section>
@@ -570,12 +694,12 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 <div class="toast" id="toast"></div>
 <script>
 var STARTERS = {"1": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"hi()\">Enter<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Gamer tag?\");\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Player \" + name;\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"hi()\">Kick off<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Footy nickname?\");\n    document.getElementById(\"msg\")\n      .innerHTML = name + \" takes the field\";\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"hi()\">Play<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Stage name?\");\n    document.getElementById(\"msg\")\n      .innerHTML = \"Now on stage: \" + name;\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"hi()\">Action<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Character name?\");\n    document.getElementById(\"msg\")\n      .innerHTML = \"Starring: \" + name;\n  }\n<\/script>"}, "2": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"hi()\">Enter<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Gamer tag?\");\n    let n = prompt(\"Level?\");\n    document.getElementById(\"msg\")\n      .innerHTML = name + \" (Lv \" + n + \")\";\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"hi()\">Kick off<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Footy nickname?\");\n    let n = prompt(\"Jersey number?\");\n    document.getElementById(\"msg\")\n      .innerHTML = name + \" (# \" + n + \")\";\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"hi()\">Play<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Stage name?\");\n    let n = prompt(\"Songs released?\");\n    document.getElementById(\"msg\")\n      .innerHTML = name + \" (songs \" + n + \")\";\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"hi()\">Action<\/button>\n\n<script>\n  function hi() {\n    let name = prompt(\"Character name?\");\n    let n = prompt(\"Films made?\");\n    document.getElementById(\"msg\")\n      .innerHTML = name + \" (films \" + n + \")\";\n  }\n<\/script>"}, "3": {"gaming": "<h2 id=\"out\"><\/h2>\n<button onclick=\"go()\">Build<\/button>\n\n<script>\n  function go() {\n    let name = prompt(\"Gamer tag?\");\n    let fav = prompt(\"Favourite game?\");\n    out.innerHTML = name + \"'s game is \" + fav;\n  }\n<\/script>", "footy": "<h2 id=\"out\"><\/h2>\n<button onclick=\"go()\">Build<\/button>\n\n<script>\n  function go() {\n    let name = prompt(\"Footy nickname?\");\n    let fav = prompt(\"Favourite team?\");\n    out.innerHTML = name + \"'s team is \" + fav;\n  }\n<\/script>", "music": "<h2 id=\"out\"><\/h2>\n<button onclick=\"go()\">Build<\/button>\n\n<script>\n  function go() {\n    let name = prompt(\"Stage name?\");\n    let fav = prompt(\"Favourite song?\");\n    out.innerHTML = name + \"'s song is \" + fav;\n  }\n<\/script>", "movies": "<h2 id=\"out\"><\/h2>\n<button onclick=\"go()\">Build<\/button>\n\n<script>\n  function go() {\n    let name = prompt(\"Character name?\");\n    let fav = prompt(\"Favourite film?\");\n    out.innerHTML = name + \"'s film is \" + fav;\n  }\n<\/script>"}, "4": {"gaming": "<div id=\"card\"><\/div>\n<button onclick=\"make()\">Make profile<\/button>\n\n<script>\n  function make() {\n    let name = prompt(\"Gamer tag?\");\n    let n = prompt(\"Level?\");\n    let fav = prompt(\"Favourite game?\");\n    card.innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Lv: \" + n + \"<\/p>\" +\n      \"<p>game: \" + fav + \"<\/p>\";\n  }\n<\/script>", "footy": "<div id=\"card\"><\/div>\n<button onclick=\"make()\">Make profile<\/button>\n\n<script>\n  function make() {\n    let name = prompt(\"Footy nickname?\");\n    let n = prompt(\"Jersey number?\");\n    let fav = prompt(\"Favourite team?\");\n    card.innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>#: \" + n + \"<\/p>\" +\n      \"<p>team: \" + fav + \"<\/p>\";\n  }\n<\/script>", "music": "<div id=\"card\"><\/div>\n<button onclick=\"make()\">Make profile<\/button>\n\n<script>\n  function make() {\n    let name = prompt(\"Stage name?\");\n    let n = prompt(\"Songs released?\");\n    let fav = prompt(\"Favourite song?\");\n    card.innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>songs: \" + n + \"<\/p>\" +\n      \"<p>song: \" + fav + \"<\/p>\";\n  }\n<\/script>", "movies": "<div id=\"card\"><\/div>\n<button onclick=\"make()\">Make profile<\/button>\n\n<script>\n  function make() {\n    let name = prompt(\"Character name?\");\n    let n = prompt(\"Films made?\");\n    let fav = prompt(\"Favourite film?\");\n    card.innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>films: \" + n + \"<\/p>\" +\n      \"<p>film: \" + fav + \"<\/p>\";\n  }\n<\/script>"}, "5": {"gaming": "<input id=\"box\" placeholder=\"Type a Player name\">\n<button onclick=\"show()\">Show<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function show() {\n    let text = document.getElementById(\"box\").value;\n    out.innerHTML = \"Hi \" + text;\n  }\n<\/script>", "footy": "<input id=\"box\" placeholder=\"Type a Player name\">\n<button onclick=\"show()\">Show<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function show() {\n    let text = document.getElementById(\"box\").value;\n    out.innerHTML = \"Hi \" + text;\n  }\n<\/script>", "music": "<input id=\"box\" placeholder=\"Type a Artist name\">\n<button onclick=\"show()\">Show<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function show() {\n    let text = document.getElementById(\"box\").value;\n    out.innerHTML = \"Hi \" + text;\n  }\n<\/script>", "movies": "<input id=\"box\" placeholder=\"Type a Star name\">\n<button onclick=\"show()\">Show<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function show() {\n    let text = document.getElementById(\"box\").value;\n    out.innerHTML = \"Hi \" + text;\n  }\n<\/script>"}, "6": {"gaming": "<input id=\"box\" placeholder=\"your score\">\n<button onclick=\"check()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function check() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 50) {\n      out.innerHTML = \"New high score\";\n    } else {\n      out.innerHTML = \"Keep trying\";\n    }\n  }\n<\/script>", "footy": "<input id=\"box\" placeholder=\"goals this season\">\n<button onclick=\"check()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function check() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 50) {\n      out.innerHTML = \"Back of the net\";\n    } else {\n      out.innerHTML = \"Next time\";\n    }\n  }\n<\/script>", "music": "<input id=\"box\" placeholder=\"streams (millions)\">\n<button onclick=\"check()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function check() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 50) {\n      out.innerHTML = \"Going platinum\";\n    } else {\n      out.innerHTML = \"Keep practising\";\n    }\n  }\n<\/script>", "movies": "<input id=\"box\" placeholder=\"box office ($m)\">\n<button onclick=\"check()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function check() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 50) {\n      out.innerHTML = \"Blockbuster\";\n    } else {\n      out.innerHTML = \"Straight to DVD\";\n    }\n  }\n<\/script>"}, "7": {"gaming": "<input id=\"box\" placeholder=\"your score\">\n<button onclick=\"grade()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function grade() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 80) {\n      out.innerHTML = \"Top of the leaderboard\";\n    } else if (score >= 50) {\n      out.innerHTML = \"Solid run\";\n    } else {\n      out.innerHTML = \"Keep trying\";\n    }\n  }\n<\/script>", "footy": "<input id=\"box\" placeholder=\"goals this season\">\n<button onclick=\"grade()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function grade() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 80) {\n      out.innerHTML = \"Player of the match\";\n    } else if (score >= 50) {\n      out.innerHTML = \"Solid game\";\n    } else {\n      out.innerHTML = \"Next time\";\n    }\n  }\n<\/script>", "music": "<input id=\"box\" placeholder=\"streams (millions)\">\n<button onclick=\"grade()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function grade() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 80) {\n      out.innerHTML = \"Number one hit\";\n    } else if (score >= 50) {\n      out.innerHTML = \"Climbing the charts\";\n    } else {\n      out.innerHTML = \"Keep practising\";\n    }\n  }\n<\/script>", "movies": "<input id=\"box\" placeholder=\"box office ($m)\">\n<button onclick=\"grade()\">Check<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function grade() {\n    let score = document.getElementById(\"box\").value;\n    if (score >= 80) {\n      out.innerHTML = \"Oscar winner\";\n    } else if (score >= 50) {\n      out.innerHTML = \"Cult classic\";\n    } else {\n      out.innerHTML = \"Straight to DVD\";\n    }\n  }\n<\/script>"}, "8": {"gaming": "<h2 id=\"out\"><\/h2>\n<button onclick=\"run()\">Run<\/button>\n\n<script>\n  function welcome(who) {\n    return \"Welcome, \" + who;\n  }\n  function run() {\n    out.innerHTML =\n      welcome(\"Player One\") + \"<br>\" + welcome(\"Player Two\");\n  }\n<\/script>", "footy": "<h2 id=\"out\"><\/h2>\n<button onclick=\"run()\">Run<\/button>\n\n<script>\n  function welcome(who) {\n    return \"Welcome, \" + who;\n  }\n  function run() {\n    out.innerHTML =\n      welcome(\"Player One\") + \"<br>\" + welcome(\"Player Two\");\n  }\n<\/script>", "music": "<h2 id=\"out\"><\/h2>\n<button onclick=\"run()\">Run<\/button>\n\n<script>\n  function welcome(who) {\n    return \"Welcome, \" + who;\n  }\n  function run() {\n    out.innerHTML =\n      welcome(\"Artist One\") + \"<br>\" + welcome(\"Artist Two\");\n  }\n<\/script>", "movies": "<h2 id=\"out\"><\/h2>\n<button onclick=\"run()\">Run<\/button>\n\n<script>\n  function welcome(who) {\n    return \"Welcome, \" + who;\n  }\n  function run() {\n    out.innerHTML =\n      welcome(\"Star One\") + \"<br>\" + welcome(\"Star Two\");\n  }\n<\/script>"}};
-var WANT = {"10": "Room: 1.01"};
-var OKTX = {"1": "the page now greets the user by name.", "2": "you joined a name and a number into one line.", "3": "you built a sentence from variables.", "4": "your profile card filled in.", "5": "you read the box and showed it back.", "6": "your code made a decision.", "7": "three-way decision working.", "8": "you reused one function twice.", "9": "you predicted a tricky one, then checked it.", "10": "you fixed the scope bug &mdash; the room shows.", "11": "you built your own greeter from scratch."};
-var MODES = {"9": "predict", "10": "debug", "11": "create"};        // {id: "predict"|"debug"|"create"} for COULD challenge tiles
-var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let score = \"10\";\n  let bonus = 5;\n  out.innerHTML = \"Total: \" + score + bonus;\n<\/script>"};    // fixed code the "predict" tile runs
-var DEBUGC = {"10": "<button onclick=\"check()\">Run<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function check() {\n    let name = \"Mr Montalban\";\n    if (name == \"Mr Montalban\") {\n      let room = \"1.01\";\n    }\n    out.innerHTML = \"Hello \" + name + \"<br>\";\n    out.innerHTML += \"Room: \" + room;\n  }\n<\/script>"};      // broken code the "debug" tile starts with
-var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];     // every tile (type tiles + challenge tiles)
+var WANT = {"10": "Room: 1.01", "13": "Level up!"};
+var OKTX = {"1": "the page now greets the user by name.", "2": "you joined a name and a number into one line.", "3": "you built a sentence from variables.", "4": "your profile card filled in.", "5": "you read the box and showed it back.", "6": "your code made a decision.", "7": "three-way decision working.", "8": "you reused one function twice.", "9": "you predicted a tricky one, then checked it.", "10": "you fixed the scope bug &mdash; the room shows.", "11": "you built your own greeter from scratch.", "12": "you traced the order &mdash; = replaces, building on the old text adds.", "13": "one capital letter &mdash; you read the error and fixed it.", "14": "your page REMEMBERS &mdash; a variable outside the function keeps counting.", "15": "two buttons, two functions, one page &mdash; that is a real interface."};
+var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "predict", "13": "debug", "14": "create", "15": "create"};        // {id: "predict"|"debug"|"create"} for COULD challenge tiles
+var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let score = \"10\";\n  let bonus = 5;\n  out.innerHTML = \"Total: \" + score + bonus;\n<\/script>", "12": "<button onclick=\"paint()\">Paint<\/button>\n<p id=\"out\"><\/p>\n<script>\n  function paint() {\n    out.innerHTML = \"Red\";\n    out.innerHTML = \"Blue\";\n    out.innerHTML = out.innerHTML + \" Gold\";\n  }\n<\/script>"};    // fixed code the "predict" tile runs
+var DEBUGC = {"10": "<button onclick=\"check()\">Run<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function check() {\n    let name = \"Mr Montalban\";\n    if (name == \"Mr Montalban\") {\n      let room = \"1.01\";\n    }\n    out.innerHTML = \"Hello \" + name + \"<br>\";\n    out.innerHTML += \"Room: \" + room;\n  }\n<\/script>", "13": "<h1 id=\"score\">Ready<\/h1>\n<button onclick=\"win()\">Win a point<\/button>\n\n<script>\n  function win() {\n    document.getElementById(\"Score\")\n      .innerHTML = \"Level up!\";\n  }\n<\/script>"};      // broken code the "debug" tile starts with
+var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];     // every tile (type tiles + challenge tiles)
 var IDS = Object.keys(STARTERS).map(Number);   // type tiles only (themed reference)
 var THEME = "gaming";
 var LSKEY = "l4-state-v1";
@@ -627,7 +751,6 @@ function runPredict(i){              // "predict" tile: must guess BEFORE the an
   persist();
 }
 function showHint(i){ var h=$("hint"+i); if(h) h.hidden=false; }
-function revealSol(i){ var s=$("sol"+i); if(s) s.hidden=false; }
 
 function resetEx(i){
   var m=MODES[String(i)]||"type";
