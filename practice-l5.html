@@ -4,7 +4,7 @@
 <style>
 :root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
   --gold:#ffd200;--brand:#00a3e0;
-  --spectrum:linear-gradient(90deg,#ff2d9b 0%,#ff7a00 27%,#ffd200 50%,#00c389 73%,#00a3e0 100%);}
+  --spectrum:linear-gradient(100deg,#ffe184 0%,#f6c043 48%,#e3982a 100%);}
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(rgba(238,242,247,.87),rgba(238,242,247,.9)),url('img/bg.jpg') center top/cover fixed #eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding:0 30px}
@@ -192,19 +192,16 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 /* ---- advanced effects: reveal, parallax, tilt, scroll progress ---- */
 html{scroll-behavior:smooth}
 .progress-top{position:fixed;left:0;top:0;height:4px;width:0;background:var(--spectrum);z-index:300;transition:width .08s linear}
-.is-in{opacity:1!important;transform:none!important}
-.band{background-attachment:fixed}
+.is-in{opacity:1!important}
 .pill{transition:transform .15s ease}
 .pill:hover{transform:translateY(-3px) scale(1.05)}
 .theme{transition:transform .12s ease}
 .theme:hover{transform:translateY(-2px)}
 .mission-card{perspective:800px}
 .mission-card .fut{transition:transform .12s ease;will-change:transform}
-.wc-ul{background-size:200% 100%;animation:shim 5s linear infinite}
-@keyframes shim{to{background-position:-200% 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
 @media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}body{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
-.fut,.poster,.petcard{position:relative;width:158px;height:208px;margin:6px auto;border-radius:12px 12px 34px 12px;color:#2e2400;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.3);overflow:hidden}.fut{background:linear-gradient(165deg,#fbe98f,#e7c453 45%,#b8860b)}.poster{background:linear-gradient(165deg,#1f2937,#7c3aed 60%,#ec4899);color:#fff;border-radius:12px}.petcard{background:linear-gradient(165deg,#fff,#fde68a 55%,#fca5a5);color:#7c2d12;border-radius:20px}.fut .rt,.poster .rt,.petcard .rt{position:absolute;top:11px;left:13px;font-size:27px}.fut .pic,.poster .pic,.petcard .pic{position:absolute;top:42px;left:50%;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-size:38px}.fut .nm,.poster .nm,.petcard .nm{position:absolute;left:8px;right:8px;bottom:22px;text-align:center;font-size:16px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
+.fut,.poster,.petcard{position:relative;width:158px;height:208px;margin:6px auto;border-radius:12px 12px 34px 12px;color:#2e2400;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.3);overflow:hidden}.fut{background:linear-gradient(165deg,#fbe98f,#e7c453 45%,#b8860b)}.poster{background:linear-gradient(165deg,#1f2937,#7c3aed 60%,#ec4899);color:#fff;border-radius:12px}.petcard{background:linear-gradient(165deg,#fff,#fde68a 55%,#fca5a5);color:#7c2d12;border-radius:20px}.fut .rt,.poster .rt,.petcard .rt{position:absolute;top:11px;left:13px;font-size:27px}.fut .pic,.poster .pic,.petcard .pic{position:absolute;top:42px;left:50%;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-size:38px}.fut .nm,.poster .nm,.petcard .nm{position:absolute;left:8px;right:8px;bottom:22px;text-align:center;font-size:16px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
   <header class="wc-hero">
