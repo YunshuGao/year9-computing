@@ -2,20 +2,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JavaScript Functions - Guided Practice L5</title>
 <style>
-:root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;}
+:root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
+  --gold:#ffd200;--brand:#00a3e0;
+  --spectrum:linear-gradient(90deg,#ff2d9b 0%,#ff7a00 27%,#ffd200 50%,#00c389 73%,#00a3e0 100%);}
 *{box-sizing:border-box}
 body{margin:0;background:#eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding:0 30px}
-.top{padding:34px 0 4px}
-.top h1{font-size:34px;margin:0 0 6px;font-weight:800;letter-spacing:-.6px}
-.top .sub{margin:0;color:var(--mut);font-size:16.5px;max-width:700px}
-.top .sub b{color:var(--ink)}
-.themebar{display:flex;align-items:center;gap:10px;margin:18px 0 2px;flex-wrap:wrap}
-.themebar .tl{font-size:12px;font-weight:800;letter-spacing:.1em;color:#94a3b8;text-transform:uppercase}
-.theme{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 16px;font-weight:700;font-size:14px;color:var(--ink);cursor:pointer;font-family:inherit}
-.theme.on{background:#16202e;color:#fff;border-color:#16202e}
+/* ---- FIFA-inspired dark hero ---- */
+.wc-hero{position:relative;margin:0 0 4px;border-radius:0 0 22px 22px;overflow:hidden;color:#fff;
+  padding:32px 34px 18px;
+  background:radial-gradient(120% 130% at 88% -10%,rgba(0,163,224,.22),transparent 55%),
+            radial-gradient(90% 120% at 6% 0%,rgba(255,45,155,.16),transparent 55%),
+            linear-gradient(135deg,#0b1020,#141b34 55%,#0b1020);
+  box-shadow:0 10px 26px rgba(8,12,28,.30)}
+.wc-stripe{position:absolute;top:0;left:0;right:0;height:6px;background:var(--spectrum)}
+.wc-inner{display:flex;align-items:center;gap:22px;margin-top:8px}
+.wc-emblem{font-size:64px;font-weight:900;font-style:italic;line-height:.85;letter-spacing:-4px;flex:none;
+  background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 7px rgba(0,0,0,.4))}
+.wc-trophy{font-size:46px;line-height:1;margin-left:auto;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4))}
+.wc-titles{min-width:0}
+.wc-kicker{font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}
+.wc-hero h1{font-size:37px;margin:5px 0 0;font-weight:900;letter-spacing:-1.1px;color:#fff}
+.wc-ul{width:104px;height:5px;border-radius:3px;background:var(--spectrum);margin:10px 0 12px}
+.wc-pill{display:inline-block;background:var(--spectrum);color:#0b1020;border-radius:999px;
+  padding:3px 13px;font-size:14px;font-weight:800;vertical-align:middle;margin-left:8px}
+.wc-sub{margin:0;font-size:15.5px;color:rgba(255,255,255,.84);max-width:700px}
+.wc-sub b{color:#fff}
+.themebar{display:flex;align-items:center;gap:9px;margin:16px 0 2px;flex-wrap:wrap}
+.themebar .tl{font-size:12px;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.62);text-transform:uppercase}
+.theme{border:1.5px solid rgba(255,255,255,.30);background:rgba(255,255,255,.10);border-radius:999px;
+  padding:7px 15px;font-weight:700;font-size:14px;color:#fff;cursor:pointer;font-family:inherit}
+.theme.on{background:#fff;color:#0b1020;border-color:#fff}
 /* anatomy panel */
-.anatomy{margin:18px 0 4px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px 22px;box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.anatomy{margin:18px 0 4px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px 22px;box-shadow:0 1px 3px rgba(22,32,46,.05);border-top:4px solid var(--brand)}
 .ana-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .ana-head h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.3px}
 .ana-sub{color:var(--mut);font-size:14.5px}
@@ -43,7 +63,7 @@ body{margin:0;background:#eef2f7;color:var(--ink);font-family:"Segoe UI",system-
 .strip input#sname{min-width:160px}
 .strip .prog{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:210px}
 .strip .track{flex:1;height:8px;background:#e3e9f1;border-radius:99px;overflow:hidden;min-width:120px}
-.strip .track i{display:block;height:100%;width:0;background:#10b981;transition:width .3s;font-style:normal}
+.strip .track i{display:block;height:100%;width:0;background:var(--spectrum);transition:width .3s;font-style:normal}
 .strip .pt{font-size:13px;font-weight:800;color:var(--ink);white-space:nowrap}
 .strip .btn.save{margin-left:6px}
 /* tier bar */
@@ -61,7 +81,7 @@ body{margin:0;background:#eef2f7;color:var(--ink);font-family:"Segoe UI",system-
 .pill .num{font-size:21px;line-height:1;font-weight:800}
 .pill .ttl{font-size:10.5px;line-height:1.15;margin-top:5px;font-weight:700}
 .pill.must{background:#10b981}.pill.should{background:#1e3a8a}.pill.could{background:#7c3aed}
-.pill.is-done{outline:3px solid #f7df1e;outline-offset:2px}
+.pill.is-done{outline:3px solid var(--gold);outline-offset:2px}
 /* dividers + exercises */
 .divide{display:flex;align-items:center;gap:16px;margin:32px 0 12px}
 .divide .lab{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
@@ -105,7 +125,7 @@ body{margin:0;background:#eef2f7;color:var(--ink);font-family:"Segoe UI",system-
 .ex.must .btn.run{background:#10b981;color:#fff}.ex.should .btn.run{background:#1e3a8a;color:#fff}.ex.could .btn.run{background:#7c3aed;color:#fff}
 .donebox{margin-left:auto;font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:7px;cursor:pointer}
 .donebox input{width:18px;height:18px;accent-color:#10b981;cursor:pointer}
-.btn.save{background:#16202e;color:#fff}
+.btn.save{background:var(--brand);color:#fff}
 .btn.load{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
 /* closing */
 .closing{margin:34px 0 20px;border:1px solid var(--line);border-radius:16px;padding:22px 26px;background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
@@ -135,11 +155,20 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 @media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
 </style></head><body>
 <div class="wrap">
-  <div class="top">
-    <h1>JavaScript Functions &mdash; Guided Practice L5</h1>
-    <p class="sub"><b>A function is a named box of steps you can run again and again.</b> Green tiles <b>meet</b> the function; <b>Should</b> gives it inputs; <b>Could</b> pushes you further. Type the code, press Run, then do the change.</p>
-    <div class="themebar"><span class="tl">Pick your theme</span><button class="theme on" data-theme="gaming" onclick="setTheme('gaming')">Gaming</button><button class="theme" data-theme="footy" onclick="setTheme('footy')">Footy</button><button class="theme" data-theme="music" onclick="setTheme('music')">Music</button><button class="theme" data-theme="movies" onclick="setTheme('movies')">Movies</button></div>
-  </div>
+  <header class="wc-hero">
+    <div class="wc-stripe"></div>
+    <div class="wc-inner">
+      <div class="wc-emblem">26</div>
+      <div class="wc-titles">
+        <div class="wc-kicker">&#9917; World Cup 26 season &middot; Year 9 Computing Technology</div>
+        <h1>JavaScript Functions <span class="wc-pill">Guided Practice L5</span></h1>
+        <div class="wc-ul"></div>
+        <p class="wc-sub"><b>A function is a named box of steps you can run again and again.</b> Pick your theme, type the code, press Run, then make it your own.</p>
+      </div>
+      <div class="wc-trophy">&#127942;</div>
+    </div>
+    <div class="themebar"><span class="tl">Pick your theme</span><button class="theme on" data-theme="worldcup" onclick="setTheme('worldcup')">⚽ World Cup</button><button class="theme" data-theme="pop" onclick="setTheme('pop')">🎤 Pop</button><button class="theme" data-theme="petcafe" onclick="setTheme('petcafe')">🐾 Pet Café</button></div>
+  </header>
 
   <section class="anatomy">
     <div class="ana-head"><h2>Anatomy of a function</h2>
@@ -149,13 +178,13 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <span class="abd">document.getElementById("msg").innerHTML = "Hi " + name;</span>
 <span class="ab">}</span>
 
-<span class="an">greet</span><span class="ap">("Sam")</span>   <span class="acmt">&larr; CALL it by name to run it</span></pre>
+<span class="an">greet</span><span class="ap">("Messi")</span>   <span class="acmt">&larr; CALL it by name to run it</span></pre>
       <ul class="ana-key">
         <li><span class="chip ak">function</span> the keyword that starts a function</li>
         <li><span class="chip an">greet</span> the <b>NAME</b> &mdash; the button calls this</li>
         <li><span class="chip ap">(name)</span> the <b>input</b> &mdash; a parameter</li>
         <li><span class="chip ab">{ }</span> the <b>body</b> &mdash; the steps it runs</li>
-        <li><span class="chip ac">greet("Sam")</span> the <b>CALL</b> &mdash; writing a function isn&rsquo;t enough, you must call it</li>
+        <li><span class="chip ac">greet("Messi")</span> the <b>CALL</b> &mdash; writing a function isn&rsquo;t enough, you must call it</li>
       </ul>
     </div>
   </section>
@@ -177,8 +206,8 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref1">&lt;h1 id="msg"&gt;Press start&lt;/h1&gt;
-&lt;button onclick="hello()"&gt;Enter&lt;/button&gt;
+        <pre class="code-ref" id="ref1">&lt;h1 id="msg"&gt;Match day&lt;/h1&gt;
+&lt;button onclick="hello()"&gt;Kick off&lt;/button&gt;
 
 &lt;script&gt;
   function hello() {
@@ -212,13 +241,13 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref2">&lt;h1 id="msg"&gt;Press start&lt;/h1&gt;
-&lt;button onclick="start()"&gt;Enter&lt;/button&gt;
+        <pre class="code-ref" id="ref2">&lt;h1 id="msg"&gt;Match day&lt;/h1&gt;
+&lt;button onclick="start()"&gt;Kick off&lt;/button&gt;
 
 &lt;script&gt;
   function start() {
     document.getElementById("msg")
-      .innerHTML = "New high score";
+      .innerHTML = "Goooal!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -247,13 +276,13 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref3">&lt;h1 id="msg"&gt;Press start&lt;/h1&gt;
-&lt;button onclick="show()"&gt;Enter&lt;/button&gt;
+        <pre class="code-ref" id="ref3">&lt;h1 id="msg"&gt;Match day&lt;/h1&gt;
+&lt;button onclick="show()"&gt;Kick off&lt;/button&gt;
 
 &lt;script&gt;
   function show() {
     let el = document.getElementById("msg");
-    el.innerHTML = "New high score";
+    el.innerHTML = "Goooal!";
     el.style.color = "green";
   }
 &lt;/script&gt;</pre>
@@ -284,7 +313,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
         <pre class="code-ref" id="ref4">&lt;h2 id="out"&gt;&lt;/h2&gt;
-&lt;button onclick="cheer()"&gt;Enter&lt;/button&gt;
+&lt;button onclick="cheer()"&gt;Kick off&lt;/button&gt;
 
 &lt;script&gt;
   function cheer() {
@@ -318,18 +347,18 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref5">&lt;h1 id="msg"&gt;Press start&lt;/h1&gt;
-&lt;button onclick="day()"&gt;Day&lt;/button&gt;
-&lt;button onclick="night()"&gt;Night&lt;/button&gt;
+        <pre class="code-ref" id="ref5">&lt;h1 id="msg"&gt;Match day&lt;/h1&gt;
+&lt;button onclick="home()"&gt;Home&lt;/button&gt;
+&lt;button onclick="away()"&gt;Away&lt;/button&gt;
 
 &lt;script&gt;
-  function day() {
+  function home() {
     document.getElementById("msg")
-      .innerHTML = "Good morning";
+      .innerHTML = "Home team scores!";
   }
-  function night() {
+  function away() {
     document.getElementById("msg")
-      .innerHTML = "Good night";
+      .innerHTML = "Away team scores!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -358,8 +387,8 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref6">&lt;h1 id="msg"&gt;Press start&lt;/h1&gt;
-&lt;button onclick="greet('Player One')"&gt;Enter&lt;/button&gt;
+        <pre class="code-ref" id="ref6">&lt;h1 id="msg"&gt;Match day&lt;/h1&gt;
+&lt;button onclick="greet('Player One')"&gt;Kick off&lt;/button&gt;
 
 &lt;script&gt;
   function greet(who) {
@@ -393,9 +422,9 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref7">&lt;h1 id="msg"&gt;Press start&lt;/h1&gt;
-&lt;button onclick="greet('Agent A')"&gt;Agent A&lt;/button&gt;
-&lt;button onclick="greet('Agent B')"&gt;Agent B&lt;/button&gt;
+        <pre class="code-ref" id="ref7">&lt;h1 id="msg"&gt;Match day&lt;/h1&gt;
+&lt;button onclick="greet('Team A')"&gt;Team A&lt;/button&gt;
+&lt;button onclick="greet('Team B')"&gt;Team B&lt;/button&gt;
 
 &lt;script&gt;
   function greet(who) {
@@ -430,7 +459,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
         <pre class="code-ref" id="ref8">&lt;div id="card"&gt;&lt;/div&gt;
-&lt;button onclick="profile('Player', 'game')"&gt;Enter&lt;/button&gt;
+&lt;button onclick="profile('Player', 'football')"&gt;Kick off&lt;/button&gt;
 
 &lt;script&gt;
   function profile(name, fav) {
@@ -465,8 +494,8 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref9">&lt;input id="box" placeholder="Gamer tag?"&gt;
-&lt;button onclick="greet(box.value)"&gt;Enter&lt;/button&gt;
+        <pre class="code-ref" id="ref9">&lt;input id="box" placeholder="Your player name?"&gt;
+&lt;button onclick="greet(box.value)"&gt;Kick off&lt;/button&gt;
 &lt;h2 id="out"&gt;&lt;/h2&gt;
 
 &lt;script&gt;
@@ -501,7 +530,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Make <code>function double(n)</code> that <b>returns</b> <code>n * 2</code>. Add a <b>button</b> that shows <code>double(5)</code> on the page.
+        <div class="goalbox">Make <code>function double(n)</code> that <b>returns</b> <code>n * 2</code> - double the goals! Add a <b>button</b> that shows <code>double(5)</code> on the page.
           <div class="eg">Expected: 10</div>
           <div class="chal-btns">
             <button class="btn ghost" onclick="showHint(10)">Show a hint</button>
@@ -538,7 +567,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
   function shout(word) {
     return word + "!!!";
   }
-  out.innerHTML = shout("Go") + " " + shout("Win");
+  out.innerHTML = shout("Goal") + " " + shout("Win");
 &lt;/script&gt;</pre>
       </div>
       <div class="col">
@@ -554,7 +583,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
-        <div class="reveal ans" id="ans11" hidden>It shows <b>Go!!! Win!!!</b>. <code>return</code> hands the joined word back, and the one function is <b>reused</b> with two different inputs - "Go" then "Win".</div>
+        <div class="reveal ans" id="ans11" hidden>It shows <b>Goal!!! Win!!!</b>. <code>return</code> hands the joined word back, and the one function is <b>reused</b> with two different inputs - "Goal" then "Win".</div>
         <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you predicted return + reuse, then checked.</span></div>
       </div>
     </div>
@@ -562,24 +591,24 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal debug" id="ex12">
     <div class="h"><span class="n">12</span><h3>Fix the bug <span class="ctype debug">DEBUG</span></h3></div>
-    <p class="lead">Click <b>Go</b> - nothing happens. The button calls a function that doesn't exist. Read the red error, find the mismatch, fix it.</p>
+    <p class="lead">Click <b>Shoot</b> - nothing happens. The button calls a function that doesn't exist. Read the red error, find the mismatch, fix it.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Click <b>Go</b> - nothing happens (check the red error line). The button calls <code>start()</code>, but no function has that name. Make them match.
+        <div class="goalbox">Click <b>Shoot</b> - nothing happens (check the red error line). The button calls <code>shoot()</code>, but the function is named <code>strike()</code>. Make them match.
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(12)">Show a hint</button></div>
-          <div class="reveal hint" id="hint12" hidden>A button calls a function <b>by name</b>. The button calls <code>start()</code> but the function is named <code>begin()</code>. Rename one so the two are identical.</div>
+          <div class="reveal hint" id="hint12" hidden>A button calls a function <b>by name</b>. The button calls <code>shoot()</code> but the function is named <code>strike()</code>. Rename one so the two are identical.</div>
         </div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Fix it here</div>
-        <textarea class="editor" id="ed12" spellcheck="false">&lt;button onclick="start()"&gt;Go&lt;/button&gt;
+        <textarea class="editor" id="ed12" spellcheck="false">&lt;button onclick="shoot()"&gt;Shoot&lt;/button&gt;
 &lt;p id="out"&gt;&lt;/p&gt;
 
 &lt;script&gt;
-  function begin() {
+  function strike() {
     document.getElementById("out")
-      .innerHTML = "We have lift off!";
+      .innerHTML = "GOAL! What a strike!";
   }
 &lt;/script&gt;</textarea>
         <div class="act">
@@ -592,7 +621,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
-        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; names match now - the function runs.</span></div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; names match now - the striker scores.</span></div>
       </div>
     </div>
   </section>
@@ -603,12 +632,12 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Make your own function <code>cheer(name)</code>: a <b>button</b> that shows <b>Go [name]!</b> Pass any name you like into the brackets.
-          <div class="eg">Expected: Go Sam!</div>
+        <div class="goalbox">Make your own function <code>cheer(name)</code>: a <b>button</b> that shows <b>Go [name]!</b> Cheer for your favourite player - pass any name into the brackets.
+          <div class="eg">Expected: Go Messi!</div>
           <div class="chal-btns">
             <button class="btn ghost" onclick="showHint(13)">Show a hint</button>
           </div>
-          <div class="reveal hint" id="hint13" hidden>One function with a parameter: <code>function cheer(who) { ... }</code>. Inside: <code>innerHTML = "Go " + who + "!"</code>. Button: <code>onclick="cheer('Sam')"</code>.</div>
+          <div class="reveal hint" id="hint13" hidden>One function with a parameter: <code>function cheer(who) { ... }</code>. Inside: <code>innerHTML = "Go " + who + "!"</code>. Button: <code>onclick="cheer('Messi')"</code>.</div>
         </div>
       </div>
       <div class="col">
@@ -624,7 +653,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out13" title="result for tile 13"></iframe></div>
-        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you built your own function from scratch.</span></div>
+        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you built your own cheer from scratch.</span></div>
       </div>
     </div>
   </section>
@@ -635,12 +664,12 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">ONE function <code>badge(word)</code> and ONE button. Clicking shows the word in the heading AND changes its colour. Combine a <b>parameter</b>, <code>innerHTML</code> and <code>.style</code>.
-          <div class="eg">Expected: the word appears, in colour</div>
+        <div class="goalbox">ONE function <code>badge(word)</code> and ONE button. Clicking shows the word in the heading AND changes its colour - like a player's name in team colours. Combine a <b>parameter</b>, <code>innerHTML</code> and <code>.style</code>.
+          <div class="eg">Expected: the name appears, in colour</div>
           <div class="chal-btns">
             <button class="btn ghost" onclick="showHint(14)">Show a hint</button>
           </div>
-          <div class="reveal hint" id="hint14" hidden><code>function badge(word) { let el = document.getElementById('msg'); el.innerHTML = word; el.style.color = 'green'; }</code>. Button: <code>onclick="badge('Champion')"</code>. Don't forget <code>&lt;h1 id="msg"&gt;</code>.</div>
+          <div class="reveal hint" id="hint14" hidden><code>function badge(word) { let el = document.getElementById('msg'); el.innerHTML = word; el.style.color = 'green'; }</code>. Button: <code>onclick="badge('Messi')"</code>. Don't forget <code>&lt;h1 id="msg"&gt;</code>.</div>
         </div>
       </div>
       <div class="col">
@@ -663,7 +692,7 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 
   <div class="closing">
     <h3>Show the class</h3>
-    <p>Finished, or out of time? Pick your best function &mdash; your funniest cheer, your boss build &mdash; and put it on the board. We will look at a few together and name the parts: the <b>function</b>, its <b>input</b>, and where it is <b>called</b>.</p>
+    <p>Finished, or out of time? Pick your best function &mdash; your loudest cheer, your boss build &mdash; and put it on the board. We will look at a few together and name the parts: the <b>function</b>, its <b>input</b>, and where it is <b>called</b>.</p>
     <div class="reflect">
       <div><label>What I built</label><textarea id="rbuilt" placeholder="In a sentence..."></textarea></div>
       <div><label>I got stuck on</label><textarea id="rstuck" placeholder="What tripped you up?"></textarea></div>
@@ -678,26 +707,29 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"hello()\">Enter<\/button>\n\n<script>\n  function hello() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Player\";\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"hello()\">Kick off<\/button>\n\n<script>\n  function hello() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Player\";\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"hello()\">Play<\/button>\n\n<script>\n  function hello() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Artist\";\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"hello()\">Action<\/button>\n\n<script>\n  function hello() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Star\";\n  }\n<\/script>"}, "2": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"start()\">Enter<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"New high score\";\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"start()\">Kick off<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Back of the net\";\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"start()\">Play<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Going platinum\";\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"start()\">Action<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Blockbuster\";\n  }\n<\/script>"}, "3": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"show()\">Enter<\/button>\n\n<script>\n  function show() {\n    let el = document.getElementById(\"msg\");\n    el.innerHTML = \"New high score\";\n    el.style.color = \"green\";\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"show()\">Kick off<\/button>\n\n<script>\n  function show() {\n    let el = document.getElementById(\"msg\");\n    el.innerHTML = \"Back of the net\";\n    el.style.color = \"green\";\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"show()\">Play<\/button>\n\n<script>\n  function show() {\n    let el = document.getElementById(\"msg\");\n    el.innerHTML = \"Going platinum\";\n    el.style.color = \"green\";\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"show()\">Action<\/button>\n\n<script>\n  function show() {\n    let el = document.getElementById(\"msg\");\n    el.innerHTML = \"Blockbuster\";\n    el.style.color = \"green\";\n  }\n<\/script>"}, "4": {"gaming": "<h2 id=\"out\"><\/h2>\n<button onclick=\"cheer()\">Enter<\/button>\n\n<script>\n  function cheer() {\n    document.getElementById(\"out\")\n      .innerHTML += \"Player! \";\n  }\n<\/script>", "footy": "<h2 id=\"out\"><\/h2>\n<button onclick=\"cheer()\">Kick off<\/button>\n\n<script>\n  function cheer() {\n    document.getElementById(\"out\")\n      .innerHTML += \"Player! \";\n  }\n<\/script>", "music": "<h2 id=\"out\"><\/h2>\n<button onclick=\"cheer()\">Play<\/button>\n\n<script>\n  function cheer() {\n    document.getElementById(\"out\")\n      .innerHTML += \"Artist! \";\n  }\n<\/script>", "movies": "<h2 id=\"out\"><\/h2>\n<button onclick=\"cheer()\">Action<\/button>\n\n<script>\n  function cheer() {\n    document.getElementById(\"out\")\n      .innerHTML += \"Star! \";\n  }\n<\/script>"}, "5": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"day()\">Day<\/button>\n<button onclick=\"night()\">Night<\/button>\n\n<script>\n  function day() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good morning\";\n  }\n  function night() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good night\";\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"day()\">Day<\/button>\n<button onclick=\"night()\">Night<\/button>\n\n<script>\n  function day() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good morning\";\n  }\n  function night() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good night\";\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"day()\">Day<\/button>\n<button onclick=\"night()\">Night<\/button>\n\n<script>\n  function day() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good morning\";\n  }\n  function night() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good night\";\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"day()\">Day<\/button>\n<button onclick=\"night()\">Night<\/button>\n\n<script>\n  function day() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good morning\";\n  }\n  function night() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Good night\";\n  }\n<\/script>"}, "6": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"greet('Player One')\">Enter<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"greet('Player One')\">Kick off<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"greet('Artist One')\">Play<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"greet('Star One')\">Action<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>"}, "7": {"gaming": "<h1 id=\"msg\">Press start<\/h1>\n<button onclick=\"greet('Agent A')\">Agent A<\/button>\n<button onclick=\"greet('Agent B')\">Agent B<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "footy": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"greet('Captain A')\">Captain A<\/button>\n<button onclick=\"greet('Captain B')\">Captain B<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "music": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"greet('DJ A')\">DJ A<\/button>\n<button onclick=\"greet('DJ B')\">DJ B<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "movies": "<h1 id=\"msg\">Now showing<\/h1>\n<button onclick=\"greet('Director A')\">Director A<\/button>\n<button onclick=\"greet('Director B')\">Director B<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>"}, "8": {"gaming": "<div id=\"card\"><\/div>\n<button onclick=\"profile('Player', 'game')\">Enter<\/button>\n\n<script>\n  function profile(name, fav) {\n    document.getElementById(\"card\").innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Likes: \" + fav + \"<\/p>\";\n  }\n<\/script>", "footy": "<div id=\"card\"><\/div>\n<button onclick=\"profile('Player', 'team')\">Kick off<\/button>\n\n<script>\n  function profile(name, fav) {\n    document.getElementById(\"card\").innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Likes: \" + fav + \"<\/p>\";\n  }\n<\/script>", "music": "<div id=\"card\"><\/div>\n<button onclick=\"profile('Artist', 'song')\">Play<\/button>\n\n<script>\n  function profile(name, fav) {\n    document.getElementById(\"card\").innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Likes: \" + fav + \"<\/p>\";\n  }\n<\/script>", "movies": "<div id=\"card\"><\/div>\n<button onclick=\"profile('Star', 'film')\">Action<\/button>\n\n<script>\n  function profile(name, fav) {\n    document.getElementById(\"card\").innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Likes: \" + fav + \"<\/p>\";\n  }\n<\/script>"}, "9": {"gaming": "<input id=\"box\" placeholder=\"Gamer tag?\">\n<button onclick=\"greet(box.value)\">Enter<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"out\")\n      .innerHTML = \"Hi \" + who + \"!\";\n  }\n<\/script>", "footy": "<input id=\"box\" placeholder=\"Footy nickname?\">\n<button onclick=\"greet(box.value)\">Kick off<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"out\")\n      .innerHTML = \"Hi \" + who + \"!\";\n  }\n<\/script>", "music": "<input id=\"box\" placeholder=\"Stage name?\">\n<button onclick=\"greet(box.value)\">Play<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"out\")\n      .innerHTML = \"Hi \" + who + \"!\";\n  }\n<\/script>", "movies": "<input id=\"box\" placeholder=\"Character name?\">\n<button onclick=\"greet(box.value)\">Action<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"out\")\n      .innerHTML = \"Hi \" + who + \"!\";\n  }\n<\/script>"}};
-var WANT = {"10": "10", "12": "lift off"};
-var OKTX = {"1": "you called the function - the button ran your code.", "2": "names match - the button found the function.", "3": "your function body ran both steps.", "4": "one function, used again and again.", "5": "two named functions, two buttons - each runs its own.", "6": "you passed an input into the function.", "7": "same function, different inputs, different results.", "8": "two parameters built your card.", "9": "the function used what the user typed.", "10": "your function handed a value back with return.", "11": "you predicted return + reuse, then checked.", "12": "names match now - the function runs.", "13": "you built your own function from scratch.", "14": "a function, a parameter, text and colour - that's the lot."};
+var STARTERS = {"1": {"worldcup": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"hello()\">Kick off<\/button>\n\n<script>\n  function hello() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Player\";\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"hello()\">Play<\/button>\n\n<script>\n  function hello() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Star\";\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Caf\u00e9 open<\/h1>\n<button onclick=\"hello()\">Order<\/button>\n\n<script>\n  function hello() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Welcome, Pet\";\n  }\n<\/script>"}, "2": {"worldcup": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"start()\">Kick off<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Goooal!\";\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"start()\">Play<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Encore!\";\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Caf\u00e9 open<\/h1>\n<button onclick=\"start()\">Order<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"So cute!\";\n  }\n<\/script>"}, "3": {"worldcup": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"show()\">Kick off<\/button>\n\n<script>\n  function show() {\n    let el = document.getElementById(\"msg\");\n    el.innerHTML = \"Goooal!\";\n    el.style.color = \"green\";\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"show()\">Play<\/button>\n\n<script>\n  function show() {\n    let el = document.getElementById(\"msg\");\n    el.innerHTML = \"Encore!\";\n    el.style.color = \"green\";\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Caf\u00e9 open<\/h1>\n<button onclick=\"show()\">Order<\/button>\n\n<script>\n  function show() {\n    let el = document.getElementById(\"msg\");\n    el.innerHTML = \"So cute!\";\n    el.style.color = \"green\";\n  }\n<\/script>"}, "4": {"worldcup": "<h2 id=\"out\"><\/h2>\n<button onclick=\"cheer()\">Kick off<\/button>\n\n<script>\n  function cheer() {\n    document.getElementById(\"out\")\n      .innerHTML += \"Player! \";\n  }\n<\/script>", "pop": "<h2 id=\"out\"><\/h2>\n<button onclick=\"cheer()\">Play<\/button>\n\n<script>\n  function cheer() {\n    document.getElementById(\"out\")\n      .innerHTML += \"Star! \";\n  }\n<\/script>", "petcafe": "<h2 id=\"out\"><\/h2>\n<button onclick=\"cheer()\">Order<\/button>\n\n<script>\n  function cheer() {\n    document.getElementById(\"out\")\n      .innerHTML += \"Pet! \";\n  }\n<\/script>"}, "5": {"worldcup": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"home()\">Home<\/button>\n<button onclick=\"away()\">Away<\/button>\n\n<script>\n  function home() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Home team scores!\";\n  }\n  function away() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Away team scores!\";\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"clap()\">Clap<\/button>\n<button onclick=\"encore()\">Encore<\/button>\n\n<script>\n  function clap() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"The crowd claps!\";\n  }\n  function encore() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"One more song!\";\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Caf\u00e9 open<\/h1>\n<button onclick=\"feed()\">Feed<\/button>\n<button onclick=\"pat()\">Pat<\/button>\n\n<script>\n  function feed() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Yum, thank you!\";\n  }\n  function pat() {\n    document.getElementById(\"msg\")\n      .innerHTML = \"So happy!\";\n  }\n<\/script>"}, "6": {"worldcup": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"greet('Player One')\">Kick off<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"greet('Star One')\">Play<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Caf\u00e9 open<\/h1>\n<button onclick=\"greet('Pet One')\">Order<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>"}, "7": {"worldcup": "<h1 id=\"msg\">Match day<\/h1>\n<button onclick=\"greet('Team A')\">Team A<\/button>\n<button onclick=\"greet('Team B')\">Team B<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Sound check<\/h1>\n<button onclick=\"greet('Act A')\">Act A<\/button>\n<button onclick=\"greet('Act B')\">Act B<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Caf\u00e9 open<\/h1>\n<button onclick=\"greet('Pup A')\">Pup A<\/button>\n<button onclick=\"greet('Pup B')\">Pup B<\/button>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"msg\")\n      .innerHTML = \"Hello, \" + who;\n  }\n<\/script>"}, "8": {"worldcup": "<div id=\"card\"><\/div>\n<button onclick=\"profile('Player', 'football')\">Kick off<\/button>\n\n<script>\n  function profile(name, fav) {\n    document.getElementById(\"card\").innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Likes: \" + fav + \"<\/p>\";\n  }\n<\/script>", "pop": "<div id=\"card\"><\/div>\n<button onclick=\"profile('Star', 'song')\">Play<\/button>\n\n<script>\n  function profile(name, fav) {\n    document.getElementById(\"card\").innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Likes: \" + fav + \"<\/p>\";\n  }\n<\/script>", "petcafe": "<div id=\"card\"><\/div>\n<button onclick=\"profile('Pet', 'treat')\">Order<\/button>\n\n<script>\n  function profile(name, fav) {\n    document.getElementById(\"card\").innerHTML =\n      \"<h2>\" + name + \"<\/h2>\" +\n      \"<p>Likes: \" + fav + \"<\/p>\";\n  }\n<\/script>"}, "9": {"worldcup": "<input id=\"box\" placeholder=\"Your player name?\">\n<button onclick=\"greet(box.value)\">Kick off<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"out\")\n      .innerHTML = \"Hi \" + who + \"!\";\n  }\n<\/script>", "pop": "<input id=\"box\" placeholder=\"Your stage name?\">\n<button onclick=\"greet(box.value)\">Play<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"out\")\n      .innerHTML = \"Hi \" + who + \"!\";\n  }\n<\/script>", "petcafe": "<input id=\"box\" placeholder=\"Your pet's name?\">\n<button onclick=\"greet(box.value)\">Order<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function greet(who) {\n    document.getElementById(\"out\")\n      .innerHTML = \"Hi \" + who + \"!\";\n  }\n<\/script>"}};
+var WANT = {"10": "10", "12": "GOAL"};
+var OKTX = {"1": "you called the function - the button ran your code.", "2": "names match - the button found the function.", "3": "your function body ran both steps.", "4": "one function, used again and again.", "5": "two named functions, two buttons - each runs its own.", "6": "you passed an input into the function.", "7": "same function, different inputs, different results.", "8": "two parameters built your card.", "9": "the function used what the user typed.", "10": "your function handed a value back with return.", "11": "you predicted return + reuse, then checked.", "12": "names match now - the striker scores.", "13": "you built your own cheer from scratch.", "14": "a function, a parameter, text and colour - that's the lot."};
 var MODES = {"10": "create", "11": "predict", "12": "debug", "13": "create", "14": "create"};
-var PREDICT = {"11": "<p id=\"out\"><\/p>\n<script>\n  function shout(word) {\n    return word + \"!!!\";\n  }\n  out.innerHTML = shout(\"Go\") + \" \" + shout(\"Win\");\n<\/script>"};
-var DEBUGC = {"12": "<button onclick=\"start()\">Go<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function begin() {\n    document.getElementById(\"out\")\n      .innerHTML = \"We have lift off!\";\n  }\n<\/script>"};
+var PREDICT = {"11": "<p id=\"out\"><\/p>\n<script>\n  function shout(word) {\n    return word + \"!!!\";\n  }\n  out.innerHTML = shout(\"Goal\") + \" \" + shout(\"Win\");\n<\/script>"};
+var DEBUGC = {"12": "<button onclick=\"shoot()\">Shoot<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function strike() {\n    document.getElementById(\"out\")\n      .innerHTML = \"GOAL! What a strike!\";\n  }\n<\/script>"};
 var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+var THEME_LIST = ["worldcup", "pop", "petcafe"];
 var IDS = Object.keys(STARTERS).map(Number);
-var THEME = "gaming";
+var THEME = "worldcup";
 var LSKEY = "l5-state-v1";
 var BASE = {};
 
 function $(id){return document.getElementById(id);}
 
 function setTheme(t){
+  if(THEME_LIST.indexOf(t)<0) t=THEME_LIST[0];
   THEME=t;
   document.querySelectorAll(".theme").forEach(function(b){ b.classList.toggle("on", b.dataset.theme===t); });
   IDS.forEach(function(i){ $("ref"+i).textContent = STARTERS[String(i)][t]; });
   persist();
-  toast("Reference switched to "+t.charAt(0).toUpperCase()+t.slice(1));
+  var nm=document.querySelector('.theme[data-theme="'+t+'"]');
+  toast("Theme: "+(nm?nm.textContent.trim():t));
 }
 
 function wrap(i, code){
@@ -796,7 +828,8 @@ function persist(){ try{ localStorage.setItem(LSKEY, JSON.stringify(gather())); 
 
 function apply(s){
   if(!s) return;
-  if(s.theme){ THEME=s.theme; document.querySelectorAll(".theme").forEach(function(b){b.classList.toggle("on",b.dataset.theme===s.theme);}); }
+  var th=(s.theme && THEME_LIST.indexOf(s.theme)>=0)? s.theme : THEME_LIST[0];
+  THEME=th; document.querySelectorAll(".theme").forEach(function(b){b.classList.toggle("on",b.dataset.theme===th);});
   $("sname").value=s.name||""; $("sclass").value=s.klass||"9 COTYC"; $("sdate").value=s.date||"";
   $("rbuilt").value=s.built||""; $("rstuck").value=s.stuck||"";
   ALL_IDS.forEach(function(i){
