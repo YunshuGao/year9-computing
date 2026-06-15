@@ -36,15 +36,19 @@
   button:active{transform:scale(.95)}
   button.alt{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25)}
   .hint{color:#94a3b8;font-size:14px;text-align:center}
-  /* FUT card - matches exactly what card() builds */
-  .fut{position:relative;width:200px;height:268px;border-radius:14px 14px 44px 14px;
-    background:linear-gradient(165deg,#fbe98f,#e7c453 45%,#b8860b);color:#2e2400;font-weight:900;
-    box-shadow:0 12px 26px rgba(0,0,0,.5);overflow:hidden}
-  .fut .rt{position:absolute;top:14px;left:18px;font-size:36px;line-height:1}
-  .fut .pic{position:absolute;top:56px;left:50%;transform:translateX(-50%);width:96px;height:96px;border-radius:50%;
-    background:rgba(255,255,255,.4);border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:48px}
-  .fut .nm{position:absolute;left:10px;right:10px;bottom:28px;text-align:center;font-size:22px;text-transform:uppercase;
-    letter-spacing:1px;border-top:2px solid rgba(46,36,0,.3);padding-top:12px}
+  /* FUT card - the styling adds the football + shine; card() fills name + rating */
+  .fut{position:relative;width:200px;height:278px;border-radius:16px 16px 52px 16px;font-weight:900;overflow:hidden;color:#3a2e00;
+    background:linear-gradient(160deg,#fff3b0,#f5c84a 33%,#e3a52c 68%,#c6891d);
+    box-shadow:0 14px 32px rgba(0,0,0,.5),inset 0 0 0 2px rgba(255,255,255,.32)}
+  .fut::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 43%,rgba(255,255,255,.5) 50%,transparent 57%);pointer-events:none}
+  .fut .rt{position:absolute;top:16px;left:20px;font-size:38px;line-height:.9;text-align:center}
+  .fut .rt::after{content:"ST";display:block;font-size:13px;letter-spacing:1.5px}
+  .fut .pic{position:absolute;top:54px;left:50%;transform:translateX(-50%);width:104px;height:104px;border-radius:50%;
+    background:radial-gradient(circle at 38% 30%,#fff,#dde5ee);border:3px solid rgba(255,255,255,.9);
+    box-shadow:0 5px 14px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:58px}
+  .fut .pic::after{content:"\26bd"}
+  .fut .nm{position:absolute;left:10px;right:10px;bottom:24px;text-align:center;font-size:23px;text-transform:uppercase;
+    letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:2px solid rgba(58,46,0,.3);padding-top:12px}
 </style></head><body>
 <div class="stripe"></div>
 <div class="wrap">
@@ -108,7 +112,7 @@
     out3.innerHTML =
       <span class="s">"&lt;div class='fut'&gt;"</span> +
       <span class="s">"&lt;div class='rt'&gt;"</span> + <span class="a">rating</span> + <span class="s">"&lt;/div&gt;"</span> +
-      <span class="s">"&lt;div class='pic'&gt;"</span> + <span class="a">name</span>[<span class="a">0</span>] + <span class="s">"&lt;/div&gt;"</span> +
+      <span class="s">"&lt;div class='pic'&gt;&lt;/div&gt;"</span> +
       <span class="s">"&lt;div class='nm'&gt;"</span> + <span class="a">name</span> + <span class="s">"&lt;/div&gt;"</span> +
       <span class="s">"&lt;/div&gt;"</span>;
 }</pre>
@@ -141,7 +145,7 @@
     out3.innerHTML =
       "<div class='fut'>" +
       "<div class='rt'>" + rating + "</div>" +
-      "<div class='pic'>" + name[0] + "</div>" +
+      "<div class='pic'></div>" +
       "<div class='nm'>" + name + "</div>" +
       "</div>";
   }
