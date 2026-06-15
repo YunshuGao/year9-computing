@@ -189,8 +189,23 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 .wflag{display:inline-block;margin-top:16px;background:var(--spectrum);color:#0b1020;font-weight:900;font-size:18px;padding:12px 22px;border-radius:12px;animation:wflagwave 1.2s ease-in-out infinite;transform-origin:left center}
 @keyframes wflagwave{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
 .anthem-code{margin:16px auto 0;display:inline-block;background:#0b1020;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 13px;font-family:Consolas,monospace;font-size:12.5px;color:#7dd3fc}
-@media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
-.fut,.poster,.petcard{position:relative;width:158px;height:208px;margin:6px auto;border-radius:12px 12px 34px 12px;color:#2e2400;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.3);overflow:hidden}.fut{background:linear-gradient(165deg,#fbe98f,#e7c453 45%,#b8860b)}.poster{background:linear-gradient(165deg,#1f2937,#7c3aed 60%,#ec4899);color:#fff;border-radius:12px}.petcard{background:linear-gradient(165deg,#fff,#fde68a 55%,#fca5a5);color:#7c2d12;border-radius:20px}.fut .rt,.poster .rt,.petcard .rt{position:absolute;top:11px;left:13px;font-size:27px}.fut .pic,.poster .pic,.petcard .pic{position:absolute;top:42px;left:50%;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-size:38px}.fut .nm,.poster .nm,.petcard .nm{position:absolute;left:8px;right:8px;bottom:22px;text-align:center;font-size:16px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style></head><body>
+/* ---- advanced effects: reveal, parallax, tilt, scroll progress ---- */
+html{scroll-behavior:smooth}
+.progress-top{position:fixed;left:0;top:0;height:4px;width:0;background:var(--spectrum);z-index:300;transition:width .08s linear}
+.is-in{opacity:1!important;transform:none!important}
+.band{background-attachment:fixed}
+.pill{transition:transform .15s ease}
+.pill:hover{transform:translateY(-3px) scale(1.05)}
+.theme{transition:transform .12s ease}
+.theme:hover{transform:translateY(-2px)}
+.mission-card{perspective:800px}
+.mission-card .fut{transition:transform .12s ease;will-change:transform}
+.wc-ul{background-size:200% 100%;animation:shim 5s linear infinite}
+@keyframes shim{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
+@media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
+.fut,.poster,.petcard{position:relative;width:158px;height:208px;margin:6px auto;border-radius:12px 12px 34px 12px;color:#2e2400;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.3);overflow:hidden}.fut{background:linear-gradient(165deg,#fbe98f,#e7c453 45%,#b8860b)}.poster{background:linear-gradient(165deg,#1f2937,#7c3aed 60%,#ec4899);color:#fff;border-radius:12px}.petcard{background:linear-gradient(165deg,#fff,#fde68a 55%,#fca5a5);color:#7c2d12;border-radius:20px}.fut .rt,.poster .rt,.petcard .rt{position:absolute;top:11px;left:13px;font-size:27px}.fut .pic,.poster .pic,.petcard .pic{position:absolute;top:42px;left:50%;transform:translateX(-50%);width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-size:38px}.fut .nm,.poster .nm,.petcard .nm{position:absolute;left:8px;right:8px;bottom:22px;text-align:center;font-size:16px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
+<div class="progress-top" id="ptop"></div>
 <div class="wrap">
   <header class="wc-hero">
     <div class="wc-stripe"></div>
@@ -1001,6 +1016,33 @@ document.addEventListener("DOMContentLoaded", function(){
   ["sname","sclass","sdate","rbuilt","rstuck","meline"].forEach(function(id){ var el=$(id); if(el) el.addEventListener("input",persist); });
   var saved=null; try{ saved=JSON.parse(localStorage.getItem(LSKEY)); }catch(e){}
   if(saved) apply(saved); else updateProgress();
+
+  // ---- advanced motion effects ----
+  try{
+    if(document.documentElement.classList.contains("anim")){
+      var io=new IntersectionObserver(function(es){es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("is-in"); io.unobserve(en.target); }
+      });},{threshold:0.08});
+      document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ io.observe(el); });
+      setTimeout(function(){ document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ el.classList.add("is-in"); }); }, 4000);
+    }
+    var mc=document.querySelector(".mission-card .fut");
+    if(mc && !window.matchMedia("(prefers-reduced-motion:reduce)").matches){
+      var mw=mc.parentElement;
+      mw.addEventListener("mousemove",function(e){
+        var r=mc.getBoundingClientRect();
+        var px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
+        mc.style.transform="rotateY("+(px*16).toFixed(2)+"deg) rotateX("+(-py*16).toFixed(2)+"deg)";
+      });
+      mw.addEventListener("mouseleave",function(){ mc.style.transform=""; });
+    }
+    var pt=document.getElementById("ptop");
+    if(pt){ var ticking=false; window.addEventListener("scroll",function(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){ var h=document.documentElement.scrollHeight-window.innerHeight;
+        pt.style.width=(h>0?(window.scrollY/h*100):0)+"%"; ticking=false; });
+    },{passive:true}); }
+  }catch(e){}
 });
 </script>
 </body></html>
