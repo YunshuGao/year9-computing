@@ -8,11 +8,10 @@
     background:radial-gradient(120% 120% at 85% -10%,rgba(0,120,200,.18),transparent 55%),
                linear-gradient(135deg,#0b1020,#141b34 55%,#0b1020);min-height:100vh}
   .stripe{height:6px;background:var(--gold)}
-  .wrap{max-width:1100px;margin:0 auto;padding:26px 30px 70px}
-  .top{display:flex;align-items:center;gap:14px;margin:4px 0 6px}
+  .wrap{max-width:1120px;margin:0 auto;padding:26px 30px 70px}
   .badge{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#0b1020;
     background:var(--gold);border-radius:999px;padding:6px 14px}
-  h1{font-size:30px;font-weight:900;margin:8px 0 2px}
+  h1{font-size:30px;font-weight:900;margin:10px 0 2px}
   .sub{color:#c2ccdd;font-size:16px;margin:0 0 18px}
   .demo{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.13);border-radius:18px;
     padding:22px 26px;margin:20px 0}
@@ -21,15 +20,15 @@
   .demo .lead{color:#c2ccdd;font-size:16px;margin:0 0 16px}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
   pre.code{margin:0;background:#0e162e;border:1px solid #2a3550;border-radius:12px;padding:16px 18px;
-    font-family:Consolas,monospace;font-size:17px;line-height:1.6;white-space:pre;overflow:auto;color:#e9eef6}
+    font-family:Consolas,monospace;font-size:16px;line-height:1.55;white-space:pre;overflow:auto;color:#e9eef6}
   .k{color:#c4b5fd}.f{color:#7dd3fc}.s{color:#86efac}.a{color:#fbbf24}.c{color:#94a3b8}
   .stage{background:#0b1020;border:1px solid #2a3550;border-radius:12px;padding:20px;display:flex;
-    flex-direction:column;justify-content:center;align-items:center;gap:18px;min-height:200px}
-  .out{font-size:40px;font-weight:900;text-align:center;min-height:52px;color:#fff}
-  .out.gold{color:var(--g1)}
+    flex-direction:column;justify-content:center;align-items:center;gap:18px;min-height:210px}
+  .out{font-size:34px;font-weight:900;text-align:center;min-height:46px;color:var(--g1);
+    word-break:break-word;line-height:1.25}
   .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
   input{font-family:inherit;font-size:20px;padding:10px 14px;border-radius:10px;border:2px solid rgba(255,255,255,.25);
-    background:rgba(255,255,255,.08);color:#fff;width:200px;text-align:center}
+    background:rgba(255,255,255,.08);color:#fff;width:190px;text-align:center}
   input.rt{width:90px}
   input::placeholder{color:rgba(255,255,255,.5)}
   button{font-family:inherit;font-size:20px;font-weight:800;padding:12px 22px;border:0;border-radius:12px;
@@ -37,41 +36,46 @@
   button:active{transform:scale(.95)}
   button.alt{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.25)}
   .hint{color:#94a3b8;font-size:14px;text-align:center}
-  /* FUT card */
-  .fut{position:relative;width:200px;height:270px;border-radius:14px 14px 44px 14px;
+  /* FUT card - matches exactly what card() builds */
+  .fut{position:relative;width:200px;height:268px;border-radius:14px 14px 44px 14px;
     background:linear-gradient(165deg,#fbe98f,#e7c453 45%,#b8860b);color:#2e2400;font-weight:900;
     box-shadow:0 12px 26px rgba(0,0,0,.5);overflow:hidden}
-  .fut .rt{position:absolute;top:14px;left:16px;font-size:34px;line-height:1}
-  .fut .rt span{display:block;font-size:14px;letter-spacing:1px}
-  .fut .pic{position:absolute;top:54px;left:50%;transform:translateX(-50%);width:96px;height:96px;border-radius:50%;
+  .fut .rt{position:absolute;top:14px;left:18px;font-size:36px;line-height:1}
+  .fut .pic{position:absolute;top:56px;left:50%;transform:translateX(-50%);width:96px;height:96px;border-radius:50%;
     background:rgba(255,255,255,.4);border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:48px}
-  .fut .nm{position:absolute;left:10px;right:10px;bottom:30px;text-align:center;font-size:22px;text-transform:uppercase;
+  .fut .nm{position:absolute;left:10px;right:10px;bottom:28px;text-align:center;font-size:22px;text-transform:uppercase;
     letter-spacing:1px;border-top:2px solid rgba(46,36,0,.3);padding-top:12px}
 </style></head><body>
 <div class="stripe"></div>
 <div class="wrap">
-  <div class="top"><span class="badge">&#9917; Function demos</span></div>
+  <span class="badge">&#9917; Function demos</span>
   <h1>Show on the board</h1>
-  <p class="sub">Three quick demos for the lesson. Click the buttons live - the students watch the function run.</p>
+  <p class="sub">The code on the left is exactly what runs on the right. Click the buttons live.</p>
 
-  <!-- DEMO 1 -->
+  <!-- DEMO 1 : cycles commentary so each click visibly runs again -->
   <section class="demo">
     <h2>1 &middot; Write + call a <b>function</b></h2>
-    <p class="lead">A function is a named block of code. The button CALLS it by name. Click it as many times as you like.</p>
+    <p class="lead">A function is a named block of code. The button CALLS it - click again and it runs again (the next line of commentary).</p>
     <div class="grid">
-      <pre class="code"><span class="k">function</span> <span class="f">kickOff</span>() {
-    <span class="c">// the page commentates</span>
-    out1.innerHTML = <span class="s">"And we're under way!"</span>;
+      <pre class="code"><span class="k">let</span> lines = [<span class="s">"And we're under way!"</span>,
+             <span class="s">"Great pass..."</span>,
+             <span class="s">"He shoots..."</span>,
+             <span class="s">"GOOOAL!"</span>];
+<span class="k">let</span> i = <span class="a">0</span>;
+
+<span class="k">function</span> <span class="f">kickOff</span>() {
+    out1.innerHTML = lines[i];
+    i = (i + <span class="a">1</span>) % lines.length;
 }</pre>
       <div class="stage">
-        <div class="out gold" id="out1">Press the button &rarr;</div>
+        <div class="out" id="out1">Press the button &rarr;</div>
         <button onclick="kickOff()">&#9917; Kick off</button>
-        <div class="hint">Click again - it runs again (that's the point of a function).</div>
+        <div class="hint">Each click runs kickOff() again - the next moment of commentary.</div>
       </div>
     </div>
   </section>
 
-  <!-- DEMO 2 -->
+  <!-- DEMO 2 : parameter -->
   <section class="demo">
     <h2>2 &middot; A function with <b>INPUT</b> (a parameter)</h2>
     <p class="lead">Put a word in the brackets - a <b>parameter</b>. Call chant("Messi") and "Messi" fills the blank.</p>
@@ -80,31 +84,34 @@
     out2.innerHTML = <span class="a">name</span> + <span class="s">"! "</span> + <span class="a">name</span> + <span class="s">"!"</span>;
 }</pre>
       <div class="stage">
-        <div class="out gold" id="out2">Pick a player &rarr;</div>
+        <div class="out" id="out2">Pick a player &rarr;</div>
         <div class="controls">
           <button onclick="chant('Messi')">Messi</button>
           <button onclick="chant('Ronaldo')">Ronaldo</button>
           <button onclick="chant('Sam')">Sam</button>
         </div>
         <div class="controls">
-          <input id="nm2" placeholder="your player" onkeydown="if(event.key==='Enter')chant(nm2.value)">
-          <button class="alt" onclick="chant(nm2.value)">Chant it</button>
+          <input id="nm2" placeholder="your player" onkeydown="if(event.key==='Enter')chant(nm2.value||'Player')">
+          <button class="alt" onclick="chant(nm2.value||'Player')">Chant it</button>
         </div>
         <div class="hint">Same function, different input, different chant.</div>
       </div>
     </div>
   </section>
 
-  <!-- DEMO 3 -->
+  <!-- DEMO 3 : two parameters - the real card code -->
   <section class="demo">
     <h2>3 &middot; Build a <b>player card</b></h2>
-    <p class="lead">TWO inputs - a name and a rating. One function builds the whole card. This is what they build today.</p>
+    <p class="lead">TWO inputs - a name and a rating. One function builds the whole card from them.</p>
     <div class="grid">
       <pre class="code"><span class="k">function</span> <span class="f">card</span>(<span class="a">name</span>, <span class="a">rating</span>) {
-    <span class="c">// builds the gold card from the inputs</span>
-}
-
-<span class="f">card</span>(<span class="s">"You"</span>, <span class="a">99</span>);</pre>
+    out3.innerHTML =
+      <span class="s">"&lt;div class='fut'&gt;"</span> +
+      <span class="s">"&lt;div class='rt'&gt;"</span> + <span class="a">rating</span> + <span class="s">"&lt;/div&gt;"</span> +
+      <span class="s">"&lt;div class='pic'&gt;"</span> + <span class="a">name</span>[<span class="a">0</span>] + <span class="s">"&lt;/div&gt;"</span> +
+      <span class="s">"&lt;div class='nm'&gt;"</span> + <span class="a">name</span> + <span class="s">"&lt;/div&gt;"</span> +
+      <span class="s">"&lt;/div&gt;"</span>;
+}</pre>
       <div class="stage">
         <div id="out3"></div>
         <div class="controls">
@@ -118,15 +125,27 @@
   </section>
 </div>
 <script>
-  function kickOff(){ document.getElementById("out1").innerHTML = "And we're under way!"; }
-  function chant(name){ name=(name||"").trim()||"Player"; document.getElementById("out2").innerHTML = name + "! " + name + "!"; }
-  function makeCard(){
-    var n=(document.getElementById("nm3").value||"You").trim().toUpperCase();
-    var r=parseInt(document.getElementById("rt3").value)||99;
-    document.getElementById("out3").innerHTML =
-      '<div class="fut"><div class="rt">'+r+'<span>ST</span></div>'
-      +'<div class="pic">'+n.charAt(0)+'</div><div class="nm">'+n+'</div></div>';
+  // exactly the code shown on the left
+  let lines = ["And we're under way!", "Great pass...", "He shoots...", "GOOOAL!"];
+  let i = 0;
+  function kickOff() {
+    out1.innerHTML = lines[i];
+    i = (i + 1) % lines.length;
   }
+
+  function chant(name) {
+    out2.innerHTML = name + "! " + name + "!";
+  }
+
+  function card(name, rating) {
+    out3.innerHTML =
+      "<div class='fut'>" +
+      "<div class='rt'>" + rating + "</div>" +
+      "<div class='pic'>" + name[0] + "</div>" +
+      "<div class='nm'>" + name + "</div>" +
+      "</div>";
+  }
+  function makeCard() { card(nm3.value || "You", rt3.value || "99"); }
   makeCard();
 </script>
 </body></html>
