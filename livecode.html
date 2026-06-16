@@ -66,12 +66,11 @@ body{margin:0;background:#eef2f7;color:var(--ink);
   <h1>Live Code<small>Year 9 Computing &middot; teacher demo</small></h1>
   <select id="preset" title="Load an example">
     <option value="">Load example&hellip;</option>
-    <option value="hello">Button says hello</option>
-    <option value="sentence">Build a sentence (two prompts)</option>
-    <option value="style">Change the look</option>
-    <option value="vars">Plain JS - variables</option>
-    <option value="ifelse">Plain JS - decision</option>
-    <option value="blank">Blank</option>
+    <option value="kick">A function - kick off</option>
+    <option value="chant">A function with INPUT</option>
+    <option value="two">A function with TWO inputs</option>
+    <option value="kangaroo">The kangaroo attack</option>
+    <option value="blank">Blank (type your own)</option>
   </select>
   <span class="spacer"></span>
   <span class="hint">Ctrl+Enter = Run</span>
@@ -105,11 +104,10 @@ var state = { size: 1 };
 /* ---- presets ---- */
 var PRESETS = {
  blank: "",
- hello: '<h1 id="msg">Press the button</h1>\n<button onclick="hi()">Say hello</button>\n\n<script>\n  function hi() {\n    let name = prompt("Your name?");\n    document.getElementById("msg").innerHTML = "Hello, " + name + "!";\n  }\n<\/script>',
- sentence: '<h2 id="out"></h2>\n<button onclick="go()">Build it</button>\n\n<script>\n  function go() {\n    let name = prompt("Your name?");\n    let fav = prompt("Favourite subject?");\n    out.innerHTML = name + " loves " + fav;\n  }\n<\/script>',
- style: '<h1 id="t">Click the button to restyle me</h1>\n<button onclick="paint()">Paint it</button>\n\n<script>\n  function paint() {\n    let el = document.getElementById("t");\n    el.style.color = "white";\n    el.style.background = "#7c3aed";\n    document.body.style.background = "#16202e";\n  }\n<\/script>',
- vars: 'let name = "Ali";\nlet score = 10;\nconsole.log(name + " scored " + score);\n\nscore + 5',
- ifelse: 'let n = Number(prompt("Pick a number"));\n\nif (n > 10) {\n  console.log(n + " is BIG");\n} else {\n  console.log(n + " is small");\n}'
+ kick: '<p id="demo">Press the button...</p>\n<button onclick="kickOff()">Kick off</button>\n\n<script>\n  function kickOff() {\n    document.getElementById("demo").innerHTML = "And we are under way!";\n  }\n<\/script>',
+ chant: '<p id="demo">Pick a player...</p>\n<button onclick="chant(\'Messi\')">Messi</button>\n<button onclick="chant(\'Ronaldo\')">Ronaldo</button>\n\n<script>\n  function chant(name) {\n    document.getElementById("demo").innerHTML = name + "! " + name + "!";\n  }\n<\/script>',
+ two: '<p id="demo">Press the button...</p>\n<button onclick="commentate(\'Messi\', \'scores\')">Commentate</button>\n\n<script>\n  function commentate(player, action) {\n    document.getElementById("demo").innerHTML = player + " " + action + "!";\n  }\n<\/script>',
+ kangaroo: '<p id="demo">Press the button...</p>\n<button onclick="kangarooAttack()">Run kangarooAttack()</button>\n\n<script>\n  function kangarooAttack() {\n    document.getElementById("demo").innerHTML = "Ronaldo runs... a kangaroo appears... KICK! He falls over. The crowd laughs!";\n  }\n<\/script>'
 };
 
 /* ---- auto-detect: does it look like markup? ---- */
@@ -216,7 +214,7 @@ function persist(){
     $("ed").value = s.code;
     if (typeof s.size === "number" && SIZES[s.size]) state.size = s.size;
   } else {
-    $("ed").value = PRESETS.hello;
+    $("ed").value = PRESETS.kick;
   }
   applySize();
 })();
