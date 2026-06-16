@@ -104,7 +104,7 @@ var state = { size: 1 };
 /* ---- presets ---- */
 var PRESETS = {
  blank: "",
- kick: '<p id="demo">Press the button...</p>\n<button onclick="kickOff()">Kick off</button>\n\n<script>\n  function kickOff() {\n    document.getElementById("demo").innerHTML = "And we are under way!";\n  }\n<\/script>',
+ kick: '<p id="demo">Press the button...</p>\n<button onclick="kickOff()">Kick off</button>\n\n<script>\n  function kickOff() {\n    document.getElementById("demo").innerHTML = "And we\'re under way!";\n  }\n<\/script>',
  chant: '<p id="demo">Pick a player...</p>\n<button onclick="chant(\'Messi\')">Messi</button>\n<button onclick="chant(\'Ronaldo\')">Ronaldo</button>\n\n<script>\n  function chant(name) {\n    document.getElementById("demo").innerHTML = name + "! " + name + "!";\n  }\n<\/script>',
  two: '<p id="demo">Press the button...</p>\n<button onclick="commentate(\'Messi\', \'scores\')">Commentate</button>\n\n<script>\n  function commentate(player, action) {\n    document.getElementById("demo").innerHTML = player + " " + action + "!";\n  }\n<\/script>',
  kangaroo: '<p id="demo">Press the button...</p>\n<button onclick="kangarooAttack()">Run kangarooAttack()</button>\n\n<script>\n  function kangarooAttack() {\n    document.getElementById("demo").innerHTML = "Ronaldo runs... a kangaroo appears... KICK! He falls over. The crowd laughs!";\n  }\n<\/script>'
