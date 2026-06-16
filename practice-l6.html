@@ -3,8 +3,8 @@
 <title>JavaScript Selection (if/else) - Guided Practice L6</title>
 <style>
 :root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
-  --gold:#ffd200;--brand:#00a3e0;
-  --spectrum:linear-gradient(100deg,#ffe184 0%,#f6c043 48%,#e3982a 100%);}
+  --gold:#ffcd00;--brand:#00843d;
+  --spectrum:linear-gradient(100deg,#00843d 0%,#2bb673 45%,#ffcd00 100%);}
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(rgba(238,242,247,.87),rgba(238,242,247,.9)),url('img/bg.jpg') center top/cover fixed #eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding:0 30px}
@@ -160,6 +160,13 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 .mission p b{color:#fff}
 .mbtn{display:inline-block;background:var(--spectrum);color:#0b1020;font-weight:800;font-size:14px;text-decoration:none;border-radius:999px;padding:8px 16px}
 .mission-card{display:flex;justify-content:center}
+.socceroos{display:flex;align-items:center;gap:18px;margin:14px 0 2px;padding:15px 22px;border-radius:16px;background:linear-gradient(120deg,#00843d,#0b1020 72%);color:#fff;border:1px solid rgba(255,205,0,.45);box-shadow:0 6px 18px rgba(0,132,61,.2)}
+.socceroos .soc-flag{font-size:46px;flex:none;line-height:1}
+.socceroos .soc-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ffcd00}
+.socceroos h3{margin:4px 0 5px;font-size:20px;font-weight:900;letter-spacing:-.3px}
+.socceroos p{margin:0;font-size:14px;color:rgba(255,255,255,.9)}
+.socceroos p b{color:#ffcd00}
+.socceroos a{color:#ffcd00;font-weight:800}
 .divide.cap .lab{color:#b8860b}.divide.cap .ln{background:#f3e3a8}
 .ex.capstone{border:2px solid var(--gold);border-left-width:6px;border-left-color:#d4af37;box-shadow:0 8px 22px rgba(212,175,55,.20)}
 .ex.capstone .n{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
@@ -212,12 +219,11 @@ html{scroll-behavior:smooth}
         <div class="wc-kicker">&#9917; World Cup 26 season &middot; Year 9 Computing Technology</div>
         <h1>JavaScript Selection <span class="wc-pill">Guided Practice L6</span></h1>
         <div class="wc-ul"></div>
-        <p class="wc-sub"><b>if / else lets the computer DECIDE - run different code depending on the situation.</b> You be the ref: pick your theme, type the code, press Run, then make it your own.</p>
+        <p class="wc-sub"><b>if / else lets the computer DECIDE - run different code depending on the situation.</b> You be the ref: type the code, press Run, then make it your own.</p>
         <a class="scrollcue" href="#ex1">Scroll to kick off &darr;</a>
       </div>
       <div class="wc-trophy">&#127942;</div>
     </div>
-    <div class="themebar"><span class="tl">Pick your theme</span><button class="theme on" data-theme="worldcup" onclick="setTheme('worldcup')">⚽ World Cup</button><button class="theme" data-theme="pop" onclick="setTheme('pop')">🎤 Pop</button><button class="theme" data-theme="petcafe" onclick="setTheme('petcafe')">🐾 Pet Cafe</button></div>
   </header>
 
   <section class="mission">
@@ -230,18 +236,27 @@ html{scroll-behavior:smooth}
     <div class="mission-card"><div class="refcard"><span class="rc1">if</span><span class="rc2">( ? )</span><span class="rc3">else</span></div></div>
   </section>
 
+  <section class="socceroos">
+    <div class="soc-flag">&#127462;&#127482;</div>
+    <div class="soc-txt">
+      <span class="soc-tag">Real World Cup &middot; free on SBS</span>
+      <h3>The Socceroos are at the World Cup!</h3>
+      <p><b>Group D:</b> Australia &middot; T&uuml;rkiye &middot; Paraguay &middot; USA.&nbsp;&nbsp;Next match: <b>Australia v USA</b> &mdash; Sat 20 June, 5am AEST. Predict it in tile 8, then check on Saturday! <a href="https://www.sbs.com.au/ondemand/fifa-world-cup-2026" target="_blank" rel="noopener">Fixtures on SBS &rarr;</a></p>
+    </div>
+  </section>
+
   <section class="anatomy">
     <div class="ana-head"><h2>Anatomy of if / else</h2>
       <span class="ana-sub">if/else lets the computer <b>decide</b> &mdash; run different code depending on a condition. Here are its parts:</span></div>
     <div class="ana-grid">
-      <pre class="ana-code"><span class="ak">if</span> <span class="ap">(home &gt; away)</span> <span class="ab">{</span>
-    <span class="abd">msg.innerHTML = "HOME WINS!";</span>
+      <pre class="ana-code"><span class="ak">if</span> <span class="ap">(australia &gt; usa)</span> <span class="ab">{</span>
+    <span class="abd">msg.innerHTML = "AUSTRALIA WINS!";</span>
 <span class="ab">}</span> <span class="ak">else</span> <span class="ab">{</span>
-    <span class="abd">msg.innerHTML = "Not a home win";</span>
+    <span class="abd">msg.innerHTML = "Not this time!";</span>
 <span class="ab">}</span></pre>
       <ul class="ana-key">
         <li><span class="chip ak">if</span> starts the decision</li>
-        <li><span class="chip ap">(home &gt; away)</span> the <b>condition</b> &mdash; a true/false question</li>
+        <li><span class="chip ap">(australia &gt; usa)</span> the <b>condition</b> &mdash; a true/false question</li>
         <li><span class="chip ab">{ }</span> the block that runs <b>when it is true</b></li>
         <li><span class="chip an">else</span> <b>otherwise</b> &mdash; runs when the condition is false</li>
         <li><span class="chip ac">&gt; &lt; &gt;= ===</span> the <b>ref&rsquo;s questions</b> &mdash; ways to compare two values</li>
@@ -272,9 +287,9 @@ html{scroll-behavior:smooth}
 
 &lt;script&gt;
   function decide() {
-    let home = 3, away = 1;
-    if (home &gt; away) {
-      document.getElementById("msg").innerHTML = "HOME WINS!";
+    let australia = 2, usa = 1;
+    if (australia &gt; usa) {
+      document.getElementById("msg").innerHTML = "AUSTRALIA WINS!";
     }
   }
 &lt;/script&gt;</pre>
@@ -309,11 +324,11 @@ html{scroll-behavior:smooth}
 
 &lt;script&gt;
   function decide() {
-    let home = 3, away = 1;
-    if (home &gt; away) {
-      document.getElementById("msg").innerHTML = "HOME WINS!";
+    let australia = 2, usa = 1;
+    if (australia &gt; usa) {
+      document.getElementById("msg").innerHTML = "AUSTRALIA WINS!";
     } else {
-      document.getElementById("msg").innerHTML = "Not a home win";
+      document.getElementById("msg").innerHTML = "Not this time!";
     }
   }
 &lt;/script&gt;</pre>
@@ -387,8 +402,8 @@ html{scroll-behavior:smooth}
 
 &lt;script&gt;
   function check() {
-    let home = 3, away = 1;
-    if (home === away) {
+    let australia = 2, usa = 1;
+    if (australia === usa) {
       document.getElementById("msg").innerHTML = "It is a DRAW!";
     } else {
       document.getElementById("msg").innerHTML = "Someone is ahead!";
@@ -427,13 +442,13 @@ html{scroll-behavior:smooth}
 
 &lt;script&gt;
   function result() {
-    let home = 3, away = 1;
-    if (home &gt; away) {
-      document.getElementById("msg").innerHTML = "HOME WINS!";
-    } else if (home === away) {
+    let australia = 2, usa = 1;
+    if (australia &gt; usa) {
+      document.getElementById("msg").innerHTML = "AUSTRALIA WINS!";
+    } else if (australia === usa) {
       document.getElementById("msg").innerHTML = "It is a DRAW!";
     } else {
-      document.getElementById("msg").innerHTML = "AWAY WINS!";
+      document.getElementById("msg").innerHTML = "USA WINS!";
     }
   }
 &lt;/script&gt;</pre>
@@ -502,7 +517,7 @@ html{scroll-behavior:smooth}
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref7">&lt;input id="box" type="number" placeholder="home goals"&gt;
+        <pre class="code-ref" id="ref7">&lt;input id="box" type="number" placeholder="australia goals"&gt;
 &lt;button onclick="decide()"&gt;Run the ref&lt;/button&gt;
 &lt;h2 id="out"&gt;&lt;/h2&gt;
 
@@ -537,14 +552,14 @@ html{scroll-behavior:smooth}
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex8">
-    <div class="h"><span class="n">8</span><h3>Predict the match</h3></div>
-    <p class="lead">The big one: put <code>else if</code> and inputs together to <b>predict a real World Cup match</b>. Type two teams and your scores - the ref decides win, draw or lose.</p>
+    <div class="h"><span class="n">8</span><h3>Predict the Socceroos</h3></div>
+    <p class="lead">The big one: put <code>else if</code> and inputs together to <b>predict a real World Cup match</b>. Australia play the USA on <b>Saturday</b> - type your scores and let the ref call it.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
         <pre class="code-ref" id="ref8">&lt;h2 id="out"&gt;Who will win?&lt;/h2&gt;
 &lt;input id="aN" value="Australia"&gt; &lt;input id="aG" type="number" placeholder="goals"&gt;
-&lt;input id="bN" value="France"&gt; &lt;input id="bG" type="number" placeholder="goals"&gt;
+&lt;input id="bN" value="USA"&gt; &lt;input id="bG" type="number" placeholder="goals"&gt;
 &lt;button onclick="predict()"&gt;Predict!&lt;/button&gt;
 
 &lt;script&gt;
@@ -574,8 +589,8 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
-        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your if/else predicted a real result.</span></div>
-        <div class="try"><b>Now change it:</b> predict a REAL match from this Friday&rsquo;s fixtures - swap in the teams and your guessed scores, then Run.</div>
+        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; you predicted a real Socceroos result.</span></div>
+        <div class="try"><b>Now change it:</b> predict <b>Australia v USA</b> (Sat 20 June, 5am AEST, free on SBS). Put your scores in, Run it - then check Saturday morning if you were right!</div>
       </div>
     </div>
   </section>
@@ -795,14 +810,14 @@ html{scroll-behavior:smooth}
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let home = 3, away = 1;\n    if (home > away) {\n      document.getElementById(\"msg\").innerHTML = \"HOME WINS!\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the judge<\/button>\n\n<script>\n  function decide() {\n    let us = 8, them = 5;\n    if (us > them) {\n      document.getElementById(\"msg\").innerHTML = \"WE WIN THE AWARD!\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the cafe<\/button>\n\n<script>\n  function decide() {\n    let cats = 4, dogs = 2;\n    if (cats > dogs) {\n      document.getElementById(\"msg\").innerHTML = \"CATS WIN!\";\n    }\n  }\n<\/script>"}, "2": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let home = 3, away = 1;\n    if (home > away) {\n      document.getElementById(\"msg\").innerHTML = \"HOME WINS!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not a home win\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the judge<\/button>\n\n<script>\n  function decide() {\n    let us = 8, them = 5;\n    if (us > them) {\n      document.getElementById(\"msg\").innerHTML = \"WE WIN THE AWARD!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not a us win\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the cafe<\/button>\n\n<script>\n  function decide() {\n    let cats = 4, dogs = 2;\n    if (cats > dogs) {\n      document.getElementById(\"msg\").innerHTML = \"CATS WIN!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not a cats win\";\n    }\n  }\n<\/script>"}, "3": {"worldcup": "<h1 id=\"msg\">Any goals?<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let goals = 1;\n    if (goals > 0) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Any claps?<\/h1>\n<button onclick=\"check()\">Run the judge<\/button>\n\n<script>\n  function check() {\n    let claps = 1;\n    if (claps > 0) {\n      document.getElementById(\"msg\").innerHTML = \"Cheers!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Silence\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Any treats?<\/h1>\n<button onclick=\"check()\">Run the cafe<\/button>\n\n<script>\n  function check() {\n    let treats = 1;\n    if (treats > 0) {\n      document.getElementById(\"msg\").innerHTML = \"Happy pet!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Still hungry\";\n    }\n  }\n<\/script>"}, "4": {"worldcup": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let home = 3, away = 1;\n    if (home === away) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the judge<\/button>\n\n<script>\n  function check() {\n    let us = 8, them = 5;\n    if (us === them) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the cafe<\/button>\n\n<script>\n  function check() {\n    let cats = 4, dogs = 2;\n    if (cats === dogs) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>"}, "5": {"worldcup": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the ref<\/button>\n\n<script>\n  function result() {\n    let home = 3, away = 1;\n    if (home > away) {\n      document.getElementById(\"msg\").innerHTML = \"HOME WINS!\";\n    } else if (home === away) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"AWAY WINS!\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the judge<\/button>\n\n<script>\n  function result() {\n    let us = 8, them = 5;\n    if (us > them) {\n      document.getElementById(\"msg\").innerHTML = \"WE WIN THE AWARD!\";\n    } else if (us === them) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"THEY win the award\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the cafe<\/button>\n\n<script>\n  function result() {\n    let cats = 4, dogs = 2;\n    if (cats > dogs) {\n      document.getElementById(\"msg\").innerHTML = \"CATS WIN!\";\n    } else if (cats === dogs) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"DOGS WIN!\";\n    }\n  }\n<\/script>"}, "6": {"worldcup": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the ref<\/button>\n\n<script>\n  function qualify() {\n    let points = 9;\n    if (points >= 9) {\n      document.getElementById(\"msg\").innerHTML = \"Through to the next round!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Out of the cup\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the judge<\/button>\n\n<script>\n  function qualify() {\n    let fans = 1000;\n    if (fans >= 1000) {\n      document.getElementById(\"msg\").innerHTML = \"Sold out show!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Seats still left\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the cafe<\/button>\n\n<script>\n  function qualify() {\n    let stamps = 5;\n    if (stamps >= 5) {\n      document.getElementById(\"msg\").innerHTML = \"Free treat!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Keep collecting\";\n    }\n  }\n<\/script>"}, "7": {"worldcup": "<input id=\"box\" type=\"number\" placeholder=\"home goals\">\n<button onclick=\"decide()\">Run the ref<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let goals = Number(box.value);\n    if (goals > 0) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>", "pop": "<input id=\"box\" type=\"number\" placeholder=\"us claps\">\n<button onclick=\"decide()\">Run the judge<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let claps = Number(box.value);\n    if (claps > 0) {\n      document.getElementById(\"out\").innerHTML = \"Cheers!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Silence\";\n    }\n  }\n<\/script>", "petcafe": "<input id=\"box\" type=\"number\" placeholder=\"cats treats\">\n<button onclick=\"decide()\">Run the cafe<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let treats = Number(box.value);\n    if (treats > 0) {\n      document.getElementById(\"out\").innerHTML = \"Happy pet!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Still hungry\";\n    }\n  }\n<\/script>"}, "8": {"worldcup": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"Australia\"> <input id=\"aG\" type=\"number\" placeholder=\"goals\">\n<input id=\"bN\" value=\"France\"> <input id=\"bG\" type=\"number\" placeholder=\"goals\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" WINS!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" WINS!\";\n    }\n  }\n<\/script>", "pop": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"DJ Sky\"> <input id=\"aG\" type=\"number\" placeholder=\"claps\">\n<input id=\"bN\" value=\"The Echoes\"> <input id=\"bG\" type=\"number\" placeholder=\"claps\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" wins the award!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" wins the award!\";\n    }\n  }\n<\/script>", "petcafe": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"Milo\"> <input id=\"aG\" type=\"number\" placeholder=\"treats\">\n<input id=\"bN\" value=\"Bella\"> <input id=\"bG\" type=\"number\" placeholder=\"treats\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" is the cutest!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" is the cutest!\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<h1 id=\"msg\">Penalty shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"SAVED!\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Encore shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"ENCORE!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Crowd goes quiet\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Treat shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"Treat!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"No treat\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>"}};
+var STARTERS = {"1": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let australia = 2, usa = 1;\n    if (australia > usa) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    }\n  }\n<\/script>"}, "2": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let australia = 2, usa = 1;\n    if (australia > usa) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not this time!\";\n    }\n  }\n<\/script>"}, "3": {"worldcup": "<h1 id=\"msg\">Any goals?<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let goals = 1;\n    if (goals > 0) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"}, "4": {"worldcup": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let australia = 2, usa = 1;\n    if (australia === usa) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>"}, "5": {"worldcup": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the ref<\/button>\n\n<script>\n  function result() {\n    let australia = 2, usa = 1;\n    if (australia > usa) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    } else if (australia === usa) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"USA WINS!\";\n    }\n  }\n<\/script>"}, "6": {"worldcup": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the ref<\/button>\n\n<script>\n  function qualify() {\n    let points = 9;\n    if (points >= 9) {\n      document.getElementById(\"msg\").innerHTML = \"Through to the next round!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Out of the cup\";\n    }\n  }\n<\/script>"}, "7": {"worldcup": "<input id=\"box\" type=\"number\" placeholder=\"australia goals\">\n<button onclick=\"decide()\">Run the ref<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let goals = Number(box.value);\n    if (goals > 0) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"}, "8": {"worldcup": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"Australia\"> <input id=\"aG\" type=\"number\" placeholder=\"goals\">\n<input id=\"bN\" value=\"USA\"> <input id=\"bG\" type=\"number\" placeholder=\"goals\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" WINS!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" WINS!\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<h1 id=\"msg\">Penalty shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"SAVED!\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>"}};
 var WANT = {"10": "No goal", "11": "RED CARD"};
-var OKTX = {"1": "your if made a decision.", "2": "if true -> first block; otherwise -> else.", "3": "the condition decided which line ran.", "4": "=== checked for an exact match.", "5": "else if gave you three outcomes.", "6": ">= drew the qualifying line.", "7": "your if reacted to what was typed.", "8": "your if/else predicted a real result.", "9": "you traced the branches and found the winner.", "10": "you fixed the condition - compare, don't assign.", "11": "your if/else made the call.", "12": "you combined two conditions with && - boss done.", "13": "you built a penalty-shootout game with if/else + random."};
+var OKTX = {"1": "your if made a decision.", "2": "if true -> first block; otherwise -> else.", "3": "the condition decided which line ran.", "4": "=== checked for an exact match.", "5": "else if gave you three outcomes.", "6": ">= drew the qualifying line.", "7": "your if reacted to what was typed.", "8": "you predicted a real Socceroos result.", "9": "you traced the branches and found the winner.", "10": "you fixed the condition - compare, don't assign.", "11": "your if/else made the call.", "12": "you combined two conditions with && - boss done.", "13": "you built a penalty-shootout game with if/else + random."};
 var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "create"};
 var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let home = 2, away = 2;\n  if (home > away) {\n    out.innerHTML = \"HOME WINS!\";\n  } else if (home === away) {\n    out.innerHTML = \"It is a DRAW!\";\n  } else {\n    out.innerHTML = \"AWAY WINS!\";\n  }\n<\/script>"};
 var DEBUGC = {"10": "<button onclick=\"decide()\">Decide<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function decide() {\n    let goals = 0;\n    if (goals = 1) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"};
 var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-var THEME_LIST = ["worldcup", "pop", "petcafe"];
+var THEME_LIST = ["worldcup"];
 var IDS = Object.keys(STARTERS).map(Number);
 var THEME = "worldcup";
 var LSKEY = "l6-state-v1";
