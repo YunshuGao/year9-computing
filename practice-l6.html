@@ -1,0 +1,1019 @@
+<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript Selection (if/else) - Guided Practice L6</title>
+<style>
+:root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
+  --gold:#ffd200;--brand:#00a3e0;
+  --spectrum:linear-gradient(100deg,#ffe184 0%,#f6c043 48%,#e3982a 100%);}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(rgba(238,242,247,.87),rgba(238,242,247,.9)),url('img/bg.jpg') center top/cover fixed #eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+/* ---- FIFA-inspired dark hero ---- */
+.wc-hero{position:relative;margin:0 0 4px;border-radius:0 0 22px 22px;overflow:hidden;color:#fff;
+  padding:32px 34px 18px;
+  background:linear-gradient(rgba(8,12,28,.72),rgba(8,12,28,.82)),
+            url('img/hero.jpg') center/cover no-repeat,
+            linear-gradient(135deg,#0b1020,#141b34 55%,#0b1020);
+  box-shadow:0 10px 26px rgba(8,12,28,.30)}
+.wc-stripe{position:absolute;top:0;left:0;right:0;height:6px;background:var(--spectrum)}
+.wc-inner{display:flex;align-items:center;gap:22px;margin-top:8px}
+.wc-emblem{font-size:64px;font-weight:900;font-style:italic;line-height:.85;letter-spacing:-4px;flex:none;
+  background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 7px rgba(0,0,0,.4))}
+.wc-trophy{font-size:46px;line-height:1;margin-left:auto;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4))}
+.wc-titles{min-width:0}
+.wc-kicker{font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}
+.wc-hero h1{font-size:37px;margin:5px 0 0;font-weight:900;letter-spacing:-1.1px;color:#fff}
+.wc-ul{width:104px;height:5px;border-radius:3px;background:var(--spectrum);margin:10px 0 12px}
+.wc-pill{display:inline-block;background:var(--spectrum);color:#0b1020;border-radius:999px;
+  padding:3px 13px;font-size:14px;font-weight:800;vertical-align:middle;margin-left:8px}
+.wc-sub{margin:0;font-size:15.5px;color:rgba(255,255,255,.84);max-width:700px}
+.wc-sub b{color:#fff}
+.themebar{display:flex;align-items:center;gap:9px;margin:16px 0 2px;flex-wrap:wrap}
+.themebar .tl{font-size:12px;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.62);text-transform:uppercase}
+.theme{border:1.5px solid rgba(255,255,255,.30);background:rgba(255,255,255,.10);border-radius:999px;
+  padding:7px 15px;font-weight:700;font-size:14px;color:#fff;cursor:pointer;font-family:inherit}
+.theme.on{background:#fff;color:#0b1020;border-color:#fff}
+/* anatomy panel */
+.anatomy{margin:18px 0 4px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px 22px;box-shadow:0 1px 3px rgba(22,32,46,.05);border-top:4px solid var(--brand)}
+.ana-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.ana-head h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.3px}
+.ana-sub{color:var(--mut);font-size:14.5px}
+.ana-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;align-items:center}
+.ana-code{margin:0;background:var(--code);color:#e9eef6;border-radius:12px;padding:16px 18px;font-family:Consolas,"Courier New",monospace;font-size:13.5px;line-height:1.7;white-space:pre;overflow:auto}
+.ana-code .ak{color:#c4b5fd;font-weight:700}
+.ana-code .an{color:#7dd3fc;font-weight:700}
+.ana-code .ap{color:#fbbf24}
+.ana-code .ab{color:#f9a8d4;font-weight:700}
+.ana-code .abd{color:#cbd5e1}
+.ana-code .acmt{color:#94a3b8;font-style:italic}
+.ana-key{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.ana-key li{font-size:13.5px;color:#37424f;line-height:1.4}
+.ana-key b{color:#16202e}
+.chip{display:inline-block;font-family:Consolas,monospace;font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;margin-right:7px;vertical-align:middle}
+.chip.ak{background:#ede9fe;color:#6d28d9}
+.chip.an{background:#e0f2fe;color:#0369a1}
+.chip.ap{background:#fef3c7;color:#92400e}
+.chip.ab{background:#fce7f3;color:#be185d}
+.chip.ac{background:#dcfce7;color:#15803d}
+/* details + progress strip */
+.strip{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 2px;padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.strip label{font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:6px}
+.strip input,.strip select{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:#fff;color:var(--ink)}
+.strip input#sname{min-width:160px}
+.strip .prog{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:210px}
+.strip .track{flex:1;height:8px;background:#e3e9f1;border-radius:99px;overflow:hidden;min-width:120px}
+.strip .track i{display:block;height:100%;width:0;background:var(--spectrum);transition:width .3s;font-style:normal}
+.strip .pt{font-size:13px;font-weight:800;color:var(--ink);white-space:nowrap}
+.strip .btn.save{margin-left:6px}
+/* tier bar */
+.tier-bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0 6px}
+.tier-zone{border-radius:14px;padding:14px 16px}
+.tier-zone.must{background:#ecfdf5;border:1.5px solid #10b981}
+.tier-zone.should{background:#eef2ff;border:1.5px solid #1e3a8a}
+.tier-zone.could{background:#f5f3ff;border:1.5px solid #7c3aed}
+.zone-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.tier-zone h3{margin:0;font-size:15px;letter-spacing:1.4px;font-weight:800}
+.tier-zone.must h3{color:#047857}.tier-zone.should h3{color:#1e3a8a}.tier-zone.could h3{color:#5b21b6}
+.zone-tag{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#94a3b8}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:78px;flex:0 1 78px;padding:9px 6px;border-radius:11px;text-decoration:none;color:#fff;font-weight:700;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,.1)}
+.pill .num{font-size:21px;line-height:1;font-weight:800}
+.pill .ttl{font-size:10.5px;line-height:1.15;margin-top:5px;font-weight:700}
+.pill.must{background:#10b981}.pill.should{background:#1e3a8a}.pill.could{background:#7c3aed}
+.pill.is-done{outline:3px solid var(--gold);outline-offset:2px}
+/* dividers + exercises */
+.divide{display:flex;align-items:center;gap:16px;margin:32px 0 12px}
+.divide .lab{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.divide .ln{flex:1;height:2px;border-radius:2px}
+.divide.must .lab{color:#047857}.divide.must .ln{background:#d1fae5}
+.divide.should .lab{color:#1e3a8a}.divide.should .ln{background:#dbe4f7}
+.divide.could .lab{color:#5b21b6}.divide.could .ln{background:#e9e0fb}
+.ex{border:1px solid var(--line);border-left-width:6px;border-radius:16px;padding:20px 22px;margin:12px 0;scroll-margin-top:14px;background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.ex.must{border-left-color:#10b981}.ex.should{border-left-color:#1e3a8a}.ex.could{border-left-color:#7c3aed}
+.ex .h{display:flex;align-items:center;gap:13px}
+.ex .n{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;flex:none}
+.ex.must .n{background:#10b981}.ex.should .n{background:#1e3a8a}.ex.could .n{background:#7c3aed}
+.ex h3{margin:0;font-size:20px;font-weight:800;letter-spacing:-.3px}
+.ex .lead{color:var(--mut);font-size:15px;margin:11px 0 15px}
+.ex code{background:#eef2f6;color:#0f172a;padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:.9em}
+.cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px;align-items:start}
+.lbl{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.lbl .cn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#16202e;color:#fff;font-size:11px;font-weight:800;flex:none}
+.lbl .hint{font-weight:600;letter-spacing:0;text-transform:none;color:#9aa6b5;font-size:11px}
+.code-ref{margin:0;height:300px;overflow:auto;background:var(--code);color:#e9eef6;border-radius:12px;padding:14px 16px;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.6;white-space:pre;-webkit-user-select:none;-moz-user-select:none;user-select:none;cursor:default}
+.code-ref::selection{background:transparent}
+.editor{width:100%;height:300px;resize:vertical;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.6;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:#16202e;tab-size:2}
+.editor:focus{outline:none;border-color:#7c8cf8;box-shadow:0 0 0 3px rgba(124,140,248,.18)}
+.editor::placeholder{color:#9aa6b5}
+.win{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.win .bar{background:var(--soft);border-bottom:1px solid var(--line);padding:8px 12px;font-size:12px;color:var(--mut);display:flex;gap:6px;align-items:center}
+.win .bar i{width:9px;height:9px;border-radius:50%;background:#cfd8e3;font-style:normal}
+.out{width:100%;height:200px;border:0;display:block;background:#fff}
+.ok{display:flex;align-items:center;gap:10px;margin-top:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:11px 14px;font-size:14px;color:#065f46;font-weight:600}
+.ok[hidden]{display:none}
+.ok .tick{flex:none;width:20px;height:20px;border-radius:50%;background:#10b981;position:relative}
+.ok .tick::after{content:"";position:absolute;left:7px;top:4px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.try{margin-top:12px;border-radius:0 10px 10px 0;padding:12px 16px;font-size:14px}
+.ex.must .try{background:#f0fdf6;border-left:3px solid #10b981;color:#14532d}
+.ex.should .try{background:#f1f5ff;border-left:3px solid #1e3a8a;color:#1e3a8a}
+.ex.could .try{background:#f7f3ff;border-left:3px solid #7c3aed;color:#5b21b6}
+.act{display:flex;gap:10px;margin-top:12px;align-items:center}
+.btn{border:0;border-radius:10px;padding:10px 18px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}
+.btn.run::before{content:"";display:inline-block;width:0;height:0;border-left:9px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-right:9px;vertical-align:middle}
+.btn.ghost{background:var(--soft);color:var(--mut);border:1px solid var(--line)}
+.ex.must .btn.run{background:#10b981;color:#fff}.ex.should .btn.run{background:#1e3a8a;color:#fff}.ex.could .btn.run{background:#7c3aed;color:#fff}
+.donebox{margin-left:auto;font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:7px;cursor:pointer}
+.donebox input{width:18px;height:18px;accent-color:#10b981;cursor:pointer}
+.btn.save{background:var(--brand);color:#fff}
+.btn.load{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+/* closing */
+.closing{margin:34px 0 20px;border:1px solid var(--line);border-radius:16px;padding:22px 26px;background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.closing h3{margin:0 0 6px;font-size:20px;font-weight:800}
+.closing p{margin:0 0 14px;color:var(--mut);font-size:15px;max-width:720px}
+.reflect{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 16px}
+.reflect label{display:block;font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--mut);text-transform:uppercase;margin-bottom:5px}
+.reflect textarea{width:100%;min-height:60px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:14px;resize:vertical;background:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#16202e;color:#fff;padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
+/* ---- COULD challenge types ---- */
+.ctype{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 9px;margin-left:6px;vertical-align:middle}
+.ctype.predict{background:#eef2ff;color:#1e3a8a}.ctype.debug{background:#fef2f2;color:#b91c1c}.ctype.create{background:#ecfdf5;color:#047857}
+.ctype.boss{background:#16202e;color:#fff}
+.editor.short{height:118px}
+.goalbox{background:#f6f9fb;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;color:#37424f;line-height:1.55}
+.goalbox b{color:#16202e}
+.goalbox .eg{margin-top:9px;font-family:Consolas,monospace;font-size:12.5px;color:#475569;background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+.goalbox code,.reveal code{background:#eef2f6;color:#0f172a;padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:.9em}
+.chal-btns{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+.reveal{margin-top:11px;border-radius:10px;padding:11px 14px;font-size:13.5px;line-height:1.55}
+.reveal[hidden]{display:none}
+.reveal.hint{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.reveal.ans{background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a}
+/* ---- mission banner + capstone + card ---- */
+.mission{display:grid;grid-template-columns:1fr 180px;gap:20px;align-items:center;margin:16px 0 2px;padding:18px 22px;border-radius:16px;background:linear-gradient(135deg,#0b1020,#1a2344);color:#fff;border:1px solid rgba(255,255,255,.12)}
+.mission .mtag{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.mission h3{margin:5px 0 6px;font-size:21px;font-weight:900;letter-spacing:-.4px}
+.mission p{margin:0 0 12px;font-size:14px;color:rgba(255,255,255,.82);max-width:520px}
+.mission p b{color:#fff}
+.mbtn{display:inline-block;background:var(--spectrum);color:#0b1020;font-weight:800;font-size:14px;text-decoration:none;border-radius:999px;padding:8px 16px}
+.mission-card{display:flex;justify-content:center}
+.divide.cap .lab{color:#b8860b}.divide.cap .ln{background:#f3e3a8}
+.ex.capstone{border:2px solid var(--gold);border-left-width:6px;border-left-color:#d4af37;box-shadow:0 8px 22px rgba(212,175,55,.20)}
+.ex.capstone .n{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
+.ex.capstone h3{color:#7a5c00}
+#ex13 .out{height:250px;background:#0b1020}
+.pill.cap{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
+.scrollcue{display:inline-block;margin-top:14px;color:rgba(255,255,255,.9);font-weight:700;font-size:13.5px;text-decoration:none;border:1.5px solid rgba(255,255,255,.32);border-radius:999px;padding:7px 16px}
+.band{position:relative;margin:30px -30px 8px;padding:46px 32px;color:#fff;overflow:hidden;background-position:center;background-size:cover;border-radius:14px}
+.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,28,.9),rgba(8,12,28,.5))}
+.band>*{position:relative}
+.band .bnum{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.band h2{margin:5px 0 6px;font-size:27px;font-weight:900;letter-spacing:-.5px}
+.band p{margin:0;font-size:15.5px;color:rgba(255,255,255,.9);max-width:620px}
+.band.kickoff{background-image:url('img/kickoff.jpg')}
+.band.buildup{background-image:url('img/buildup.jpg')}
+.band.glory{background-image:url('img/glory.jpg')}
+.band.trophy{background-image:url('img/trophy.jpg')}
+.anthem{border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 24px;margin-bottom:22px;background:linear-gradient(rgba(8,12,28,.8),rgba(8,12,28,.88)),url('img/flag.jpg') center/cover;color:#fff;text-align:center}
+.anthem-quote{font-size:25px;font-weight:900;letter-spacing:-.4px}
+.anthem-attr{font-size:12.5px;color:var(--gold);letter-spacing:.05em;margin-top:5px;font-weight:700}
+.anthem-lead{color:rgba(255,255,255,.84);font-size:14.5px;max-width:560px;margin:14px auto}
+.anthem-lead b{color:#fff}
+.anthem-do{display:flex;gap:9px;justify-content:center;align-items:center;flex-wrap:wrap}
+.anthem-pre{font-weight:700;font-size:15px}
+.anthem-do input{font-family:inherit;font-size:15px;padding:9px 13px;border-radius:10px;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;min-width:240px}
+.anthem-do input::placeholder{color:rgba(255,255,255,.5)}
+.wflag{display:inline-block;margin-top:16px;background:var(--spectrum);color:#0b1020;font-weight:900;font-size:18px;padding:12px 22px;border-radius:12px;animation:wflagwave 1.2s ease-in-out infinite;transform-origin:left center}
+@keyframes wflagwave{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+.anthem-code{margin:16px auto 0;display:inline-block;background:#0b1020;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 13px;font-family:Consolas,monospace;font-size:12.5px;color:#7dd3fc}
+/* ---- advanced effects: reveal, parallax, tilt, scroll progress ---- */
+html{scroll-behavior:smooth}
+.progress-top{position:fixed;left:0;top:0;height:4px;width:0;background:var(--spectrum);z-index:300;transition:width .08s linear}
+.is-in{opacity:1!important}
+.pill{transition:transform .15s ease}
+.pill:hover{transform:translateY(-3px) scale(1.05)}
+.theme{transition:transform .12s ease}
+.theme:hover{transform:translateY(-2px)}
+.mission-card{perspective:800px}
+.mission-card .refcard{transition:transform .12s ease;will-change:transform}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
+@media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}body{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
+.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
+<div class="progress-top" id="ptop"></div>
+<div class="wrap">
+  <header class="wc-hero">
+    <div class="wc-stripe"></div>
+    <div class="wc-inner">
+      <div class="wc-emblem">26</div>
+      <div class="wc-titles">
+        <div class="wc-kicker">&#9917; World Cup 26 season &middot; Year 9 Computing Technology</div>
+        <h1>JavaScript Selection <span class="wc-pill">Guided Practice L6</span></h1>
+        <div class="wc-ul"></div>
+        <p class="wc-sub"><b>if / else lets the computer DECIDE - run different code depending on the situation.</b> You be the ref: pick your theme, type the code, press Run, then make it your own.</p>
+        <a class="scrollcue" href="#ex1">Scroll to kick off &darr;</a>
+      </div>
+      <div class="wc-trophy">&#127942;</div>
+    </div>
+    <div class="themebar"><span class="tl">Pick your theme</span><button class="theme on" data-theme="worldcup" onclick="setTheme('worldcup')">⚽ World Cup</button><button class="theme" data-theme="pop" onclick="setTheme('pop')">🎤 Pop</button><button class="theme" data-theme="petcafe" onclick="setTheme('petcafe')">🐾 Pet Cafe</button></div>
+  </header>
+
+  <section class="mission">
+    <div class="mission-txt">
+      <span class="mtag">&#11088; Your mission today</span>
+      <h3>Become the referee</h3>
+      <p>Every tile teaches the computer to <b>decide</b>. The last one is a <b>penalty-shootout game</b> &mdash; and it is all just <b>if / else</b>.</p>
+      <a class="mbtn" href="#ex13">Jump to the shootout &rarr;</a>
+    </div>
+    <div class="mission-card"><div class="refcard"><span class="rc1">if</span><span class="rc2">( ? )</span><span class="rc3">else</span></div></div>
+  </section>
+
+  <section class="anatomy">
+    <div class="ana-head"><h2>Anatomy of if / else</h2>
+      <span class="ana-sub">if/else lets the computer <b>decide</b> &mdash; run different code depending on a condition. Here are its parts:</span></div>
+    <div class="ana-grid">
+      <pre class="ana-code"><span class="ak">if</span> <span class="ap">(home &gt; away)</span> <span class="ab">{</span>
+    <span class="abd">msg.innerHTML = "HOME WINS!";</span>
+<span class="ab">}</span> <span class="ak">else</span> <span class="ab">{</span>
+    <span class="abd">msg.innerHTML = "Not a home win";</span>
+<span class="ab">}</span></pre>
+      <ul class="ana-key">
+        <li><span class="chip ak">if</span> starts the decision</li>
+        <li><span class="chip ap">(home &gt; away)</span> the <b>condition</b> &mdash; a true/false question</li>
+        <li><span class="chip ab">{ }</span> the block that runs <b>when it is true</b></li>
+        <li><span class="chip an">else</span> <b>otherwise</b> &mdash; runs when the condition is false</li>
+        <li><span class="chip ac">&gt; &lt; &gt;= ===</span> the <b>ref&rsquo;s questions</b> &mdash; ways to compare two values</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="strip">
+    <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
+    <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
+    <label>Date <input id="sdate" type="date"></label>
+    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 13 done</span></span>
+    <button class="btn save" onclick="save()">Save my work</button>
+  </div>
+
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">First if</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">...or else</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">Goal?</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">Draw?</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">3 results</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">Qualify?</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">You type</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">Predict</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Predict it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix the condition</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Boss level</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Shootout</span></a></div></div></nav>
+
+  <section class="band kickoff"><div class="bnum">1 / Kick-off</div><h2>Make a decision</h2><p>Every match needs a ref. Now the computer becomes the ref - one condition, one decision.</p></section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex1">
+    <div class="h"><span class="n">1</span><h3>The first decision</h3></div>
+    <p class="lead"><code>if</code> asks a yes/no question. If the answer is YES, the code in the <code>{ }</code> runs. The ref checks: is home greater than away? Type it, press Run, then click.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref1">&lt;h1 id="msg"&gt;Who wins?&lt;/h1&gt;
+&lt;button onclick="decide()"&gt;Run the ref&lt;/button&gt;
+
+&lt;script&gt;
+  function decide() {
+    let home = 3, away = 1;
+    if (home &gt; away) {
+      document.getElementById("msg").innerHTML = "HOME WINS!";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed1" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(1)">Run</button>
+          <button class="btn ghost" onclick="resetEx(1)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done1" onchange="toggleDone(1)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
+        <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; your if made a decision.</span></div>
+        <div class="try"><b>Now change it:</b> change the scores so it is NOT a home win, then Run - nothing shows! (there is no <code>else</code> yet).</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex2">
+    <div class="h"><span class="n">2</span><h3>Otherwise (else)</h3></div>
+    <p class="lead"><code>else</code> means "otherwise". If the <code>if</code> is NOT true, the <code>else</code> block runs instead. Now every score gets an answer.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref2">&lt;h1 id="msg"&gt;Who wins?&lt;/h1&gt;
+&lt;button onclick="decide()"&gt;Run the ref&lt;/button&gt;
+
+&lt;script&gt;
+  function decide() {
+    let home = 3, away = 1;
+    if (home &gt; away) {
+      document.getElementById("msg").innerHTML = "HOME WINS!";
+    } else {
+      document.getElementById("msg").innerHTML = "Not a home win";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed2" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(2)">Run</button>
+          <button class="btn ghost" onclick="resetEx(2)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done2" onchange="toggleDone(2)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
+        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; if true -&gt; first block; otherwise -&gt; else.</span></div>
+        <div class="try"><b>Now change it:</b> swap the scores to 1 and 3 and Run - this time the else fires.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex3">
+    <div class="h"><span class="n">3</span><h3>A yes / no question</h3></div>
+    <p class="lead">A condition is just a true/false question. <code>goals &gt; 0</code> is true when there is at least one goal. Change the number and watch the answer flip.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref3">&lt;h1 id="msg"&gt;Any goals?&lt;/h1&gt;
+&lt;button onclick="check()"&gt;Run the ref&lt;/button&gt;
+
+&lt;script&gt;
+  function check() {
+    let goals = 1;
+    if (goals &gt; 0) {
+      document.getElementById("msg").innerHTML = "GOAL!";
+    } else {
+      document.getElementById("msg").innerHTML = "No goal";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed3" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(3)">Run</button>
+          <button class="btn ghost" onclick="resetEx(3)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done3" onchange="toggleDone(3)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
+        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; the condition decided which line ran.</span></div>
+        <div class="try"><b>Now change it:</b> set <code>goals</code> to 0 and Run - the else fires (No goal).</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex4">
+    <div class="h"><span class="n">4</span><h3>Exactly equal (===)</h3></div>
+    <p class="lead"><code>&gt;</code> is greater-than. <code>===</code> means <b>exactly equal</b>. Use it to spot a draw - when the two scores are the same.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref4">&lt;h1 id="msg"&gt;Score check&lt;/h1&gt;
+&lt;button onclick="check()"&gt;Run the ref&lt;/button&gt;
+
+&lt;script&gt;
+  function check() {
+    let home = 3, away = 1;
+    if (home === away) {
+      document.getElementById("msg").innerHTML = "It is a DRAW!";
+    } else {
+      document.getElementById("msg").innerHTML = "Someone is ahead!";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed4" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(4)">Run</button>
+          <button class="btn ghost" onclick="resetEx(4)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done4" onchange="toggleDone(4)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
+        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; === checked for an exact match.</span></div>
+        <div class="try"><b>Now change it:</b> make the two scores equal and Run - you get a draw.</div>
+      </div>
+    </div>
+  </section>
+  <section class="band buildup"><div class="bnum">2 / Build-up play</div><h2>More outcomes</h2><p>One question is good - now chain decisions with else if, and react to real input.</p></section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex5">
+    <div class="h"><span class="n">5</span><h3>Win, draw or lose</h3></div>
+    <p class="lead">Chain decisions with <code>else if</code>. The ref checks in order: home wins, ELSE IF it is a draw, ELSE away wins. Three outcomes, one decider.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref5">&lt;h1 id="msg"&gt;Full time&lt;/h1&gt;
+&lt;button onclick="result()"&gt;Run the ref&lt;/button&gt;
+
+&lt;script&gt;
+  function result() {
+    let home = 3, away = 1;
+    if (home &gt; away) {
+      document.getElementById("msg").innerHTML = "HOME WINS!";
+    } else if (home === away) {
+      document.getElementById("msg").innerHTML = "It is a DRAW!";
+    } else {
+      document.getElementById("msg").innerHTML = "AWAY WINS!";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed5" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(5)">Run</button>
+          <button class="btn ghost" onclick="resetEx(5)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done5" onchange="toggleDone(5)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
+        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; else if gave you three outcomes.</span></div>
+        <div class="try"><b>Now change it:</b> change the scores three times to trigger all three results.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex6">
+    <div class="h"><span class="n">6</span><h3>Did they qualify?</h3></div>
+    <p class="lead"><code>&gt;=</code> means "greater than or equal to". A team is through if its points are 9 or more. Try a number just below the line.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref6">&lt;h1 id="msg"&gt;League table&lt;/h1&gt;
+&lt;button onclick="qualify()"&gt;Run the ref&lt;/button&gt;
+
+&lt;script&gt;
+  function qualify() {
+    let points = 9;
+    if (points &gt;= 9) {
+      document.getElementById("msg").innerHTML = "Through to the next round!";
+    } else {
+      document.getElementById("msg").innerHTML = "Out of the cup";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed6" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(6)">Run</button>
+          <button class="btn ghost" onclick="resetEx(6)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done6" onchange="toggleDone(6)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
+        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; &gt;= drew the qualifying line.</span></div>
+        <div class="try"><b>Now change it:</b> set <code>points</code> to 8 and Run - just missed! Then try 9.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex7">
+    <div class="h"><span class="n">7</span><h3>Type a number, the ref decides</h3></div>
+    <p class="lead">The condition can use what the user <b>typed</b>. <code>Number(box.value)</code> reads the input; the <code>if</code> decides from it. Real apps react to real input.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref7">&lt;input id="box" type="number" placeholder="home goals"&gt;
+&lt;button onclick="decide()"&gt;Run the ref&lt;/button&gt;
+&lt;h2 id="out"&gt;&lt;/h2&gt;
+
+&lt;script&gt;
+  function decide() {
+    let goals = Number(box.value);
+    if (goals &gt; 0) {
+      document.getElementById("out").innerHTML = "GOAL!";
+    } else {
+      document.getElementById("out").innerHTML = "No goal";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed7" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(7)">Run</button>
+          <button class="btn ghost" onclick="resetEx(7)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
+        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your if reacted to what was typed.</span></div>
+        <div class="try"><b>Now change it:</b> type different numbers (including 0) and Run each time.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex8">
+    <div class="h"><span class="n">8</span><h3>Predict the match</h3></div>
+    <p class="lead">The big one: put <code>else if</code> and inputs together to <b>predict a real World Cup match</b>. Type two teams and your scores - the ref decides win, draw or lose.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref8">&lt;h2 id="out"&gt;Who will win?&lt;/h2&gt;
+&lt;input id="aN" value="Australia"&gt; &lt;input id="aG" type="number" placeholder="goals"&gt;
+&lt;input id="bN" value="France"&gt; &lt;input id="bG" type="number" placeholder="goals"&gt;
+&lt;button onclick="predict()"&gt;Predict!&lt;/button&gt;
+
+&lt;script&gt;
+  function predict() {
+    let a = aN.value, b = bN.value;
+    let ag = Number(aG.value), bg = Number(bG.value);
+    if (ag &gt; bg) {
+      document.getElementById("out").innerHTML = a + " WINS!";
+    } else if (ag === bg) {
+      document.getElementById("out").innerHTML = "It is a DRAW!";
+    } else {
+      document.getElementById("out").innerHTML = b + " WINS!";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed8" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(8)">Run</button>
+          <button class="btn ghost" onclick="resetEx(8)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done8" onchange="toggleDone(8)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
+        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your if/else predicted a real result.</span></div>
+        <div class="try"><b>Now change it:</b> predict a REAL match from this Friday&rsquo;s fixtures - swap in the teams and your guessed scores, then Run.</div>
+      </div>
+    </div>
+  </section>
+  <section class="band glory"><div class="bnum">3 / Going for glory</div><h2>Push yourself</h2><p>The hard yards - predict the branch, fix the condition, build it from nothing.</p></section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal predict" id="ex9">
+    <div class="h"><span class="n">9</span><h3>Predict the branch <span class="ctype predict">PREDICT</span></h3></div>
+    <p class="lead">Read the if / else if / else carefully. Only ONE branch runs. Write which message shows, then check.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code</div>
+        <pre class="code-ref" id="ref9">&lt;p id="out"&gt;&lt;/p&gt;
+&lt;script&gt;
+  let home = 2, away = 2;
+  if (home &gt; away) {
+    out.innerHTML = "HOME WINS!";
+  } else if (home === away) {
+    out.innerHTML = "It is a DRAW!";
+  } else {
+    out.innerHTML = "AWAY WINS!";
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Your prediction</div>
+        <textarea class="editor short" id="ed9" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runPredict(9)">Run &amp; check</button>
+          <button class="btn ghost" onclick="resetEx(9)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done9" onchange="toggleDone(9)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
+        <div class="reveal ans" id="ans9" hidden>It shows <b>It is a DRAW!</b>. <code>home &gt; away</code> is false (2 is not &gt; 2), so it checks the next: <code>home === away</code> is true, so that branch runs and the rest is skipped.</div>
+        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you traced the branches and found the winner.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal debug" id="ex10">
+    <div class="h"><span class="n">10</span><h3>Fix the bug <span class="ctype debug">DEBUG</span></h3></div>
+    <p class="lead">Click <b>Decide</b> - it always says GOAL, even for 0 goals. The condition is wrong. Read it, find the slip, fix it.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">It always says GOAL, even when <code>goals</code> is 0. The condition uses <code>=</code> (assign) instead of a compare. Fix it so 0 goals shows "No goal".
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
+          <div class="reveal hint" id="hint10" hidden><code>=</code> puts a value IN. To COMPARE, use <code>&gt;</code>, <code>&lt;</code> or <code>===</code>. Change <code>if (goals = 1)</code> to <code>if (goals &gt; 0)</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fix it here</div>
+        <textarea class="editor" id="ed10" spellcheck="false">&lt;button onclick="decide()"&gt;Decide&lt;/button&gt;
+&lt;p id="out"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+  function decide() {
+    let goals = 0;
+    if (goals = 1) {
+      document.getElementById("out").innerHTML = "GOAL!";
+    } else {
+      document.getElementById("out").innerHTML = "No goal";
+    }
+  }
+&lt;/script&gt;</textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(10)">Run</button>
+          <button class="btn ghost" onclick="resetEx(10)">Reset</button>
+          <label class="donebox"><input type="checkbox" id="done10" onchange="toggleDone(10)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
+        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed the condition - compare, don't assign.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal create" id="ex11">
+    <div class="h"><span class="n">11</span><h3>Red card decider <span class="ctype create">CREATE</span></h3></div>
+    <p class="lead">No code given. Build an if/else from the goal - the hint is there if you are stuck.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">Make a <b>button</b> and a function that checks <code>fouls</code>. If <code>fouls &gt; 2</code> show <b>RED CARD!</b>, otherwise show <b>Play on</b>.
+          <div class="eg">Expected: RED CARD!</div>
+          <div class="chal-btns">
+            <button class="btn ghost" onclick="showHint(11)">Show a hint</button>
+          </div>
+          <div class="reveal hint" id="hint11" hidden><code>function check() { let fouls = 3; if (fouls &gt; 2) { out.innerHTML = "RED CARD!"; } else { out.innerHTML = "Play on"; } }</code>. Add a <code>&lt;p id="out"&gt;</code> and a button: <code>onclick="check()"</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
+        <textarea class="editor" id="ed11" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(11)">Run</button>
+          <button class="btn ghost" onclick="resetEx(11)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done11" onchange="toggleDone(11)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
+        <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; your if/else made the call.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal create" id="ex12">
+    <div class="h"><span class="n">12</span><h3>Boss: two conditions <span class="ctype boss">BOSS</span></h3></div>
+    <p class="lead">Everything together: combine TWO conditions with <code>&amp;&amp;</code> (AND). No answer given - you have the pieces.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">A button that checks a team: if <code>points &gt;= 9</code> <b>AND</b> <code>goals &gt; 0</code>, show <b>Champions!</b>, otherwise <b>Not yet</b>.
+          <div class="eg">Expected: Champions!</div>
+          <div class="chal-btns">
+            <button class="btn ghost" onclick="showHint(12)">Show a hint</button>
+          </div>
+          <div class="reveal hint" id="hint12" hidden><code>&amp;&amp;</code> means BOTH must be true: <code>if (points &gt;= 9 &amp;&amp; goals &gt; 0) { ... } else { ... }</code>. Set both numbers high to win, then drop one and Run again.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
+        <textarea class="editor" id="ed12" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(12)">Run</button>
+          <button class="btn ghost" onclick="resetEx(12)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done12" onchange="toggleDone(12)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; you combined two conditions with &amp;&amp; - boss done.</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="band trophy"><div class="bnum">4 / Lift the trophy</div><h2>Penalty shootout</h2><p>if/else + a little luck = a game you would actually play.</p></section>
+  <div class="divide cap"><span class="lab">Capstone &mdash; build the thing you&rsquo;d screenshot</span><span class="ln"></span></div>
+  <section class="ex could capstone" id="ex13">
+    <div class="h"><span class="n">13</span><h3>Penalty shootout</h3></div>
+    <p class="lead">This is the capstone &mdash; a game you&rsquo;d actually play. <code>Math.random()</code> gives a number from 0 to 1; the <code>if</code> turns it into a GOAL or a SAVE, and the score counts up. Type it, press Run, then keep shooting.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref13">&lt;h1 id="msg"&gt;Penalty shootout!&lt;/h1&gt;
+&lt;p id="score"&gt;Goals: 0&lt;/p&gt;
+&lt;button onclick="shoot()"&gt;Shoot!&lt;/button&gt;
+
+&lt;script&gt;
+  let goals = 0;
+  function shoot() {
+    if (Math.random() &lt; 0.5) {
+      document.getElementById("msg").innerHTML = "GOAL!";
+      goals = goals + 1;
+    } else {
+      document.getElementById("msg").innerHTML = "SAVED!";
+    }
+    document.getElementById("score").innerHTML = "Goals: " + goals;
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <textarea class="editor" id="ed13" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(13)">Run</button>
+          <button class="btn ghost" onclick="resetEx(13)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done13" onchange="toggleDone(13)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> Your game</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your game</div>
+          <iframe class="out" id="out13" title="your game"></iframe></div>
+        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you built a penalty-shootout game with if/else + random.</span></div>
+        <div class="try"><b>Now make it yours:</b> change <code>0.5</code> to <code>0.8</code> to score more often (easier keeper!), or add a <code>misses</code> counter in the <code>else</code>.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div class="anthem">
+      <div class="anthem-quote">&ldquo;When I get older, I will be stronger.&rdquo;</div>
+      <div class="anthem-attr">K&rsquo;NAAN &mdash; Wavin&rsquo; Flag &middot; 2010 World Cup</div>
+      <p class="anthem-lead">You just taught the computer to DECIDE. Now decide who <b>you&rsquo;ll</b> be &mdash; type your line, then wave your flag.</p>
+      <div class="anthem-do">
+        <span class="anthem-pre">When I get older, I will be</span>
+        <input id="meline" placeholder="stronger... a coder... unstoppable" autocomplete="off">
+        <button class="btn save" onclick="waveFlag()">Wave my flag</button>
+      </div>
+      <div id="flagout"></div>
+      <pre class="anthem-code">if (effort &gt; 0) { you = "unstoppable"; }   // your future is a decision</pre>
+    </div>
+    <h3>Show the class</h3>
+    <p>Finished, or out of time? Put your best <b>decider</b> or shootout on the board &mdash; we will look at a few together and name the parts: the <b>condition</b>, the <b>if</b> block, and the <b>else</b>.</p>
+    <div class="reflect">
+      <div><label>What I built</label><textarea id="rbuilt" placeholder="In a sentence..."></textarea></div>
+      <div><label>I got stuck on</label><textarea id="rstuck" placeholder="What tripped you up?"></textarea></div>
+    </div>
+    <div class="row">
+      <button class="btn save" onclick="save()">Save my work (one file)</button>
+      <button class="btn load" onclick="document.getElementById('lf').click()">Load my file</button>
+      <input id="lf" type="file" accept=".html,text/html" hidden onchange="loadFile(this)">
+    </div>
+  </div>
+  <footer>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; JavaScript Selection (if/else) &mdash; Guided Practice L6</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var STARTERS = {"1": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let home = 3, away = 1;\n    if (home > away) {\n      document.getElementById(\"msg\").innerHTML = \"HOME WINS!\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the judge<\/button>\n\n<script>\n  function decide() {\n    let us = 8, them = 5;\n    if (us > them) {\n      document.getElementById(\"msg\").innerHTML = \"WE WIN THE AWARD!\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the cafe<\/button>\n\n<script>\n  function decide() {\n    let cats = 4, dogs = 2;\n    if (cats > dogs) {\n      document.getElementById(\"msg\").innerHTML = \"CATS WIN!\";\n    }\n  }\n<\/script>"}, "2": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let home = 3, away = 1;\n    if (home > away) {\n      document.getElementById(\"msg\").innerHTML = \"HOME WINS!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not a home win\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the judge<\/button>\n\n<script>\n  function decide() {\n    let us = 8, them = 5;\n    if (us > them) {\n      document.getElementById(\"msg\").innerHTML = \"WE WIN THE AWARD!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not a us win\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the cafe<\/button>\n\n<script>\n  function decide() {\n    let cats = 4, dogs = 2;\n    if (cats > dogs) {\n      document.getElementById(\"msg\").innerHTML = \"CATS WIN!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not a cats win\";\n    }\n  }\n<\/script>"}, "3": {"worldcup": "<h1 id=\"msg\">Any goals?<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let goals = 1;\n    if (goals > 0) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Any claps?<\/h1>\n<button onclick=\"check()\">Run the judge<\/button>\n\n<script>\n  function check() {\n    let claps = 1;\n    if (claps > 0) {\n      document.getElementById(\"msg\").innerHTML = \"Cheers!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Silence\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Any treats?<\/h1>\n<button onclick=\"check()\">Run the cafe<\/button>\n\n<script>\n  function check() {\n    let treats = 1;\n    if (treats > 0) {\n      document.getElementById(\"msg\").innerHTML = \"Happy pet!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Still hungry\";\n    }\n  }\n<\/script>"}, "4": {"worldcup": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let home = 3, away = 1;\n    if (home === away) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the judge<\/button>\n\n<script>\n  function check() {\n    let us = 8, them = 5;\n    if (us === them) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the cafe<\/button>\n\n<script>\n  function check() {\n    let cats = 4, dogs = 2;\n    if (cats === dogs) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>"}, "5": {"worldcup": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the ref<\/button>\n\n<script>\n  function result() {\n    let home = 3, away = 1;\n    if (home > away) {\n      document.getElementById(\"msg\").innerHTML = \"HOME WINS!\";\n    } else if (home === away) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"AWAY WINS!\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the judge<\/button>\n\n<script>\n  function result() {\n    let us = 8, them = 5;\n    if (us > them) {\n      document.getElementById(\"msg\").innerHTML = \"WE WIN THE AWARD!\";\n    } else if (us === them) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"THEY win the award\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the cafe<\/button>\n\n<script>\n  function result() {\n    let cats = 4, dogs = 2;\n    if (cats > dogs) {\n      document.getElementById(\"msg\").innerHTML = \"CATS WIN!\";\n    } else if (cats === dogs) {\n      document.getElementById(\"msg\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"DOGS WIN!\";\n    }\n  }\n<\/script>"}, "6": {"worldcup": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the ref<\/button>\n\n<script>\n  function qualify() {\n    let points = 9;\n    if (points >= 9) {\n      document.getElementById(\"msg\").innerHTML = \"Through to the next round!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Out of the cup\";\n    }\n  }\n<\/script>", "pop": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the judge<\/button>\n\n<script>\n  function qualify() {\n    let fans = 1000;\n    if (fans >= 1000) {\n      document.getElementById(\"msg\").innerHTML = \"Sold out show!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Seats still left\";\n    }\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the cafe<\/button>\n\n<script>\n  function qualify() {\n    let stamps = 5;\n    if (stamps >= 5) {\n      document.getElementById(\"msg\").innerHTML = \"Free treat!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Keep collecting\";\n    }\n  }\n<\/script>"}, "7": {"worldcup": "<input id=\"box\" type=\"number\" placeholder=\"home goals\">\n<button onclick=\"decide()\">Run the ref<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let goals = Number(box.value);\n    if (goals > 0) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>", "pop": "<input id=\"box\" type=\"number\" placeholder=\"us claps\">\n<button onclick=\"decide()\">Run the judge<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let claps = Number(box.value);\n    if (claps > 0) {\n      document.getElementById(\"out\").innerHTML = \"Cheers!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Silence\";\n    }\n  }\n<\/script>", "petcafe": "<input id=\"box\" type=\"number\" placeholder=\"cats treats\">\n<button onclick=\"decide()\">Run the cafe<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let treats = Number(box.value);\n    if (treats > 0) {\n      document.getElementById(\"out\").innerHTML = \"Happy pet!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Still hungry\";\n    }\n  }\n<\/script>"}, "8": {"worldcup": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"Australia\"> <input id=\"aG\" type=\"number\" placeholder=\"goals\">\n<input id=\"bN\" value=\"France\"> <input id=\"bG\" type=\"number\" placeholder=\"goals\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" WINS!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" WINS!\";\n    }\n  }\n<\/script>", "pop": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"DJ Sky\"> <input id=\"aG\" type=\"number\" placeholder=\"claps\">\n<input id=\"bN\" value=\"The Echoes\"> <input id=\"bG\" type=\"number\" placeholder=\"claps\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" wins the award!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" wins the award!\";\n    }\n  }\n<\/script>", "petcafe": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"Milo\"> <input id=\"aG\" type=\"number\" placeholder=\"treats\">\n<input id=\"bN\" value=\"Bella\"> <input id=\"bG\" type=\"number\" placeholder=\"treats\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" is the cutest!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a TIE!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" is the cutest!\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<h1 id=\"msg\">Penalty shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"SAVED!\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>", "pop": "<h1 id=\"msg\">Encore shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"ENCORE!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Crowd goes quiet\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>", "petcafe": "<h1 id=\"msg\">Treat shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"Treat!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"No treat\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>"}};
+var WANT = {"10": "No goal", "11": "RED CARD"};
+var OKTX = {"1": "your if made a decision.", "2": "if true -> first block; otherwise -> else.", "3": "the condition decided which line ran.", "4": "=== checked for an exact match.", "5": "else if gave you three outcomes.", "6": ">= drew the qualifying line.", "7": "your if reacted to what was typed.", "8": "your if/else predicted a real result.", "9": "you traced the branches and found the winner.", "10": "you fixed the condition - compare, don't assign.", "11": "your if/else made the call.", "12": "you combined two conditions with && - boss done.", "13": "you built a penalty-shootout game with if/else + random."};
+var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "create"};
+var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let home = 2, away = 2;\n  if (home > away) {\n    out.innerHTML = \"HOME WINS!\";\n  } else if (home === away) {\n    out.innerHTML = \"It is a DRAW!\";\n  } else {\n    out.innerHTML = \"AWAY WINS!\";\n  }\n<\/script>"};
+var DEBUGC = {"10": "<button onclick=\"decide()\">Decide<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function decide() {\n    let goals = 0;\n    if (goals = 1) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"};
+var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+var THEME_LIST = ["worldcup", "pop", "petcafe"];
+var IDS = Object.keys(STARTERS).map(Number);
+var THEME = "worldcup";
+var LSKEY = "l6-state-v1";
+var BASE = {};
+
+function $(id){return document.getElementById(id);}
+
+function setTheme(t){
+  if(THEME_LIST.indexOf(t)<0) t=THEME_LIST[0];
+  THEME=t;
+  document.querySelectorAll(".theme").forEach(function(b){ b.classList.toggle("on", b.dataset.theme===t); });
+  IDS.forEach(function(i){ $("ref"+i).textContent = STARTERS[String(i)][t]; });
+  persist();
+  var nm=document.querySelector('.theme[data-theme="'+t+'"]');
+  toast("Theme: "+(nm?nm.textContent.trim():t));
+}
+
+function wrap(i, code){
+  var head='<!doctype html><html><head><meta charset="utf-8"><style>'
+   + 'body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:16px;color:#16202e}'
+   + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:6px;background:#e8edf3;cursor:pointer;margin:2px 4px 2px 0}'
+   + 'input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid #cbd5e1;border-radius:6px;margin:2px 4px 2px 0}'
+   + 'h1,h2{margin:.3em 0}'
+   + '.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}'
+   + '#__l4err{position:fixed;left:0;right:0;bottom:0;background:#fef2f2;color:#b91c1c;border-top:2px solid #ef4444;font-family:Consolas,monospace;font-size:12.5px;padding:8px 12px;white-space:pre-wrap;z-index:9}'
+   + '</style><scr'+'ipt>window.onerror=function(m){'
+   + 'var b=document.body||document.documentElement;'
+   + 'var e=document.getElementById("__l4err");if(!e){e=document.createElement("div");e.id="__l4err";b.appendChild(e);}'
+   + 'e.textContent="Error: "+m;'
+   + 'try{parent.postMessage({l4:1,id:'+i+',err:String(m)},"*");}catch(_){}return false;};<\/scr'+'ipt></head>';
+  var body='<body><div id="__l4app">'+code+'</div>'
+   + '<scr'+'ipt>(function(){'
+   + 'function tx(){var a=document.getElementById("__l4app");return a?(a.innerText||"").trim():"";}'
+   + 'function p(at){try{parent.postMessage({l4:1,id:'+i+',text:tx(),attr:at?1:0},"*");}catch(e){}}'
+   + 'try{new MutationObserver(function(ms){var a=false;'
+   + 'for(var k=0;k<ms.length;k++){if(ms[k].type==="attributes"){a=true;break;}}'
+   + 'p(a);}).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true});}catch(e){}'
+   + 'setTimeout(function(){p(false);},60);})();<\/scr'+'ipt></body></html>';
+  return head+body;
+}
+
+function runEx(i){
+  delete BASE[i];
+  $("ok"+i).hidden=true;
+  $("out"+i).srcdoc = wrap(i, $("ed"+i).value);
+}
+
+function runPredict(i){
+  if(!($("ed"+i).value||"").trim()){ toast("Write your prediction first, then check."); $("ed"+i).focus(); return; }
+  delete BASE[i];
+  $("out"+i).srcdoc = wrap(i, PREDICT[String(i)]);
+  var a=$("ans"+i); if(a) a.hidden=false;
+  showOk(i);
+  persist();
+}
+function showHint(i){ var h=$("hint"+i); if(h) h.hidden=false; }
+
+function waveFlag(){
+  var v=($("meline").value||"stronger");
+  $("flagout").innerHTML='<div class="wflag">When I get older, I will be '+esc(v)+'</div>';
+  persist();
+}
+
+function resetEx(i){
+  var m=MODES[String(i)]||"type";
+  $("ed"+i).value = (m=="debug" ? DEBUGC[String(i)] : "");
+  if(m=="predict"){ var a=$("ans"+i); if(a) a.hidden=true; }
+  delete BASE[i];
+  $("out"+i).srcdoc="";
+  $("ok"+i).hidden=true;
+  persist();
+}
+
+window.addEventListener("message", function(e){
+  var d=e.data; if(!d || d.l4!==1) return;
+  var i=d.id;
+  if(d.err) return;
+  var text=d.text||"";
+  if(BASE[i]===undefined){ BASE[i]=text; return; }
+  var want=WANT[String(i)];
+  var ok = want ? (text.indexOf(want)>=0)
+                : ((text!==BASE[i] && text.trim().length>0) || d.attr===1);
+  if(ok) showOk(i);
+});
+
+function showOk(i){
+  $("ok"+i).hidden=false;
+  var cb=$("done"+i);
+  if(cb && !cb.checked){ cb.checked=true; toggleDone(i, true); }
+}
+
+function toggleDone(i, quiet){
+  var done=$("done"+i).checked;
+  var pill=document.querySelector('.pill[href="#ex'+i+'"]');
+  if(pill) pill.classList.toggle("is-done", done);
+  if(!done) $("ok"+i).hidden=true;
+  updateProgress();
+  persist();
+}
+
+function updateProgress(){
+  var n=ALL_IDS.filter(function(i){var c=$("done"+i);return c&&c.checked;}).length;
+  $("pfill").style.width = Math.round(n/ALL_IDS.length*100)+"%";
+  $("ptext").textContent = n+" of "+ALL_IDS.length+" done";
+}
+
+function gather(){
+  var code={}, done=[];
+  ALL_IDS.forEach(function(i){
+    code[i]=$("ed"+i).value;
+    if($("done"+i).checked) done.push(i);
+  });
+  return {v:1, name:$("sname").value, klass:$("sclass").value, date:$("sdate").value,
+          theme:THEME, code:code, done:done,
+          built:$("rbuilt").value, stuck:$("rstuck").value,
+          me:($("meline")?$("meline").value:"")};
+}
+function persist(){ try{ localStorage.setItem(LSKEY, JSON.stringify(gather())); }catch(e){} }
+
+function apply(s){
+  if(!s) return;
+  var th=(s.theme && THEME_LIST.indexOf(s.theme)>=0)? s.theme : THEME_LIST[0];
+  THEME=th; document.querySelectorAll(".theme").forEach(function(b){b.classList.toggle("on",b.dataset.theme===th);});
+  $("sname").value=s.name||""; $("sclass").value=s.klass||"9 COTYC"; $("sdate").value=s.date||"";
+  $("rbuilt").value=s.built||""; $("rstuck").value=s.stuck||""; if($("meline")) $("meline").value=s.me||"";
+  ALL_IDS.forEach(function(i){
+    if(STARTERS[String(i)]) $("ref"+i).textContent = STARTERS[String(i)][THEME];
+    var c=s.code&&s.code[i], m=MODES[String(i)]||"type";
+    $("ed"+i).value = (c!=null ? c : (m=="debug" ? DEBUGC[String(i)] : ""));
+    var on=(s.done||[]).indexOf(i)>=0; $("done"+i).checked=on;
+    var pill=document.querySelector('.pill[href="#ex'+i+'"]'); if(pill) pill.classList.toggle("is-done",on);
+  });
+  updateProgress();
+}
+
+function save(){
+  var s=gather();
+  if(!s.name){ if(!confirm("No name entered. Save anyway?")) { $("sname").focus(); return; } }
+  var rows="";
+  ALL_IDS.forEach(function(i){
+    rows+='<h3>Tile '+i+'</h3><pre>'+esc(s.code[i]||"")+'</pre>';
+  });
+  var meta='Name: '+esc(s.name||'-')+' &middot; Class: '+esc(s.klass||'-')+' &middot; Date: '+esc(s.date||'-')
+          +' &middot; Theme: '+esc(s.theme)+' &middot; Progress: '+s.done.length+'/'+ALL_IDS.length;
+  var doc='<!doctype html><meta charset="utf-8"><title>JS Selection Practice L6 - '+esc(s.name||'')+'</title>'
+    +'<body style="font-family:Segoe UI,Arial;max-width:800px;margin:30px auto;padding:0 16px;color:#16202e">'
+    +'<h1>JavaScript Selection (if/else) - Guided Practice L6</h1><p>'+meta+'</p>'
+    +'<p><b>What I built:</b> '+esc(s.built||'-')+'<br><b>Stuck on:</b> '+esc(s.stuck||'-')+'</p><hr>'
+    +rows
+    +'<scr'+'ipt type="application/json" id="l6-state">'+JSON.stringify(s).replace(/</g,"\\u003c")+'<\/scr'+'ipt>'
+    +'<p style="color:#94a3b8;font-size:12px;margin-top:30px">This file is your save. Open it in the workshop with '
+    +'&ldquo;Load my file&rdquo; to keep working, or hand it in on Google Classroom.</p></body>';
+  var blob=new Blob([doc],{type:"text/html"});
+  var a=document.createElement("a");
+  var fn=("JS-L6_"+(s.name||"student")+"_"+(s.klass||"")).replace(/[^a-z0-9_-]+/gi,"-")+".html";
+  a.href=URL.createObjectURL(blob); a.download=fn; document.body.appendChild(a); a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
+  toast("Saved "+fn+" - now upload it to Google Classroom");
+}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function loadFile(input){
+  var f=input.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var doc=new DOMParser().parseFromString(r.result,"text/html");
+      var node=doc.getElementById("l6-state");
+      if(!node){ toast("That file has no saved L6 work."); return; }
+      apply(JSON.parse(node.textContent)); persist();
+      toast("Loaded - carry on where you left off");
+    }catch(e){ toast("Could not read that file."); }
+  };
+  r.readAsText(f); input.value="";
+}
+
+var _tt;
+function toast(m){ var t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(_tt); _tt=setTimeout(function(){t.classList.remove("show");},2600); }
+
+document.addEventListener("DOMContentLoaded", function(){
+  ALL_IDS.forEach(function(i){ $("ed"+i).addEventListener("input", persist); });
+  ["sname","sclass","sdate","rbuilt","rstuck","meline"].forEach(function(id){ var el=$(id); if(el) el.addEventListener("input",persist); });
+  var saved=null; try{ saved=JSON.parse(localStorage.getItem(LSKEY)); }catch(e){}
+  if(saved) apply(saved); else updateProgress();
+
+  // ---- advanced motion effects ----
+  try{
+    if(document.documentElement.classList.contains("anim")){
+      var io=new IntersectionObserver(function(es){es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("is-in"); io.unobserve(en.target); }
+      });},{threshold:0.08});
+      document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ io.observe(el); });
+      setTimeout(function(){ document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ el.classList.add("is-in"); }); }, 4000);
+    }
+    var mc=document.querySelector(".mission-card .refcard");
+    if(mc && !window.matchMedia("(prefers-reduced-motion:reduce)").matches){
+      var mw=mc.parentElement;
+      mw.addEventListener("mousemove",function(e){
+        var r=mc.getBoundingClientRect();
+        var px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
+        mc.style.transform="rotateY("+(px*16).toFixed(2)+"deg) rotateX("+(-py*16).toFixed(2)+"deg)";
+      });
+      mw.addEventListener("mouseleave",function(){ mc.style.transform=""; });
+    }
+    var pt=document.getElementById("ptop");
+    if(pt){ var ticking=false; window.addEventListener("scroll",function(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){ var h=document.documentElement.scrollHeight-window.innerHeight;
+        pt.style.width=(h>0?(window.scrollY/h*100):0)+"%"; ticking=false; });
+    },{passive:true}); }
+  }catch(e){}
+});
+</script>
+</body></html>
