@@ -8,6 +8,13 @@
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(rgba(238,242,247,.87),rgba(238,242,247,.9)),url('img/bg.jpg') center top/cover fixed #eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+/* ---- Predict-before-Run beat (type-it tiles) ---- */
+.predict-row{display:flex;flex-direction:column;gap:5px;margin:0 0 9px;padding:9px 11px;border:1px dashed #d9b400;border-radius:9px;background:linear-gradient(180deg,#fffdf3,#fffaef)}
+.predict-lbl{font-size:12.5px;font-weight:800;color:#8a6d00}
+.predict-lbl em{font-weight:600;font-style:normal;color:#9a7d20}
+.predict-in{width:100%;font-family:inherit;font-size:13.5px;padding:7px 10px;border:1px solid #e3cf7a;border-radius:7px;background:#fff;color:var(--ink)}
+.predict-in:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.guesscheck{margin-top:8px;font-size:12.5px;font-weight:700;color:#00843d;background:#eafaf0;border:1px solid #b6e6c9;border-radius:7px;padding:7px 10px}
 /* ---- FIFA-inspired dark hero ---- */
 .wc-hero{position:relative;margin:0 0 4px;border-radius:0 0 22px 22px;overflow:hidden;color:#fff;
   padding:32px 34px 18px;
@@ -300,12 +307,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred1" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed1" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(1)">Run</button>
           <button class="btn ghost" onclick="resetEx(1)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done1" onchange="toggleDone(1)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc1" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -339,12 +351,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred2" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed2" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(2)">Run</button>
           <button class="btn ghost" onclick="resetEx(2)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done2" onchange="toggleDone(2)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc2" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -378,12 +395,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred3" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed3" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(3)">Run</button>
           <button class="btn ghost" onclick="resetEx(3)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done3" onchange="toggleDone(3)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc3" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -417,12 +439,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred4" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed4" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(4)">Run</button>
           <button class="btn ghost" onclick="resetEx(4)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done4" onchange="toggleDone(4)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc4" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -459,12 +486,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred5" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed5" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(5)">Run</button>
           <button class="btn ghost" onclick="resetEx(5)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done5" onchange="toggleDone(5)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc5" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -498,12 +530,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred6" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed6" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(6)">Run</button>
           <button class="btn ghost" onclick="resetEx(6)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done6" onchange="toggleDone(6)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc6" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -538,12 +575,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred7" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed7" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(7)">Run</button>
           <button class="btn ghost" onclick="resetEx(7)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc7" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -582,12 +624,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred8" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed8" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(8)">Run</button>
           <button class="btn ghost" onclick="resetEx(8)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done8" onchange="toggleDone(8)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc8" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -768,12 +815,17 @@ html{scroll-behavior:smooth}
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred13" placeholder="Type your guess...">
+        </div>
         <textarea class="editor" id="ed13" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(13)">Run</button>
           <button class="btn ghost" onclick="resetEx(13)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done13" onchange="toggleDone(13)"> Done</label>
         </div>
+        <div class="guesscheck" id="gc13" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> Your game</div>
@@ -855,10 +907,17 @@ function wrap(i, code){
   return head+body;
 }
 
+var PRED_NUDGED = {};
 function runEx(i){
+  var pin=$("pred"+i), dn=$("done"+i);
+  if(pin && !(pin.value||"").trim() && !PRED_NUDGED[i] && !(dn&&dn.checked)){
+    PRED_NUDGED[i]=true; toast("🔮 Quick — type your guess first, then Run.");
+    pin.focus(); return;
+  }
   delete BASE[i];
   $("ok"+i).hidden=true;
   $("out"+i).srcdoc = wrap(i, $("ed"+i).value);
+  var gc=$("gc"+i); if(gc) gc.hidden=false;
 }
 
 function runPredict(i){
