@@ -1,0 +1,1045 @@
+<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript Lists &amp; Random - Guided Practice L7</title>
+<style>
+:root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
+  --gold:#ffcd00;--brand:#00843d;
+  --spectrum:linear-gradient(100deg,#00843d 0%,#2bb673 45%,#ffcd00 100%);}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(rgba(238,242,247,.87),rgba(238,242,247,.9)),url('img/bg.jpg') center top/cover fixed #eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+/* ---- Predict-before-Run beat (type-it tiles) ---- */
+.predict-row{display:flex;flex-direction:column;gap:5px;margin:0 0 9px;padding:9px 11px;border:1px dashed #d9b400;border-radius:9px;background:linear-gradient(180deg,#fffdf3,#fffaef)}
+.predict-lbl{font-size:12.5px;font-weight:800;color:#8a6d00}
+.predict-lbl em{font-weight:600;font-style:normal;color:#9a7d20}
+.predict-in{width:100%;font-family:inherit;font-size:13.5px;padding:7px 10px;border:1px solid #e3cf7a;border-radius:7px;background:#fff;color:var(--ink)}
+.predict-in:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.guesscheck{margin-top:8px;font-size:12.5px;font-weight:700;color:#00843d;background:#eafaf0;border:1px solid #b6e6c9;border-radius:7px;padding:7px 10px}
+/* ---- FIFA-inspired dark hero ---- */
+.wc-hero{position:relative;margin:0 0 4px;border-radius:0 0 22px 22px;overflow:hidden;color:#fff;
+  padding:32px 34px 18px;
+  background:linear-gradient(rgba(8,12,28,.72),rgba(8,12,28,.82)),
+            url('img/hero.jpg') center/cover no-repeat,
+            linear-gradient(135deg,#0b1020,#141b34 55%,#0b1020);
+  box-shadow:0 10px 26px rgba(8,12,28,.30)}
+.wc-stripe{position:absolute;top:0;left:0;right:0;height:6px;background:var(--spectrum)}
+.wc-inner{display:flex;align-items:center;gap:22px;margin-top:8px}
+.wc-emblem{font-size:64px;font-weight:900;font-style:italic;line-height:.85;letter-spacing:-4px;flex:none;
+  background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 7px rgba(0,0,0,.4))}
+.wc-trophy{font-size:46px;line-height:1;margin-left:auto;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4))}
+.wc-titles{min-width:0}
+.wc-kicker{font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}
+.wc-hero h1{font-size:37px;margin:5px 0 0;font-weight:900;letter-spacing:-1.1px;color:#fff}
+.wc-ul{width:104px;height:5px;border-radius:3px;background:var(--spectrum);margin:10px 0 12px}
+.wc-pill{display:inline-block;background:var(--spectrum);color:#0b1020;border-radius:999px;
+  padding:3px 13px;font-size:14px;font-weight:800;vertical-align:middle;margin-left:8px}
+.wc-sub{margin:0;font-size:15.5px;color:rgba(255,255,255,.84);max-width:700px}
+.wc-sub b{color:#fff}
+.themebar{display:flex;align-items:center;gap:9px;margin:16px 0 2px;flex-wrap:wrap}
+.themebar .tl{font-size:12px;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.62);text-transform:uppercase}
+.theme{border:1.5px solid rgba(255,255,255,.30);background:rgba(255,255,255,.10);border-radius:999px;
+  padding:7px 15px;font-weight:700;font-size:14px;color:#fff;cursor:pointer;font-family:inherit}
+.theme.on{background:#fff;color:#0b1020;border-color:#fff}
+/* anatomy panel */
+.anatomy{margin:18px 0 4px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px 22px;box-shadow:0 1px 3px rgba(22,32,46,.05);border-top:4px solid var(--brand)}
+.ana-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.ana-head h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.3px}
+.ana-sub{color:var(--mut);font-size:14.5px}
+.ana-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;align-items:center}
+.ana-code{margin:0;background:var(--code);color:#e9eef6;border-radius:12px;padding:16px 18px;font-family:Consolas,"Courier New",monospace;font-size:13.5px;line-height:1.7;white-space:pre;overflow:auto}
+.ana-code .ak{color:#c4b5fd;font-weight:700}
+.ana-code .an{color:#7dd3fc;font-weight:700}
+.ana-code .ap{color:#fbbf24}
+.ana-code .ab{color:#f9a8d4;font-weight:700}
+.ana-code .abd{color:#cbd5e1}
+.ana-code .acmt{color:#94a3b8;font-style:italic}
+.ana-key{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.ana-key li{font-size:13.5px;color:#37424f;line-height:1.4}
+.ana-key b{color:#16202e}
+.chip{display:inline-block;font-family:Consolas,monospace;font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;margin-right:7px;vertical-align:middle}
+.chip.ak{background:#ede9fe;color:#6d28d9}
+.chip.an{background:#e0f2fe;color:#0369a1}
+.chip.ap{background:#fef3c7;color:#92400e}
+.chip.ab{background:#fce7f3;color:#be185d}
+.chip.ac{background:#dcfce7;color:#15803d}
+/* details + progress strip */
+.strip{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 2px;padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.strip label{font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:6px}
+.strip input,.strip select{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:#fff;color:var(--ink)}
+.strip input#sname{min-width:160px}
+.strip .prog{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:210px}
+.strip .track{flex:1;height:8px;background:#e3e9f1;border-radius:99px;overflow:hidden;min-width:120px}
+.strip .track i{display:block;height:100%;width:0;background:var(--spectrum);transition:width .3s;font-style:normal}
+.strip .pt{font-size:13px;font-weight:800;color:var(--ink);white-space:nowrap}
+.strip .btn.save{margin-left:6px}
+/* tier bar */
+.tier-bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0 6px}
+.tier-zone{border-radius:14px;padding:14px 16px}
+.tier-zone.must{background:#ecfdf5;border:1.5px solid #10b981}
+.tier-zone.should{background:#eef2ff;border:1.5px solid #1e3a8a}
+.tier-zone.could{background:#f5f3ff;border:1.5px solid #7c3aed}
+.zone-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.tier-zone h3{margin:0;font-size:15px;letter-spacing:1.4px;font-weight:800}
+.tier-zone.must h3{color:#047857}.tier-zone.should h3{color:#1e3a8a}.tier-zone.could h3{color:#5b21b6}
+.zone-tag{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#94a3b8}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:78px;flex:0 1 78px;padding:9px 6px;border-radius:11px;text-decoration:none;color:#fff;font-weight:700;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,.1)}
+.pill .num{font-size:21px;line-height:1;font-weight:800}
+.pill .ttl{font-size:10.5px;line-height:1.15;margin-top:5px;font-weight:700}
+.pill.must{background:#10b981}.pill.should{background:#1e3a8a}.pill.could{background:#7c3aed}
+.pill.is-done{outline:3px solid var(--gold);outline-offset:2px}
+/* dividers + exercises */
+.divide{display:flex;align-items:center;gap:16px;margin:32px 0 12px}
+.divide .lab{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.divide .ln{flex:1;height:2px;border-radius:2px}
+.divide.must .lab{color:#047857}.divide.must .ln{background:#d1fae5}
+.divide.should .lab{color:#1e3a8a}.divide.should .ln{background:#dbe4f7}
+.divide.could .lab{color:#5b21b6}.divide.could .ln{background:#e9e0fb}
+.ex{border:1px solid var(--line);border-left-width:6px;border-radius:16px;padding:20px 22px;margin:12px 0;scroll-margin-top:14px;background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.ex.must{border-left-color:#10b981}.ex.should{border-left-color:#1e3a8a}.ex.could{border-left-color:#7c3aed}
+.ex .h{display:flex;align-items:center;gap:13px}
+.ex .n{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;flex:none}
+.ex.must .n{background:#10b981}.ex.should .n{background:#1e3a8a}.ex.could .n{background:#7c3aed}
+.ex h3{margin:0;font-size:20px;font-weight:800;letter-spacing:-.3px}
+.ex .lead{color:var(--mut);font-size:15px;margin:11px 0 15px}
+.ex code{background:#eef2f6;color:#0f172a;padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:.9em}
+.cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px;align-items:start}
+.lbl{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.lbl .cn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#16202e;color:#fff;font-size:11px;font-weight:800;flex:none}
+.lbl .hint{font-weight:600;letter-spacing:0;text-transform:none;color:#9aa6b5;font-size:11px}
+.code-ref{margin:0;height:300px;overflow:auto;background:var(--code);color:#e9eef6;border-radius:12px;padding:14px 16px;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.6;white-space:pre;-webkit-user-select:none;-moz-user-select:none;user-select:none;cursor:default}
+.code-ref::selection{background:transparent}
+.editor{width:100%;height:300px;resize:vertical;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.6;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:#16202e;tab-size:2}
+.editor:focus{outline:none;border-color:#7c8cf8;box-shadow:0 0 0 3px rgba(124,140,248,.18)}
+.editor::placeholder{color:#9aa6b5}
+.win{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.win .bar{background:var(--soft);border-bottom:1px solid var(--line);padding:8px 12px;font-size:12px;color:var(--mut);display:flex;gap:6px;align-items:center}
+.win .bar i{width:9px;height:9px;border-radius:50%;background:#cfd8e3;font-style:normal}
+.out{width:100%;height:200px;border:0;display:block;background:#fff}
+.ok{display:flex;align-items:center;gap:10px;margin-top:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:11px 14px;font-size:14px;color:#065f46;font-weight:600}
+.ok[hidden]{display:none}
+.ok .tick{flex:none;width:20px;height:20px;border-radius:50%;background:#10b981;position:relative}
+.ok .tick::after{content:"";position:absolute;left:7px;top:4px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.try{margin-top:12px;border-radius:0 10px 10px 0;padding:12px 16px;font-size:14px}
+.ex.must .try{background:#f0fdf6;border-left:3px solid #10b981;color:#14532d}
+.ex.should .try{background:#f1f5ff;border-left:3px solid #1e3a8a;color:#1e3a8a}
+.ex.could .try{background:#f7f3ff;border-left:3px solid #7c3aed;color:#5b21b6}
+.act{display:flex;gap:10px;margin-top:12px;align-items:center}
+.btn{border:0;border-radius:10px;padding:10px 18px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}
+.btn.run::before{content:"";display:inline-block;width:0;height:0;border-left:9px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-right:9px;vertical-align:middle}
+.btn.ghost{background:var(--soft);color:var(--mut);border:1px solid var(--line)}
+.ex.must .btn.run{background:#10b981;color:#fff}.ex.should .btn.run{background:#1e3a8a;color:#fff}.ex.could .btn.run{background:#7c3aed;color:#fff}
+.donebox{margin-left:auto;font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:7px;cursor:pointer}
+.donebox input{width:18px;height:18px;accent-color:#10b981;cursor:pointer}
+.btn.save{background:var(--brand);color:#fff}
+.btn.load{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+/* closing */
+.closing{margin:34px 0 20px;border:1px solid var(--line);border-radius:16px;padding:22px 26px;background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
+.closing h3{margin:0 0 6px;font-size:20px;font-weight:800}
+.closing p{margin:0 0 14px;color:var(--mut);font-size:15px;max-width:720px}
+.reflect{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 16px}
+.reflect label{display:block;font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--mut);text-transform:uppercase;margin-bottom:5px}
+.reflect textarea{width:100%;min-height:60px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:14px;resize:vertical;background:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#16202e;color:#fff;padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
+/* ---- COULD challenge types ---- */
+.ctype{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 9px;margin-left:6px;vertical-align:middle}
+.ctype.predict{background:#eef2ff;color:#1e3a8a}.ctype.debug{background:#fef2f2;color:#b91c1c}.ctype.create{background:#ecfdf5;color:#047857}
+.ctype.boss{background:#16202e;color:#fff}
+.editor.short{height:118px}
+.goalbox{background:#f6f9fb;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;color:#37424f;line-height:1.55}
+.goalbox b{color:#16202e}
+.goalbox .eg{margin-top:9px;font-family:Consolas,monospace;font-size:12.5px;color:#475569;background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+.goalbox code,.reveal code{background:#eef2f6;color:#0f172a;padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:.9em}
+.chal-btns{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+.reveal{margin-top:11px;border-radius:10px;padding:11px 14px;font-size:13.5px;line-height:1.55}
+.reveal[hidden]{display:none}
+.reveal.hint{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.reveal.ans{background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a}
+/* ---- mission banner + capstone + card ---- */
+.mission{display:grid;grid-template-columns:1fr 180px;gap:20px;align-items:center;margin:16px 0 2px;padding:18px 22px;border-radius:16px;background:linear-gradient(135deg,#0b1020,#1a2344);color:#fff;border:1px solid rgba(255,255,255,.12)}
+.mission .mtag{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.mission h3{margin:5px 0 6px;font-size:21px;font-weight:900;letter-spacing:-.4px}
+.mission p{margin:0 0 12px;font-size:14px;color:rgba(255,255,255,.82);max-width:520px}
+.mission p b{color:#fff}
+.mbtn{display:inline-block;background:var(--spectrum);color:#0b1020;font-weight:800;font-size:14px;text-decoration:none;border-radius:999px;padding:8px 16px}
+.mission-card{display:flex;justify-content:center}
+.socceroos{display:flex;align-items:center;gap:18px;margin:14px 0 2px;padding:15px 22px;border-radius:16px;background:linear-gradient(120deg,#00843d,#0b1020 72%);color:#fff;border:1px solid rgba(255,205,0,.45);box-shadow:0 6px 18px rgba(0,132,61,.2)}
+.socceroos .soc-flag{font-size:46px;flex:none;line-height:1}
+.socceroos .soc-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ffcd00}
+.socceroos h3{margin:4px 0 5px;font-size:20px;font-weight:900;letter-spacing:-.3px}
+.socceroos p{margin:0;font-size:14px;color:rgba(255,255,255,.9)}
+.socceroos p b{color:#ffcd00}
+.socceroos a{color:#ffcd00;font-weight:800}
+.finale{margin:24px 0 4px;border-radius:16px;padding:22px 26px;background:linear-gradient(135deg,#0b1020,#1a2344);color:#fff;border:1px solid rgba(255,205,0,.35);text-align:center}
+.finale h3{margin:0 0 8px;font-size:22px;font-weight:900;color:#ffcd00;letter-spacing:-.3px}
+.finale p{margin:0 auto;font-size:15px;color:rgba(255,255,255,.9);max-width:660px;line-height:1.55}
+.finale p b{color:#ffcd00}
+.divide.cap .lab{color:#b8860b}.divide.cap .ln{background:#f3e3a8}
+.ex.capstone{border:2px solid var(--gold);border-left-width:6px;border-left-color:#d4af37;box-shadow:0 8px 22px rgba(212,175,55,.20)}
+.ex.capstone .n{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
+.ex.capstone h3{color:#7a5c00}
+#ex13 .out{height:250px;background:#0b1020}
+.pill.cap{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
+.scrollcue{display:inline-block;margin-top:14px;color:rgba(255,255,255,.9);font-weight:700;font-size:13.5px;text-decoration:none;border:1.5px solid rgba(255,255,255,.32);border-radius:999px;padding:7px 16px}
+.band{position:relative;margin:30px -30px 8px;padding:46px 32px;color:#fff;overflow:hidden;background-position:center;background-size:cover;border-radius:14px}
+.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,28,.9),rgba(8,12,28,.5))}
+.band>*{position:relative}
+.band .bnum{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.band h2{margin:5px 0 6px;font-size:27px;font-weight:900;letter-spacing:-.5px}
+.band p{margin:0;font-size:15.5px;color:rgba(255,255,255,.9);max-width:620px}
+.band.kickoff{background-image:url('img/kickoff.jpg')}
+.band.buildup{background-image:url('img/buildup.jpg')}
+.band.glory{background-image:url('img/glory.jpg')}
+.band.trophy{background-image:url('img/trophy.jpg')}
+.anthem{border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 24px;margin-bottom:22px;background:linear-gradient(rgba(8,12,28,.8),rgba(8,12,28,.88)),url('img/flag.jpg') center/cover;color:#fff;text-align:center}
+.anthem-quote{font-size:25px;font-weight:900;letter-spacing:-.4px}
+.anthem-attr{font-size:12.5px;color:var(--gold);letter-spacing:.05em;margin-top:5px;font-weight:700}
+.anthem-lead{color:rgba(255,255,255,.84);font-size:14.5px;max-width:560px;margin:14px auto}
+.anthem-lead b{color:#fff}
+.anthem-do{display:flex;gap:9px;justify-content:center;align-items:center;flex-wrap:wrap}
+.anthem-pre{font-weight:700;font-size:15px}
+.anthem-do input{font-family:inherit;font-size:15px;padding:9px 13px;border-radius:10px;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;min-width:240px}
+.anthem-do input::placeholder{color:rgba(255,255,255,.5)}
+.wflag{display:inline-block;margin-top:16px;background:var(--spectrum);color:#0b1020;font-weight:900;font-size:18px;padding:12px 22px;border-radius:12px;animation:wflagwave 1.2s ease-in-out infinite;transform-origin:left center}
+@keyframes wflagwave{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+.anthem-code{margin:16px auto 0;display:inline-block;background:#0b1020;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 13px;font-family:Consolas,monospace;font-size:12.5px;color:#7dd3fc}
+/* ---- advanced effects: reveal, parallax, tilt, scroll progress ---- */
+html{scroll-behavior:smooth}
+.progress-top{position:fixed;left:0;top:0;height:4px;width:0;background:var(--spectrum);z-index:300;transition:width .08s linear}
+.is-in{opacity:1!important}
+.pill{transition:transform .15s ease}
+.pill:hover{transform:translateY(-3px) scale(1.05)}
+.theme{transition:transform .12s ease}
+.theme:hover{transform:translateY(-2px)}
+.mission-card{perspective:800px}
+.mission-card .refcard{transition:transform .12s ease;will-change:transform}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
+@media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}body{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
+.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
+<div class="progress-top" id="ptop"></div>
+<div class="wrap">
+  <header class="wc-hero">
+    <div class="wc-stripe"></div>
+    <div class="wc-inner">
+      <div class="wc-emblem">26</div>
+      <div class="wc-titles">
+        <div class="wc-kicker">&#9917; World Cup 26 season &middot; Year 9 Computing Technology</div>
+        <h1>Lists &amp; Random <span class="wc-pill">Guided Practice L7</span></h1>
+        <div class="wc-ul"></div>
+        <p class="wc-sub"><b>The magic trick: a LIST + Math.random = a different answer every click.</b> Colour changers, dice, Magic 8-balls - all the same pattern. Type the code, press Run, make it your own.</p>
+        <a class="scrollcue" href="#ex1">Scroll to kick off &darr;</a>
+      </div>
+      <div class="wc-trophy">&#127942;</div>
+    </div>
+  </header>
+
+  <section class="mission">
+    <div class="mission-txt">
+      <span class="mtag">&#11088; Your mission today</span>
+      <h3>Learn the magic trick</h3>
+      <p>Every tile is the same three steps: a <b>list</b>, a <b>random pick</b>, then <b>show</b> it. Master it and you can build a colour changer, a dice game, even a Magic 8-ball.</p>
+      <a class="mbtn" href="#ex13">Jump to the Magic Ball &rarr;</a>
+    </div>
+    <div class="mission-card"><div class="refcard"><span class="rc1">[ ]</span><span class="rc2">random</span><span class="rc3">show</span></div></div>
+  </section>
+
+  <section class="socceroos">
+    <div class="soc-flag">&#127462;&#127482;</div>
+    <div class="soc-txt">
+      <span class="soc-tag">Real World Cup &middot; free on SBS</span>
+      <h3>The Socceroos are at the World Cup!</h3>
+      <p><b>Group D:</b> Australia &middot; T&uuml;rkiye &middot; Paraguay &middot; USA.&nbsp;&nbsp;Next match: <b>Australia v USA</b> &mdash; Sat 20 June, 5am AEST, free on SBS. Use them in your lists today, and catch them this weekend! <a href="https://www.sbs.com.au/ondemand/fifa-world-cup-2026" target="_blank" rel="noopener">Fixtures on SBS &rarr;</a></p>
+    </div>
+  </section>
+
+  <section class="anatomy">
+    <div class="ana-head"><h2>Anatomy of a list + random pick</h2>
+      <span class="ana-sub">A <b>list</b> holds many values; <b>Math.random</b> picks one. This one pattern powers colour changers, dice, Magic 8-balls and more:</span></div>
+    <div class="ana-grid">
+      <pre class="ana-code"><span class="ak">let</span> players <span class="ab">=</span> <span class="ap">["Messi", "Ronaldo", "Sam Kerr"]</span>;
+<span class="ak">let</span> i <span class="ab">=</span> <span class="ac">Math.floor(Math.random() * players.length)</span>;
+<span class="abd">msg.innerHTML = players[i];</span></pre>
+      <ul class="ana-key">
+        <li><span class="chip ap">[ "a", "b", "c" ]</span> a <b>list</b> (array) of values, inside <code>[ ]</code></li>
+        <li><span class="chip ab">players[0]</span> read one item by its <b>index</b> &mdash; lists start at <b>0</b></li>
+        <li><span class="chip ac">.length</span> how many items are in the list</li>
+        <li><span class="chip ak">Math.random()</span> a random number &mdash; <code>Math.floor(... * length)</code> makes a random index</li>
+        <li><span class="chip an">innerHTML</span> <b>show</b> the picked item on the page</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="strip">
+    <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
+    <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
+    <label>Date <input id="sdate" type="date"></label>
+    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 13 done</span></span>
+    <button class="btn save" onclick="save()">Save my work</button>
+  </div>
+
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">Make a list</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">Pick by index</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">Length</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">Random pick</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">Colour changer</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">Random message</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">Emoji burst</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">Dice</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Predict it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Magic Answer</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Shootout</span></a></div></div></nav>
+
+  <section class="band kickoff"><div class="bnum">1 / Kick-off</div><h2>Make a decision</h2><p>Every match needs a ref. The computer becomes the ref - and there is more than ONE way to make it decide.</p></section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex1">
+    <div class="h"><span class="n">1</span><h3>Make a list</h3></div>
+    <p class="lead">A <b>list</b> (an array) holds many values in one variable - the square brackets <code>[ ]</code> with commas between. <code>players[0]</code> reads the <b>first</b> one (lists start at <b>0</b>, not 1).</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref1">&lt;h2 id="msg"&gt;Squad list&lt;/h2&gt;
+&lt;button onclick="show()"&gt;Show the first player&lt;/button&gt;
+
+&lt;script&gt;
+  function show() {
+    let players = ["Messi", "Ronaldo", "Sam Kerr"];
+    document.getElementById("msg").innerHTML = players[0];
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred1" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed1" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(1)">Run</button>
+          <button class="btn ghost" onclick="resetEx(1)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done1" onchange="toggleDone(1)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc1" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
+        <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; you made a list and read an item.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>players[0]</code> to <code>players[1]</code> and Run - now it shows Ronaldo.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex2">
+    <div class="h"><span class="n">2</span><h3>Pick by index (starts at 0)</h3></div>
+    <p class="lead">Each item has a number called its <b>index</b>. The first is <code>[0]</code>, the second <code>[1]</code>, the third <code>[2]</code>. The button says "player 3" - so which index do you need?</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref2">&lt;h2 id="msg"&gt;Pick a player&lt;/h2&gt;
+&lt;button onclick="show()"&gt;Show player 3&lt;/button&gt;
+
+&lt;script&gt;
+  function show() {
+    let players = ["Messi", "Ronaldo", "Sam Kerr"];
+    document.getElementById("msg").innerHTML = players[2];
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred2" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed2" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(2)">Run</button>
+          <button class="btn ghost" onclick="resetEx(2)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done2" onchange="toggleDone(2)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc2" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
+        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you picked an item by its index.</span></div>
+        <div class="try"><b>Now change it:</b> the third player is index <b>2</b>, not 3. Try <code>players[3]</code> and Run - it says <code>undefined</code> (there is no index 3).</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex3">
+    <div class="h"><span class="n">3</span><h3>.length - how many?</h3></div>
+    <p class="lead"><code>players.length</code> tells you <b>how many</b> items are in the list. Add one more name to the list and the count goes up by itself.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref3">&lt;h2 id="msg"&gt;Squad size&lt;/h2&gt;
+&lt;button onclick="count()"&gt;Count the squad&lt;/button&gt;
+
+&lt;script&gt;
+  function count() {
+    let players = ["Messi", "Ronaldo", "Sam Kerr"];
+    document.getElementById("msg").innerHTML = "Players: " + players.length;
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred3" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed3" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(3)">Run</button>
+          <button class="btn ghost" onclick="resetEx(3)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done3" onchange="toggleDone(3)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc3" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
+        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; .length counted the list for you.</span></div>
+        <div class="try"><b>Now change it:</b> add <code>"Mbappe"</code> to the list and Run - the count becomes 4.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex4">
+    <div class="h"><span class="n">4</span><h3>The random pick</h3></div>
+    <p class="lead">Here is the magic line: <code>Math.floor(Math.random() * players.length)</code> makes a random index, and <code>players[i]</code> reads that item. Click again - a different player each time!</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref4">&lt;h2 id="msg"&gt;Random player&lt;/h2&gt;
+&lt;button onclick="pick()"&gt;Pick a random player&lt;/button&gt;
+
+&lt;script&gt;
+  function pick() {
+    let players = ["Messi", "Ronaldo", "Sam Kerr"];
+    let i = Math.floor(Math.random() * players.length);
+    document.getElementById("msg").innerHTML = players[i];
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred4" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed4" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(4)">Run</button>
+          <button class="btn ghost" onclick="resetEx(4)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done4" onchange="toggleDone(4)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc4" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
+        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; you picked a RANDOM item - the big trick!</span></div>
+        <div class="try"><b>Now change it:</b> click Run, then the button, again and again - a random player every time.</div>
+      </div>
+    </div>
+  </section>
+  <section class="band buildup"><div class="bnum">2 / Build-up play</div><h2>More outcomes</h2><p>React to real input now - drag a slider, chase the ball, predict a match, take a guess.</p></section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex5">
+    <div class="h"><span class="n">5</span><h3>Random colour changer</h3></div>
+    <p class="lead">Same trick, new list. A list of <b>colours</b>, a random pick, and <code>document.body.style.background</code> paints the whole page that colour.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref5">&lt;h1 id="msg"&gt;Click for a colour!&lt;/h1&gt;
+&lt;button onclick="newColour()"&gt;Random colour&lt;/button&gt;
+
+&lt;script&gt;
+  function newColour() {
+    let colours = ["#ffadad", "#caffbf", "#9bf6ff", "#bdb2ff"];
+    let pick = colours[Math.floor(Math.random() * colours.length)];
+    document.body.style.background = pick;
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred5" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed5" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(5)">Run</button>
+          <button class="btn ghost" onclick="resetEx(5)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done5" onchange="toggleDone(5)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc5" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
+        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; list + random changed the whole page.</span></div>
+        <div class="try"><b>Now change it:</b> add your own favourite colour code to the list, then keep clicking.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex6">
+    <div class="h"><span class="n">6</span><h3>Random message generator</h3></div>
+    <p class="lead">Swap the list for <b>messages</b> and show the pick with <code>innerHTML</code>. This is a commentary generator - or a compliment generator, or random jokes. Change the list, change the app.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref6">&lt;h2 id="msg"&gt;Press for a prediction!&lt;/h2&gt;
+&lt;button onclick="say()"&gt;Predict&lt;/button&gt;
+
+&lt;script&gt;
+  function say() {
+    let lines = ["Australia will WIN!", "It will be a DRAW", "A late goal decides it!"];
+    let pick = lines[Math.floor(Math.random() * lines.length)];
+    document.getElementById("msg").innerHTML = pick;
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred6" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed6" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(6)">Run</button>
+          <button class="btn ghost" onclick="resetEx(6)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done6" onchange="toggleDone(6)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc6" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
+        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; same pattern, brand-new app.</span></div>
+        <div class="try"><b>Now change it:</b> change the three predictions to your own, then keep pressing.</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal tweak" id="ex7">
+    <div class="h"><span class="n">7</span><h3>Emoji burst (complete the pick) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">This party button is wired up and the emoji list is ready - but the random pick is blank. <b>Complete it</b> so it shows a random emoji.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>PICK</code> with <code>Math.floor(Math.random() * emojis.length)</code>, then click Party a few times.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(7)">Show a hint</button></div>
+          <div class="reveal hint" id="hint7" hidden>The pick is always the same shape: <code>Math.floor(Math.random() * LIST.length)</code>. Here the list is called <code>emojis</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed7" spellcheck="false">&lt;h1 id="party"&gt;Click for a party!&lt;/h1&gt;
+&lt;button onclick="party()"&gt;Party!&lt;/button&gt;
+
+&lt;script&gt;
+  function party() {
+    let emojis = ["🎉", "🎈", "✨", "🥳", "⭐"];
+    let pick = emojis[PICK];
+    document.getElementById("party").innerHTML = pick + pick + pick;
+  }
+&lt;/script&gt;</textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(7)">Run</button>
+          <button class="btn ghost" onclick="resetEx(7)">Reset</button>
+          <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
+        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; you completed the random pick.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex8">
+    <div class="h"><span class="n">8</span><h3>Dice roll + a decision</h3></div>
+    <p class="lead">Put <b>random + if/else</b> together (the two halves of "a decision"). <code>Math.random()*6</code> rolls 1-6, then <code>if (n &gt;= 4)</code> calls it HIGH or low. This is one of your 30 June apps!</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref8">&lt;h1 id="msg"&gt;Roll the dice!&lt;/h1&gt;
+&lt;button onclick="roll()"&gt;Roll&lt;/button&gt;
+
+&lt;script&gt;
+  function roll() {
+    let n = Math.floor(Math.random() * 6) + 1;
+    if (n &gt;= 4) {
+      document.getElementById("msg").innerHTML = n + " - HIGH!";
+    } else {
+      document.getElementById("msg").innerHTML = n + " - low";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred8" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed8" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(8)">Run</button>
+          <button class="btn ghost" onclick="resetEx(8)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done8" onchange="toggleDone(8)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc8" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
+        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; you built the Dice app - random + if/else.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>4</code> to <code>3</code> so 3 counts as HIGH too, then roll a few times.</div>
+      </div>
+    </div>
+  </section>
+  <section class="band glory"><div class="bnum">3 / Going for glory</div><h2>Push yourself</h2><p>Press a key, trace the branch, fix a bug, beat the clock.</p></section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal predict" id="ex9">
+    <div class="h"><span class="n">9</span><h3>Predict the index <span class="ctype predict">PREDICT</span></h3></div>
+    <p class="lead">Lists start at <b>0</b>. Read the code and write which team will show, then check.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code</div>
+        <pre class="code-ref" id="ref9">&lt;p id="out"&gt;&lt;/p&gt;
+&lt;script&gt;
+  let teams = ["Australia", "USA", "Brazil"];
+  out.innerHTML = teams[1];
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Your prediction</div>
+        <textarea class="editor short" id="ed9" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runPredict(9)">Run &amp; check</button>
+          <button class="btn ghost" onclick="resetEx(9)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done9" onchange="toggleDone(9)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
+        <div class="reveal ans" id="ans9" hidden>It shows <b>USA</b>. Lists start at 0, so <code>teams[0]</code> is Australia, <code>teams[1]</code> is USA, and <code>teams[2]</code> is Brazil.</div>
+        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you counted from 0 - like a real list.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal debug" id="ex10">
+    <div class="h"><span class="n">10</span><h3>Fix the list bug <span class="ctype debug">DEBUG</span></h3></div>
+    <p class="lead">Click <b>Show</b> - it says <code>undefined</code> instead of the last team. The index is wrong. Read it, find the slip, fix it.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">There are 3 teams, so the indexes are 0, 1, 2 - there is no index 3. Fix <code>teams[3]</code> so it shows the last team, Brazil.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
+          <div class="reveal hint" id="hint10" hidden>The last index is one LESS than the length. 3 items -> last index is <code>2</code>. Change <code>teams[3]</code> to <code>teams[2]</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fix it here</div>
+        <textarea class="editor" id="ed10" spellcheck="false">&lt;button onclick="show()"&gt;Show the last team&lt;/button&gt;
+&lt;p id="out"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+  function show() {
+    let teams = ["Australia", "USA", "Brazil"];
+    document.getElementById("out").innerHTML = teams[3];
+  }
+&lt;/script&gt;</textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(10)">Run</button>
+          <button class="btn ghost" onclick="resetEx(10)">Reset</button>
+          <label class="donebox"><input type="checkbox" id="done10" onchange="toggleDone(10)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
+        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed the off-by-one - lists start at 0.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal create" id="ex11">
+    <div class="h"><span class="n">11</span><h3>Build your own picker <span class="ctype create">CREATE</span></h3></div>
+    <p class="lead">No code given. Build a random picker from scratch - the hint is there if you are stuck.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">Make a <b>button</b> and a function with your OWN list (foods, games, songs - anything) that shows a <b>random</b> item from it with <code>innerHTML</code>.
+          <div class="eg">Expected: a random item from your list</div>
+          <div class="chal-btns">
+            <button class="btn ghost" onclick="showHint(11)">Show a hint</button>
+          </div>
+          <div class="reveal hint" id="hint11" hidden><code>function pick() { let things = ["a","b","c"]; let i = Math.floor(Math.random()*things.length); document.getElementById("out").innerHTML = things[i]; }</code> - add a <code>&lt;p id="out"&gt;</code> and a button <code>onclick="pick()"</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
+        <textarea class="editor" id="ed11" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(11)">Run</button>
+          <button class="btn ghost" onclick="resetEx(11)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done11" onchange="toggleDone(11)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
+        <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you built your own random app.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal tweak" id="ex12">
+    <div class="h"><span class="n">12</span><h3>Magic Answer (complete the pick) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">A Magic 8-ball: ask a yes/no question and it answers at random. The answer list is ready - <b>complete the random pick</b>. This is one of your 30 June apps!</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>PICK</code> with <code>Math.floor(Math.random() * answers.length)</code>, then click Ask.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(12)">Show a hint</button></div>
+          <div class="reveal hint" id="hint12" hidden>Same pick as always: <code>Math.floor(Math.random() * answers.length)</code>. Here the list is called <code>answers</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed12" spellcheck="false">&lt;h2 id="msg"&gt;Ask a yes/no question, then click Ask...&lt;/h2&gt;
+&lt;button onclick="ask()"&gt;Ask&lt;/button&gt;
+
+&lt;script&gt;
+  function ask() {
+    let answers = ["Yes", "No", "Maybe", "Ask again"];
+    let pick = answers[PICK];
+    document.getElementById("msg").innerHTML = pick;
+  }
+&lt;/script&gt;</textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(12)">Run</button>
+          <button class="btn ghost" onclick="resetEx(12)">Reset</button>
+          <label class="donebox"><input type="checkbox" id="done12" onchange="toggleDone(12)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; you built the Magic Answer app.</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="band trophy"><div class="bnum">4 / Lift the trophy</div><h2>Penalty shootout</h2><p>if/else + a little luck = a game you would actually play.</p></section>
+  <div class="divide cap"><span class="lab">Capstone &mdash; build the thing you&rsquo;d screenshot</span><span class="ln"></span></div>
+  <section class="ex could capstone" id="ex13">
+    <div class="h"><span class="n">13</span><h3>Magic Answer</h3></div>
+    <p class="lead">This is the capstone &mdash; a Magic 8-ball you&rsquo;d actually use. A <b>list</b> of answers, <code>Math.random()</code> picks one, and <code>innerHTML</code> shows it. It is the SAME trick as every tile today &mdash; just a new list. Type it, press Run, then keep asking.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref13">&lt;h1 id="msg"&gt;Ask the Magic Ball!&lt;/h1&gt;
+&lt;button onclick="ask()"&gt;Will the Socceroos win?&lt;/button&gt;
+
+&lt;script&gt;
+  function ask() {
+    let answers = ["YES!", "No way", "Maybe...", "Ask again", "Definitely!"];
+    let pick = answers[Math.floor(Math.random() * answers.length)];
+    document.getElementById("msg").innerHTML = pick;
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred13" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed13" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(13)">Run</button>
+          <button class="btn ghost" onclick="resetEx(13)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done13" onchange="toggleDone(13)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc13" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> Your app</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your game</div>
+          <iframe class="out" id="out13" title="your game"></iframe></div>
+        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you built the Magic Answer app - list + random.</span></div>
+        <div class="try"><b>Now make it yours:</b> change the answers to your own (add a funny one!), or add more options &mdash; the random pick still works because it uses <code>answers.length</code>.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div class="finale">
+      <h3>You learned the magic trick.</h3>
+      <p>A <b>list</b> + <b>Math.random</b> + <b>innerHTML</b> powers half the apps on the internet &mdash; and two of your three choices on the 30 June assessment (Dice and Magic Answer). Change the list, change the app. Next lesson you build your own. <b>Go Australia!</b> &#127462;&#127482;</p>
+    </div>
+    <h3>Show the class</h3>
+    <p>Finished, or out of time? Put your best <b>random app</b> on the board &mdash; we will look at a few together and name the parts: the <b>list</b>, the <b>random pick</b>, and where it <b>shows</b>.</p>
+    <div class="reflect">
+      <div><label>What I built</label><textarea id="rbuilt" placeholder="In a sentence..."></textarea></div>
+      <div><label>I got stuck on</label><textarea id="rstuck" placeholder="What tripped you up?"></textarea></div>
+    </div>
+    <div class="row">
+      <button class="btn save" onclick="save()">Save my work (one file)</button>
+      <button class="btn load" onclick="document.getElementById('lf').click()">Load my file</button>
+      <input id="lf" type="file" accept=".html,text/html" hidden onchange="loadFile(this)">
+    </div>
+  </div>
+  <footer>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; JavaScript Lists &amp; Random &mdash; Guided Practice L7</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var STARTERS = {"1": {"worldcup": "<h2 id=\"msg\">Squad list<\/h2>\n<button onclick=\"show()\">Show the first player<\/button>\n\n<script>\n  function show() {\n    let players = [\"Messi\", \"Ronaldo\", \"Sam Kerr\"];\n    document.getElementById(\"msg\").innerHTML = players[0];\n  }\n<\/script>"}, "2": {"worldcup": "<h2 id=\"msg\">Pick a player<\/h2>\n<button onclick=\"show()\">Show player 3<\/button>\n\n<script>\n  function show() {\n    let players = [\"Messi\", \"Ronaldo\", \"Sam Kerr\"];\n    document.getElementById(\"msg\").innerHTML = players[2];\n  }\n<\/script>"}, "3": {"worldcup": "<h2 id=\"msg\">Squad size<\/h2>\n<button onclick=\"count()\">Count the squad<\/button>\n\n<script>\n  function count() {\n    let players = [\"Messi\", \"Ronaldo\", \"Sam Kerr\"];\n    document.getElementById(\"msg\").innerHTML = \"Players: \" + players.length;\n  }\n<\/script>"}, "4": {"worldcup": "<h2 id=\"msg\">Random player<\/h2>\n<button onclick=\"pick()\">Pick a random player<\/button>\n\n<script>\n  function pick() {\n    let players = [\"Messi\", \"Ronaldo\", \"Sam Kerr\"];\n    let i = Math.floor(Math.random() * players.length);\n    document.getElementById(\"msg\").innerHTML = players[i];\n  }\n<\/script>"}, "5": {"worldcup": "<h1 id=\"msg\">Click for a colour!<\/h1>\n<button onclick=\"newColour()\">Random colour<\/button>\n\n<script>\n  function newColour() {\n    let colours = [\"#ffadad\", \"#caffbf\", \"#9bf6ff\", \"#bdb2ff\"];\n    let pick = colours[Math.floor(Math.random() * colours.length)];\n    document.body.style.background = pick;\n  }\n<\/script>"}, "6": {"worldcup": "<h2 id=\"msg\">Press for a prediction!<\/h2>\n<button onclick=\"say()\">Predict<\/button>\n\n<script>\n  function say() {\n    let lines = [\"Australia will WIN!\", \"It will be a DRAW\", \"A late goal decides it!\"];\n    let pick = lines[Math.floor(Math.random() * lines.length)];\n    document.getElementById(\"msg\").innerHTML = pick;\n  }\n<\/script>"}, "8": {"worldcup": "<h1 id=\"msg\">Roll the dice!<\/h1>\n<button onclick=\"roll()\">Roll<\/button>\n\n<script>\n  function roll() {\n    let n = Math.floor(Math.random() * 6) + 1;\n    if (n >= 4) {\n      document.getElementById(\"msg\").innerHTML = n + \" - HIGH!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = n + \" - low\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<h1 id=\"msg\">Ask the Magic Ball!<\/h1>\n<button onclick=\"ask()\">Will the Socceroos win?<\/button>\n\n<script>\n  function ask() {\n    let answers = [\"YES!\", \"No way\", \"Maybe...\", \"Ask again\", \"Definitely!\"];\n    let pick = answers[Math.floor(Math.random() * answers.length)];\n    document.getElementById(\"msg\").innerHTML = pick;\n  }\n<\/script>"}};
+var WANT = {"10": "Brazil"};
+var OKTX = {"1": "you made a list and read an item.", "2": "you picked an item by its index.", "3": ".length counted the list for you.", "4": "you picked a RANDOM item - the big trick!", "5": "list + random changed the whole page.", "6": "same pattern, brand-new app.", "8": "you built the Dice app - random + if/else.", "7": "you completed the random pick.", "9": "you counted from 0 - like a real list.", "10": "you fixed the off-by-one - lists start at 0.", "11": "you built your own random app.", "12": "you built the Magic Answer app.", "13": "you built the Magic Answer app - list + random."};
+var MODES = {"7": "tweak", "9": "predict", "10": "debug", "11": "create", "12": "tweak"};
+var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let teams = [\"Australia\", \"USA\", \"Brazil\"];\n  out.innerHTML = teams[1];\n<\/script>"};
+var DEBUGC = {"10": "<button onclick=\"show()\">Show the last team<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function show() {\n    let teams = [\"Australia\", \"USA\", \"Brazil\"];\n    document.getElementById(\"out\").innerHTML = teams[3];\n  }\n<\/script>"};
+var TWEAKC = {"7": "<h1 id=\"party\">Click for a party!<\/h1>\n<button onclick=\"party()\">Party!<\/button>\n\n<script>\n  function party() {\n    let emojis = [\"\ud83c\udf89\", \"\ud83c\udf88\", \"\u2728\", \"\ud83e\udd73\", \"\u2b50\"];\n    let pick = emojis[PICK];\n    document.getElementById(\"party\").innerHTML = pick + pick + pick;\n  }\n<\/script>", "12": "<h2 id=\"msg\">Ask a yes/no question, then click Ask...<\/h2>\n<button onclick=\"ask()\">Ask<\/button>\n\n<script>\n  function ask() {\n    let answers = [\"Yes\", \"No\", \"Maybe\", \"Ask again\"];\n    let pick = answers[PICK];\n    document.getElementById(\"msg\").innerHTML = pick;\n  }\n<\/script>"};
+var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+var THEME_LIST = ["worldcup"];
+var IDS = Object.keys(STARTERS).map(Number);
+var THEME = "worldcup";
+var LSKEY = "l7-state-v1";
+var BASE = {};
+
+function $(id){return document.getElementById(id);}
+
+function setTheme(t){
+  if(THEME_LIST.indexOf(t)<0) t=THEME_LIST[0];
+  THEME=t;
+  document.querySelectorAll(".theme").forEach(function(b){ b.classList.toggle("on", b.dataset.theme===t); });
+  IDS.forEach(function(i){ $("ref"+i).textContent = STARTERS[String(i)][t]; });
+  persist();
+  var nm=document.querySelector('.theme[data-theme="'+t+'"]');
+  toast("Theme: "+(nm?nm.textContent.trim():t));
+}
+
+function wrap(i, code){
+  var head='<!doctype html><html><head><meta charset="utf-8"><style>'
+   + 'body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:16px;color:#16202e}'
+   + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:6px;background:#e8edf3;cursor:pointer;margin:2px 4px 2px 0}'
+   + 'input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid #cbd5e1;border-radius:6px;margin:2px 4px 2px 0}'
+   + 'h1,h2{margin:.3em 0}'
+   + '.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}'
+   + '#__l4err{position:fixed;left:0;right:0;bottom:0;background:#fef2f2;color:#b91c1c;border-top:2px solid #ef4444;font-family:Consolas,monospace;font-size:12.5px;padding:8px 12px;white-space:pre-wrap;z-index:9}'
+   + '</style><scr'+'ipt>window.onerror=function(m){'
+   + 'var b=document.body||document.documentElement;'
+   + 'var e=document.getElementById("__l4err");if(!e){e=document.createElement("div");e.id="__l4err";b.appendChild(e);}'
+   + 'e.textContent="Error: "+m;'
+   + 'try{parent.postMessage({l4:1,id:'+i+',err:String(m)},"*");}catch(_){}return false;};<\/scr'+'ipt></head>';
+  var body='<body><div id="__l4app">'+code+'</div>'
+   + '<scr'+'ipt>(function(){'
+   + 'function tx(){var a=document.getElementById("__l4app");return a?(a.innerText||"").trim():"";}'
+   + 'function p(at){try{parent.postMessage({l4:1,id:'+i+',text:tx(),attr:at?1:0},"*");}catch(e){}}'
+   + 'try{new MutationObserver(function(ms){var a=false;'
+   + 'for(var k=0;k<ms.length;k++){if(ms[k].type==="attributes"){a=true;break;}}'
+   + 'p(a);}).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true});}catch(e){}'
+   + 'setTimeout(function(){p(false);},60);})();<\/scr'+'ipt></body></html>';
+  return head+body;
+}
+
+var PRED_NUDGED = {};
+function runEx(i){
+  var pin=$("pred"+i), dn=$("done"+i);
+  if(pin && !(pin.value||"").trim() && !PRED_NUDGED[i] && !(dn&&dn.checked)){
+    PRED_NUDGED[i]=true; toast("🔮 Quick — type your guess first, then Run.");
+    pin.focus(); return;
+  }
+  delete BASE[i];
+  $("ok"+i).hidden=true;
+  $("out"+i).srcdoc = wrap(i, $("ed"+i).value);
+  var gc=$("gc"+i); if(gc) gc.hidden=false;
+}
+
+function runPredict(i){
+  if(!($("ed"+i).value||"").trim()){ toast("Write your prediction first, then check."); $("ed"+i).focus(); return; }
+  delete BASE[i];
+  $("out"+i).srcdoc = wrap(i, PREDICT[String(i)]);
+  var a=$("ans"+i); if(a) a.hidden=false;
+  showOk(i);
+  persist();
+}
+function showHint(i){ var h=$("hint"+i); if(h) h.hidden=false; }
+
+function waveFlag(){
+  var v=($("meline").value||"stronger");
+  $("flagout").innerHTML='<div class="wflag">When I get older, I will be '+esc(v)+'</div>';
+  persist();
+}
+
+function resetEx(i){
+  var m=MODES[String(i)]||"type";
+  $("ed"+i).value = (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : "");
+  if(m=="predict"){ var a=$("ans"+i); if(a) a.hidden=true; }
+  delete BASE[i];
+  $("out"+i).srcdoc="";
+  $("ok"+i).hidden=true;
+  persist();
+}
+
+window.addEventListener("message", function(e){
+  var d=e.data; if(!d || d.l4!==1) return;
+  var i=d.id;
+  if(d.err) return;
+  var text=d.text||"";
+  if(BASE[i]===undefined){ BASE[i]=text; return; }
+  var want=WANT[String(i)];
+  var ok = want ? (text.indexOf(want)>=0)
+                : ((text!==BASE[i] && text.trim().length>0) || d.attr===1);
+  if(ok) showOk(i);
+});
+
+function showOk(i){
+  $("ok"+i).hidden=false;
+  var cb=$("done"+i);
+  if(cb && !cb.checked){ cb.checked=true; toggleDone(i, true); }
+}
+
+function toggleDone(i, quiet){
+  var done=$("done"+i).checked;
+  var pill=document.querySelector('.pill[href="#ex'+i+'"]');
+  if(pill) pill.classList.toggle("is-done", done);
+  if(!done) $("ok"+i).hidden=true;
+  updateProgress();
+  persist();
+}
+
+function updateProgress(){
+  var n=ALL_IDS.filter(function(i){var c=$("done"+i);return c&&c.checked;}).length;
+  $("pfill").style.width = Math.round(n/ALL_IDS.length*100)+"%";
+  $("ptext").textContent = n+" of "+ALL_IDS.length+" done";
+}
+
+function gather(){
+  var code={}, done=[];
+  ALL_IDS.forEach(function(i){
+    code[i]=$("ed"+i).value;
+    if($("done"+i).checked) done.push(i);
+  });
+  return {v:1, name:$("sname").value, klass:$("sclass").value, date:$("sdate").value,
+          theme:THEME, code:code, done:done,
+          built:$("rbuilt").value, stuck:$("rstuck").value,
+          me:($("meline")?$("meline").value:"")};
+}
+function persist(){ try{ localStorage.setItem(LSKEY, JSON.stringify(gather())); }catch(e){} }
+
+function apply(s){
+  if(!s) return;
+  var th=(s.theme && THEME_LIST.indexOf(s.theme)>=0)? s.theme : THEME_LIST[0];
+  THEME=th; document.querySelectorAll(".theme").forEach(function(b){b.classList.toggle("on",b.dataset.theme===th);});
+  $("sname").value=s.name||""; $("sclass").value=s.klass||"9 COTYC"; $("sdate").value=s.date||"";
+  $("rbuilt").value=s.built||""; $("rstuck").value=s.stuck||""; if($("meline")) $("meline").value=s.me||"";
+  ALL_IDS.forEach(function(i){
+    if(STARTERS[String(i)]) $("ref"+i).textContent = STARTERS[String(i)][THEME];
+    var c=s.code&&s.code[i], m=MODES[String(i)]||"type";
+    $("ed"+i).value = (c!=null ? c : (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : ""));
+    var on=(s.done||[]).indexOf(i)>=0; $("done"+i).checked=on;
+    var pill=document.querySelector('.pill[href="#ex'+i+'"]'); if(pill) pill.classList.toggle("is-done",on);
+  });
+  updateProgress();
+}
+
+function save(){
+  var s=gather();
+  if(!s.name){ if(!confirm("No name entered. Save anyway?")) { $("sname").focus(); return; } }
+  var rows="";
+  ALL_IDS.forEach(function(i){
+    rows+='<h3>Tile '+i+'</h3><pre>'+esc(s.code[i]||"")+'</pre>';
+  });
+  var meta='Name: '+esc(s.name||'-')+' &middot; Class: '+esc(s.klass||'-')+' &middot; Date: '+esc(s.date||'-')
+          +' &middot; Theme: '+esc(s.theme)+' &middot; Progress: '+s.done.length+'/'+ALL_IDS.length;
+  var doc='<!doctype html><meta charset="utf-8"><title>JS Lists and Random Practice L7 -'+esc(s.name||'')+'</title>'
+    +'<body style="font-family:Segoe UI,Arial;max-width:800px;margin:30px auto;padding:0 16px;color:#16202e">'
+    +'<h1>JavaScript Lists and Random - Guided Practice L7</h1><p>'+meta+'</p>'
+    +'<p><b>What I built:</b> '+esc(s.built||'-')+'<br><b>Stuck on:</b> '+esc(s.stuck||'-')+'</p><hr>'
+    +rows
+    +'<scr'+'ipt type="application/json" id="l7-state">'+JSON.stringify(s).replace(/</g,"\\u003c")+'<\/scr'+'ipt>'
+    +'<p style="color:#94a3b8;font-size:12px;margin-top:30px">This file is your save. Open it in the workshop with '
+    +'&ldquo;Load my file&rdquo; to keep working, or hand it in on Google Classroom.</p></body>';
+  var blob=new Blob([doc],{type:"text/html"});
+  var a=document.createElement("a");
+  var fn=("JS-L7_"+(s.name||"student")+"_"+(s.klass||"")).replace(/[^a-z0-9_-]+/gi,"-")+".html";
+  a.href=URL.createObjectURL(blob); a.download=fn; document.body.appendChild(a); a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
+  toast("Saved "+fn+" - now upload it to Google Classroom");
+}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function loadFile(input){
+  var f=input.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var doc=new DOMParser().parseFromString(r.result,"text/html");
+      var node=doc.getElementById("l7-state");
+      if(!node){ toast("That file has no saved L6 work."); return; }
+      apply(JSON.parse(node.textContent)); persist();
+      toast("Loaded - carry on where you left off");
+    }catch(e){ toast("Could not read that file."); }
+  };
+  r.readAsText(f); input.value="";
+}
+
+var _tt;
+function toast(m){ var t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(_tt); _tt=setTimeout(function(){t.classList.remove("show");},2600); }
+
+document.addEventListener("DOMContentLoaded", function(){
+  ALL_IDS.forEach(function(i){ $("ed"+i).addEventListener("input", persist); });
+  ["sname","sclass","sdate","rbuilt","rstuck","meline"].forEach(function(id){ var el=$(id); if(el) el.addEventListener("input",persist); });
+  var saved=null; try{ saved=JSON.parse(localStorage.getItem(LSKEY)); }catch(e){}
+  if(saved) apply(saved); else updateProgress();
+
+  // ---- advanced motion effects ----
+  try{
+    if(document.documentElement.classList.contains("anim")){
+      var io=new IntersectionObserver(function(es){es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("is-in"); io.unobserve(en.target); }
+      });},{threshold:0.08});
+      document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ io.observe(el); });
+      setTimeout(function(){ document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ el.classList.add("is-in"); }); }, 4000);
+    }
+    var mc=document.querySelector(".mission-card .refcard");
+    if(mc && !window.matchMedia("(prefers-reduced-motion:reduce)").matches){
+      var mw=mc.parentElement;
+      mw.addEventListener("mousemove",function(e){
+        var r=mc.getBoundingClientRect();
+        var px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
+        mc.style.transform="rotateY("+(px*16).toFixed(2)+"deg) rotateX("+(-py*16).toFixed(2)+"deg)";
+      });
+      mw.addEventListener("mouseleave",function(){ mc.style.transform=""; });
+    }
+    var pt=document.getElementById("ptop");
+    if(pt){ var ticking=false; window.addEventListener("scroll",function(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){ var h=document.documentElement.scrollHeight-window.innerHeight;
+        pt.style.width=(h>0?(window.scrollY/h*100):0)+"%"; ticking=false; });
+    },{passive:true}); }
+  }catch(e){}
+});
+</script>
+</body></html>
