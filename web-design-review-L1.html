@@ -273,7 +273,7 @@ const LSKEY='wdr-l1-9immxa-v2';
 const $=id=>document.getElementById(id);
 const norm=s=>(s||'').toLowerCase().replace(/\s+/g,'');
 const reqMet=(req,v)=>Array.isArray(req)?req.some(x=>v.includes(norm(x))):v.includes(norm(req));
-function wrapDoc(code){return '<!doctype html><meta charset="utf-8"><style>body{font-family:Nunito,Segoe UI,Arial,sans-serif;margin:10px;color:#3c3c3c}</style>'+(code||'');}
+function wrapDoc(code){return '<!doctype html><meta charset="utf-8"><style>html,body{margin:0}body{font-family:Nunito,Segoe UI,Arial,sans-serif;padding:12px;color:#3c3c3c;display:flow-root}</style>'+(code||'');}
 let createdSaved={}; let ready=false;
 function codeOf(i){ return $('ed'+i).value.replace(/\/\*[\s\S]*?\*\//g,'').replace(/<!--[\s\S]*?-->/g,''); }
 function resultText(i){ try{const d=$('yr'+i).contentDocument; return norm(d.body?d.body.innerText||d.body.textContent:'');}catch(e){return '';} }
@@ -303,7 +303,10 @@ function updateCounts(){
 }
 function reset(i){ const t=TILES[i]; $('ed'+i).value=t.starter||''; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
 function run(i){ $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
-function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; const h=(d&&d.body)?d.body.scrollHeight:140; f.style.height=Math.max(110,Math.min(620,h+10))+'px'; }catch(e){} }
+function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d)return; const b=d.body,e=d.documentElement;
+  const h=Math.max(b?b.scrollHeight:0, e?e.scrollHeight:0, b?b.offsetHeight:0, 120);
+  f.style.height=Math.max(90,Math.min(2400,h+18))+'px'; }catch(_){} }
+function fitSoon(id){ fitFrame(id); setTimeout(()=>fitFrame(id),160); setTimeout(()=>fitFrame(id),460); }
 function tileHTML(t){
   return `<div class="tile ${t.tier}" id="tile${t.i}">
     <div class="th"><span class="num">${t.i+1}</span>
@@ -331,8 +334,8 @@ function build(){
   TILES.forEach(t=>{
     const ed=$('ed'+t.i);
     if(t.starter) ed.value=t.starter;
-    $('tg'+t.i).addEventListener('load',()=>fitFrame('tg'+t.i));
-    $('yr'+t.i).addEventListener('load',()=>{ fitFrame('yr'+t.i); updateTile(t); });
+    $('tg'+t.i).addEventListener('load',()=>fitSoon('tg'+t.i));
+    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); });
     $('tg'+t.i).srcdoc=wrapDoc(t.target);
     $('yr'+t.i).srcdoc=wrapDoc(ed.value);
     ed.addEventListener('input',()=>{ $('yr'+t.i).srcdoc=wrapDoc(ed.value); persist(); });
