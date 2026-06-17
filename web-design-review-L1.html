@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomato Street Pizza · Web Design L1 · 9IMMXA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#13a08e; --green-d:#0d7d6e; --blue:#1cb0f6; --blue-d:#1899d6; --gold:#ff9600; --gold-d:#e08600; /* "green" is now TEAL — bright green clashed with the tomato hero (红配绿) */
+    --red:#ff4b4b; --red-d:#e63f3f; --tomato:#e8402c; --tomato-d:#c4321f;
+    --bg:#f7f7f5; --card:#ffffff; --line:#e5e5e5; --line-d:#d9d9d9; --ink:#3c3c3c; --muted:#8a8a8a;
+    --font:'Nunito','Nunito Sans','Segoe UI Rounded','Segoe UI',system-ui,Arial,sans-serif;
+    --mono:'Consolas',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px;font-weight:600;-webkit-font-smoothing:antialiased}
+  code{font-family:var(--mono);font-weight:400}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+
+  header{background:var(--tomato);color:#fff;border-bottom:5px solid var(--tomato-d)}
+  header .wrap{padding:18px 18px 16px}
+  .brand{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+  .pie{flex:none;filter:drop-shadow(0 3px 0 rgba(0,0,0,.18))}
+  .title .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.85}
+  .title h1{margin:1px 0 0;font-size:26px;font-weight:900;letter-spacing:-.3px}
+  .title .sub{opacity:.92;font-size:13.5px;font-weight:700;margin-top:2px}
+  .ringwrap{margin-left:auto;text-align:center;background:rgba(0,0,0,.16);border-radius:16px;padding:8px 16px}
+  .ringwrap b{font-size:22px;font-weight:900;display:block;line-height:1} .ringwrap span{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.85}
+  .pbar{margin-top:14px;height:14px;background:rgba(0,0,0,.18);border-radius:10px;overflow:hidden}
+  .pfill{height:100%;width:0;background:#ffd900;border-radius:10px;transition:width .3s ease}
+  .who{margin-top:13px;display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .who input{border:none;border-radius:12px;padding:9px 12px;font-size:14px;min-width:150px;font-family:inherit;font-weight:700;color:#3c3c3c}
+  .who label{font-size:12.5px;font-weight:800;opacity:.92}
+
+  .lead{background:var(--card);border:2px solid var(--line);border-radius:18px;margin:22px 0 6px;display:flex;flex-wrap:wrap}
+  .lead .col{flex:1;min-width:220px;padding:15px 22px;border-right:2px solid var(--line)}
+  .lead .col:last-child{border-right:none}
+  @media(max-width:680px){.lead .col{border-right:none;border-bottom:2px solid var(--line)}}
+  .lead h3{margin:0 0 5px;font-size:16px;font-weight:900}
+  .lead h3 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;margin-right:8px;vertical-align:middle}
+  .lead p{margin:0;font-size:13.5px;color:var(--muted);font-weight:700} .lead b{color:var(--ink)}
+
+  .tierbar{display:flex;align-items:center;gap:14px;padding:13px 20px;margin-top:30px;color:#fff;border-radius:18px 18px 0 0}
+  .tierbar .badge{font-weight:900;font-size:18px;letter-spacing:.4px}
+  .tierbar .desc{font-size:13px;font-weight:700;opacity:.95} .tierbar .count{margin-left:auto;font-weight:900;font-size:15px;background:rgba(0,0,0,.16);padding:4px 13px;border-radius:14px;white-space:nowrap}
+  .tierbar.must{background:var(--green)} .tierbar.should{background:var(--blue)}
+  .tierbar.could{background:var(--gold)} .tierbar.capstone{background:var(--red)}
+  .tiergroup{border:2px solid var(--line);border-top:none;border-radius:0 0 18px 18px;padding:5px 13px 13px;background:#fbfbfa;margin-bottom:6px}
+
+  .tile{background:var(--card);border:2px solid var(--line);border-bottom-width:4px;border-radius:18px;margin:12px 0;overflow:hidden}
+  .tile.must{border-color:#bfe6e0;border-bottom-color:var(--green)} .tile.should{border-color:#c4e9fb;border-bottom-color:var(--blue)}
+  .tile.could{border-color:#ffe2b3;border-bottom-color:var(--gold)} .tile.capstone{border-color:#ffd0d0;border-bottom-color:var(--red)}
+  .tile.done{border-color:#a8ddd4;border-bottom-color:var(--green)}
+  .th{display:flex;align-items:flex-start;gap:12px;padding:14px 18px 8px}
+  .num{flex:none;width:32px;height:32px;border-radius:50%;background:#f1f1ef;color:var(--muted);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .tile.done .num{background:var(--green);color:#fff}
+  .ttl{font-weight:900;font-size:17px}
+  .spec{font-size:14px;color:var(--muted);margin-top:2px;font-weight:700} .spec b{color:var(--ink)}
+  .badge2{margin-left:auto;flex:none;font-size:12.5px;font-weight:800;color:var(--muted);background:#f1f1ef;border-radius:20px;padding:5px 14px;white-space:nowrap}
+  .tile.done .badge2{color:#fff;background:var(--green)}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 18px 10px}
+  @media(max-width:680px){.compare{grid-template-columns:1fr}}
+  .panel{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+  .panel .lab{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:7px 13px;color:#fff}
+  .panel.target .lab{background:#4b4b4b} .panel.yours .lab{background:var(--blue)}
+  .panel iframe{width:100%;height:150px;border:none;display:block;background:#fff}
+  .tile.capstone .panel iframe{height:260px}
+  .panel.target{user-select:none} .panel.target iframe{pointer-events:none}
+
+  .edrow{padding:0 18px 14px}
+  .edlab{font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:2px 2px 6px;display:flex;align-items:center;gap:10px}
+  .edlab .lock{font-weight:700;text-transform:none;letter-spacing:0;color:#b0b0b0;flex:1}
+  textarea{width:100%;border:2px solid var(--line);border-radius:14px;resize:vertical;min-height:120px;padding:11px 14px;font-family:var(--mono);font-size:13.5px;font-weight:400;line-height:1.6;color:#3c3c3c;outline:none;background:#fff}
+  .tile.capstone textarea{min-height:200px}
+  textarea:focus{border-color:var(--blue)}
+  .hintbar{padding:0 18px 14px;display:flex;align-items:center;gap:10px}
+  .hint{font-size:13px;color:var(--muted);font-weight:700;background:#f7f7f5;border:2px solid var(--line);border-radius:14px;padding:9px 13px;flex:1}
+  .hint b{color:var(--ink)} .hint code{background:#eaf6ff;color:#1899d6;padding:1px 6px;border-radius:6px;font-size:12.5px;font-weight:700;user-select:none}
+  .resetb{background:#fff;border:2px solid var(--line);border-bottom-width:3px;color:var(--muted);border-radius:14px;padding:7px 14px;font-size:12.5px;font-weight:800;cursor:pointer;flex:none;font-family:inherit}
+  .resetb:hover{background:#f7f7f5} .resetb:active{border-bottom-width:2px;transform:translateY(1px)}
+
+  .save-card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px 22px;margin:14px 0}
+  .save-card h3{margin:0 0 4px;font-size:18px;font-weight:900}
+  .reflect{display:grid;gap:11px;margin:12px 0 4px}
+  .reflect label{font-size:13.5px;font-weight:800;color:var(--muted)}
+  .reflect input{width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 13px;font-size:14px;font-family:inherit;font-weight:700;background:#fff;color:#3c3c3c}
+  .reflect input:focus{border-color:var(--blue);outline:none}
+  .savebar{position:sticky;bottom:0;background:#fff;border-top:2px solid var(--line);padding:13px 20px;display:flex;gap:14px;align-items:center;margin-top:22px}
+  .btn{background:var(--green);color:#fff;border:none;border-bottom:4px solid var(--green-d);border-radius:16px;padding:13px 28px;font-size:15px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;font-family:var(--font)}
+  .btn:hover{background:#61d406} .btn:active{border-bottom-width:1px;transform:translateY(3px)}
+  .savebar .msg{font-size:13px;color:var(--muted);font-weight:700}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;font-weight:700;margin-top:26px}
+  #toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:#4b4b4b;color:#fff;padding:12px 22px;border-radius:14px;font-size:14px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:50}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  #mascot{position:fixed;right:18px;bottom:84px;z-index:55;display:flex;flex-direction:column;align-items:flex-end;gap:7px;opacity:0;transform:translateY(14px);transition:.25s;pointer-events:none}
+  #mascot.show{opacity:1;transform:translateY(0)}
+  #bubble{max-width:210px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:9px 13px;font-size:13.5px;font-weight:800;color:var(--ink);line-height:1.35;box-shadow:0 4px 0 rgba(0,0,0,.05);position:relative}
+  #bubble:before{content:"";position:absolute;bottom:-12px;right:26px;border:8px solid transparent;border-top-color:var(--line)}
+  #bubble:after{content:"";position:absolute;bottom:-9px;right:27px;border:7px solid transparent;border-top-color:#fff}
+  .pomo{filter:drop-shadow(0 4px 0 rgba(0,0,0,.12))}
+  #mascot.pop .pomo{animation:pop .5s ease} #mascot.jump .pomo{animation:jump .65s ease}
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18) rotate(-6deg)}100%{transform:scale(1)}}
+  @keyframes jump{0%,100%{transform:translateY(0)}30%{transform:translateY(-18px) rotate(9deg)}60%{transform:translateY(-5px)}}
+  .conf{position:fixed;top:-14px;width:9px;height:15px;border-radius:2px;z-index:60;animation:fall 2.5s linear forwards}
+  @keyframes fall{to{top:106vh;opacity:.4}}
+  @media(max-width:700px){#mascot{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="pie" width="60" height="60" viewBox="0 0 120 120" aria-label="pizza">
+        <circle cx="60" cy="60" r="56" fill="#ffd166"/><circle cx="60" cy="60" r="46" fill="#e8402c"/>
+        <circle cx="60" cy="60" r="46" fill="#ffe08a" opacity=".45"/>
+        <circle cx="45" cy="46" r="7" fill="#a8311f"/><circle cx="79" cy="52" r="7" fill="#a8311f"/>
+        <circle cx="54" cy="79" r="7" fill="#a8311f"/><circle cx="82" cy="80" r="6" fill="#a8311f"/>
+        <circle cx="40" cy="72" r="6" fill="#a8311f"/>
+        <circle cx="65" cy="39" r="4.5" fill="#58cc02"/><circle cx="93" cy="66" r="4.5" fill="#58cc02"/><circle cx="35" cy="55" r="4" fill="#58cc02"/>
+      </svg>
+      <div class="title">
+        <div class="eyebrow">Web Design · Lesson 1</div>
+        <h1>Tomato Street Pizza</h1>
+        <div class="sub">9IMMXA · build the pizzeria's website — recreate each target with your own code</div>
+      </div>
+      <div class="ringwrap"><b id="ringn">0/16</b><span>made</span></div>
+    </div>
+    <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    <div class="who">
+      <label>Name <input id="sName" placeholder="your name"></label>
+      <label>Class <input id="sClass" value="9IMMXA" style="min-width:88px"></label>
+      <label>Date <input id="sDate" placeholder="__ / __ / 2026" style="min-width:120px"></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="lead">
+    <div class="col"><h3><span class="n">1</span>Recreate the target</h3><p>Each task shows a slice of the pizzeria site (<b>Target</b>). Type your own code until <b>Your result</b> matches. It ticks <b>Made</b> when you get it.</p></div>
+    <div class="col"><h3><span class="n">2</span>Type it — no pasting</h3><p>Pasting is off on purpose — typing the code is how it sticks. Work through <b>Must → Should → Could</b>, then the big <b>Capstone</b>: the whole homepage.</p></div>
+    <div class="col"><h3><span class="n">3</span>Save your work</h3><p>It <b>auto-saves</b> here. At the end hit <b>Save my work</b> for one file with everything — that's what you hand in.</p></div>
+  </div>
+  <div id="board"></div>
+
+  <div class="tierbar capstone" style="margin-top:34px"><span class="badge">CAPSTONE</span><span class="desc">Build the whole Tomato Street homepage</span><span class="count" id="cnt-capstone">0 / 1</span></div>
+  <div class="tiergroup" id="grp-capstone"></div>
+
+  <div class="save-card" style="margin-top:26px">
+    <h3>Reflect &amp; save</h3>
+    <div class="reflect">
+      <div><label>The part of the site I'm most proud of building was…</label><input id="r1" placeholder="type here"></div>
+      <div><label>One thing I had forgotten but now remember is…</label><input id="r2" placeholder="e.g. how to make a class, padding vs margin"></div>
+      <div><label>One thing I want to get better at is…</label><input id="r3" placeholder="type here"></div>
+    </div>
+  </div>
+  <footer>Tomato Street Pizza · Web Design Review &amp; Practice · Lesson 1 · 9IMMXA · auto-saves in this browser</footer>
+</div>
+
+<div class="savebar">
+  <button class="btn" onclick="saveWork()">Save my work</button>
+  <span class="msg" id="saveMsg">Put your name in at the top, then build down the menu.</span>
+</div>
+<div id="mascot">
+  <div id="bubble">Ciao!</div>
+  <svg class="pomo" width="76" height="76" viewBox="0 0 100 100" aria-label="Pomo the tomato">
+    <g fill="#3a9b4f"><ellipse cx="50" cy="26" rx="4.5" ry="10"/><ellipse cx="39" cy="30" rx="9" ry="4.5" transform="rotate(-28 39 30)"/><ellipse cx="61" cy="30" rx="9" ry="4.5" transform="rotate(28 61 30)"/></g>
+    <circle cx="50" cy="62" r="32" fill="#e8402c"/>
+    <ellipse cx="38" cy="50" rx="9" ry="6" fill="#ff7a68" opacity=".5"/>
+    <circle cx="40" cy="58" r="7" fill="#fff"/><circle cx="60" cy="58" r="7" fill="#fff"/>
+    <circle cx="41" cy="59" r="3.4" fill="#23201a"/><circle cx="61" cy="59" r="3.4" fill="#23201a"/>
+    <circle cx="42.6" cy="57.6" r="1.1" fill="#fff"/><circle cx="62.6" cy="57.6" r="1.1" fill="#fff"/>
+    <circle cx="33" cy="68" r="4" fill="#ff9a8a" opacity=".65"/><circle cx="67" cy="68" r="4" fill="#ff9a8a" opacity=".65"/>
+    <path d="M41 71 Q50 80 59 71" stroke="#23201a" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+  </svg>
+</div>
+<div id="toast"></div>
+
+<script>
+const PIZZA="data:image/svg+xml;utf8,"+encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120" viewBox="0 0 160 120">'
+  +'<rect width="160" height="120" fill="#fbe9c8"/>'
+  +'<circle cx="80" cy="60" r="46" fill="#ffd166"/><circle cx="80" cy="60" r="37" fill="#e8402c"/>'
+  +'<circle cx="80" cy="60" r="37" fill="#ffe08a" opacity=".45"/>'
+  +'<circle cx="66" cy="48" r="6" fill="#a8311f"/><circle cx="96" cy="54" r="6" fill="#a8311f"/>'
+  +'<circle cx="74" cy="76" r="6" fill="#a8311f"/><circle cx="98" cy="78" r="5" fill="#a8311f"/>'
+  +'<circle cx="86" cy="42" r="4" fill="#58cc02"/><circle cx="60" cy="64" r="3.5" fill="#58cc02"/></svg>');
+
+/* ===== TILES — recreate the TARGET (Tomato Street Pizza). want=technique tokens; text=words in YOUR result ===== */
+const TILES=[
+ {tier:'must',title:'The page header',
+  spec:'The site header: a big heading <b>Tomato Street Pizza</b>, a smaller heading <b>Wood-fired since 2005</b>, and a paragraph <b>The favourite pizza in Parramatta.</b>',
+  want:['<h1','<h2','<p'], text:['Tomato Street Pizza','Wood-fired since 2005','favourite pizza in Parramatta'],
+  target:`<h1>Tomato Street Pizza</h1><h2>Wood-fired since 2005</h2><p>The favourite pizza in Parramatta.</p>`},
+
+ {tier:'must',title:'The pizza menu',
+  spec:'A menu section: a heading <b>Our Pizzas</b> and a bullet list of FOUR — <b>Margherita</b>, <b>Pepperoni</b>, <b>Veggie</b>, <b>Hawaiian</b>.',
+  want:['<h2','<ul','<li'], text:['Our Pizzas','Margherita','Pepperoni','Veggie','Hawaiian'],
+  target:`<h2>Our Pizzas</h2><ul><li>Margherita</li><li>Pepperoni</li><li>Veggie</li><li>Hawaiian</li></ul>`},
+
+ {tier:'must',title:'A formatted intro',
+  spec:'A paragraph <b>Our dough is fresh and baked daily.</b> with <b>fresh</b> in bold and <b>daily</b> in italic, then a line break and a second line <b>Come and taste it!</b>',
+  want:['<strong','<em','<br'], text:['fresh','daily','Come and taste it'],
+  target:`<p>Our dough is <strong>fresh</strong> and baked <em>daily</em>.<br>Come and taste it!</p>`},
+
+ {tier:'must',title:'A coloured, centred heading',
+  spec:'A heading <b>Welcome!</b> that is BOTH <b>tomato red</b> AND <b>centred</b> on the page (two CSS rules on h1).',
+  want:['<style','color','text-align'], text:['Welcome'],
+  target:`<style>h1{color:#e8402c;text-align:center}</style><h1>Welcome!</h1>`},
+
+ {tier:'must',title:'Style the whole page',
+  spec:'A page with a <b>warm background colour</b> AND the <b>Arial</b> font on the body, plus a heading <b>Our Menu</b>.',
+  want:['<style','background','font-family'], text:['Our Menu'],
+  target:`<style>body{background-color:#fff3e0;font-family:Arial}</style><h1>Our Menu</h1><p>Wood-fired, every day.</p>`},
+
+ {tier:'must',title:'A logo and an order link',
+  spec:'Two things together: an <b>image</b> (file <b>logo.png</b>, alt text <b>our logo</b>) AND a <b>link</b> saying <b>Order online</b> that points to https://www.tomatostreet.com',
+  want:['<img','alt','<a','href'], text:['Order online'],
+  target:`<img src="${PIZZA}" alt="our logo" width="120"><br><a href="https://www.tomatostreet.com">Order online</a>`},
+
+ {tier:'must',title:'Specials of the week',
+  spec:'A specials section: a heading <b>This week</b> and a NUMBERED list of three deals — <b>Margherita $12</b>, <b>Pepperoni $14</b>, <b>Veggie $13</b>.',
+  want:['<h2','<ol','<li'], text:['This week','$12','$14'],
+  target:`<h2>This week</h2><ol><li>Margherita $12</li><li>Pepperoni $14</li><li>Veggie $13</li></ol>`},
+
+ {tier:'should',title:'The full box model',
+  spec:'A menu box (a div) saying <b>Margherita — $12</b> with ALL THREE: <b>padding</b>, a <b>border</b>, and a <b>margin</b> around it.',
+  want:['padding','border','margin'], text:['Margherita'],
+  target:`<style>.item{padding:14px;border:2px solid #c4321f;margin:12px;display:inline-block}</style><div class="item">Margherita — $12</div>`},
+
+ {tier:'should',title:'A reusable dish class',
+  spec:'Make ONE class <b>.dish</b> (a background, some padding and rounded corners) and use it on TWO dishes — <b>Margherita</b> and <b>Pepperoni</b>.',
+  want:['.dish','padding','border-radius'], text:['Margherita','Pepperoni'],
+  target:`<style>.dish{background:#f6e9d4;padding:8px 12px;border-radius:8px;display:inline-block;margin:3px}</style><p class="dish">Margherita</p><p class="dish">Pepperoni</p>`},
+
+ {tier:'should',title:'Combine selectors',
+  spec:'Style <b>h1</b> AND <b>h2</b> in ONE rule so both are <b>basil green</b> AND <b>centred</b>. The headings are <b>Starters</b> and <b>Mains</b>.',
+  want:[',','text-align'], text:['Starters','Mains'],
+  target:`<style>h1,h2{color:#3f8a4f;text-align:center}</style><h1>Starters</h1><h2>Mains</h2>`},
+
+ {tier:'should',title:'A full menu card',
+  spec:'A <b>&lt;div&gt;</b> card holding a heading <b>Margherita</b>, a line <b>Tomato, basil, mozzarella</b> and a price <b>$12</b> — give the card a <b>border</b> AND a <b>background</b> colour.',
+  want:['<div','border','background'], text:['Margherita','mozzarella'],
+  target:`<style>.card{border:2px solid #c4321f;background:#fffaf0;padding:14px;border-radius:10px;width:210px;display:inline-block}</style><div class="card"><h2 style="margin:0">Margherita</h2><p style="margin:5px 0">Tomato, basil, mozzarella</p><p style="margin:0;color:#c4321f"><strong>$12</strong></p></div>`},
+
+ {tier:'should',title:'A link styled as a button',
+  spec:'Take a <b>link</b> that says <b>Order Now</b> and style it to LOOK like a button — a <b>background</b> colour, <b>padding</b>, rounded corners and <b>no underline</b> (text-decoration).',
+  want:['<a','background','text-decoration'], text:['Order Now'],
+  target:`<style>.btn{background:#e8402c;color:#fff;padding:11px 20px;border-radius:10px;text-decoration:none;font-family:Arial}</style><a class="btn" href="#">Order Now</a>`},
+
+ {tier:'could',title:'A two-column menu',
+  spec:'Two columns <b>side by side</b>: a <b>Pizzas</b> column (Margherita, Pepperoni) and a <b>Drinks</b> column (Cola, Lemonade) — each is a heading plus a list.',
+  want:[['inline-block','flex']], text:['Pizzas','Drinks','Margherita','Cola'],
+  target:`<style>.col{display:inline-block;width:44%;vertical-align:top;background:#f6e9d4;padding:10px 14px;border-radius:8px}</style><div class="col"><h3>Pizzas</h3><ul><li>Margherita</li><li>Pepperoni</li></ul></div><div class="col"><h3>Drinks</h3><ul><li>Cola</li><li>Lemonade</li></ul></div>`},
+
+ {tier:'could',title:'A smooth hover button',
+  spec:'A button <b>Order now</b> that on <b>hover</b> changes colour AND grows a little — and make it <b>smooth</b> with a <b>transition</b>.',
+  want:[':hover','transition'], text:['Order now'],
+  target:`<style>.order{padding:12px 24px;border:none;border-radius:14px;background:#ffc233;font-weight:bold;transition:0.2s}.order:hover{background:#e8402c;color:#fff;transform:scale(1.06)}</style><button class="order">Order now</button>`},
+
+ {tier:'could',title:'A polished special card',
+  spec:'A featured card for <b>Pepperoni — $14, our best seller</b>: a class with a background, padding, <b>rounded corners</b> AND a <b>box-shadow</b> so it floats off the page.',
+  want:['border-radius','box-shadow','padding'], text:['Pepperoni','best seller'],
+  target:`<style>.feat{background:#fffaf0;padding:22px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,0.15);width:210px;display:inline-block;font-family:Arial}.feat h2{margin:0;color:#e8402c}</style><div class="feat"><h2>Pepperoni</h2><p>$14 — our best seller</p></div>`},
+
+ {tier:'capstone',title:'Build the whole Tomato Street homepage',
+  spec:'The big one! Recreate this <b>entire web page</b>: a warm background, a heading, a welcome paragraph, a <b>toppings list</b>, a <b>specials table</b> (with prices), and the <b>pizza picture</b>. Match it as closely as you can — colours too.',
+  want:['<ul','<table','<img'], text:['Tomato Street'],
+  hint:'Work top to bottom: <code>&lt;style&gt;</code> for colours, then <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, a <code>&lt;table&gt;</code> and an <code>&lt;img&gt;</code>. Use the skills from above!',
+  target:`<style>body{background:#fff3e0;font-family:Arial;color:#3c3c3c}h1{color:#e8402c}th,td{border:1px solid #c4321f;padding:4px 8px}</style>`
+    +`<h1>Tomato Street Pizza</h1><p>Wood-fired pizza, made fresh since 2005.</p>`
+    +`<h2>Toppings</h2><ul><li>Pepperoni</li><li>Mushroom</li><li>Basil</li></ul>`
+    +`<h2>This week's specials</h2><table><tr><th>Pizza</th><th>Price</th></tr><tr><td>Margherita</td><td>$12</td></tr><tr><td>Pepperoni</td><td>$14</td></tr></table>`
+    +`<p><img src="${PIZZA}" alt="our pizza" width="160"></p>`,
+  starter:`<style>
+  body { /* warm background, font, colour */ }
+  h1 { /* tomato red */ }
+</style>
+
+<!-- heading, paragraph, toppings list, specials table, pizza image -->
+`}
+];
+
+/* ===== engine ===== */
+const TIER={must:['MUST DO','The basics — everyone builds these','must'],
+            should:['SHOULD DO','Push on — boxes, classes & selectors','should'],
+            could:['COULD DO','Stretch — layout, hover & cards','could'],
+            capstone:['CAPSTONE','Build the whole homepage','capstone']};
+const LSKEY='wdr-l1-9immxa-v2';
+const $=id=>document.getElementById(id);
+const norm=s=>(s||'').toLowerCase().replace(/\s+/g,'');
+const reqMet=(req,v)=>Array.isArray(req)?req.some(x=>v.includes(norm(x))):v.includes(norm(req));
+function wrapDoc(code){return '<!doctype html><meta charset="utf-8"><style>body{font-family:Nunito,Segoe UI,Arial,sans-serif;margin:10px;color:#3c3c3c}</style>'+(code||'');}
+let createdSaved={}; let ready=false;
+function codeOf(i){ return $('ed'+i).value.replace(/\/\*[\s\S]*?\*\//g,'').replace(/<!--[\s\S]*?-->/g,''); }
+function resultText(i){ try{const d=$('yr'+i).contentDocument; return norm(d.body?d.body.innerText||d.body.textContent:'');}catch(e){return '';} }
+function matched(t){
+  if(t.free) return !!createdSaved[t.i];
+  const code=norm(codeOf(t.i));
+  const okCode=(t.want||[]).every(r=>reqMet(r,code));
+  const okText=(t.text||[]).every(w=>resultText(t.i).includes(norm(w)));
+  return okCode && okText;
+}
+function updateTile(t){
+  const was=t.done;
+  const ok=matched(t);
+  $('tile'+t.i).classList.toggle('done',ok);
+  $('badge'+t.i).textContent = ok?'✓ Made':(t.free?'free build':'not yet');
+  t.done=ok; updateCounts();
+  if(ready && ok && !was) onProgress(t);
+}
+function updateCounts(){
+  const done=TILES.filter(t=>t.done).length;
+  $('ringn').textContent=done+'/'+TILES.length;
+  $('pfill').style.width=(done/TILES.length*100)+'%';
+  ['must','should','could','capstone'].forEach(k=>{
+    const g=TILES.filter(t=>t.tier===k); const c=$('cnt-'+k);
+    if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length;
+  });
+}
+function reset(i){ const t=TILES[i]; $('ed'+i).value=t.starter||''; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
+function tileHTML(t){
+  return `<div class="tile ${t.tier}" id="tile${t.i}">
+    <div class="th"><span class="num">${t.i+1}</span>
+      <div><div class="ttl">${t.title}</div><div class="spec">${t.spec}</div></div>
+      <span class="badge2" id="badge${t.i}">not yet</span></div>
+    <div class="compare">
+      <div class="panel target"><div class="lab">Target — recreate this</div><iframe id="tg${t.i}" title="target ${t.i+1}"></iframe></div>
+      <div class="panel yours"><div class="lab">Your result</div><iframe id="yr${t.i}" title="your result ${t.i+1}"></iframe></div>
+    </div>
+    <div class="edrow"><div class="edlab">Your code <span class="lock">— type it yourself, pasting is off</span><button class="resetb" onclick="reset(${t.i})">Clear</button></div>
+      <textarea id="ed${t.i}" spellcheck="false" placeholder="Write your HTML and CSS here..."></textarea></div>
+  </div>`;
+}
+function build(){
+  TILES.forEach((t,i)=>t.i=i);
+  let html='';
+  ['must','should','could'].forEach(k=>{
+    const g=TILES.filter(t=>t.tier===k), m=TIER[k];
+    html+=`<div class="tierbar ${k}"><span class="badge">${m[0]}</span><span class="desc">${m[1]}</span><span class="count" id="cnt-${k}">0 / ${g.length}</span></div>`;
+    html+=`<div class="tiergroup">`+g.map(tileHTML).join('')+`</div>`;
+  });
+  $('board').innerHTML=html;
+  $('grp-capstone').innerHTML=TILES.filter(t=>t.tier==='capstone').map(tileHTML).join('');
+  TILES.forEach(t=>{
+    const ed=$('ed'+t.i);
+    if(t.starter) ed.value=t.starter;
+    $('tg'+t.i).srcdoc=wrapDoc(t.target);
+    $('yr'+t.i).srcdoc=wrapDoc(ed.value);
+    ed.addEventListener('input',()=>{ $('yr'+t.i).srcdoc=wrapDoc(ed.value); persist(); });
+    ed.addEventListener('paste',e=>{ e.preventDefault(); toast('Type it yourself — pasting is off'); });
+    ed.addEventListener('drop',e=>e.preventDefault());
+    $('yr'+t.i).addEventListener('load',()=>updateTile(t));
+  });
+}
+let toT; function toast(msg){ const e=$('toast'); e.textContent=msg; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),1800); }
+function gather(){ return {name:$('sName').value,cls:$('sClass').value,date:$('sDate').value,r1:$('r1').value,r2:$('r2').value,r3:$('r3').value,code:TILES.map(t=>$('ed'+t.i).value),created:createdSaved}; }
+function persist(){ try{localStorage.setItem(LSKEY,JSON.stringify(gather()));}catch(e){} }
+function restore(){
+  let s=null; try{s=JSON.parse(localStorage.getItem(LSKEY));}catch(e){}
+  if(!s)return;
+  $('sName').value=s.name||''; if(s.cls)$('sClass').value=s.cls; $('sDate').value=s.date||'';
+  $('r1').value=s.r1||''; $('r2').value=s.r2||''; $('r3').value=s.r3||''; createdSaved=s.created||{};
+  if(Array.isArray(s.code)) TILES.forEach(t=>{ if(s.code[t.i]!=null){ $('ed'+t.i).value=s.code[t.i]; $('yr'+t.i).srcdoc=wrapDoc(s.code[t.i]); } });
+}
+document.addEventListener('input',e=>{ if(['sName','sClass','sDate','r1','r2','r3'].includes(e.target.id))persist(); });
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function saveWork(){
+  TILES.forEach(t=>{ if(t.free) createdSaved[t.i]=true; });
+  TILES.forEach(t=>updateTile(t)); persist();
+  const g=gather(), nm=(g.name||'student').replace(/[^a-z0-9]+/gi,'-');
+  const tally=k=>{const a=TILES.filter(t=>t.tier===k);return a.filter(t=>t.done).length+'/'+a.length;};
+  let body='';
+  TILES.forEach((t,i)=>{ body+=`<section><h2>${i+1}. ${t.title} <small style="color:#8a8a8a">(${t.tier.toUpperCase()})</small></h2>
+    <div class="r">${g.code[i]||'<em style=color:#999>not attempted</em>'}</div>
+    <details><summary>my code</summary><pre>${esc(g.code[i])}</pre></details></section>`; });
+  const out=`<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><title>Tomato Street Pizza — ${esc(g.name)}</title>
+<style>body{font-family:Nunito,Segoe UI,Arial,sans-serif;max-width:860px;margin:0 auto;padding:26px;color:#3c3c3c;background:#f7f7f5}
+h1{color:#e8402c;margin-bottom:2px} .meta{color:#8a8a8a;margin-bottom:6px}
+.tiers{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:12px 16px;margin:12px 0;font-weight:800}
+.tiers span{display:inline-block;margin-right:18px}
+section{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:15px 18px;margin:13px 0}
+h2{font-size:16px;margin:0 0 9px} .r{border:2px dashed #d9d9d9;border-radius:10px;padding:10px;background:#fff}
+pre{background:#3c3c3c;color:#eafff0;padding:12px;border-radius:10px;overflow:auto;font-size:12.5px;font-family:Consolas,monospace}
+summary{cursor:pointer;color:#1899d6;margin-top:8px} .refl{background:#fffceb;border:2px solid #ffd900;border-radius:14px;padding:14px 16px;margin:14px 0}</style></head>
+<body><h1>Tomato Street Pizza — Web Design L1</h1>
+<div class="meta"><b>${esc(g.name)||'(no name)'}</b> · ${esc(g.cls)} · ${esc(g.date)}</div>
+<div class="tiers"><span>MUST ${tally('must')}</span><span>SHOULD ${tally('should')}</span><span>COULD ${tally('could')}</span><span>CAPSTONE ${tally('capstone')}</span> &nbsp; → made ${TILES.filter(t=>t.done).length}/${TILES.length}</div>
+<div class="refl"><b>My reflection</b><br>Proudest build: ${esc(g.r1)}<br>Remembered: ${esc(g.r2)}<br>Want to improve: ${esc(g.r3)}</div>
+${body}</body></html>`;
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/html'}));
+  a.download='TomatoStreet-L1-'+nm+'.html'; document.body.appendChild(a); a.click(); a.remove();
+  $('saveMsg').textContent='Saved! Upload TomatoStreet-L1-'+nm+'.html to Google Classroom.';
+}
+/* ---- Pomo the mascot ---- */
+const CHEERS=["Bravo!","Delizioso!","Bellissimo!","Molto bene!","Nice one!","You're cooking!","Perfetto!","That's a match!"];
+const TIPS=["Stuck? Peek at the hint under the code.","Read the target, then type it bit by bit.","Don't forget to close your tags!","Match the words AND the colours.","Type it yourself — that's how it sticks."];
+function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+let sayT;
+function say(msg,big){ const m=$('mascot'); $('bubble').textContent=msg; m.classList.add('show');
+  m.classList.remove('pop','jump'); void m.offsetWidth; m.classList.add(big?'jump':'pop');
+  clearTimeout(sayT); sayT=setTimeout(()=>m.classList.remove('show'), big?5200:3300); }
+function onProgress(t){
+  const done=TILES.filter(x=>x.done).length;
+  if(done===TILES.length){ say("MAMMA MIA! You built the whole site. Bravo, chef!",true); confetti(); return; }
+  const g=TILES.filter(x=>x.tier===t.tier);
+  if(t.tier!=='capstone' && g.every(x=>x.done)) say("That whole tier is cooked — fantastico!",true);
+  else say(rnd(CHEERS)); }
+function confetti(){ const cols=['#e8402c','#13a08e','#ffc233','#1cb0f6','#ff8a3d'];
+  for(let i=0;i<30;i++){ const c=document.createElement('div'); c.className='conf';
+    c.style.left=(8+Math.random()*84)+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDelay=(Math.random()*0.35)+'s'; document.body.appendChild(c); setTimeout(()=>c.remove(),2700);} }
+
+build(); restore(); updateCounts();
+setTimeout(()=>say("Ciao! I'm Pomo. Type the code to match each target — you've got this!"),700);
+setTimeout(()=>{ready=true;},1000);
+setInterval(()=>{ if(!$('mascot').classList.contains('show')) say(rnd(TIPS)); },27000);
+</script>
+</body>
+</html>
