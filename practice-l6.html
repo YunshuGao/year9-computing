@@ -283,13 +283,13 @@ html{scroll-behavior:smooth}
     <button class="btn save" onclick="save()">Save my work</button>
   </div>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">First if</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">...or else</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">Goal?</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">Draw?</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">3 results</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">Qualify?</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">You type</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">Predict</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Predict it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix the condition</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Boss level</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Shootout</span></a></div></div></nav>
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Click</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Type-live</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ VAR light</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Pick a team</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Slider</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Hot or cold</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Predict</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Guess</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Press a key</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Trace it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑩ Beat the clock</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Shootout</span></a></div></div></nav>
 
-  <section class="band kickoff"><div class="bnum">1 / Kick-off</div><h2>Make a decision</h2><p>Every match needs a ref. Now the computer becomes the ref - one condition, one decision.</p></section>
+  <section class="band kickoff"><div class="bnum">1 / Kick-off</div><h2>Make a decision</h2><p>Every match needs a ref. The computer becomes the ref - and there is more than ONE way to make it decide.</p></section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex1">
-    <div class="h"><span class="n">1</span><h3>The first decision</h3></div>
-    <p class="lead"><code>if</code> asks a yes/no question. If the answer is YES, the code in the <code>{ }</code> runs. The ref checks: is home greater than away? Type it, press Run, then click.</p>
+    <div class="h"><span class="n">1</span><h3>The first decision - a click</h3></div>
+    <p class="lead"><code>if</code> asks a yes/no question. If the answer is YES, the code in the <code>{ }</code> runs. The ref checks: is Australia ahead? Type it, press Run, then click.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
@@ -324,27 +324,28 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
         <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; your if made a decision.</span></div>
-        <div class="try"><b>Now change it:</b> change the scores so it is NOT a home win, then Run - nothing shows! (there is no <code>else</code> yet).</div>
+        <div class="try"><b>Now change it:</b> change the scores so it is NOT a win, then Run - nothing shows! (there is no <code>else</code> yet).</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex2">
-    <div class="h"><span class="n">2</span><h3>Otherwise (else)</h3></div>
-    <p class="lead"><code>else</code> means "otherwise". If the <code>if</code> is NOT true, the <code>else</code> block runs instead. Now every score gets an answer.</p>
+    <div class="h"><span class="n">2</span><h3>Decide AS you type</h3></div>
+    <p class="lead">No button this time! <code>oninput</code> runs the <code>if/else</code> every time you type a digit, so the verdict updates <b>live</b>.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref2">&lt;h1 id="msg"&gt;Who wins?&lt;/h1&gt;
-&lt;button onclick="decide()"&gt;Run the ref&lt;/button&gt;
+        <pre class="code-ref" id="ref2">&lt;p&gt;USA scored 1. Type Australia goals:&lt;/p&gt;
+&lt;input id="box" type="number" oninput="live()"&gt;
+&lt;h2 id="msg"&gt;...&lt;/h2&gt;
 
 &lt;script&gt;
-  function decide() {
-    let australia = 2, usa = 1;
-    if (australia &gt; usa) {
+  function live() {
+    let australia = Number(box.value);
+    if (australia &gt; 1) {
       document.getElementById("msg").innerHTML = "AUSTRALIA WINS!";
     } else {
-      document.getElementById("msg").innerHTML = "Not this time!";
+      document.getElementById("msg").innerHTML = "Not yet...";
     }
   }
 &lt;/script&gt;</pre>
@@ -367,28 +368,30 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
-        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; if true -&gt; first block; otherwise -&gt; else.</span></div>
-        <div class="try"><b>Now change it:</b> swap the scores to 1 and 3 and Run - this time the else fires.</div>
+        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; your if/else reacted as you typed.</span></div>
+        <div class="try"><b>Now change it:</b> type 0, then 1, then 2 - the answer flips the moment Australia goes ahead.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex3">
-    <div class="h"><span class="n">3</span><h3>A yes / no question</h3></div>
-    <p class="lead">A condition is just a true/false question. <code>goals &gt; 0</code> is true when there is at least one goal. Change the number and watch the answer flip.</p>
+    <div class="h"><span class="n">3</span><h3>Make the whole page react</h3></div>
+    <p class="lead">An <code>if/else</code> can change more than text. Here the condition flips the <b>screen colour</b>, like a real VAR light - green for a goal, red for offside.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref3">&lt;h1 id="msg"&gt;Any goals?&lt;/h1&gt;
+        <pre class="code-ref" id="ref3">&lt;h1 id="msg"&gt;VAR check&lt;/h1&gt;
 &lt;button onclick="check()"&gt;Run the ref&lt;/button&gt;
 
 &lt;script&gt;
   function check() {
-    let goals = 1;
-    if (goals &gt; 0) {
-      document.getElementById("msg").innerHTML = "GOAL!";
+    let offside = false;
+    if (offside === true) {
+      document.body.style.background = "crimson";
+      document.getElementById("msg").innerHTML = "OFFSIDE! No goal";
     } else {
-      document.getElementById("msg").innerHTML = "No goal";
+      document.body.style.background = "seagreen";
+      document.getElementById("msg").innerHTML = "ONSIDE - GOAL!";
     }
   }
 &lt;/script&gt;</pre>
@@ -411,70 +414,81 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
-        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; the condition decided which line ran.</span></div>
-        <div class="try"><b>Now change it:</b> set <code>goals</code> to 0 and Run - the else fires (No goal).</div>
+        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your condition changed the whole page.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>offside</code> to <code>true</code> and Run - the screen turns red.</div>
       </div>
     </div>
   </section>
-  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
-  <section class="ex must" id="ex4">
-    <div class="h"><span class="n">4</span><h3>Exactly equal (===)</h3></div>
-    <p class="lead"><code>&gt;</code> is greater-than. <code>===</code> means <b>exactly equal</b>. Use it to spot a draw - when the two scores are the same.</p>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal tweak" id="ex4">
+    <div class="h"><span class="n">4</span><h3>Pick a team (===) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">This dropdown is already wired up - but the deciding line is blank. <b>Complete the condition</b> so picking Australia cheers them on.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref4">&lt;h1 id="msg"&gt;Score check&lt;/h1&gt;
-&lt;button onclick="check()"&gt;Run the ref&lt;/button&gt;
-
-&lt;script&gt;
-  function check() {
-    let australia = 2, usa = 1;
-    if (australia === usa) {
-      document.getElementById("msg").innerHTML = "It is a DRAW!";
-    } else {
-      document.getElementById("msg").innerHTML = "Someone is ahead!";
-    }
-  }
-&lt;/script&gt;</pre>
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>CONDITION</code> with <code>team === "australia"</code>, then pick Australia from the menu.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(4)">Show a hint</button></div>
+          <div class="reveal hint" id="hint4" hidden><code>===</code> checks an exact match, and the team is text so it needs quotes: <code>team === "australia"</code>.</div>
+        </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred4" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed4" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed4" spellcheck="false">&lt;p&gt;Pick a team:&lt;/p&gt;
+&lt;select id="team" onchange="pick()"&gt;
+  &lt;option&gt;australia&lt;/option&gt;
+  &lt;option&gt;usa&lt;/option&gt;
+  &lt;option&gt;brazil&lt;/option&gt;
+&lt;/select&gt;
+&lt;h2 id="msg"&gt;...&lt;/h2&gt;
+
+&lt;script&gt;
+  function pick() {
+    let team = document.getElementById("team").value;
+    if (CONDITION) {
+      document.getElementById("msg").innerHTML = "Go Socceroos!";
+    } else {
+      document.getElementById("msg").innerHTML = "Good luck, " + team;
+    }
+  }
+&lt;/script&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(4)">Run</button>
-          <button class="btn ghost" onclick="resetEx(4)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(4)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done4" onchange="toggleDone(4)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc4" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
-        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; === checked for an exact match.</span></div>
-        <div class="try"><b>Now change it:</b> make the two scores equal and Run - you get a draw.</div>
+        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your === decided from the menu.</span></div>
       </div>
     </div>
   </section>
-  <section class="band buildup"><div class="bnum">2 / Build-up play</div><h2>More outcomes</h2><p>One question is good - now chain decisions with else if, and react to real input.</p></section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex5">
-    <div class="h"><span class="n">5</span><h3>Win, draw or lose</h3></div>
-    <p class="lead">Chain decisions with <code>else if</code>. The ref checks in order: home wins, ELSE IF it is a draw, ELSE away wins. Three outcomes, one decider.</p>
+  <section class="band buildup"><div class="bnum">2 / Build-up play</div><h2>More outcomes</h2><p>React to real input now - drag a slider, chase the ball, predict a match, take a guess.</p></section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal tweak" id="ex5">
+    <div class="h"><span class="n">5</span><h3>Drag the slider (else if) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">Drag the slider to set Australia's goals. <b>Complete the first condition</b> so a win is called correctly.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref5">&lt;h1 id="msg"&gt;Full time&lt;/h1&gt;
-&lt;button onclick="result()"&gt;Run the ref&lt;/button&gt;
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>CONDITION</code> with <code>australia &gt; usa</code>, then drag the slider above and below 1.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(5)">Show a hint</button></div>
+          <div class="reveal hint" id="hint5" hidden>A win means Australia's goals are greater than USA's: <code>australia &gt; usa</code>.</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed5" spellcheck="false">&lt;p&gt;Drag Australia goals (USA scored 1):&lt;/p&gt;
+&lt;input id="g" type="range" min="0" max="5" value="1" oninput="judge()"&gt;
+&lt;h2 id="msg"&gt;...&lt;/h2&gt;
 
 &lt;script&gt;
-  function result() {
-    let australia = 2, usa = 1;
-    if (australia &gt; usa) {
+  function judge() {
+    let australia = Number(document.getElementById("g").value);
+    let usa = 1;
+    if (CONDITION) {
       document.getElementById("msg").innerHTML = "AUSTRALIA WINS!";
     } else if (australia === usa) {
       document.getElementById("msg").innerHTML = "It is a DRAW!";
@@ -482,128 +496,70 @@ html{scroll-behavior:smooth}
       document.getElementById("msg").innerHTML = "USA WINS!";
     }
   }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred5" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed5" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+&lt;/script&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(5)">Run</button>
-          <button class="btn ghost" onclick="resetEx(5)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(5)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done5" onchange="toggleDone(5)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc5" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
-        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; else if gave you three outcomes.</span></div>
-        <div class="try"><b>Now change it:</b> change the scores three times to trigger all three results.</div>
+        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; your else-if chain judged every score.</span></div>
       </div>
     </div>
   </section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex6">
-    <div class="h"><span class="n">6</span><h3>Did they qualify?</h3></div>
-    <p class="lead"><code>&gt;=</code> means "greater than or equal to". A team is through if its points are 9 or more. Try a number just below the line.</p>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal tweak" id="ex6">
+    <div class="h"><span class="n">6</span><h3>Find the ball (&amp;&amp;) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">Move your mouse across the pitch - the ball is hidden near the middle. <b>Complete the condition</b> so it says WARMER when you are close.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref6">&lt;h1 id="msg"&gt;League table&lt;/h1&gt;
-&lt;button onclick="qualify()"&gt;Run the ref&lt;/button&gt;
-
-&lt;script&gt;
-  function qualify() {
-    let points = 9;
-    if (points &gt;= 9) {
-      document.getElementById("msg").innerHTML = "Through to the next round!";
-    } else {
-      document.getElementById("msg").innerHTML = "Out of the cup";
-    }
-  }
-&lt;/script&gt;</pre>
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>CONDITION</code> with <code>x &gt;= 150 &amp;&amp; x &lt;= 250</code>, then sweep your mouse across.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(6)">Show a hint</button></div>
+          <div class="reveal hint" id="hint6" hidden><code>&amp;&amp;</code> means BOTH must be true - past 150 AND before 250: <code>x &gt;= 150 &amp;&amp; x &lt;= 250</code>.</div>
+        </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred6" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed6" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed6" spellcheck="false">&lt;p id="msg"&gt;Move your mouse to find the ball!&lt;/p&gt;
+&lt;div id="pitch" onmousemove="hot(event)" style="height:120px;border:2px solid #00843d;border-radius:8px;background:#eafaf0"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  function hot(e) {
+    let x = e.offsetX;
+    if (CONDITION) {
+      document.getElementById("msg").innerHTML = "WARMER! Near the ball";
+    } else {
+      document.getElementById("msg").innerHTML = "colder...";
+    }
+  }
+&lt;/script&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(6)">Run</button>
-          <button class="btn ghost" onclick="resetEx(6)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(6)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done6" onchange="toggleDone(6)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc6" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
-        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; &gt;= drew the qualifying line.</span></div>
-        <div class="try"><b>Now change it:</b> set <code>points</code> to 8 and Run - just missed! Then try 9.</div>
+        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; your &amp;&amp; found the sweet spot.</span></div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex7">
-    <div class="h"><span class="n">7</span><h3>Type a number, the ref decides</h3></div>
-    <p class="lead">The condition can use what the user <b>typed</b>. <code>Number(box.value)</code> reads the input; the <code>if</code> decides from it. Real apps react to real input.</p>
+    <div class="h"><span class="n">7</span><h3>Predict a real match</h3></div>
+    <p class="lead">Put <code>else if</code> and inputs together to <b>predict Australia v USA</b> (Sat 20 June, 5am AEST, free on SBS) - the real Socceroos fixture.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref7">&lt;input id="box" type="number" placeholder="australia goals"&gt;
-&lt;button onclick="decide()"&gt;Run the ref&lt;/button&gt;
-&lt;h2 id="out"&gt;&lt;/h2&gt;
-
-&lt;script&gt;
-  function decide() {
-    let goals = Number(box.value);
-    if (goals &gt; 0) {
-      document.getElementById("out").innerHTML = "GOAL!";
-    } else {
-      document.getElementById("out").innerHTML = "No goal";
-    }
-  }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred7" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed7" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(7)">Run</button>
-          <button class="btn ghost" onclick="resetEx(7)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
-        </div>
-        <div class="guesscheck" id="gc7" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
-        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your if reacted to what was typed.</span></div>
-        <div class="try"><b>Now change it:</b> type different numbers (including 0) and Run each time.</div>
-      </div>
-    </div>
-  </section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex8">
-    <div class="h"><span class="n">8</span><h3>Predict the Socceroos</h3></div>
-    <p class="lead">The big one: put <code>else if</code> and inputs together to <b>predict a real World Cup match</b>. Australia play the USA on <b>Saturday</b> - type your scores and let the ref call it.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref8">&lt;h2 id="out"&gt;Who will win?&lt;/h2&gt;
+        <pre class="code-ref" id="ref7">&lt;h2 id="out"&gt;Who will win?&lt;/h2&gt;
 &lt;input id="aN" value="Australia"&gt; &lt;input id="aG" type="number" placeholder="goals"&gt;
 &lt;input id="bN" value="USA"&gt; &lt;input id="bG" type="number" placeholder="goals"&gt;
 &lt;button onclick="predict()"&gt;Predict!&lt;/button&gt;
@@ -626,6 +582,52 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">2</span> Type it here</div>
         <div class="predict-row">
           <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
+          <input class="predict-in" id="pred7" placeholder="Type your guess...">
+        </div>
+        <textarea class="editor" id="ed7" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(7)">Run</button>
+          <button class="btn ghost" onclick="resetEx(7)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
+        </div>
+        <div class="guesscheck" id="gc7" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
+        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; you predicted a real Socceroos result.</span></div>
+        <div class="try"><b>Now change it:</b> type your scores, Run it, then check on Saturday morning if you were right!</div>
+      </div>
+    </div>
+  </section>
+  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
+  <section class="ex should" id="ex8">
+    <div class="h"><span class="n">8</span><h3>Guess the score (prompt)</h3></div>
+    <p class="lead"><code>prompt</code> pops up a box to ask the user. An <code>if / else if / else</code> then says too many, too few, or spot on.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <pre class="code-ref" id="ref8">&lt;h2 id="msg"&gt;How many goals will Australia score?&lt;/h2&gt;
+&lt;button onclick="guess()"&gt;Make your guess&lt;/button&gt;
+
+&lt;script&gt;
+  function guess() {
+    let n = Number(prompt("Your guess?"));
+    if (n &gt; 3) {
+      document.getElementById("msg").innerHTML = "Too many!";
+    } else if (n &lt; 3) {
+      document.getElementById("msg").innerHTML = "Too few!";
+    } else {
+      document.getElementById("msg").innerHTML = "Spot on - 3!";
+    }
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="predict-row">
+          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
           <input class="predict-in" id="pred8" placeholder="Type your guess...">
         </div>
         <textarea class="editor" id="ed8" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
@@ -640,37 +642,41 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
-        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; you predicted a real Socceroos result.</span></div>
-        <div class="try"><b>Now change it:</b> predict <b>Australia v USA</b> (Sat 20 June, 5am AEST, free on SBS). Put your scores in, Run it - then check Saturday morning if you were right!</div>
+        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your if/else if/else judged the guess.</span></div>
+        <div class="try"><b>Now change it:</b> guess 3 to hit it exactly, then try a high number and a low one.</div>
       </div>
     </div>
   </section>
-  <section class="band glory"><div class="bnum">3 / Going for glory</div><h2>Push yourself</h2><p>The hard yards - predict the branch, fix the condition, build it from nothing.</p></section>
+  <section class="band glory"><div class="bnum">3 / Going for glory</div><h2>Push yourself</h2><p>Press a key, trace the branch, fix a bug, beat the clock.</p></section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal predict" id="ex9">
-    <div class="h"><span class="n">9</span><h3>Predict the branch <span class="ctype predict">PREDICT</span></h3></div>
-    <p class="lead">Read the if / else if / else carefully. Only ONE branch runs. Write which message shows, then check.</p>
+  <section class="ex could chal tweak" id="ex9">
+    <div class="h"><span class="n">9</span><h3>Press to shoot (key) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">Click the box, then press a key. <b>Complete the condition</b> so only the SPACE bar shoots.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code</div>
-        <pre class="code-ref" id="ref9">&lt;p id="out"&gt;&lt;/p&gt;
-&lt;script&gt;
-  let home = 2, away = 2;
-  if (home &gt; away) {
-    out.innerHTML = "HOME WINS!";
-  } else if (home === away) {
-    out.innerHTML = "It is a DRAW!";
-  } else {
-    out.innerHTML = "AWAY WINS!";
-  }
-&lt;/script&gt;</pre>
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>CONDITION</code> with <code>e.key === " "</code> (a space between the quotes). Click the box, then press SPACE.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(9)">Show a hint</button></div>
+          <div class="reveal hint" id="hint9" hidden>The spacebar's key is a single space character: <code>e.key === " "</code>.</div>
+        </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Your prediction</div>
-        <textarea class="editor short" id="ed9" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed9" spellcheck="false">&lt;p id="msg"&gt;Click the box, then press SPACE to shoot!&lt;/p&gt;
+&lt;input id="kb" onkeydown="shoot(event)" placeholder="click me, then press SPACE"&gt;
+
+&lt;script&gt;
+  function shoot(e) {
+    if (CONDITION) {
+      document.getElementById("msg").innerHTML = "GOAL! Great shot!";
+    } else {
+      document.getElementById("msg").innerHTML = "Press SPACE to shoot";
+    }
+  }
+&lt;/script&gt;</textarea>
         <div class="act">
-          <button class="btn run" onclick="runPredict(9)">Run &amp; check</button>
-          <button class="btn ghost" onclick="resetEx(9)">Clear</button>
+          <button class="btn run" onclick="runEx(9)">Run</button>
+          <button class="btn ghost" onclick="resetEx(9)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done9" onchange="toggleDone(9)"> Done</label>
         </div>
       </div>
@@ -678,26 +684,62 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
-        <div class="reveal ans" id="ans9" hidden>It shows <b>It is a DRAW!</b>. <code>home &gt; away</code> is false (2 is not &gt; 2), so it checks the next: <code>home === away</code> is true, so that branch runs and the rest is skipped.</div>
-        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you traced the branches and found the winner.</span></div>
+        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; your === read the keyboard.</span></div>
       </div>
     </div>
   </section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal debug" id="ex10">
-    <div class="h"><span class="n">10</span><h3>Fix the bug <span class="ctype debug">DEBUG</span></h3></div>
+  <section class="ex could chal predict" id="ex10">
+    <div class="h"><span class="n">10</span><h3>Predict the branch <span class="ctype predict">PREDICT</span></h3></div>
+    <p class="lead">Read the if / else if / else carefully. Only ONE branch runs. Write which message shows, then check.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> Read this code</div>
+        <pre class="code-ref" id="ref10">&lt;p id="out"&gt;&lt;/p&gt;
+&lt;script&gt;
+  let australia = 2, usa = 2;
+  if (australia &gt; usa) {
+    out.innerHTML = "AUSTRALIA WINS!";
+  } else if (australia === usa) {
+    out.innerHTML = "It is a DRAW!";
+  } else {
+    out.innerHTML = "USA WINS!";
+  }
+&lt;/script&gt;</pre>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Your prediction</div>
+        <textarea class="editor short" id="ed10" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
+        <div class="act">
+          <button class="btn run" onclick="runPredict(10)">Run &amp; check</button>
+          <button class="btn ghost" onclick="resetEx(10)">Clear</button>
+          <label class="donebox"><input type="checkbox" id="done10" onchange="toggleDone(10)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
+        <div class="reveal ans" id="ans10" hidden>It shows <b>It is a DRAW!</b>. <code>australia &gt; usa</code> is false (2 is not &gt; 2), so it checks the next: <code>australia === usa</code> is true, so that branch runs and the rest is skipped.</div>
+        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you traced the branches and found the winner.</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal debug" id="ex11">
+    <div class="h"><span class="n">11</span><h3>Fix the bug <span class="ctype debug">DEBUG</span></h3></div>
     <p class="lead">Click <b>Decide</b> - it always says GOAL, even for 0 goals. The condition is wrong. Read it, find the slip, fix it.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
         <div class="goalbox">It always says GOAL, even when <code>goals</code> is 0. The condition uses <code>=</code> (assign) instead of a compare. Fix it so 0 goals shows "No goal".
-          <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
-          <div class="reveal hint" id="hint10" hidden><code>=</code> puts a value IN. To COMPARE, use <code>&gt;</code>, <code>&lt;</code> or <code>===</code>. Change <code>if (goals = 1)</code> to <code>if (goals &gt; 0)</code>.</div>
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(11)">Show a hint</button></div>
+          <div class="reveal hint" id="hint11" hidden><code>=</code> puts a value IN. To COMPARE, use <code>&gt;</code> or <code>===</code>. Change <code>if (goals = 1)</code> to <code>if (goals &gt; 0)</code>.</div>
         </div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Fix it here</div>
-        <textarea class="editor" id="ed10" spellcheck="false">&lt;button onclick="decide()"&gt;Decide&lt;/button&gt;
+        <textarea class="editor" id="ed11" spellcheck="false">&lt;button onclick="decide()"&gt;Decide&lt;/button&gt;
 &lt;p id="out"&gt;&lt;/p&gt;
 
 &lt;script&gt;
@@ -711,40 +753,8 @@ html{scroll-behavior:smooth}
   }
 &lt;/script&gt;</textarea>
         <div class="act">
-          <button class="btn run" onclick="runEx(10)">Run</button>
-          <button class="btn ghost" onclick="resetEx(10)">Reset</button>
-          <label class="donebox"><input type="checkbox" id="done10" onchange="toggleDone(10)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
-        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed the condition - compare, don't assign.</span></div>
-      </div>
-    </div>
-  </section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal create" id="ex11">
-    <div class="h"><span class="n">11</span><h3>Red card decider <span class="ctype create">CREATE</span></h3></div>
-    <p class="lead">No code given. Build an if/else from the goal - the hint is there if you are stuck.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Make a <b>button</b> and a function that checks <code>fouls</code>. If <code>fouls &gt; 2</code> show <b>RED CARD!</b>, otherwise show <b>Play on</b>.
-          <div class="eg">Expected: RED CARD!</div>
-          <div class="chal-btns">
-            <button class="btn ghost" onclick="showHint(11)">Show a hint</button>
-          </div>
-          <div class="reveal hint" id="hint11" hidden><code>function check() { let fouls = 3; if (fouls &gt; 2) { out.innerHTML = "RED CARD!"; } else { out.innerHTML = "Play on"; } }</code>. Add a <code>&lt;p id="out"&gt;</code> and a button: <code>onclick="check()"</code>.</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
-        <textarea class="editor" id="ed11" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
-        <div class="act">
           <button class="btn run" onclick="runEx(11)">Run</button>
-          <button class="btn ghost" onclick="resetEx(11)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(11)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done11" onchange="toggleDone(11)"> Done</label>
         </div>
       </div>
@@ -752,31 +762,44 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
-        <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; your if/else made the call.</span></div>
+        <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you fixed the condition - compare, don't assign.</span></div>
       </div>
     </div>
   </section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal create" id="ex12">
-    <div class="h"><span class="n">12</span><h3>Boss: two conditions <span class="ctype boss">BOSS</span></h3></div>
-    <p class="lead">Everything together: combine TWO conditions with <code>&amp;&amp;</code> (AND). No answer given - you have the pieces.</p>
+  <section class="ex could chal tweak" id="ex12">
+    <div class="h"><span class="n">12</span><h3>Beat the clock (timer) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">A countdown ticks every second with <code>setInterval</code>. <b>Complete the condition</b> so it shouts FULL TIME at zero.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">A button that checks a team: if <code>points &gt;= 9</code> <b>AND</b> <code>goals &gt; 0</code>, show <b>Champions!</b>, otherwise <b>Not yet</b>.
-          <div class="eg">Expected: Champions!</div>
-          <div class="chal-btns">
-            <button class="btn ghost" onclick="showHint(12)">Show a hint</button>
-          </div>
-          <div class="reveal hint" id="hint12" hidden><code>&amp;&amp;</code> means BOTH must be true: <code>if (points &gt;= 9 &amp;&amp; goals &gt; 0) { ... } else { ... }</code>. Set both numbers high to win, then drop one and Run again.</div>
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>CONDITION</code> with <code>time === 0</code>, then press Start and watch it count down.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(12)">Show a hint</button></div>
+          <div class="reveal hint" id="hint12" hidden>You want the exact moment the clock hits zero: <code>time === 0</code>.</div>
         </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
-        <textarea class="editor" id="ed12" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed12" spellcheck="false">&lt;h2 id="msg"&gt;Press start!&lt;/h2&gt;
+&lt;button onclick="start()"&gt;Start countdown&lt;/button&gt;
+
+&lt;script&gt;
+  let time = 5;
+  function start() {
+    let timer = setInterval(tick, 1000);
+    function tick() {
+      time = time - 1;
+      document.getElementById("msg").innerHTML = "Time: " + time;
+      if (CONDITION) {
+        document.getElementById("msg").innerHTML = "FULL TIME!";
+        clearInterval(timer);
+      }
+    }
+  }
+&lt;/script&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(12)">Run</button>
-          <button class="btn ghost" onclick="resetEx(12)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(12)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done12" onchange="toggleDone(12)"> Done</label>
         </div>
       </div>
@@ -784,7 +807,7 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
-        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; you combined two conditions with &amp;&amp; - boss done.</span></div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your === stopped the clock at full time.</span></div>
       </div>
     </div>
   </section>
@@ -858,12 +881,13 @@ html{scroll-behavior:smooth}
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let australia = 2, usa = 1;\n    if (australia > usa) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    }\n  }\n<\/script>"}, "2": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let australia = 2, usa = 1;\n    if (australia > usa) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not this time!\";\n    }\n  }\n<\/script>"}, "3": {"worldcup": "<h1 id=\"msg\">Any goals?<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let goals = 1;\n    if (goals > 0) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"}, "4": {"worldcup": "<h1 id=\"msg\">Score check<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let australia = 2, usa = 1;\n    if (australia === usa) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Someone is ahead!\";\n    }\n  }\n<\/script>"}, "5": {"worldcup": "<h1 id=\"msg\">Full time<\/h1>\n<button onclick=\"result()\">Run the ref<\/button>\n\n<script>\n  function result() {\n    let australia = 2, usa = 1;\n    if (australia > usa) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    } else if (australia === usa) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"USA WINS!\";\n    }\n  }\n<\/script>"}, "6": {"worldcup": "<h1 id=\"msg\">League table<\/h1>\n<button onclick=\"qualify()\">Run the ref<\/button>\n\n<script>\n  function qualify() {\n    let points = 9;\n    if (points >= 9) {\n      document.getElementById(\"msg\").innerHTML = \"Through to the next round!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Out of the cup\";\n    }\n  }\n<\/script>"}, "7": {"worldcup": "<input id=\"box\" type=\"number\" placeholder=\"australia goals\">\n<button onclick=\"decide()\">Run the ref<\/button>\n<h2 id=\"out\"><\/h2>\n\n<script>\n  function decide() {\n    let goals = Number(box.value);\n    if (goals > 0) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"}, "8": {"worldcup": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"Australia\"> <input id=\"aG\" type=\"number\" placeholder=\"goals\">\n<input id=\"bN\" value=\"USA\"> <input id=\"bG\" type=\"number\" placeholder=\"goals\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" WINS!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" WINS!\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<h1 id=\"msg\">Penalty shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"SAVED!\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>"}};
-var WANT = {"10": "No goal", "11": "RED CARD"};
-var OKTX = {"1": "your if made a decision.", "2": "if true -> first block; otherwise -> else.", "3": "the condition decided which line ran.", "4": "=== checked for an exact match.", "5": "else if gave you three outcomes.", "6": ">= drew the qualifying line.", "7": "your if reacted to what was typed.", "8": "you predicted a real Socceroos result.", "9": "you traced the branches and found the winner.", "10": "you fixed the condition - compare, don't assign.", "11": "your if/else made the call.", "12": "you combined two conditions with && - boss done.", "13": "you built a penalty-shootout game with if/else + random."};
-var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "create"};
-var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let home = 2, away = 2;\n  if (home > away) {\n    out.innerHTML = \"HOME WINS!\";\n  } else if (home === away) {\n    out.innerHTML = \"It is a DRAW!\";\n  } else {\n    out.innerHTML = \"AWAY WINS!\";\n  }\n<\/script>"};
-var DEBUGC = {"10": "<button onclick=\"decide()\">Decide<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function decide() {\n    let goals = 0;\n    if (goals = 1) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"};
+var STARTERS = {"1": {"worldcup": "<h1 id=\"msg\">Who wins?<\/h1>\n<button onclick=\"decide()\">Run the ref<\/button>\n\n<script>\n  function decide() {\n    let australia = 2, usa = 1;\n    if (australia > usa) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    }\n  }\n<\/script>"}, "2": {"worldcup": "<p>USA scored 1. Type Australia goals:<\/p>\n<input id=\"box\" type=\"number\" oninput=\"live()\">\n<h2 id=\"msg\">...<\/h2>\n\n<script>\n  function live() {\n    let australia = Number(box.value);\n    if (australia > 1) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Not yet...\";\n    }\n  }\n<\/script>"}, "3": {"worldcup": "<h1 id=\"msg\">VAR check<\/h1>\n<button onclick=\"check()\">Run the ref<\/button>\n\n<script>\n  function check() {\n    let offside = false;\n    if (offside === true) {\n      document.body.style.background = \"crimson\";\n      document.getElementById(\"msg\").innerHTML = \"OFFSIDE! No goal\";\n    } else {\n      document.body.style.background = \"seagreen\";\n      document.getElementById(\"msg\").innerHTML = \"ONSIDE - GOAL!\";\n    }\n  }\n<\/script>"}, "7": {"worldcup": "<h2 id=\"out\">Who will win?<\/h2>\n<input id=\"aN\" value=\"Australia\"> <input id=\"aG\" type=\"number\" placeholder=\"goals\">\n<input id=\"bN\" value=\"USA\"> <input id=\"bG\" type=\"number\" placeholder=\"goals\">\n<button onclick=\"predict()\">Predict!<\/button>\n\n<script>\n  function predict() {\n    let a = aN.value, b = bN.value;\n    let ag = Number(aG.value), bg = Number(bG.value);\n    if (ag > bg) {\n      document.getElementById(\"out\").innerHTML = a + \" WINS!\";\n    } else if (ag === bg) {\n      document.getElementById(\"out\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = b + \" WINS!\";\n    }\n  }\n<\/script>"}, "8": {"worldcup": "<h2 id=\"msg\">How many goals will Australia score?<\/h2>\n<button onclick=\"guess()\">Make your guess<\/button>\n\n<script>\n  function guess() {\n    let n = Number(prompt(\"Your guess?\"));\n    if (n > 3) {\n      document.getElementById(\"msg\").innerHTML = \"Too many!\";\n    } else if (n < 3) {\n      document.getElementById(\"msg\").innerHTML = \"Too few!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Spot on - 3!\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<h1 id=\"msg\">Penalty shootout!<\/h1>\n<p id=\"score\">Goals: 0<\/p>\n<button onclick=\"shoot()\">Shoot!<\/button>\n\n<script>\n  let goals = 0;\n  function shoot() {\n    if (Math.random() < 0.5) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL!\";\n      goals = goals + 1;\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"SAVED!\";\n    }\n    document.getElementById(\"score\").innerHTML = \"Goals: \" + goals;\n  }\n<\/script>"}};
+var WANT = {"11": "No goal", "12": "FULL TIME"};
+var OKTX = {"1": "your if made a decision.", "2": "your if/else reacted as you typed.", "3": "your condition changed the whole page.", "7": "you predicted a real Socceroos result.", "8": "your if/else if/else judged the guess.", "4": "your === decided from the menu.", "5": "your else-if chain judged every score.", "6": "your && found the sweet spot.", "9": "your === read the keyboard.", "10": "you traced the branches and found the winner.", "11": "you fixed the condition - compare, don't assign.", "12": "your === stopped the clock at full time.", "13": "you built a penalty-shootout game with if/else + random."};
+var MODES = {"4": "tweak", "5": "tweak", "6": "tweak", "9": "tweak", "10": "predict", "11": "debug", "12": "tweak"};
+var PREDICT = {"10": "<p id=\"out\"><\/p>\n<script>\n  let australia = 2, usa = 2;\n  if (australia > usa) {\n    out.innerHTML = \"AUSTRALIA WINS!\";\n  } else if (australia === usa) {\n    out.innerHTML = \"It is a DRAW!\";\n  } else {\n    out.innerHTML = \"USA WINS!\";\n  }\n<\/script>"};
+var DEBUGC = {"11": "<button onclick=\"decide()\">Decide<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function decide() {\n    let goals = 0;\n    if (goals = 1) {\n      document.getElementById(\"out\").innerHTML = \"GOAL!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No goal\";\n    }\n  }\n<\/script>"};
+var TWEAKC = {"4": "<p>Pick a team:<\/p>\n<select id=\"team\" onchange=\"pick()\">\n  <option>australia<\/option>\n  <option>usa<\/option>\n  <option>brazil<\/option>\n<\/select>\n<h2 id=\"msg\">...<\/h2>\n\n<script>\n  function pick() {\n    let team = document.getElementById(\"team\").value;\n    if (CONDITION) {\n      document.getElementById(\"msg\").innerHTML = \"Go Socceroos!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Good luck, \" + team;\n    }\n  }\n<\/script>", "5": "<p>Drag Australia goals (USA scored 1):<\/p>\n<input id=\"g\" type=\"range\" min=\"0\" max=\"5\" value=\"1\" oninput=\"judge()\">\n<h2 id=\"msg\">...<\/h2>\n\n<script>\n  function judge() {\n    let australia = Number(document.getElementById(\"g\").value);\n    let usa = 1;\n    if (CONDITION) {\n      document.getElementById(\"msg\").innerHTML = \"AUSTRALIA WINS!\";\n    } else if (australia === usa) {\n      document.getElementById(\"msg\").innerHTML = \"It is a DRAW!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"USA WINS!\";\n    }\n  }\n<\/script>", "6": "<p id=\"msg\">Move your mouse to find the ball!<\/p>\n<div id=\"pitch\" onmousemove=\"hot(event)\" style=\"height:120px;border:2px solid #00843d;border-radius:8px;background:#eafaf0\"><\/div>\n\n<script>\n  function hot(e) {\n    let x = e.offsetX;\n    if (CONDITION) {\n      document.getElementById(\"msg\").innerHTML = \"WARMER! Near the ball\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"colder...\";\n    }\n  }\n<\/script>", "9": "<p id=\"msg\">Click the box, then press SPACE to shoot!<\/p>\n<input id=\"kb\" onkeydown=\"shoot(event)\" placeholder=\"click me, then press SPACE\">\n\n<script>\n  function shoot(e) {\n    if (CONDITION) {\n      document.getElementById(\"msg\").innerHTML = \"GOAL! Great shot!\";\n    } else {\n      document.getElementById(\"msg\").innerHTML = \"Press SPACE to shoot\";\n    }\n  }\n<\/script>", "12": "<h2 id=\"msg\">Press start!<\/h2>\n<button onclick=\"start()\">Start countdown<\/button>\n\n<script>\n  let time = 5;\n  function start() {\n    let timer = setInterval(tick, 1000);\n    function tick() {\n      time = time - 1;\n      document.getElementById(\"msg\").innerHTML = \"Time: \" + time;\n      if (CONDITION) {\n        document.getElementById(\"msg\").innerHTML = \"FULL TIME!\";\n        clearInterval(timer);\n      }\n    }\n  }\n<\/script>"};
 var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 var THEME_LIST = ["worldcup"];
 var IDS = Object.keys(STARTERS).map(Number);
@@ -938,7 +962,7 @@ function waveFlag(){
 
 function resetEx(i){
   var m=MODES[String(i)]||"type";
-  $("ed"+i).value = (m=="debug" ? DEBUGC[String(i)] : "");
+  $("ed"+i).value = (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : "");
   if(m=="predict"){ var a=$("ans"+i); if(a) a.hidden=true; }
   delete BASE[i];
   $("out"+i).srcdoc="";
@@ -1001,7 +1025,7 @@ function apply(s){
   ALL_IDS.forEach(function(i){
     if(STARTERS[String(i)]) $("ref"+i).textContent = STARTERS[String(i)][THEME];
     var c=s.code&&s.code[i], m=MODES[String(i)]||"type";
-    $("ed"+i).value = (c!=null ? c : (m=="debug" ? DEBUGC[String(i)] : ""));
+    $("ed"+i).value = (c!=null ? c : (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : ""));
     var on=(s.done||[]).indexOf(i)>=0; $("done"+i).checked=on;
     var pill=document.querySelector('.pill[href="#ex'+i+'"]'); if(pill) pill.classList.toggle("is-done",on);
   });
