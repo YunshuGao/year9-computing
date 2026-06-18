@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Design Review L2 · Build a whole page · 9IMMXA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --p1:#1cb0f6; --p1d:#1899d6; --p2:#3a5a40; --p2d:#2c4632; --p3:#0d1b2a; --p3d:#091320; --gold:#ff9600; --gold-d:#e08600;
+    --teal:#13a08e; --teal-d:#0d7d6e; --red:#ff4b4b;
+    --bg:#f7f7f5; --card:#fff; --line:#e5e5e5; --ink:#3c3c3c; --muted:#8a8a8a;
+    --font:'Nunito','Segoe UI Rounded','Segoe UI',system-ui,Arial,sans-serif; --mono:'Consolas',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px;font-weight:600;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px 90px}
+  header{background:linear-gradient(120deg,#0d1b2a,#1f6f78);color:#fff;border-bottom:5px solid #0a141f}
+  header .wrap{padding:18px 18px 16px}
+  .brand{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+  .mark{flex:none}
+  .title .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.85}
+  .title h1{margin:1px 0 0;font-size:25px;font-weight:900;letter-spacing:-.3px}
+  .title .sub{opacity:.92;font-size:13.5px;font-weight:700;margin-top:2px}
+  .ringwrap{margin-left:auto;text-align:center;background:rgba(0,0,0,.2);border-radius:16px;padding:8px 16px}
+  .ringwrap b{font-size:22px;font-weight:900;display:block;line-height:1} .ringwrap span{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.85}
+  .pbar{margin-top:14px;height:14px;background:rgba(0,0,0,.22);border-radius:10px;overflow:hidden}
+  .pfill{height:100%;width:0;background:#ffd900;border-radius:10px;transition:width .3s ease}
+  .who{margin-top:13px;display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .who input{border:none;border-radius:12px;padding:9px 12px;font-size:14px;min-width:150px;font-family:inherit;font-weight:700;color:#3c3c3c}
+  .who label{font-size:12.5px;font-weight:800;opacity:.92}
+
+  .lead{background:var(--card);border:2px solid var(--line);border-radius:18px;margin:22px 0 6px;display:flex;flex-wrap:wrap}
+  .lead .col{flex:1;min-width:220px;padding:15px 22px;border-right:2px solid var(--line)}
+  .lead .col:last-child{border-right:none}
+  @media(max-width:680px){.lead .col{border-right:none;border-bottom:2px solid var(--line)}}
+  .lead h3{margin:0 0 5px;font-size:16px;font-weight:900}
+  .lead h3 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;font-size:13px;margin-right:8px;vertical-align:middle}
+  .lead p{margin:0;font-size:13.5px;color:var(--muted);font-weight:700} .lead b{color:var(--ink)}
+
+  .projbar{display:flex;align-items:center;gap:14px;padding:14px 20px;margin-top:30px;color:#fff;border-radius:18px 18px 0 0}
+  .projbar .badge{font-weight:900;font-size:17px;letter-spacing:.4px} .projbar .desc{font-size:13px;font-weight:700;opacity:.95}
+  .projbar .count{margin-left:auto;font-weight:900;font-size:15px;background:rgba(0,0,0,.18);padding:4px 13px;border-radius:14px;white-space:nowrap}
+  .projbar.p1{background:var(--p1)} .projbar.p2{background:var(--p2)} .projbar.p3{background:var(--p3)}
+  .tiergroup{border:2px solid var(--line);border-top:none;border-radius:0 0 18px 18px;padding:5px 13px 13px;background:#fbfbfa;margin-bottom:6px}
+
+  .tile{background:var(--card);border:2px solid var(--line);border-bottom-width:4px;border-radius:18px;margin:12px 0;overflow:hidden}
+  .tile.p1{border-color:#c4e9fb;border-bottom-color:var(--p1)} .tile.p2{border-color:#cfe0d2;border-bottom-color:var(--p2)} .tile.p3{border-color:#c3cdd8;border-bottom-color:var(--p3)}
+  .tile.final{border-bottom-color:var(--gold);border-color:#ffe2b3;background:#fffdf7}
+  .tile.done{border-color:#a8ddd4;border-bottom-color:var(--teal)}
+  .th{display:flex;align-items:flex-start;gap:12px;padding:14px 18px 8px}
+  .num{flex:none;width:32px;height:32px;border-radius:50%;background:#f1f1ef;color:var(--muted);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .tile.final .num{background:var(--gold);color:#fff} .tile.done .num{background:var(--teal);color:#fff}
+  .ttl{font-weight:900;font-size:17px} .tile.final .ttl{color:var(--gold-d)}
+  .spec{font-size:14px;color:var(--muted);margin-top:2px;font-weight:700} .spec b{color:var(--ink)}
+  .badge2{margin-left:auto;flex:none;font-size:12.5px;font-weight:800;color:var(--muted);background:#f1f1ef;border-radius:20px;padding:5px 14px;white-space:nowrap}
+  .tile.done .badge2{color:#fff;background:var(--teal)}
+
+  .work{display:grid;grid-template-columns:0.95fr 1.5fr 1.05fr;gap:12px;padding:6px 18px 14px;align-items:start}
+  .work>*{min-width:0} @media(max-width:880px){.work{grid-template-columns:1fr}}
+  .panel{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+  .panel .lab{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:7px 13px;color:#fff}
+  .panel.target .lab{background:#4b4b4b} .panel.yours .lab{background:var(--p1)}
+  .panel iframe{width:100%;min-height:120px;border:none;display:block;background:#fff}
+  .panel.target{user-select:none} .panel.target iframe{pointer-events:none}
+  .codecol{display:flex;flex-direction:column}
+  .clab{font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--teal);padding:7px 13px;border-radius:16px 16px 0 0}
+  textarea{width:100%;border:2px solid var(--teal);border-top:none;border-radius:0 0 16px 16px;resize:vertical;min-height:240px;padding:11px 13px;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.55;color:#3c3c3c;outline:none;background:#fff;display:block}
+  .tile.final textarea{min-height:330px}
+  textarea:focus{border-color:var(--teal-d)}
+  .runrow{display:flex;align-items:center;gap:12px;margin-top:11px;flex-wrap:wrap}
+  .runb{background:var(--p1);color:#fff;border:none;border-bottom:4px solid var(--p1d);border-radius:14px;padding:11px 22px;font-size:14px;font-weight:900;letter-spacing:.4px;cursor:pointer;font-family:var(--font)}
+  .runb:hover{filter:brightness(1.05)} .runb:active{border-bottom-width:1px;transform:translateY(3px)}
+  .resetb{background:#fff;border:2px solid var(--line);border-bottom-width:3px;color:var(--muted);border-radius:14px;padding:7px 14px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:inherit}
+  .resetb:hover{background:#f7f7f5} .resetb:active{border-bottom-width:2px;transform:translateY(1px)}
+  .partslist{margin:0 18px 14px;font-size:13px;font-weight:700;color:var(--muted);background:#fff8e8;border:2px solid #ffe2b3;border-radius:14px;padding:10px 14px}
+  .partslist b{color:var(--gold-d)}
+
+  .save-card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px 22px;margin:14px 0}
+  .save-card h3{margin:0 0 4px;font-size:18px;font-weight:900}
+  .reflect{display:grid;gap:11px;margin:12px 0 4px} .reflect label{font-size:13.5px;font-weight:800;color:var(--muted)}
+  .reflect input{width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 13px;font-size:14px;font-family:inherit;font-weight:700;background:#fff;color:#3c3c3c}
+  .reflect input:focus{border-color:var(--p1);outline:none}
+  .savebar{position:sticky;bottom:0;background:#fff;border-top:2px solid var(--line);padding:13px 20px;display:flex;gap:14px;align-items:center;margin-top:22px}
+  .btn{background:var(--teal);color:#fff;border:none;border-bottom:4px solid var(--teal-d);border-radius:16px;padding:13px 28px;font-size:15px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;font-family:var(--font)}
+  .btn:active{border-bottom-width:1px;transform:translateY(3px)} .savebar .msg{font-size:13px;color:var(--muted);font-weight:700}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;font-weight:700;margin-top:26px}
+  #toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:#4b4b4b;color:#fff;padding:12px 22px;border-radius:14px;font-size:14px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:50}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .conf{position:fixed;top:-14px;width:9px;height:15px;border-radius:2px;z-index:60;animation:fall 2.5s linear forwards} @keyframes fall{to{top:106vh;opacity:.4}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" width="54" height="54" viewBox="0 0 64 64" aria-label="pages">
+        <rect x="12" y="8" width="40" height="30" rx="4" fill="#ffffff" opacity=".25"/>
+        <rect x="8" y="16" width="40" height="30" rx="4" fill="#ffffff" opacity=".55"/>
+        <rect x="4" y="24" width="44" height="32" rx="5" fill="#ffffff"/>
+        <rect x="4" y="24" width="44" height="9" rx="5" fill="#ffba08"/>
+        <rect x="10" y="38" width="20" height="4" rx="2" fill="#0d1b2a"/><rect x="10" y="46" width="30" height="4" rx="2" fill="#9aa6b2"/>
+      </svg>
+      <div class="title">
+        <div class="eyebrow">Web Design · Review &amp; Practice · Lesson 2</div>
+        <h1>Build a whole webpage</h1>
+        <div class="sub">9IMMXA · 3 real pages, built part by part, then assembled — use everything you learned in Grok</div>
+      </div>
+      <div class="ringwrap"><b id="ringn">0/14</b><span>made</span></div>
+    </div>
+    <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    <div class="who">
+      <label>Name <input id="sName" placeholder="your name"></label>
+      <label>Class <input id="sClass" value="9IMMXA" style="min-width:88px"></label>
+      <label>Date <input id="sDate" placeholder="__ / __ / 2026" style="min-width:120px"></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="lead">
+    <div class="col"><h3><span class="n">1</span>Build it in parts</h3><p>Each project is a real page broken into <b>parts</b> (header, hero, columns, footer...). Recreate each part's <b>Target</b> with your own code.</p></div>
+    <div class="col"><h3><span class="n">2</span>Then assemble</h3><p>The gold <b>🧩 Assemble</b> task in each project is the whole page — combine the parts you just built into one page.</p></div>
+    <div class="col"><h3><span class="n">3</span>Harder each time</h3><p><b>Project 1</b> simple → <b>Project 2</b> a café site → <b>Project 3</b> a full travel landing page. Type the code (no pasting); it <b>auto-saves</b>.</p></div>
+  </div>
+  <div id="board"></div>
+
+  <div class="save-card" style="margin-top:26px">
+    <h3>Reflect &amp; save</h3>
+    <div class="reflect">
+      <div><label>The page I am most proud of building was…</label><input id="r1" placeholder="type here"></div>
+      <div><label>One skill from Grok I used a lot was…</label><input id="r2" placeholder="e.g. flexbox, classes, padding, hover"></div>
+      <div><label>One thing I want to get better at is…</label><input id="r3" placeholder="type here"></div>
+    </div>
+  </div>
+  <footer>Web Design Review &amp; Practice · Lesson 2 · 9IMMXA · <b>L2 build v1</b> · auto-saves in this browser</footer>
+</div>
+
+<div class="savebar"><button class="btn" onclick="saveWork()">Save my work</button><span class="msg" id="saveMsg">Put your name in at the top, then build Project 1.</span></div>
+<div id="toast"></div>
+
+<script>
+/* ===== TILES — 3 projects, each: parts then a 🧩 Assemble. want=technique tokens; text=words in YOUR result ===== */
+const TILES=[
+ /* ============ PROJECT 1 · EASY — a simple profile page ============ */
+ {proj:'p1',title:'Part 1 · The intro',
+  spec:'The top of the profile: a big name <b>Mia Chen</b> (navy, centred) and a role line <b>DESIGNER &amp; MAKER</b> (grey, bold, spaced-out letters). Centre everything.',
+  want:['<style','text-align','color','<h1','<p'], text:['Mia Chen','DESIGNER'],
+  target:`<style>body{font-family:Arial;text-align:center}h1{color:#22386b;margin:0}.role{color:#9aa0aa;font-weight:bold;letter-spacing:2px;margin-top:4px}</style><h1>Mia Chen</h1><p class="role">DESIGNER &amp; MAKER</p>`},
+
+ {proj:'p1',title:'Part 2 · Photo &amp; bio',
+  spec:'A round <b>profile photo</b> (file <b>avatar.png</b>, with alt text) and a short <b>bio</b> paragraph. Make the photo a circle with <b>border-radius</b>.',
+  want:['<img','alt','border-radius','<p'], text:['Hello','design'],
+  target:`<style>.pic{border-radius:50%;width:120px}.bio{max-width:340px;margin:10px auto;color:#555;font-family:Arial}</style><img class="pic" src="avatar.png" alt="photo of Mia"><p class="bio">Hello! I design clean, friendly websites and love a good cup of tea while I work.</p>`},
+
+ {proj:'p1',title:'Part 3 · Button &amp; footer',
+  spec:'A <b>link styled as a button</b> saying <b>Get in touch</b> (a background colour, padding, rounded corners, no underline), then a small grey <b>footer</b> line.',
+  want:['<a','background','padding','text-decoration','<footer'], text:['Get in touch','Mia Chen'],
+  target:`<style>.btn{background:#22386b;color:#fff;padding:12px 26px;border-radius:30px;text-decoration:none;font-weight:bold;font-family:Arial}footer{color:#9aa0aa;font-size:13px;margin-top:20px;font-family:Arial}</style><a class="btn" href="#">Get in touch</a><footer>&copy; 2026 Mia Chen</footer>`},
+
+ {proj:'p1',final:true,title:'🧩 Assemble the profile page',
+  spec:'Combine all 3 parts into ONE centred profile page on a soft background: the name + role, the round photo + bio, the button, and the footer.',
+  want:['<style','text-align','<h1','<img','border-radius','<a','background','<footer'], text:['Mia Chen','DESIGNER','Get in touch'],
+  parts:'Part 1 (name + role) · Part 2 (photo + bio) · Part 3 (button + footer)',
+  target:`<style>body{font-family:Arial;text-align:center;background:#f4f6fb;color:#333;padding:30px;margin:0}h1{color:#22386b;margin:0}.role{color:#9aa0aa;font-weight:bold;letter-spacing:2px}.pic{border-radius:50%;width:120px;margin-top:14px}.bio{max-width:340px;margin:10px auto;color:#555}.btn{background:#22386b;color:#fff;padding:12px 26px;border-radius:30px;text-decoration:none;font-weight:bold;display:inline-block;margin-top:6px}footer{color:#9aa0aa;font-size:13px;margin-top:24px}</style><h1>Mia Chen</h1><p class="role">DESIGNER &amp; MAKER</p><img class="pic" src="avatar.png" alt="photo of Mia"><p class="bio">Hello! I design clean, friendly websites and love a good cup of tea while I work.</p><a class="btn" href="#">Get in touch</a><footer>&copy; 2026 Mia Chen</footer>`,
+  starter:`<style>
+  body { /* Arial, centred, soft background, padding */ }
+  /* styles for the name, role, round photo, button, footer */
+</style>
+
+<!-- Part 1: name + role -->
+<!-- Part 2: round photo + bio -->
+<!-- Part 3: button + footer -->
+`},
+
+ /* ============ PROJECT 2 · MEDIUM — a cafe homepage ============ */
+ {proj:'p2',title:'Part 1 · The nav bar',
+  spec:'A top <b>navigation bar</b> with <b>flexbox</b>: the cafe name <b>Bean &amp; Leaf</b> on the LEFT and three links <b>Menu</b>, <b>About</b>, <b>Visit</b> on the RIGHT. Use <b>display:flex</b> and <b>justify-content:space-between</b>.',
+  want:['display:flex','justify-content','<a'], text:['Bean','Menu','About','Visit'],
+  target:`<style>nav{display:flex;justify-content:space-between;align-items:center;background:#3a5a40;padding:14px 22px;font-family:Arial}.name{color:#fff;font-weight:bold;font-size:20px}nav a{color:#dfe7df;text-decoration:none;margin-left:18px}</style><nav><span class="name">Bean &amp; Leaf</span><span><a href="#">Menu</a><a href="#">About</a><a href="#">Visit</a></span></nav>`},
+
+ {proj:'p2',title:'Part 2 · The hero',
+  spec:'A <b>hero banner</b>: a soft green background, a big centred heading <b>Coffee, slow mornings, good company.</b> and a line <b>Open 7 days in Parramatta.</b>, with plenty of padding.',
+  want:['<style','background','text-align','padding','<h1'], text:['slow mornings','Parramatta'],
+  target:`<style>.hero{background:#a3b18a;color:#1b2a1b;text-align:center;padding:60px 20px;font-family:Arial}.hero h1{margin:0;font-size:28px}</style><div class="hero"><h1>Coffee, slow mornings, good company.</h1><p>Open 7 days in Parramatta.</p></div>`},
+
+ {proj:'p2',title:'Part 3 · Two columns',
+  spec:'Two boxes <b>side by side</b> (use flexbox): an <b>Our Story</b> box (with a small <b>coffee.png</b> image) and an <b>Opening Hours</b> box. Give each box a <b>border</b> and <b>padding</b>.',
+  want:[['display:flex','inline-block','display:grid'],['border:','border-style'],'padding','<img'], text:['Our Story','Opening Hours','Mon'],
+  target:`<style>.cols{display:flex;gap:16px;font-family:Arial;padding:18px}.box{flex:1;border:1px solid #c9d3c0;padding:18px;border-radius:8px}.box h2{margin-top:0;color:#3a5a40}.box img{width:70px;border-radius:8px;float:right;margin-left:10px}</style><div class="cols"><div class="box"><img src="coffee.png" alt="coffee"><h2>Our Story</h2><p>We have roasted small-batch beans since 2010.</p></div><div class="box"><h2>Opening Hours</h2><p>Mon-Fri 7am-3pm<br>Sat-Sun 8am-2pm</p></div></div>`},
+
+ {proj:'p2',title:'Part 4 · The footer',
+  spec:'A dark green <b>footer</b> bar, centred, with the cafe name and an address line <b>123 Church St, Parramatta</b>.',
+  want:['<footer','background','text-align'], text:['Bean','Church St'],
+  target:`<style>footer{background:#3a5a40;color:#dfe7df;text-align:center;padding:18px;font-family:Arial}</style><footer><b>Bean &amp; Leaf</b><br>123 Church St, Parramatta</footer>`},
+
+ {proj:'p2',final:true,title:'🧩 Assemble the cafe page',
+  spec:'Combine the nav, the hero, the two columns and the footer into ONE cafe homepage (set the body margin to 0 so the bars reach the edges).',
+  want:['display:flex','<h1',['border:','border-style'],'<footer','background'], text:['Bean','slow mornings','Our Story','Church St'],
+  parts:'Part 1 (nav) · Part 2 (hero) · Part 3 (two columns) · Part 4 (footer)',
+  target:`<style>body{margin:0;font-family:Arial}nav{display:flex;justify-content:space-between;align-items:center;background:#3a5a40;padding:14px 22px}.name{color:#fff;font-weight:bold;font-size:20px}nav a{color:#dfe7df;text-decoration:none;margin-left:18px}.hero{background:#a3b18a;color:#1b2a1b;text-align:center;padding:54px 20px}.hero h1{margin:0;font-size:26px}.cols{display:flex;gap:16px;padding:18px}.box{flex:1;border:1px solid #c9d3c0;padding:18px;border-radius:8px}.box h2{margin-top:0;color:#3a5a40}footer{background:#3a5a40;color:#dfe7df;text-align:center;padding:18px}</style><nav><span class="name">Bean &amp; Leaf</span><span><a href="#">Menu</a><a href="#">About</a><a href="#">Visit</a></span></nav><div class="hero"><h1>Coffee, slow mornings, good company.</h1><p>Open 7 days in Parramatta.</p></div><div class="cols"><div class="box"><h2>Our Story</h2><p>We have roasted small-batch beans since 2010.</p></div><div class="box"><h2>Opening Hours</h2><p>Mon-Fri 7am-3pm<br>Sat-Sun 8am-2pm</p></div></div><footer><b>Bean &amp; Leaf</b><br>123 Church St, Parramatta</footer>`,
+  starter:`<style>
+  body { margin:0; font-family:Arial; }
+  /* nav (flex), hero, .cols (flex) + .box (border, padding), footer */
+</style>
+
+<!-- nav -->
+<!-- hero -->
+<!-- two columns -->
+<!-- footer -->
+`},
+
+ /* ============ PROJECT 3 · HARD — a travel landing page ============ */
+ {proj:'p3',title:'Part 1 · Logo nav (hover)',
+  spec:'A nav bar with a <b>logo</b> <b>&#9992; Wander</b> on the left and links <b>Home</b>, <b>Trips</b>, <b>Book</b> on the right (flexbox). Make the links turn gold on <b>hover</b>.',
+  want:['display:flex','<a',':hover'], text:['Wander','Home','Trips','Book'],
+  target:`<style>nav{display:flex;justify-content:space-between;align-items:center;background:#0d1b2a;padding:16px 26px;font-family:Arial}.logo{color:#fff;font-weight:bold;font-size:22px}nav a{color:#c9d6e3;text-decoration:none;margin-left:20px}nav a:hover{color:#ffba08}</style><nav><span class="logo">&#9992; Wander</span><span><a href="#">Home</a><a href="#">Trips</a><a href="#">Book</a></span></nav>`},
+
+ {proj:'p3',title:'Part 2 · Hero with a photo',
+  spec:'A big <b>hero</b> with a <b>background image</b> (file <b>beach.png</b>) and a dark overlay, white <b>centred</b> heading <b>See the world differently</b>, and a gold <b>button</b> <b>Start exploring</b>.',
+  want:['background','<h1','text-align',['<a','<button']], text:['See the world','Start exploring'],
+  target:`<style>.hero{background:linear-gradient(rgba(13,27,42,.45),rgba(13,27,42,.45)),url('beach.png');background-size:cover;background-position:center;color:#fff;text-align:center;padding:90px 20px;font-family:Arial}.hero h1{font-size:32px;margin:0 0 14px}.cta{background:#ffba08;color:#0d1b2a;padding:13px 30px;border-radius:30px;text-decoration:none;font-weight:bold}</style><div class="hero"><h1>See the world differently</h1><a class="cta" href="#">Start exploring</a></div>`},
+
+ {proj:'p3',title:'Part 3 · A 3-card grid',
+  spec:'Three destination <b>cards side by side</b> using a <b>3-column grid</b>: <b>Bali</b>, <b>Tokyo</b>, <b>Paris</b>, each with a colour strip, a name and a price. Give the cards <b>rounded corners</b> AND a <b>box-shadow</b>.',
+  want:[['display:grid','inline-block','display:flex'],'border-radius','box-shadow'], text:['Bali','Tokyo','Paris'],
+  target:`<style>.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:22px;font-family:Arial}.card{border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.12);overflow:hidden}.top{height:74px}.b{background:#3aafa9}.t{background:#ef476f}.p{background:#118ab2}.info{padding:14px}.info h3{margin:0}</style><div class="grid"><div class="card"><div class="top b"></div><div class="info"><h3>Bali</h3><p>from $899</p></div></div><div class="card"><div class="top t"></div><div class="info"><h3>Tokyo</h3><p>from $1199</p></div></div><div class="card"><div class="top p"></div><div class="info"><h3>Paris</h3><p>from $1399</p></div></div></div>`},
+
+ {proj:'p3',title:'Part 4 · Footer with icons',
+  spec:'A dark <b>footer</b>, centred, with the logo and three <b>Font Awesome icons</b> (a camera, a plane and a heart). Use <b>&lt;i class="fa-solid fa-camera"&gt;&lt;/i&gt;</b> etc.',
+  want:['<footer','<i','fa-'], text:['Wander'],
+  target:`<style>footer{background:#0d1b2a;color:#c9d6e3;text-align:center;padding:24px;font-family:Arial}.icons{font-size:22px;margin-top:8px;color:#ffba08}.icons i{margin:0 9px}</style><footer><b>&#9992; Wander</b><div class="icons"><i class="fa-solid fa-camera"></i><i class="fa-solid fa-plane"></i><i class="fa-solid fa-heart"></i></div><p style="font-size:13px">&copy; 2026 Wander Travel</p></footer>`},
+
+ {proj:'p3',final:true,title:'🧩 Assemble the travel landing page',
+  spec:'The big one — combine the nav, the photo hero, the 3-card grid and the icon footer into ONE complete travel landing page.',
+  want:['display:flex','background','<h1',['display:grid','inline-block'],'box-shadow','<footer'], text:['Wander','See the world','Bali','Paris'],
+  parts:'Part 1 (logo nav) · Part 2 (hero photo) · Part 3 (3-card grid) · Part 4 (icon footer)',
+  target:`<style>body{margin:0;font-family:Arial}nav{display:flex;justify-content:space-between;align-items:center;background:#0d1b2a;padding:16px 26px}.logo{color:#fff;font-weight:bold;font-size:22px}nav a{color:#c9d6e3;text-decoration:none;margin-left:20px}nav a:hover{color:#ffba08}.hero{background:linear-gradient(rgba(13,27,42,.45),rgba(13,27,42,.45)),url('beach.png');background-size:cover;background-position:center;color:#fff;text-align:center;padding:80px 20px}.hero h1{font-size:30px;margin:0 0 14px}.cta{background:#ffba08;color:#0d1b2a;padding:13px 30px;border-radius:30px;text-decoration:none;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:22px}.card{border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.12);overflow:hidden}.top{height:64px}.b{background:#3aafa9}.t{background:#ef476f}.p{background:#118ab2}.info{padding:14px}.info h3{margin:0}footer{background:#0d1b2a;color:#c9d6e3;text-align:center;padding:22px}.icons{font-size:20px;color:#ffba08}.icons i{margin:0 8px}</style><nav><span class="logo">&#9992; Wander</span><span><a href="#">Home</a><a href="#">Trips</a><a href="#">Book</a></span></nav><div class="hero"><h1>See the world differently</h1><a class="cta" href="#">Start exploring</a></div><div class="grid"><div class="card"><div class="top b"></div><div class="info"><h3>Bali</h3><p>from $899</p></div></div><div class="card"><div class="top t"></div><div class="info"><h3>Tokyo</h3><p>from $1199</p></div></div><div class="card"><div class="top p"></div><div class="info"><h3>Paris</h3><p>from $1399</p></div></div></div><footer><b>&#9992; Wander</b><div class="icons"><i class="fa-solid fa-camera"></i><i class="fa-solid fa-plane"></i><i class="fa-solid fa-heart"></i></div></footer>`,
+  starter:`<style>
+  body { margin:0; font-family:Arial; }
+  /* nav (flex + :hover), .hero (background image + overlay), .grid (3 columns) + .card (shadow), footer + icons */
+</style>
+
+<!-- nav with logo + links -->
+<!-- hero with beach.png background + button -->
+<!-- 3-card grid: Bali / Tokyo / Paris -->
+<!-- footer with Font Awesome icons -->
+`}
+];
+
+/* ===== engine (same proven core as L1) ===== */
+const PROJECT={p1:['PROJECT 1 · EASY','A simple profile page — build the parts, then assemble','p1'],
+               p2:['PROJECT 2 · MEDIUM','A cafe homepage — nav, hero, columns, footer','p2'],
+               p3:['PROJECT 3 · HARD','A travel landing page — use everything','p3']};
+const LSKEY='wdr-l2-9immxa-v1';
+const $=id=>document.getElementById(id);
+const norm=s=>(s||'').toLowerCase().replace(/\s+/g,'');
+const reqMet=(req,v)=>Array.isArray(req)?req.some(x=>v.includes(norm(x))):v.includes(norm(req));
+function wrapDoc(code){return '<!doctype html><meta charset="utf-8"><base href="https://yunshugao.github.io/year9-computing/"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>html,body{margin:0}body{font-family:Nunito,Segoe UI,Arial,sans-serif;padding:12px;color:#3c3c3c;display:flow-root}</style>'+(code||'');}
+let ready=false;
+function codeOf(i){ return $('ed'+i).value.replace(/\/\*[\s\S]*?\*\//g,'').replace(/<!--[\s\S]*?-->/g,''); }
+function resultText(i){ try{const d=$('yr'+i).contentDocument; return norm(d.body?d.body.innerText||d.body.textContent:'');}catch(e){return '';} }
+function matched(t){ const code=norm(codeOf(t.i));
+  const okCode=(t.want||[]).every(r=>reqMet(r,code));
+  const okText=(t.text||[]).every(w=>resultText(t.i).includes(norm(w)));
+  return okCode && okText; }
+function updateTile(t){ const was=t.done, ok=matched(t);
+  $('tile'+t.i).classList.toggle('done',ok);
+  $('badge'+t.i).textContent = ok?'✓ Made':'not yet'; t.done=ok; updateCounts();
+  if(ready && ok && !was) onProgress(t); }
+function updateCounts(){ const done=TILES.filter(t=>t.done).length;
+  $('ringn').textContent=done+'/'+TILES.length; $('pfill').style.width=(done/TILES.length*100)+'%';
+  ['p1','p2','p3'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), c=$('cnt-'+k); if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length; }); }
+let pendScroll=null;
+function restoreScroll(){ if(pendScroll==null)return; const y=pendScroll; window.scrollTo(0,y);
+  setTimeout(()=>window.scrollTo(0,y),180); setTimeout(()=>{window.scrollTo(0,y);pendScroll=null;},520); }
+function render(i){ pendScroll=window.pageYOffset||document.documentElement.scrollTop||0; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
+function reset(i){ $('ed'+i).value=TILES[i].starter||''; render(i); }
+function run(i){ render(i); }
+function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d||!d.body)return;
+  f.style.height='0';
+  const h=Math.max(d.body.scrollHeight, d.body.offsetHeight, 90);
+  f.style.height=Math.max(90,Math.min(2400,h+16))+'px'; }catch(_){} }
+function fitSoon(id){ fitFrame(id); setTimeout(()=>fitFrame(id),160); setTimeout(()=>fitFrame(id),460); }
+function tileHTML(t){
+  return `<div class="tile ${t.proj}${t.final?' final':''}" id="tile${t.i}">
+    <div class="th"><span class="num">${t.final?'🧩':(t.i+1)}</span>
+      <div><div class="ttl">${t.title}</div><div class="spec">${t.spec}</div></div>
+      <span class="badge2" id="badge${t.i}">not yet</span></div>
+    ${t.parts?`<div class="partslist">🧩 <b>Assemble</b> — bring together: ${t.parts}</div>`:''}
+    <div class="work">
+      <div class="panel target"><div class="lab">🎯 Target — match this</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
+      <div class="codecol"><div class="clab">⌨ Your code — type it, no pasting</div>
+        <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" placeholder="Write your HTML and CSS here..."></textarea>
+        <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run</button><button class="resetb" onclick="reset(${t.i})">Clear</button></div></div>
+      <div class="panel yours"><div class="lab">▶ Your result</div><iframe id="yr${t.i}" scrolling="no" title="your result ${t.i+1}"></iframe></div>
+    </div>
+  </div>`;
+}
+function build(){
+  TILES.forEach((t,i)=>t.i=i);
+  let html='';
+  ['p1','p2','p3'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), m=PROJECT[k];
+    html+=`<div class="projbar ${k}"><span class="badge">${m[0]}</span><span class="desc">${m[1]}</span><span class="count" id="cnt-${k}">0 / ${g.length}</span></div>`;
+    html+=`<div class="tiergroup">`+g.map(tileHTML).join('')+`</div>`; });
+  $('board').innerHTML=html;
+  TILES.forEach(t=>{ const ed=$('ed'+t.i);
+    if(t.starter) ed.value=t.starter;
+    $('tg'+t.i).addEventListener('load',()=>fitSoon('tg'+t.i));
+    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); restoreScroll(); });
+    $('tg'+t.i).srcdoc=wrapDoc(t.target);
+    $('yr'+t.i).srcdoc=wrapDoc(ed.value);
+    ed.addEventListener('input',()=>{ persist(); });
+    ed.addEventListener('paste',e=>{ e.preventDefault(); toast('Type it yourself — pasting is off'); });
+    ed.addEventListener('drop',e=>e.preventDefault());
+  });
+}
+let toT; function toast(msg){ const e=$('toast'); e.textContent=msg; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),1800); }
+function gather(){ return {name:$('sName').value,cls:$('sClass').value,date:$('sDate').value,r1:$('r1').value,r2:$('r2').value,r3:$('r3').value,code:TILES.map(t=>$('ed'+t.i).value)}; }
+function persist(){ try{localStorage.setItem(LSKEY,JSON.stringify(gather()));}catch(e){} }
+function restore(){ let s=null; try{s=JSON.parse(localStorage.getItem(LSKEY));}catch(e){} if(!s)return;
+  $('sName').value=s.name||''; if(s.cls)$('sClass').value=s.cls; $('sDate').value=s.date||'';
+  $('r1').value=s.r1||''; $('r2').value=s.r2||''; $('r3').value=s.r3||'';
+  if(Array.isArray(s.code)) TILES.forEach(t=>{ if(s.code[t.i]!=null){ $('ed'+t.i).value=s.code[t.i]; $('yr'+t.i).srcdoc=wrapDoc(s.code[t.i]); } }); }
+document.addEventListener('input',e=>{ if(['sName','sClass','sDate','r1','r2','r3'].includes(e.target.id))persist(); });
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function attr(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
+function saveWork(){
+  TILES.forEach(t=>updateTile(t)); persist();
+  const g=gather(), nm=(g.name||'student').replace(/[^a-z0-9]+/gi,'-');
+  const tally=k=>{const a=TILES.filter(t=>t.proj===k);return a.filter(t=>t.done).length+'/'+a.length;};
+  let body='';
+  TILES.forEach((t,i)=>{ const has=(g.code[i]||'').trim();
+    body+=`<section><h2>${i+1}. ${t.title} <small style="color:#8a8a8a">(${t.proj.toUpperCase()})</small></h2>`
+      +(has?`<iframe class="r" sandbox srcdoc="${attr(wrapDoc(g.code[i]))}" title="result ${i+1}"></iframe>`:`<div class="r"><em style="color:#999">not attempted</em></div>`)
+      +`<details><summary>my code</summary><pre>${esc(g.code[i])}</pre></details></section>`; });
+  const out=`<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><title>Web Design L2 — ${esc(g.name)}</title>
+<style>body{font-family:Nunito,Segoe UI,Arial,sans-serif;max-width:880px;margin:0 auto;padding:26px;color:#3c3c3c;background:#f7f7f5}
+h1{color:#0d1b2a;margin-bottom:2px} .meta{color:#8a8a8a;margin-bottom:6px}
+.tiers{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:12px 16px;margin:12px 0;font-weight:800}.tiers span{display:inline-block;margin-right:18px}
+section{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:15px 18px;margin:13px 0}
+h2{font-size:16px;margin:0 0 9px} .r{width:100%;height:200px;border:2px dashed #d9d9d9;border-radius:10px;background:#fff;display:block}
+pre{background:#0d1b2a;color:#eafff0;padding:12px;border-radius:10px;overflow:auto;font-size:12.5px;font-family:Consolas,monospace}
+summary{cursor:pointer;color:#1899d6;margin-top:8px} .refl{background:#fffceb;border:2px solid #ffd900;border-radius:14px;padding:14px 16px;margin:14px 0}</style></head>
+<body><h1>Web Design Review L2 — ${esc(g.name)||'(no name)'}</h1>
+<div class="meta">${esc(g.cls)} · ${esc(g.date)}</div>
+<div class="tiers"><span>PROJECT 1 ${tally('p1')}</span><span>PROJECT 2 ${tally('p2')}</span><span>PROJECT 3 ${tally('p3')}</span> &nbsp; → made ${TILES.filter(t=>t.done).length}/${TILES.length}</div>
+<div class="refl"><b>My reflection</b><br>Proudest page: ${esc(g.r1)}<br>Skill I used a lot: ${esc(g.r2)}<br>Want to improve: ${esc(g.r3)}</div>
+${body}</body></html>`;
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/html'}));
+  a.download='WebDesignL2-'+nm+'.html'; document.body.appendChild(a); a.click(); a.remove();
+  $('saveMsg').textContent='Saved! Upload WebDesignL2-'+nm+'.html to Google Classroom.';
+}
+function onProgress(t){ const done=TILES.filter(x=>x.done).length;
+  if(done===TILES.length){ toast('🎉 All three pages built — now hit Save my work!'); confetti(); return; }
+  if(t.final){ toast('🧩 Page assembled — brilliant!'); confetti(); return; }
+  const g=TILES.filter(x=>x.proj===t.proj); if(g.every(x=>x.done)) toast('Whole project done — nice work!'); }
+function confetti(){ const cols=['#1cb0f6','#3a5a40','#ffba08','#ef476f','#13a08e'];
+  for(let i=0;i<28;i++){ const c=document.createElement('div'); c.className='conf';
+    c.style.left=(8+Math.random()*84)+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDelay=(Math.random()*0.35)+'s'; document.body.appendChild(c); setTimeout(()=>c.remove(),2700);} }
+build(); restore(); updateCounts();
+setTimeout(()=>{ready=true;},1000);
+</script>
+</body>
+</html>
