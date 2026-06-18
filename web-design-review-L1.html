@@ -197,9 +197,9 @@ const TILES=[
   target:`<style>body{background-color:#fff3e0;font-family:Arial}</style><h1>Our Menu</h1><p>Wood-fired, every day.</p>`},
 
  {tier:'must',title:'A logo and an order link',
-  spec:'Two things together: an <b>image</b> (file <b>logo.png</b>, alt text <b>our logo</b>) AND a <b>link</b> saying <b>Order online</b> that points to https://www.tomatostreet.com',
+  spec:'Two things together: an <b>image</b> of the logo (use the file <b>pizza.png</b>, alt text <b>our logo</b>) AND a <b>link</b> saying <b>Order online</b> that points to https://www.tomatostreet.com',
   want:['<img','alt','<a','href'], text:['Order online'],
-  target:`<img src="${PIZZA}" alt="our logo" width="120"><br><a href="https://www.tomatostreet.com">Order online</a>`},
+  target:`<img src="pizza.png" alt="our logo" width="130"><br><a href="https://www.tomatostreet.com">Order online</a>`},
 
  {tier:'must',title:'Specials of the week',
   spec:'A specials section: a heading <b>This week</b> and a NUMBERED list of three deals — <b>Margherita $12</b>, <b>Pepperoni $14</b>, <b>Veggie $13</b>.',
@@ -208,7 +208,7 @@ const TILES=[
 
  {tier:'should',title:'The full box model',
   spec:'A menu box (a div) saying <b>Margherita — $12</b> with ALL THREE: <b>padding</b>, a <b>border</b>, and a <b>margin</b> around it.',
-  want:['padding','border','margin'], text:['Margherita'],
+  want:['padding',['border:','border-style','border-width'],'margin'], text:['Margherita'],
   target:`<style>.item{padding:14px;border:2px solid #c4321f;margin:12px;display:inline-block}</style><div class="item">Margherita — $12</div>`},
 
  {tier:'should',title:'A reusable dish class',
@@ -218,12 +218,12 @@ const TILES=[
 
  {tier:'should',title:'Combine selectors',
   spec:'Style <b>h1</b> AND <b>h2</b> in ONE rule so both are <b>basil green</b> AND <b>centred</b>. The headings are <b>Starters</b> and <b>Mains</b>.',
-  want:[',','text-align'], text:['Starters','Mains'],
+  want:[',','color','text-align'], text:['Starters','Mains'],
   target:`<style>h1,h2{color:#3f8a4f;text-align:center}</style><h1>Starters</h1><h2>Mains</h2>`},
 
  {tier:'should',title:'A full menu card',
   spec:'A <b>&lt;div&gt;</b> card holding a heading <b>Margherita</b>, a line <b>Tomato, basil, mozzarella</b> and a price <b>$12</b> — give the card a <b>border</b> AND a <b>background</b> colour.',
-  want:['<div','border','background'], text:['Margherita','mozzarella'],
+  want:['<div',['border:','border-style','border-width'],'background'], text:['Margherita','mozzarella'],
   target:`<style>.card{border:2px solid #c4321f;background:#fffaf0;padding:14px;border-radius:10px;width:210px;display:inline-block}</style><div class="card"><h2 style="margin:0">Margherita</h2><p style="margin:5px 0">Tomato, basil, mozzarella</p><p style="margin:0;color:#c4321f"><strong>$12</strong></p></div>`},
 
  {tier:'should',title:'A link styled as a button',
@@ -231,49 +231,69 @@ const TILES=[
   want:['<a','background','text-decoration'], text:['Order Now'],
   target:`<style>.btn{background:#e8402c;color:#fff;padding:11px 20px;border-radius:10px;text-decoration:none;font-family:Arial}</style><a class="btn" href="#">Order Now</a>`},
 
- {tier:'could',title:'A two-column menu',
-  spec:'Two columns <b>side by side</b>: a <b>Pizzas</b> column (Margherita, Pepperoni) and a <b>Drinks</b> column (Cola, Lemonade) — each is a heading plus a list.',
-  want:[['inline-block','flex']], text:['Pizzas','Drinks','Margherita','Cola'],
-  target:`<style>.col{display:inline-block;width:44%;vertical-align:top;background:#f6e9d4;padding:10px 14px;border-radius:8px}</style><div class="col"><h3>Pizzas</h3><ul><li>Margherita</li><li>Pepperoni</li></ul></div><div class="col"><h3>Drinks</h3><ul><li>Cola</li><li>Lemonade</li></ul></div>`},
+ {tier:'could',title:'A flexbox nav bar',
+  spec:'A real top <b>navigation bar</b> with <b>flexbox</b>: a dark bar holding three links in a row — <b>Home</b>, <b>Menu</b>, <b>Order</b>. Put <b>display:flex</b> on the nav and space the links out.',
+  want:['display:flex','<a'], text:['Home','Menu','Order'],
+  target:`<style>nav{display:flex;gap:22px;justify-content:center;background:#2b2b2b;padding:14px}nav a{color:#fff;text-decoration:none;font-weight:bold}</style><nav><a href="#">Home</a><a href="#">Menu</a><a href="#">Order</a></nav>`},
+
+ {tier:'could',title:'A gradient hero banner',
+  spec:'A hero banner: a big box with a <b>gradient background</b> (use <b>linear-gradient</b>) and white text <b>centred</b> — a big <b>Tomato Street</b> and a line <b>Wood-fired &amp; wonderful</b>.',
+  want:['linear-gradient','text-align'], text:['Tomato Street','wonderful'],
+  target:`<style>.hero{background:linear-gradient(135deg,#e8402c,#ff9600);color:#fff;text-align:center;padding:46px 18px;border-radius:14px}.hero h1{margin:0;font-size:32px}</style><div class="hero"><h1>Tomato Street</h1><p>Wood-fired &amp; wonderful</p></div>`},
+
+ {tier:'could',title:'A menu in a CSS grid',
+  spec:'Three pizza cards <b>side by side</b> with <b>CSS Grid</b>: a container with <b>display:grid</b> and <b>three equal columns</b> (grid-template-columns). The cards are <b>Margherita</b>, <b>Pepperoni</b>, <b>Veggie</b>.',
+  want:['display:grid','grid-template-columns'], text:['Margherita','Pepperoni','Veggie'],
+  target:`<style>.menu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.menu div{background:#f6e9d4;padding:18px;border-radius:10px;text-align:center;font-weight:bold}</style><div class="menu"><div>Margherita</div><div>Pepperoni</div><div>Veggie</div></div>`},
+
+ {tier:'could',title:'A "NEW!" badge (positioning)',
+  spec:'A pizza card with a <b>"NEW!"</b> badge pinned to its <b>top-right corner</b>. Make the card <b>position:relative</b> and the badge <b>position:absolute</b>.',
+  want:['position:relative','position:absolute'], text:['NEW','Hawaiian'],
+  target:`<style>.card{position:relative;background:#fffaf0;border:2px solid #c4321f;border-radius:12px;padding:26px;width:190px;display:inline-block}.tag{position:absolute;top:-10px;right:-10px;background:#e8402c;color:#fff;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:13px}</style><div class="card"><span class="tag">NEW!</span><h3 style="margin:0">Hawaiian</h3><p style="margin:6px 0 0">Ham &amp; pineapple</p></div>`},
 
  {tier:'could',title:'A smooth hover button',
-  spec:'A button <b>Order now</b> that on <b>hover</b> changes colour AND grows a little — and make it <b>smooth</b> with a <b>transition</b>.',
+  spec:'A button <b>Order now</b> that on <b>hover</b> changes colour AND grows a little — make the change <b>smooth</b> with a <b>transition</b>.',
   want:[':hover','transition'], text:['Order now'],
-  target:`<style>.order{padding:12px 24px;border:none;border-radius:14px;background:#ffc233;font-weight:bold;transition:0.2s}.order:hover{background:#e8402c;color:#fff;transform:scale(1.06)}</style><button class="order">Order now</button>`},
+  target:`<style>.order{padding:12px 24px;border:none;border-radius:14px;background:#ffc233;font-weight:bold;cursor:pointer;transition:0.2s}.order:hover{background:#e8402c;color:#fff;transform:scale(1.08)}</style><button class="order">Order now</button>`},
 
- {tier:'could',title:'A polished special card',
+ {tier:'could',title:'A floating special card',
   spec:'A featured card for <b>Pepperoni — $14, our best seller</b>: a class with a background, padding, <b>rounded corners</b> AND a <b>box-shadow</b> so it floats off the page.',
   want:['border-radius','box-shadow','padding'], text:['Pepperoni','best seller'],
-  target:`<style>.feat{background:#fffaf0;padding:22px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,0.15);width:210px;display:inline-block;font-family:Arial}.feat h2{margin:0;color:#e8402c}</style><div class="feat"><h2>Pepperoni</h2><p>$14 — our best seller</p></div>`},
+  target:`<style>.feat{background:#fffaf0;padding:22px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,0.15);width:220px;display:inline-block;font-family:Arial}.feat h2{margin:0;color:#e8402c}</style><div class="feat"><h2>Pepperoni</h2><p>$14 — our best seller</p></div>`},
 
  {tier:'capstone',title:'Build the whole Tomato Street homepage',
-  spec:'The big one! Recreate this <b>entire web page</b>: a warm background, a heading, a welcome paragraph, a <b>toppings list</b>, a <b>specials table</b> (with prices), and the <b>pizza picture</b>. Match it as closely as you can — colours too.',
-  want:['<ul','<table','<img'], text:['Tomato Street'],
-  hint:'Work top to bottom: <code>&lt;style&gt;</code> for colours, then <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>, a <code>&lt;table&gt;</code> and an <code>&lt;img&gt;</code>. Use the skills from above!',
-  target:`<style>body{background:#fff3e0;font-family:Arial;color:#3c3c3c}h1{color:#e8402c}th,td{border:1px solid #c4321f;padding:4px 8px}</style>`
-    +`<h1>Tomato Street Pizza</h1><p>Wood-fired pizza, made fresh since 2005.</p>`
-    +`<h2>Toppings</h2><ul><li>Pepperoni</li><li>Mushroom</li><li>Basil</li></ul>`
+  spec:'The big one — put EVERYTHING together! Build a real homepage: a <b>styled page</b> (warm background + Arial), a <b>flexbox nav bar</b> (Home · Menu · Order), a <b>heading</b> + welcome line, a <b>pizza list</b>, a <b>specials table with prices</b>, the <b>pizza picture</b> (pizza.png), and a dark <b>footer</b>.',
+  want:['<style','display:flex','<h1','<ul','<table','<img',['<footer','footer{']], text:['Tomato Street','$12','Home'],
+  hint:'Top to bottom: a <code>&lt;style&gt;</code> block, a <code>&lt;nav&gt;</code> with <code>display:flex</code>, an <code>&lt;h1&gt;</code> + <code>&lt;p&gt;</code>, a <code>&lt;ul&gt;</code>, a <code>&lt;table&gt;</code>, an <code>&lt;img src="pizza.png"&gt;</code>, and a <code>&lt;footer&gt;</code>.',
+  target:`<style>body{background:#fff3e0;font-family:Arial;color:#3c3c3c;margin:0}nav{display:flex;gap:18px;justify-content:center;background:#2b2b2b;padding:13px}nav a{color:#fff;text-decoration:none;font-weight:bold}h1{color:#e8402c;text-align:center}.box{text-align:center;padding:14px}table{margin:8px auto;border-collapse:collapse}th,td{border:1px solid #c4321f;padding:6px 16px}footer{background:#2b2b2b;color:#fff;text-align:center;padding:14px}</style>`
+    +`<nav><a href="#">Home</a><a href="#">Menu</a><a href="#">Order</a></nav>`
+    +`<div class="box"><h1>Tomato Street Pizza</h1><p>Wood-fired pizza, made fresh since 2005.</p>`
+    +`<h2>Our Pizzas</h2><ul style="list-style:none;padding:0"><li>Margherita</li><li>Pepperoni</li><li>Veggie</li></ul>`
     +`<h2>This week's specials</h2><table><tr><th>Pizza</th><th>Price</th></tr><tr><td>Margherita</td><td>$12</td></tr><tr><td>Pepperoni</td><td>$14</td></tr></table>`
-    +`<p><img src="${PIZZA}" alt="our pizza" width="160"></p>`,
+    +`<p><img src="pizza.png" alt="our pizza" width="150"></p></div>`
+    +`<footer>© Tomato Street Pizza · Parramatta</footer>`,
   starter:`<style>
-  body { /* warm background, font, colour */ }
-  h1 { /* tomato red */ }
+  body { /* warm background + Arial */ }
+  nav { display:flex; /* dark bar; space the links out */ }
+  h1 { /* tomato red, centred */ }
 </style>
 
-<!-- heading, paragraph, toppings list, specials table, pizza image -->
+<nav> ...Home / Menu / Order... </nav>
+<!-- heading, welcome line, pizza list, specials table,
+     <img src="pizza.png">, and a <footer> -->
 `}
 ];
 
 /* ===== engine ===== */
 const TIER={must:['MUST DO','The basics — everyone builds these','must'],
             should:['SHOULD DO','Push on — boxes, classes & selectors','should'],
-            could:['COULD DO','Stretch — layout, hover & cards','could'],
+            could:['COULD DO','Stretch — flexbox, grid, gradients & position','could'],
             capstone:['CAPSTONE','Build the whole homepage','capstone']};
-const LSKEY='wdr-l1-9immxa-v2';
+const LSKEY='wdr-l1-9immxa-v3';
 const $=id=>document.getElementById(id);
 const norm=s=>(s||'').toLowerCase().replace(/\s+/g,'');
 const reqMet=(req,v)=>Array.isArray(req)?req.some(x=>v.includes(norm(x))):v.includes(norm(req));
-function wrapDoc(code){return '<!doctype html><meta charset="utf-8"><style>html,body{margin:0}body{font-family:Nunito,Segoe UI,Arial,sans-serif;padding:12px;color:#3c3c3c;display:flow-root}</style>'+(code||'');}
+function wrapDoc(code){return '<!doctype html><meta charset="utf-8"><base href="https://yunshugao.github.io/year9-computing/"><style>html,body{margin:0}body{font-family:Nunito,Segoe UI,Arial,sans-serif;padding:12px;color:#3c3c3c;display:flow-root}</style>'+(code||'');}
 let createdSaved={}; let ready=false;
 function codeOf(i){ return $('ed'+i).value.replace(/\/\*[\s\S]*?\*\//g,'').replace(/<!--[\s\S]*?-->/g,''); }
 function resultText(i){ try{const d=$('yr'+i).contentDocument; return norm(d.body?d.body.innerText||d.body.textContent:'');}catch(e){return '';} }
@@ -301,8 +321,12 @@ function updateCounts(){
     if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length;
   });
 }
-function reset(i){ const t=TILES[i]; $('ed'+i).value=t.starter||''; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
-function run(i){ $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
+let pendScroll=null;
+function restoreScroll(){ if(pendScroll==null)return; const y=pendScroll;
+  window.scrollTo(0,y); setTimeout(()=>window.scrollTo(0,y),180); setTimeout(()=>{window.scrollTo(0,y);pendScroll=null;},520); }
+function render(i){ pendScroll=window.pageYOffset||document.documentElement.scrollTop||0; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
+function reset(i){ $('ed'+i).value=TILES[i].starter||''; render(i); }
+function run(i){ render(i); }
 function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d)return; const b=d.body,e=d.documentElement;
   const h=Math.max(b?b.scrollHeight:0, e?e.scrollHeight:0, b?b.offsetHeight:0, 120);
   f.style.height=Math.max(90,Math.min(2400,h+18))+'px'; }catch(_){} }
@@ -335,7 +359,7 @@ function build(){
     const ed=$('ed'+t.i);
     if(t.starter) ed.value=t.starter;
     $('tg'+t.i).addEventListener('load',()=>fitSoon('tg'+t.i));
-    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); });
+    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); restoreScroll(); });
     $('tg'+t.i).srcdoc=wrapDoc(t.target);
     $('yr'+t.i).srcdoc=wrapDoc(ed.value);
     ed.addEventListener('input',()=>{ persist(); });
@@ -361,16 +385,18 @@ function saveWork(){
   const g=gather(), nm=(g.name||'student').replace(/[^a-z0-9]+/gi,'-');
   const tally=k=>{const a=TILES.filter(t=>t.tier===k);return a.filter(t=>t.done).length+'/'+a.length;};
   let body='';
-  TILES.forEach((t,i)=>{ body+=`<section><h2>${i+1}. ${t.title} <small style="color:#8a8a8a">(${t.tier.toUpperCase()})</small></h2>
-    <div class="r">${g.code[i]||'<em style=color:#999>not attempted</em>'}</div>
-    <details><summary>my code</summary><pre>${esc(g.code[i])}</pre></details></section>`; });
+  const attr=s=>(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  TILES.forEach((t,i)=>{ const has=(g.code[i]||'').trim();
+    body+=`<section><h2>${i+1}. ${t.title} <small style="color:#8a8a8a">(${t.tier.toUpperCase()})</small></h2>`
+      +(has?`<iframe class="r" sandbox srcdoc="${attr(wrapDoc(g.code[i]))}" title="result ${i+1}"></iframe>`:`<div class="r"><em style="color:#999">not attempted</em></div>`)
+      +`<details><summary>my code</summary><pre>${esc(g.code[i])}</pre></details></section>`; });
   const out=`<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><title>Tomato Street Pizza — ${esc(g.name)}</title>
 <style>body{font-family:Nunito,Segoe UI,Arial,sans-serif;max-width:860px;margin:0 auto;padding:26px;color:#3c3c3c;background:#f7f7f5}
 h1{color:#e8402c;margin-bottom:2px} .meta{color:#8a8a8a;margin-bottom:6px}
 .tiers{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:12px 16px;margin:12px 0;font-weight:800}
 .tiers span{display:inline-block;margin-right:18px}
 section{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:15px 18px;margin:13px 0}
-h2{font-size:16px;margin:0 0 9px} .r{border:2px dashed #d9d9d9;border-radius:10px;padding:10px;background:#fff}
+h2{font-size:16px;margin:0 0 9px} .r{width:100%;height:170px;border:2px dashed #d9d9d9;border-radius:10px;background:#fff;display:block}
 pre{background:#3c3c3c;color:#eafff0;padding:12px;border-radius:10px;overflow:auto;font-size:12.5px;font-family:Consolas,monospace}
 summary{cursor:pointer;color:#1899d6;margin-top:8px} .refl{background:#fffceb;border:2px solid #ffd900;border-radius:14px;padding:14px 16px;margin:14px 0}</style></head>
 <body><h1>Tomato Street Pizza — Web Design L1</h1>
