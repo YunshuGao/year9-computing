@@ -332,9 +332,10 @@ function restoreScroll(){ if(pendScroll==null)return; const y=pendScroll;
 function render(i){ pendScroll=window.pageYOffset||document.documentElement.scrollTop||0; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
 function reset(i){ $('ed'+i).value=TILES[i].starter||''; render(i); }
 function run(i){ render(i); }
-function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d)return; const b=d.body,e=d.documentElement;
-  const h=Math.max(b?b.scrollHeight:0, e?e.scrollHeight:0, b?b.offsetHeight:0, 120);
-  f.style.height=Math.max(90,Math.min(2400,h+18))+'px'; }catch(_){} }
+function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d||!d.body)return;
+  f.style.height='0';                                  // collapse first so the measure is content-only (no viewport feedback loop)
+  const h=Math.max(d.body.scrollHeight, d.body.offsetHeight, 90);
+  f.style.height=Math.max(90,Math.min(2400,h+16))+'px'; }catch(_){} }
 function fitSoon(id){ fitFrame(id); setTimeout(()=>fitFrame(id),160); setTimeout(()=>fitFrame(id),460); }
 function tileHTML(t){
   return `<div class="tile ${t.tier}" id="tile${t.i}">
