@@ -62,19 +62,19 @@
   .badge2{margin-left:auto;flex:none;font-size:12.5px;font-weight:800;color:var(--muted);background:#f1f1ef;border-radius:20px;padding:5px 14px;white-space:nowrap}
   .tile.done .badge2{color:#fff;background:var(--green)}
 
-  .work{display:grid;grid-template-columns:0.95fr 1.5fr 1.05fr;gap:12px;padding:6px 18px 14px;align-items:start}
-  .work>*{min-width:0}
-  @media(max-width:880px){.work{grid-template-columns:1fr}}
+  .preview{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:6px 18px 0;align-items:start}
+  .preview>*{min-width:0}
+  @media(max-width:760px){.preview{grid-template-columns:1fr}}
   .panel{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
   .panel .lab{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:7px 13px;color:#fff}
   .panel.target .lab{background:#4b4b4b} .panel.yours .lab{background:var(--blue)}
   .panel iframe{width:100%;min-height:120px;border:none;display:block;background:#fff}
   .panel.target{user-select:none} .panel.target iframe{pointer-events:none}
 
-  .codecol{display:flex;flex-direction:column}
+  .codewrap{padding:12px 18px 14px}
   .clab{font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--green);padding:7px 13px;border-radius:16px 16px 0 0}
-  textarea{width:100%;border:2px solid var(--green);border-top:none;border-radius:0 0 16px 16px;resize:vertical;min-height:230px;padding:11px 13px;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.55;color:#3c3c3c;outline:none;background:#fff;display:block}
-  .tile.capstone textarea{min-height:300px}
+  textarea{width:100%;border:2px solid var(--green);border-top:none;border-radius:0 0 16px 16px;resize:vertical;min-height:200px;padding:11px 13px;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.55;color:#3c3c3c;outline:none;background:#fff;display:block}
+  .tile.capstone textarea{min-height:260px}
   textarea:focus{border-color:var(--green-d)}
   .hintbar{padding:0 18px 14px;display:flex;align-items:center;gap:10px}
   .hint{font-size:13px;color:var(--muted);font-weight:700;background:#f7f7f5;border:2px solid var(--line);border-radius:14px;padding:9px 13px;flex:1}
@@ -150,7 +150,7 @@
       <div><label>One thing I want to get better at is…</label><input id="r3" placeholder="type here"></div>
     </div>
   </div>
-  <footer>Tomato Street Pizza · Web Design Review &amp; Practice · Lesson 1 · 9IMMXA · <b>build v4</b> · auto-saves in this browser</footer>
+  <footer>Tomato Street Pizza · Web Design Review &amp; Practice · Lesson 1 · 9IMMXA · <b>build v5</b> · auto-saves in this browser</footer>
 </div>
 
 <div class="savebar">
@@ -326,15 +326,19 @@ function updateCounts(){
     if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length;
   });
 }
-let pendScroll=null;
-function restoreScroll(){ if(pendScroll==null)return; const y=pendScroll;
-  window.scrollTo(0,y); setTimeout(()=>window.scrollTo(0,y),180); setTimeout(()=>{window.scrollTo(0,y);pendScroll=null;},520); }
-function render(i){ pendScroll=window.pageYOffset||document.documentElement.scrollTop||0; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
+/* Scroll stability: pin the tile's header to its viewport position and re-assert through every
+   async reflow (image/font load) so Run never makes the page jump; anchoring to an element beats
+   restoring an absolute scrollY because the browser's own scroll-anchoring fights back on growth. */
+let runAnchor=null;
+function anchorNow(){ if(!runAnchor)return; const dy=runAnchor.el.getBoundingClientRect().top-runAnchor.top; if(Math.abs(dy)>0.5) window.scrollBy(0,dy); }
+function startAnchor(i){ const el=$('tile'+i); if(el) runAnchor={el:el, top:el.getBoundingClientRect().top, until:Date.now()+1700}; }
+function render(i){ startAnchor(i); $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist();
+  requestAnimationFrame(anchorNow); requestAnimationFrame(()=>requestAnimationFrame(anchorNow));
+  setTimeout(anchorNow,90); setTimeout(anchorNow,260); setTimeout(anchorNow,560); }
 function reset(i){ $('ed'+i).value=TILES[i].starter||''; render(i); }
 function run(i){ render(i); }
 function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d||!d.body)return;
-  f.style.height='0';                                  // collapse first so the measure is content-only (no viewport feedback loop)
-  const h=Math.max(d.body.scrollHeight, d.body.offsetHeight, 90);
+  const h=Math.max(d.body.scrollHeight, d.body.offsetHeight, 90);   // body.scrollHeight is content-based (not viewport-clamped) so no growth loop; no collapse = no scroll oscillation
   f.style.height=Math.max(90,Math.min(2400,h+16))+'px'; }catch(_){} }
 function fitSoon(id){ fitFrame(id); setTimeout(()=>fitFrame(id),160); setTimeout(()=>fitFrame(id),460); }
 function tileHTML(t){
@@ -342,13 +346,13 @@ function tileHTML(t){
     <div class="th"><span class="num">${t.i+1}</span>
       <div><div class="ttl">${t.title}</div><div class="spec">${t.spec}</div></div>
       <span class="badge2" id="badge${t.i}">not yet</span></div>
-    <div class="work">
+    <div class="preview">
       <div class="panel target"><div class="lab">🎯 Target — match this</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
-      <div class="codecol"><div class="clab">⌨ Your code — type it, no pasting</div>
-        <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" placeholder="Write your HTML and CSS here..."></textarea>
-        <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run</button><button class="resetb" onclick="reset(${t.i})">Clear</button></div></div>
       <div class="panel yours"><div class="lab">▶ Your result</div><iframe id="yr${t.i}" scrolling="no" title="your result ${t.i+1}"></iframe></div>
     </div>
+    <div class="codewrap"><div class="clab">⌨ Your code — type it, no pasting</div>
+      <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" placeholder="Write your HTML and CSS here..."></textarea>
+      <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run</button><button class="resetb" onclick="reset(${t.i})">Clear</button></div></div>
   </div>`;
 }
 function build(){
@@ -364,8 +368,11 @@ function build(){
   TILES.forEach(t=>{
     const ed=$('ed'+t.i);
     if(t.starter) ed.value=t.starter;
-    $('tg'+t.i).addEventListener('load',()=>fitSoon('tg'+t.i));
-    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); restoreScroll(); });
+    let obTg=null, obYr=null;
+    $('tg'+t.i).addEventListener('load',()=>{ fitSoon('tg'+t.i);
+      try{ if(obTg)obTg.disconnect(); obTg=new ResizeObserver(()=>fitFrame('tg'+t.i)); obTg.observe($('tg'+t.i).contentDocument.body); }catch(_){} });
+    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); anchorNow();
+      try{ if(obYr)obYr.disconnect(); obYr=new ResizeObserver(()=>{ fitFrame('yr'+t.i); if(runAnchor&&Date.now()<runAnchor.until) anchorNow(); }); obYr.observe($('yr'+t.i).contentDocument.body); }catch(_){} });
     $('tg'+t.i).srcdoc=wrapDoc(t.target);
     $('yr'+t.i).srcdoc=wrapDoc(ed.value);
     ed.addEventListener('input',()=>{ persist(); });
