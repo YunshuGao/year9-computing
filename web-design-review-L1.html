@@ -18,7 +18,7 @@
   *{box-sizing:border-box}
   body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px;font-weight:600;-webkit-font-smoothing:antialiased}
   code{font-family:var(--mono);font-weight:400}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px 90px}
 
   header{background:var(--tomato);color:#fff;border-bottom:5px solid var(--tomato-d)}
   header .wrap{padding:18px 18px 16px}
@@ -62,20 +62,20 @@
   .badge2{margin-left:auto;flex:none;font-size:12.5px;font-weight:800;color:var(--muted);background:#f1f1ef;border-radius:20px;padding:5px 14px;white-space:nowrap}
   .tile.done .badge2{color:#fff;background:var(--green)}
 
-  .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 18px 10px}
-  @media(max-width:680px){.compare{grid-template-columns:1fr}}
+  .work{display:grid;grid-template-columns:0.95fr 1.5fr 1.05fr;gap:12px;padding:6px 18px 14px;align-items:start}
+  .work>*{min-width:0}
+  @media(max-width:880px){.work{grid-template-columns:1fr}}
   .panel{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
   .panel .lab{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:7px 13px;color:#fff}
   .panel.target .lab{background:#4b4b4b} .panel.yours .lab{background:var(--blue)}
   .panel iframe{width:100%;min-height:120px;border:none;display:block;background:#fff}
   .panel.target{user-select:none} .panel.target iframe{pointer-events:none}
 
-  .edrow{padding:0 18px 14px}
-  .edlab{font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:2px 2px 6px;display:flex;align-items:center;gap:10px}
-  .edlab .lock{font-weight:700;text-transform:none;letter-spacing:0;color:#b0b0b0;flex:1}
-  textarea{width:100%;border:2px solid var(--line);border-radius:14px;resize:vertical;min-height:120px;padding:11px 14px;font-family:var(--mono);font-size:13.5px;font-weight:400;line-height:1.6;color:#3c3c3c;outline:none;background:#fff}
-  .tile.capstone textarea{min-height:200px}
-  textarea:focus{border-color:var(--blue)}
+  .codecol{display:flex;flex-direction:column}
+  .clab{font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--green);padding:7px 13px;border-radius:16px 16px 0 0}
+  textarea{width:100%;border:2px solid var(--green);border-top:none;border-radius:0 0 16px 16px;resize:vertical;min-height:230px;padding:11px 13px;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.55;color:#3c3c3c;outline:none;background:#fff;display:block}
+  .tile.capstone textarea{min-height:300px}
+  textarea:focus{border-color:var(--green-d)}
   .hintbar{padding:0 18px 14px;display:flex;align-items:center;gap:10px}
   .hint{font-size:13px;color:var(--muted);font-weight:700;background:#f7f7f5;border:2px solid var(--line);border-radius:14px;padding:9px 13px;flex:1}
   .hint b{color:var(--ink)} .hint code{background:#eaf6ff;color:#1899d6;padding:1px 6px;border-radius:6px;font-size:12.5px;font-weight:700;user-select:none}
@@ -312,13 +312,13 @@ function tileHTML(t){
     <div class="th"><span class="num">${t.i+1}</span>
       <div><div class="ttl">${t.title}</div><div class="spec">${t.spec}</div></div>
       <span class="badge2" id="badge${t.i}">not yet</span></div>
-    <div class="compare">
-      <div class="panel target"><div class="lab">🎯 Target — make yours match this</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
+    <div class="work">
+      <div class="panel target"><div class="lab">🎯 Target — match this</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
+      <div class="codecol"><div class="clab">⌨ Your code — type it, no pasting</div>
+        <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" placeholder="Write your HTML and CSS here..."></textarea>
+        <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run</button><button class="resetb" onclick="reset(${t.i})">Clear</button></div></div>
       <div class="panel yours"><div class="lab">▶ Your result</div><iframe id="yr${t.i}" scrolling="no" title="your result ${t.i+1}"></iframe></div>
     </div>
-    <div class="edrow"><div class="edlab">Your code <span class="lock">— type it yourself, pasting is off</span><button class="resetb" onclick="reset(${t.i})">Clear</button></div>
-      <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" placeholder="Write your HTML and CSS here..."></textarea>
-      <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run my code</button><span class="runhint">Then compare <b>Your result</b> with the <b>Target</b> — fix whatever looks different.</span></div></div>
   </div>`;
 }
 function build(){
@@ -338,7 +338,7 @@ function build(){
     $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); });
     $('tg'+t.i).srcdoc=wrapDoc(t.target);
     $('yr'+t.i).srcdoc=wrapDoc(ed.value);
-    ed.addEventListener('input',()=>{ $('yr'+t.i).srcdoc=wrapDoc(ed.value); persist(); });
+    ed.addEventListener('input',()=>{ persist(); });
     ed.addEventListener('paste',e=>{ e.preventDefault(); toast('Type it yourself — pasting is off'); });
     ed.addEventListener('drop',e=>e.preventDefault());
   });
