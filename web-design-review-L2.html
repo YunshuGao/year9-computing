@@ -57,17 +57,17 @@
   .badge2{margin-left:auto;flex:none;font-size:12.5px;font-weight:800;color:var(--muted);background:#f1f1ef;border-radius:20px;padding:5px 14px;white-space:nowrap}
   .tile.done .badge2{color:#fff;background:var(--teal)}
 
-  .work{display:grid;grid-template-columns:0.95fr 1.5fr 1.05fr;gap:12px;padding:6px 18px 14px;align-items:start}
-  .work>*{min-width:0} @media(max-width:880px){.work{grid-template-columns:1fr}}
+  .preview{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:6px 18px 0;align-items:start}
+  .preview>*{min-width:0} @media(max-width:760px){.preview{grid-template-columns:1fr}}
   .panel{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
   .panel .lab{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:7px 13px;color:#fff}
   .panel.target .lab{background:#4b4b4b} .panel.yours .lab{background:var(--p1)}
   .panel iframe{width:100%;min-height:120px;border:none;display:block;background:#fff}
   .panel.target{user-select:none} .panel.target iframe{pointer-events:none}
-  .codecol{display:flex;flex-direction:column}
+  .codewrap{padding:12px 18px 14px}
   .clab{font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--teal);padding:7px 13px;border-radius:16px 16px 0 0}
-  textarea{width:100%;border:2px solid var(--teal);border-top:none;border-radius:0 0 16px 16px;resize:vertical;min-height:240px;padding:11px 13px;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.55;color:#3c3c3c;outline:none;background:#fff;display:block}
-  .tile.final textarea{min-height:330px}
+  textarea{width:100%;border:2px solid var(--teal);border-top:none;border-radius:0 0 16px 16px;resize:vertical;min-height:200px;padding:11px 13px;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.55;color:#3c3c3c;outline:none;background:#fff;display:block}
+  .tile.final textarea{min-height:260px}
   textarea:focus{border-color:var(--teal-d)}
   .runrow{display:flex;align-items:center;gap:12px;margin-top:11px;flex-wrap:wrap}
   .runb{background:var(--p1);color:#fff;border:none;border-bottom:4px solid var(--p1d);border-radius:14px;padding:11px 22px;font-size:14px;font-weight:900;letter-spacing:.4px;cursor:pointer;font-family:var(--font)}
@@ -272,15 +272,20 @@ function updateTile(t){ const was=t.done, ok=matched(t);
 function updateCounts(){ const done=TILES.filter(t=>t.done).length;
   $('ringn').textContent=done+'/'+TILES.length; $('pfill').style.width=(done/TILES.length*100)+'%';
   ['p1','p2','p3'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), c=$('cnt-'+k); if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length; }); }
-let pendScroll=null;
-function restoreScroll(){ if(pendScroll==null)return; const y=pendScroll; window.scrollTo(0,y);
-  setTimeout(()=>window.scrollTo(0,y),180); setTimeout(()=>{window.scrollTo(0,y);pendScroll=null;},520); }
-function render(i){ pendScroll=window.pageYOffset||document.documentElement.scrollTop||0; $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist(); }
+/* Scroll stability: pin the tile's header to its viewport position and re-assert through
+   every async reflow (image loads from Pages, font swaps) so Run never makes the page jump.
+   Anchoring to an element beats restoring an absolute scrollY because the browser's own
+   scroll-anchoring fights back on each growth — we just keep correcting it back. */
+let runAnchor=null;
+function anchorNow(){ if(!runAnchor)return; const dy=runAnchor.el.getBoundingClientRect().top-runAnchor.top; if(Math.abs(dy)>0.5) window.scrollBy(0,dy); }
+function startAnchor(i){ const el=$('tile'+i); if(el) runAnchor={el:el, top:el.getBoundingClientRect().top, until:Date.now()+1700}; }
+function render(i){ startAnchor(i); $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist();
+  requestAnimationFrame(anchorNow); requestAnimationFrame(()=>requestAnimationFrame(anchorNow));
+  setTimeout(anchorNow,90); setTimeout(anchorNow,260); setTimeout(anchorNow,560); }
 function reset(i){ $('ed'+i).value=TILES[i].starter||''; render(i); }
 function run(i){ render(i); }
 function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d||!d.body)return;
-  f.style.height='0';
-  const h=Math.max(d.body.scrollHeight, d.body.offsetHeight, 90);
+  const h=Math.max(d.body.scrollHeight, d.body.offsetHeight, 90);   /* body.scrollHeight is content-based (not viewport-clamped) so no growth loop, and no collapse = no scroll oscillation */
   f.style.height=Math.max(90,Math.min(2400,h+16))+'px'; }catch(_){} }
 function fitSoon(id){ fitFrame(id); setTimeout(()=>fitFrame(id),160); setTimeout(()=>fitFrame(id),460); }
 function tileHTML(t){
@@ -289,13 +294,13 @@ function tileHTML(t){
       <div><div class="ttl">${t.title}</div><div class="spec">${t.spec}</div></div>
       <span class="badge2" id="badge${t.i}">not yet</span></div>
     ${t.parts?`<div class="partslist">🧩 <b>Assemble</b> — bring together: ${t.parts}</div>`:''}
-    <div class="work">
-      <div class="panel target"><div class="lab">🎯 Target — match this</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
-      <div class="codecol"><div class="clab">⌨ Your code — type it, no pasting</div>
-        <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" placeholder="Write your HTML and CSS here..."></textarea>
-        <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run</button><button class="resetb" onclick="reset(${t.i})">Clear</button></div></div>
+    <div class="preview">
+      <div class="panel target"><div class="lab">🎯 Target — the page to match</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
       <div class="panel yours"><div class="lab">▶ Your result</div><iframe id="yr${t.i}" scrolling="no" title="your result ${t.i+1}"></iframe></div>
     </div>
+    <div class="codewrap"><div class="clab">⌨ Your code — type it, no pasting</div>
+      <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" placeholder="Write your HTML and CSS here..."></textarea>
+      <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run</button><button class="resetb" onclick="reset(${t.i})">Clear</button></div></div>
   </div>`;
 }
 function build(){
@@ -307,8 +312,11 @@ function build(){
   $('board').innerHTML=html;
   TILES.forEach(t=>{ const ed=$('ed'+t.i);
     if(t.starter) ed.value=t.starter;
-    $('tg'+t.i).addEventListener('load',()=>fitSoon('tg'+t.i));
-    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); restoreScroll(); });
+    let obTg=null, obYr=null;
+    $('tg'+t.i).addEventListener('load',()=>{ fitSoon('tg'+t.i);
+      try{ if(obTg)obTg.disconnect(); obTg=new ResizeObserver(()=>fitFrame('tg'+t.i)); obTg.observe($('tg'+t.i).contentDocument.body); }catch(_){} });
+    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); anchorNow();
+      try{ if(obYr)obYr.disconnect(); obYr=new ResizeObserver(()=>{ fitFrame('yr'+t.i); if(runAnchor&&Date.now()<runAnchor.until) anchorNow(); }); obYr.observe($('yr'+t.i).contentDocument.body); }catch(_){} });
     $('tg'+t.i).srcdoc=wrapDoc(t.target);
     $('yr'+t.i).srcdoc=wrapDoc(ed.value);
     ed.addEventListener('input',()=>{ persist(); });
