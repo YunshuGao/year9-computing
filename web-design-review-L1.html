@@ -120,7 +120,7 @@
         <h1>Tomato Street Pizza</h1>
         <div class="sub">9IMMXA · build the pizzeria's website — recreate each target with your own code</div>
       </div>
-      <div class="ringwrap"><b id="ringn">0/16</b><span>made</span></div>
+      <div class="ringwrap"><b id="ringn">0/20</b><span>made</span></div>
     </div>
     <div class="pbar"><div class="pfill" id="pfill"></div></div>
     <div class="who">
@@ -171,40 +171,45 @@ const PIZZA="data:image/svg+xml;utf8,"+encodeURIComponent(
 
 /* ===== TILES — recreate the TARGET (Tomato Street Pizza). want=technique tokens; text=words in YOUR result ===== */
 const TILES=[
- {tier:'must',title:'The page header',
-  spec:'The site header: a big heading <b>Tomato Street Pizza</b>, a smaller heading <b>Wood-fired since 2005</b>, and a paragraph <b>The favourite pizza in Parramatta.</b>',
-  want:['<h1','<h2','<p'], text:['Tomato Street Pizza','Wood-fired since 2005','favourite pizza in Parramatta'],
-  target:`<h1>Tomato Street Pizza</h1><h2>Wood-fired since 2005</h2><p>The favourite pizza in Parramatta.</p>`},
+ {tier:'must',title:'A styled page header',
+  spec:'A real site header: make the big heading <b>Tomato Street Pizza</b> <b>tomato red</b> (a style rule), then a smaller heading <b>Wood-fired since 2005</b>, a paragraph <b>The favourite pizza in Parramatta.</b>, and a line across the page (<b>&lt;hr&gt;</b>).',
+  want:['<style','color','<h1','<h2','<p','<hr'], text:['Tomato Street Pizza','Wood-fired since 2005','favourite pizza in Parramatta'],
+  target:`<style>h1{color:#e8402c}</style><h1>Tomato Street Pizza</h1><h2>Wood-fired since 2005</h2><p>The favourite pizza in Parramatta.</p><hr>`},
 
  {tier:'must',title:'The pizza menu',
-  spec:'A menu section: a heading <b>Our Pizzas</b> and a bullet list of FOUR — <b>Margherita</b>, <b>Pepperoni</b>, <b>Veggie</b>, <b>Hawaiian</b>.',
-  want:['<h2','<ul','<li'], text:['Our Pizzas','Margherita','Pepperoni','Veggie','Hawaiian'],
-  target:`<h2>Our Pizzas</h2><ul><li>Margherita</li><li>Pepperoni</li><li>Veggie</li><li>Hawaiian</li></ul>`},
+  spec:'A menu section: a heading <b>Our Pizzas</b>, an intro line, and a bullet list of FIVE — <b>Margherita</b>, <b>Pepperoni</b>, <b>Veggie</b>, <b>Hawaiian</b>, <b>Supreme</b>.',
+  want:['<h2','<p','<ul','<li'], text:['Our Pizzas','Margherita','Pepperoni','Veggie','Hawaiian','Supreme'],
+  target:`<h2>Our Pizzas</h2><p>Hand-stretched and wood-fired, every day.</p><ul><li>Margherita</li><li>Pepperoni</li><li>Veggie</li><li>Hawaiian</li><li>Supreme</li></ul>`},
 
  {tier:'must',title:'A formatted intro',
-  spec:'A paragraph <b>Our dough is fresh and baked daily.</b> with <b>fresh</b> in bold and <b>daily</b> in italic, then a line break and a second line <b>Come and taste it!</b>',
-  want:['<strong','<em','<br'], text:['fresh','daily','Come and taste it'],
-  target:`<p>Our dough is <strong>fresh</strong> and baked <em>daily</em>.<br>Come and taste it!</p>`},
+  spec:'A paragraph with THREE kinds of formatting: <b>fresh</b> in bold, <b>daily</b> in italic, <b>award-winning</b> underlined (&lt;u&gt;), then a line break and a second line <b>Come and taste it!</b>',
+  want:['<strong','<em','<u','<br'], text:['fresh','daily','award','Come and taste it'],
+  target:`<p>Our dough is <strong>fresh</strong>, baked <em>daily</em>, and <u>award-winning</u>.<br>Come and taste it!</p>`},
 
- {tier:'must',title:'A coloured, centred heading',
-  spec:'A heading <b>Welcome!</b> that is BOTH <b>tomato red</b> AND <b>centred</b> on the page (two CSS rules on h1).',
-  want:['<style','color','text-align'], text:['Welcome'],
-  target:`<style>h1{color:#e8402c;text-align:center}</style><h1>Welcome!</h1>`},
+ {tier:'must',title:'A coloured, centred, big heading',
+  spec:'A heading <b>Welcome to Tomato Street</b> with THREE CSS rules on the h1: <b>tomato red</b>, <b>centred</b>, and a <b>bigger font-size</b>.',
+  want:['<style','color','text-align','font-size'], text:['Welcome to Tomato Street'],
+  target:`<style>h1{color:#e8402c;text-align:center;font-size:40px}</style><h1>Welcome to Tomato Street</h1>`},
 
  {tier:'must',title:'Style the whole page',
-  spec:'A page with a <b>warm background colour</b> AND the <b>Arial</b> font on the body, plus a heading <b>Our Menu</b>.',
-  want:['<style','background','font-family'], text:['Our Menu'],
-  target:`<style>body{background-color:#fff3e0;font-family:Arial}</style><h1>Our Menu</h1><p>Wood-fired, every day.</p>`},
+  spec:'Style the whole <b>body</b> with THREE rules: a warm <b>background colour</b>, the <b>Arial</b> font, AND a comfy <b>font-size</b> — plus a heading <b>Our Menu</b>.',
+  want:['<style','background','font-family','font-size'], text:['Our Menu'],
+  target:`<style>body{background-color:#fff3e0;font-family:Arial;font-size:18px}</style><h1>Our Menu</h1><p>Wood-fired, every day.</p>`},
 
- {tier:'must',title:'A logo and an order link',
-  spec:'Two things together: an <b>image</b> of the logo (use the file <b>pizza.png</b>, alt text <b>our logo</b>) AND a <b>link</b> saying <b>Order online</b> that points to https://www.tomatostreet.com',
-  want:['<img','alt','<a','href'], text:['Order online'],
-  target:`<img src="pizza.png" alt="our logo" width="130"><br><a href="https://www.tomatostreet.com">Order online</a>`},
+ {tier:'must',title:'A logo, heading and order link',
+  spec:'A logo block — THREE things together: an <b>image</b> (file <b>pizza.png</b>, with <b>alt</b> text AND a <b>width</b>), a heading <b>Tomato Street Pizza</b>, and a <b>link</b> <b>Order online</b> → https://www.tomatostreet.com',
+  want:['<img','alt','width','<h2','<a','href'], text:['Tomato Street','Order online'],
+  target:`<img src="pizza.png" alt="our logo" width="130"><h2>Tomato Street Pizza</h2><p><a href="https://www.tomatostreet.com">Order online</a></p>`},
 
- {tier:'must',title:'Specials of the week',
-  spec:'A specials section: a heading <b>This week</b> and a NUMBERED list of three deals — <b>Margherita $12</b>, <b>Pepperoni $14</b>, <b>Veggie $13</b>.',
-  want:['<h2','<ol','<li'], text:['This week','$12','$14'],
-  target:`<h2>This week</h2><ol><li>Margherita $12</li><li>Pepperoni $14</li><li>Veggie $13</li></ol>`},
+ {tier:'must',title:'Specials with bold prices',
+  spec:'A specials section: a heading <b>Our weekly specials</b> and a NUMBERED list of three deals with the <b>prices in bold</b> — Margherita $12, Pepperoni $14, Veggie $13.',
+  want:['<h2','<ol','<li',['<strong','<b>']], text:['weekly specials','$12','$14','$13'],
+  target:`<h2>Our weekly specials</h2><ol><li>Margherita <strong>$12</strong></li><li>Pepperoni <strong>$14</strong></li><li>Veggie <strong>$13</strong></li></ol>`},
+
+ {tier:'must',title:'An opening-hours table',
+  spec:'An opening-hours section: a heading <b>Opening hours</b> and a <b>table</b> with two rows — <b>Mon-Fri</b> / 4pm-10pm, and <b>Sat-Sun</b> / 12pm-11pm.',
+  want:['<h2','<table','<tr','<td'], text:['Opening hours','Mon','Sat'],
+  target:`<h2>Opening hours</h2><table border="1"><tr><td>Mon-Fri</td><td>4pm - 10pm</td></tr><tr><td>Sat-Sun</td><td>12pm - 11pm</td></tr></table>`},
 
  {tier:'should',title:'The full box model',
   spec:'A menu box (a div) saying <b>Margherita — $12</b> with ALL THREE: <b>padding</b>, a <b>border</b>, and a <b>margin</b> around it.',
@@ -285,11 +290,11 @@ const TILES=[
 ];
 
 /* ===== engine ===== */
-const TIER={must:['MUST DO','The basics — everyone builds these','must'],
+const TIER={must:['MUST DO','Build a real section each time — everyone does these','must'],
             should:['SHOULD DO','Push on — boxes, classes & selectors','should'],
             could:['COULD DO','Stretch — flexbox, grid, gradients & position','could'],
             capstone:['CAPSTONE','Build the whole homepage','capstone']};
-const LSKEY='wdr-l1-9immxa-v3';
+const LSKEY='wdr-l1-9immxa-v4';
 const $=id=>document.getElementById(id);
 const norm=s=>(s||'').toLowerCase().replace(/\s+/g,'');
 const reqMet=(req,v)=>Array.isArray(req)?req.some(x=>v.includes(norm(x))):v.includes(norm(req));
