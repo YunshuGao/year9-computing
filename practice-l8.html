@@ -1,1034 +1,387 @@
-<!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JavaScript Revision Arcade - Guided Practice L8</title>
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Game Hub · Build &amp; Combine · Guided Practice L8 · 9 COTYC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
-  --gold:#ffcd00;--brand:#00843d;
-  --spectrum:linear-gradient(100deg,#00843d 0%,#2bb673 45%,#ffcd00 100%);}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(rgba(238,242,247,.87),rgba(238,242,247,.9)),url('img/bg.jpg') center top/cover fixed #eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
-.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
-/* ---- Predict-before-Run beat (type-it tiles) ---- */
-.predict-row{display:flex;flex-direction:column;gap:5px;margin:0 0 9px;padding:9px 11px;border:1px dashed #d9b400;border-radius:9px;background:linear-gradient(180deg,#fffdf3,#fffaef)}
-.predict-lbl{font-size:12.5px;font-weight:800;color:#8a6d00}
-.predict-lbl em{font-weight:600;font-style:normal;color:#9a7d20}
-.predict-in{width:100%;font-family:inherit;font-size:13.5px;padding:7px 10px;border:1px solid #e3cf7a;border-radius:7px;background:#fff;color:var(--ink)}
-.predict-in:focus{outline:2px solid var(--gold);border-color:var(--gold)}
-.guesscheck{margin-top:8px;font-size:12.5px;font-weight:700;color:#00843d;background:#eafaf0;border:1px solid #b6e6c9;border-radius:7px;padding:7px 10px}
-/* ---- FIFA-inspired dark hero ---- */
-.wc-hero{position:relative;margin:0 0 4px;border-radius:0 0 22px 22px;overflow:hidden;color:#fff;
-  padding:32px 34px 18px;
-  background:linear-gradient(rgba(8,12,28,.72),rgba(8,12,28,.82)),
-            url('img/hero.jpg') center/cover no-repeat,
-            linear-gradient(135deg,#0b1020,#141b34 55%,#0b1020);
-  box-shadow:0 10px 26px rgba(8,12,28,.30)}
-.wc-stripe{position:absolute;top:0;left:0;right:0;height:6px;background:var(--spectrum)}
-.wc-inner{display:flex;align-items:center;gap:22px;margin-top:8px}
-.wc-emblem{font-size:64px;font-weight:900;font-style:italic;line-height:.85;letter-spacing:-4px;flex:none;
-  background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 2px 7px rgba(0,0,0,.4))}
-.wc-trophy{font-size:46px;line-height:1;margin-left:auto;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4))}
-.wc-titles{min-width:0}
-.wc-kicker{font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}
-.wc-hero h1{font-size:37px;margin:5px 0 0;font-weight:900;letter-spacing:-1.1px;color:#fff}
-.wc-ul{width:104px;height:5px;border-radius:3px;background:var(--spectrum);margin:10px 0 12px}
-.wc-pill{display:inline-block;background:var(--spectrum);color:#0b1020;border-radius:999px;
-  padding:3px 13px;font-size:14px;font-weight:800;vertical-align:middle;margin-left:8px}
-.wc-sub{margin:0;font-size:15.5px;color:rgba(255,255,255,.84);max-width:700px}
-.wc-sub b{color:#fff}
-.themebar{display:flex;align-items:center;gap:9px;margin:16px 0 2px;flex-wrap:wrap}
-.themebar .tl{font-size:12px;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.62);text-transform:uppercase}
-.theme{border:1.5px solid rgba(255,255,255,.30);background:rgba(255,255,255,.10);border-radius:999px;
-  padding:7px 15px;font-weight:700;font-size:14px;color:#fff;cursor:pointer;font-family:inherit}
-.theme.on{background:#fff;color:#0b1020;border-color:#fff}
-/* anatomy panel */
-.anatomy{margin:18px 0 4px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:18px 22px;box-shadow:0 1px 3px rgba(22,32,46,.05);border-top:4px solid var(--brand)}
-.ana-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.ana-head h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.3px}
-.ana-sub{color:var(--mut);font-size:14.5px}
-.ana-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;align-items:center}
-.ana-code{margin:0;background:var(--code);color:#e9eef6;border-radius:12px;padding:16px 18px;font-family:Consolas,"Courier New",monospace;font-size:13.5px;line-height:1.7;white-space:pre;overflow:auto}
-.ana-code .ak{color:#c4b5fd;font-weight:700}
-.ana-code .an{color:#7dd3fc;font-weight:700}
-.ana-code .ap{color:#fbbf24}
-.ana-code .ab{color:#f9a8d4;font-weight:700}
-.ana-code .abd{color:#cbd5e1}
-.ana-code .acmt{color:#94a3b8;font-style:italic}
-.ana-key{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-.ana-key li{font-size:13.5px;color:#37424f;line-height:1.4}
-.ana-key b{color:#16202e}
-.chip{display:inline-block;font-family:Consolas,monospace;font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;margin-right:7px;vertical-align:middle}
-.chip.ak{background:#ede9fe;color:#6d28d9}
-.chip.an{background:#e0f2fe;color:#0369a1}
-.chip.ap{background:#fef3c7;color:#92400e}
-.chip.ab{background:#fce7f3;color:#be185d}
-.chip.ac{background:#dcfce7;color:#15803d}
-/* details + progress strip */
-.strip{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0 2px;padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
-.strip label{font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:6px}
-.strip input,.strip select{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:#fff;color:var(--ink)}
-.strip input#sname{min-width:160px}
-.strip .prog{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:210px}
-.strip .track{flex:1;height:8px;background:#e3e9f1;border-radius:99px;overflow:hidden;min-width:120px}
-.strip .track i{display:block;height:100%;width:0;background:var(--spectrum);transition:width .3s;font-style:normal}
-.strip .pt{font-size:13px;font-weight:800;color:var(--ink);white-space:nowrap}
-.strip .btn.save{margin-left:6px}
-/* tier bar */
-.tier-bar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0 6px}
-.tier-zone{border-radius:14px;padding:14px 16px}
-.tier-zone.must{background:#ecfdf5;border:1.5px solid #10b981}
-.tier-zone.should{background:#eef2ff;border:1.5px solid #1e3a8a}
-.tier-zone.could{background:#f5f3ff;border:1.5px solid #7c3aed}
-.zone-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
-.tier-zone h3{margin:0;font-size:15px;letter-spacing:1.4px;font-weight:800}
-.tier-zone.must h3{color:#047857}.tier-zone.should h3{color:#1e3a8a}.tier-zone.could h3{color:#5b21b6}
-.zone-tag{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#94a3b8}
-.pills{display:flex;gap:8px;flex-wrap:wrap}
-.pill{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:78px;flex:0 1 78px;padding:9px 6px;border-radius:11px;text-decoration:none;color:#fff;font-weight:700;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,.1)}
-.pill .num{font-size:21px;line-height:1;font-weight:800}
-.pill .ttl{font-size:10.5px;line-height:1.15;margin-top:5px;font-weight:700}
-.pill.must{background:#10b981}.pill.should{background:#1e3a8a}.pill.could{background:#7c3aed}
-.pill.is-done{outline:3px solid var(--gold);outline-offset:2px}
-/* dividers + exercises */
-.divide{display:flex;align-items:center;gap:16px;margin:32px 0 12px}
-.divide .lab{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
-.divide .ln{flex:1;height:2px;border-radius:2px}
-.divide.must .lab{color:#047857}.divide.must .ln{background:#d1fae5}
-.divide.should .lab{color:#1e3a8a}.divide.should .ln{background:#dbe4f7}
-.divide.could .lab{color:#5b21b6}.divide.could .ln{background:#e9e0fb}
-.ex{border:1px solid var(--line);border-left-width:6px;border-radius:16px;padding:20px 22px;margin:12px 0;scroll-margin-top:14px;background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
-.ex.must{border-left-color:#10b981}.ex.should{border-left-color:#1e3a8a}.ex.could{border-left-color:#7c3aed}
-.ex .h{display:flex;align-items:center;gap:13px}
-.ex .n{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;flex:none}
-.ex.must .n{background:#10b981}.ex.should .n{background:#1e3a8a}.ex.could .n{background:#7c3aed}
-.ex h3{margin:0;font-size:20px;font-weight:800;letter-spacing:-.3px}
-.ex .lead{color:var(--mut);font-size:15px;margin:11px 0 15px}
-.ex code{background:#eef2f6;color:#0f172a;padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:.9em}
-.cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px;align-items:start}
-.lbl{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin:0 0 8px;display:flex;align-items:center;gap:8px}
-.lbl .cn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#16202e;color:#fff;font-size:11px;font-weight:800;flex:none}
-.lbl .hint{font-weight:600;letter-spacing:0;text-transform:none;color:#9aa6b5;font-size:11px}
-.code-ref{margin:0;height:300px;overflow:auto;background:var(--code);color:#e9eef6;border-radius:12px;padding:14px 16px;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.6;white-space:pre;-webkit-user-select:none;-moz-user-select:none;user-select:none;cursor:default}
-.code-ref::selection{background:transparent}
-.editor{width:100%;height:300px;resize:vertical;font-family:Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.6;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:#16202e;tab-size:2}
-.editor:focus{outline:none;border-color:#7c8cf8;box-shadow:0 0 0 3px rgba(124,140,248,.18)}
-.editor::placeholder{color:#9aa6b5}
-.win{border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.win .bar{background:var(--soft);border-bottom:1px solid var(--line);padding:8px 12px;font-size:12px;color:var(--mut);display:flex;gap:6px;align-items:center}
-.win .bar i{width:9px;height:9px;border-radius:50%;background:#cfd8e3;font-style:normal}
-.out{width:100%;height:200px;border:0;display:block;background:#fff}
-.ok{display:flex;align-items:center;gap:10px;margin-top:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:11px 14px;font-size:14px;color:#065f46;font-weight:600}
-.ok[hidden]{display:none}
-.ok .tick{flex:none;width:20px;height:20px;border-radius:50%;background:#10b981;position:relative}
-.ok .tick::after{content:"";position:absolute;left:7px;top:4px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-.try{margin-top:12px;border-radius:0 10px 10px 0;padding:12px 16px;font-size:14px}
-.ex.must .try{background:#f0fdf6;border-left:3px solid #10b981;color:#14532d}
-.ex.should .try{background:#f1f5ff;border-left:3px solid #1e3a8a;color:#1e3a8a}
-.ex.could .try{background:#f7f3ff;border-left:3px solid #7c3aed;color:#5b21b6}
-.act{display:flex;gap:10px;margin-top:12px;align-items:center}
-.btn{border:0;border-radius:10px;padding:10px 18px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}
-.btn.run::before{content:"";display:inline-block;width:0;height:0;border-left:9px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-right:9px;vertical-align:middle}
-.btn.ghost{background:var(--soft);color:var(--mut);border:1px solid var(--line)}
-.ex.must .btn.run{background:#10b981;color:#fff}.ex.should .btn.run{background:#1e3a8a;color:#fff}.ex.could .btn.run{background:#7c3aed;color:#fff}
-.donebox{margin-left:auto;font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;gap:7px;cursor:pointer}
-.donebox input{width:18px;height:18px;accent-color:#10b981;cursor:pointer}
-.btn.save{background:var(--brand);color:#fff}
-.btn.load{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
-/* closing */
-.closing{margin:34px 0 20px;border:1px solid var(--line);border-radius:16px;padding:22px 26px;background:#fff;box-shadow:0 1px 3px rgba(22,32,46,.05)}
-.closing h3{margin:0 0 6px;font-size:20px;font-weight:800}
-.closing p{margin:0 0 14px;color:var(--mut);font-size:15px;max-width:720px}
-.reflect{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 16px}
-.reflect label{display:block;font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--mut);text-transform:uppercase;margin-bottom:5px}
-.reflect textarea{width:100%;min-height:60px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:14px;resize:vertical;background:#fff}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#16202e;color:#fff;padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
-/* ---- COULD challenge types ---- */
-.ctype{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 9px;margin-left:6px;vertical-align:middle}
-.ctype.predict{background:#eef2ff;color:#1e3a8a}.ctype.debug{background:#fef2f2;color:#b91c1c}.ctype.create{background:#ecfdf5;color:#047857}
-.ctype.boss{background:#16202e;color:#fff}
-.editor.short{height:118px}
-.goalbox{background:#f6f9fb;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;color:#37424f;line-height:1.55}
-.goalbox b{color:#16202e}
-.goalbox .eg{margin-top:9px;font-family:Consolas,monospace;font-size:12.5px;color:#475569;background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px}
-.goalbox code,.reveal code{background:#eef2f6;color:#0f172a;padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:.9em}
-.chal-btns{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
-.reveal{margin-top:11px;border-radius:10px;padding:11px 14px;font-size:13.5px;line-height:1.55}
-.reveal[hidden]{display:none}
-.reveal.hint{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
-.reveal.ans{background:#eef2ff;border:1px solid #c7d2fe;color:#1e3a8a}
-/* ---- mission banner + capstone + card ---- */
-.mission{display:grid;grid-template-columns:1fr 180px;gap:20px;align-items:center;margin:16px 0 2px;padding:18px 22px;border-radius:16px;background:linear-gradient(135deg,#0b1020,#1a2344);color:#fff;border:1px solid rgba(255,255,255,.12)}
-.mission .mtag{font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
-.mission h3{margin:5px 0 6px;font-size:21px;font-weight:900;letter-spacing:-.4px}
-.mission p{margin:0 0 12px;font-size:14px;color:rgba(255,255,255,.82);max-width:520px}
-.mission p b{color:#fff}
-.mbtn{display:inline-block;background:var(--spectrum);color:#0b1020;font-weight:800;font-size:14px;text-decoration:none;border-radius:999px;padding:8px 16px}
-.mission-card{display:flex;justify-content:center}
-.socceroos{display:flex;align-items:center;gap:18px;margin:14px 0 2px;padding:15px 22px;border-radius:16px;background:linear-gradient(120deg,#00843d,#0b1020 72%);color:#fff;border:1px solid rgba(255,205,0,.45);box-shadow:0 6px 18px rgba(0,132,61,.2)}
-.socceroos .soc-flag{font-size:46px;flex:none;line-height:1}
-.socceroos .soc-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ffcd00}
-.socceroos h3{margin:4px 0 5px;font-size:20px;font-weight:900;letter-spacing:-.3px}
-.socceroos p{margin:0;font-size:14px;color:rgba(255,255,255,.9)}
-.socceroos p b{color:#ffcd00}
-.socceroos a{color:#ffcd00;font-weight:800}
-.finale{margin:24px 0 4px;border-radius:16px;padding:22px 26px;background:linear-gradient(135deg,#0b1020,#1a2344);color:#fff;border:1px solid rgba(255,205,0,.35);text-align:center}
-.finale h3{margin:0 0 8px;font-size:22px;font-weight:900;color:#ffcd00;letter-spacing:-.3px}
-.finale p{margin:0 auto;font-size:15px;color:rgba(255,255,255,.9);max-width:660px;line-height:1.55}
-.finale p b{color:#ffcd00}
-.divide.cap .lab{color:#b8860b}.divide.cap .ln{background:#f3e3a8}
-.ex.capstone{border:2px solid var(--gold);border-left-width:6px;border-left-color:#d4af37;box-shadow:0 8px 22px rgba(212,175,55,.20)}
-.ex.capstone .n{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
-.ex.capstone h3{color:#7a5c00}
-#ex13 .out{height:250px;background:#0b1020}
-.pill.cap{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
-.scrollcue{display:inline-block;margin-top:14px;color:rgba(255,255,255,.9);font-weight:700;font-size:13.5px;text-decoration:none;border:1.5px solid rgba(255,255,255,.32);border-radius:999px;padding:7px 16px}
-.band{position:relative;margin:30px -30px 8px;padding:46px 32px;color:#fff;overflow:hidden;background-position:center;background-size:cover;border-radius:14px}
-.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,28,.9),rgba(8,12,28,.5))}
-.band>*{position:relative}
-.band .bnum{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
-.band h2{margin:5px 0 6px;font-size:27px;font-weight:900;letter-spacing:-.5px}
-.band p{margin:0;font-size:15.5px;color:rgba(255,255,255,.9);max-width:620px}
-.band.kickoff{background-image:url('img/kickoff.jpg')}
-.band.buildup{background-image:url('img/buildup.jpg')}
-.band.glory{background-image:url('img/glory.jpg')}
-.band.trophy{background-image:url('img/trophy.jpg')}
-.anthem{border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 24px;margin-bottom:22px;background:linear-gradient(rgba(8,12,28,.8),rgba(8,12,28,.88)),url('img/flag.jpg') center/cover;color:#fff;text-align:center}
-.anthem-quote{font-size:25px;font-weight:900;letter-spacing:-.4px}
-.anthem-attr{font-size:12.5px;color:var(--gold);letter-spacing:.05em;margin-top:5px;font-weight:700}
-.anthem-lead{color:rgba(255,255,255,.84);font-size:14.5px;max-width:560px;margin:14px auto}
-.anthem-lead b{color:#fff}
-.anthem-do{display:flex;gap:9px;justify-content:center;align-items:center;flex-wrap:wrap}
-.anthem-pre{font-weight:700;font-size:15px}
-.anthem-do input{font-family:inherit;font-size:15px;padding:9px 13px;border-radius:10px;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;min-width:240px}
-.anthem-do input::placeholder{color:rgba(255,255,255,.5)}
-.wflag{display:inline-block;margin-top:16px;background:var(--spectrum);color:#0b1020;font-weight:900;font-size:18px;padding:12px 22px;border-radius:12px;animation:wflagwave 1.2s ease-in-out infinite;transform-origin:left center}
-@keyframes wflagwave{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
-.anthem-code{margin:16px auto 0;display:inline-block;background:#0b1020;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 13px;font-family:Consolas,monospace;font-size:12.5px;color:#7dd3fc}
-/* ---- advanced effects: reveal, parallax, tilt, scroll progress ---- */
-html{scroll-behavior:smooth}
-.progress-top{position:fixed;left:0;top:0;height:4px;width:0;background:var(--spectrum);z-index:300;transition:width .08s linear}
-.is-in{opacity:1!important}
-.pill{transition:transform .15s ease}
-.pill:hover{transform:translateY(-3px) scale(1.05)}
-.theme{transition:transform .12s ease}
-.theme:hover{transform:translateY(-2px)}
-.mission-card{perspective:800px}
-.mission-card .refcard{transition:transform .12s ease;will-change:transform}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
-@media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}body{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
-.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}
-/* ===== DECORATION SKIN: L8 "Arcade" (electric blue) ===== */
-:root{--brand:#0284c7;--gold:#22d3ee;--spectrum:linear-gradient(100deg,#2563eb 0%,#0ea5e9 45%,#22d3ee 100%)}
-body{background:linear-gradient(rgba(240,249,255,.93),rgba(240,249,255,.95)),repeating-linear-gradient(45deg,rgba(2,132,199,.05) 0 2px,transparent 2px 26px) #f0f9ff!important}
-.wc-hero{background:radial-gradient(130% 150% at 82% 4%,#0ea5e9 0%,#1e40af 52%,#0b1530 100%)!important}
-.band,.band.kickoff,.band.buildup,.band.glory,.band.trophy{background-image:linear-gradient(115deg,#1e3a8a,#0284c7 58%,#06b6d4)!important}
-.refcard{background:linear-gradient(160deg,#38bdf8,#1e3a8a)!important}
-</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
-<div class="progress-top" id="ptop"></div>
+  :root{
+    --p1:#1ec77a; --p1d:#16a061; --p2:#2b9cff; --p2d:#1f7fd6; --p3:#0d1b2a; --p3d:#091320; --gold:#ffb000; --gold-d:#e09600;
+    --teal:#13a08e; --teal-d:#0d7d6e; --red:#ff4b4b;
+    --bg:#f7f7f5; --card:#fff; --line:#e5e5e5; --ink:#3c3c3c; --muted:#8a8a8a;
+    --font:'Nunito','Segoe UI Rounded','Segoe UI',system-ui,Arial,sans-serif; --mono:'Consolas',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px;font-weight:600;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px 90px}
+  header{background:linear-gradient(120deg,#160c2b,#241a5e 55%,#0e2342);color:#fff;border-bottom:5px solid #0a0a18}
+  header .wrap{padding:18px 18px 16px}
+  .brand{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+  .mark{flex:none}
+  .title .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.85}
+  .title h1{margin:1px 0 0;font-size:25px;font-weight:900;letter-spacing:-.3px}
+  .title .sub{opacity:.92;font-size:13.5px;font-weight:700;margin-top:2px}
+  .ringwrap{margin-left:auto;text-align:center;background:rgba(0,0,0,.2);border-radius:16px;padding:8px 16px}
+  .ringwrap b{font-size:22px;font-weight:900;display:block;line-height:1} .ringwrap span{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:.85}
+  .pbar{margin-top:14px;height:14px;background:rgba(0,0,0,.22);border-radius:10px;overflow:hidden}
+  .pfill{height:100%;width:0;background:#ffd900;border-radius:10px;transition:width .3s ease}
+  .who{margin-top:13px;display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .who input{border:none;border-radius:12px;padding:9px 12px;font-size:14px;min-width:150px;font-family:inherit;font-weight:700;color:#3c3c3c}
+  .who label{font-size:12.5px;font-weight:800;opacity:.92}
+
+  .lead{background:var(--card);border:2px solid var(--line);border-radius:18px;margin:22px 0 6px;display:flex;flex-wrap:wrap}
+  .lead .col{flex:1;min-width:220px;padding:15px 22px;border-right:2px solid var(--line)}
+  .lead .col:last-child{border-right:none}
+  @media(max-width:680px){.lead .col{border-right:none;border-bottom:2px solid var(--line)}}
+  .lead h3{margin:0 0 5px;font-size:16px;font-weight:900}
+  .lead h3 .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;font-size:13px;margin-right:8px;vertical-align:middle}
+  .lead p{margin:0;font-size:13.5px;color:var(--muted);font-weight:700} .lead b{color:var(--ink)}
+
+  .projbar{display:flex;align-items:center;gap:14px;padding:14px 20px;margin-top:30px;color:#fff;border-radius:18px 18px 0 0}
+  .projbar .badge{font-weight:900;font-size:17px;letter-spacing:.4px} .projbar .desc{font-size:13px;font-weight:700;opacity:.95}
+  .projbar .count{margin-left:auto;font-weight:900;font-size:15px;background:rgba(0,0,0,.18);padding:4px 13px;border-radius:14px;white-space:nowrap}
+  .projbar.p1{background:var(--p1)} .projbar.p2{background:var(--p2)} .projbar.p3{background:var(--p3)}
+  .tiergroup{border:2px solid var(--line);border-top:none;border-radius:0 0 18px 18px;padding:5px 13px 13px;background:#fbfbfa;margin-bottom:6px}
+
+  .tile{background:var(--card);border:2px solid var(--line);border-bottom-width:4px;border-radius:18px;margin:12px 0;overflow:hidden}
+  .tile.p1{border-color:#c4f0db;border-bottom-color:var(--p1)} .tile.p2{border-color:#cce4fb;border-bottom-color:var(--p2)} .tile.p3{border-color:#c3cdd8;border-bottom-color:var(--p3)}
+  .tile.final{border-bottom-color:var(--gold);border-color:#ffe2b3;background:#fffdf7}
+  .tile.done{border-color:#a8ddd4;border-bottom-color:var(--teal)}
+  .th{display:flex;align-items:flex-start;gap:12px;padding:14px 18px 8px}
+  .num{flex:none;width:32px;height:32px;border-radius:50%;background:#f1f1ef;color:var(--muted);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .tile.final .num{background:var(--gold);color:#fff} .tile.done .num{background:var(--teal);color:#fff}
+  .ttl{font-weight:900;font-size:17px} .tile.final .ttl{color:var(--gold-d)}
+  .spec{font-size:14px;color:var(--muted);margin-top:2px;font-weight:700} .spec b{color:var(--ink)}
+  .badge2{margin-left:auto;flex:none;font-size:12.5px;font-weight:800;color:var(--muted);background:#f1f1ef;border-radius:20px;padding:5px 14px;white-space:nowrap}
+  .tile.done .badge2{color:#fff;background:var(--teal)}
+
+  .preview{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:6px 18px 0;align-items:start}
+  .preview>*{min-width:0} @media(max-width:760px){.preview{grid-template-columns:1fr}}
+  .panel{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+  .panel .lab{font-size:11px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:7px 13px;color:#fff}
+  .panel.target .lab{background:#4b4b4b} .panel.yours .lab{background:var(--p1)}
+  .panel iframe{width:100%;min-height:120px;border:none;display:block;background:#fff}
+  .panel.target{user-select:none} .panel.target iframe{pointer-events:none}
+  .codewrap{padding:12px 18px 14px}
+  .clab{font-size:11px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--teal);padding:7px 13px;border-radius:16px 16px 0 0}
+  textarea{width:100%;border:2px solid var(--teal);border-top:none;border-radius:0 0 16px 16px;resize:vertical;min-height:200px;padding:11px 13px;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.55;color:#3c3c3c;outline:none;background:#fff;display:block}
+  .tile.final textarea{min-height:260px}
+  textarea:focus{border-color:var(--teal-d)}
+  .runrow{display:flex;align-items:center;gap:12px;margin-top:11px;flex-wrap:wrap}
+  .runb{background:var(--p1);color:#fff;border:none;border-bottom:4px solid var(--p1d);border-radius:14px;padding:11px 22px;font-size:14px;font-weight:900;letter-spacing:.4px;cursor:pointer;font-family:var(--font)}
+  .runb:hover{filter:brightness(1.05)} .runb:active{border-bottom-width:1px;transform:translateY(3px)}
+  .resetb{background:#fff;border:2px solid var(--line);border-bottom-width:3px;color:var(--muted);border-radius:14px;padding:7px 14px;font-size:12.5px;font-weight:800;cursor:pointer;font-family:inherit}
+  .resetb:hover{background:#f7f7f5} .resetb:active{border-bottom-width:2px;transform:translateY(1px)}
+  .partslist{margin:0 18px 14px;font-size:13px;font-weight:700;color:var(--muted);background:#fff8e8;border:2px solid #ffe2b3;border-radius:14px;padding:10px 14px}
+  .partslist b{color:var(--gold-d)}
+
+  .save-card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px 22px;margin:14px 0}
+  .save-card h3{margin:0 0 4px;font-size:18px;font-weight:900}
+  .reflect{display:grid;gap:11px;margin:12px 0 4px} .reflect label{font-size:13.5px;font-weight:800;color:var(--muted)}
+  .reflect input{width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 13px;font-size:14px;font-family:inherit;font-weight:700;background:#fff;color:#3c3c3c}
+  .reflect input:focus{border-color:var(--p1);outline:none}
+  .savebar{position:sticky;bottom:0;background:#fff;border-top:2px solid var(--line);padding:13px 20px;display:flex;gap:14px;align-items:center;margin-top:22px}
+  .btn{background:var(--teal);color:#fff;border:none;border-bottom:4px solid var(--teal-d);border-radius:16px;padding:13px 28px;font-size:15px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;font-family:var(--font)}
+  .btn:active{border-bottom-width:1px;transform:translateY(3px)} .savebar .msg{font-size:13px;color:var(--muted);font-weight:700}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;font-weight:700;margin-top:26px}
+  #toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:#4b4b4b;color:#fff;padding:12px 22px;border-radius:14px;font-size:14px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:50}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .conf{position:fixed;top:-14px;width:9px;height:15px;border-radius:2px;z-index:60;animation:fall 2.5s linear forwards} @keyframes fall{to{top:106vh;opacity:.4}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" width="54" height="54" viewBox="0 0 64 64" aria-label="pages">
+        <rect x="12" y="8" width="40" height="30" rx="4" fill="#ffffff" opacity=".25"/>
+        <rect x="8" y="16" width="40" height="30" rx="4" fill="#ffffff" opacity=".55"/>
+        <rect x="4" y="24" width="44" height="32" rx="5" fill="#ffffff"/>
+        <rect x="4" y="24" width="44" height="9" rx="5" fill="#ffba08"/>
+        <rect x="10" y="38" width="20" height="4" rx="2" fill="#0d1b2a"/><rect x="10" y="46" width="30" height="4" rx="2" fill="#9aa6b2"/>
+      </svg>
+      <div class="title">
+        <div class="eyebrow">JavaScript · Combine Everything · Guided Practice L8</div>
+        <h1>Build a Game Hub</h1>
+        <div class="sub">9 COTYC · a Roblox-style hub, built part by part, then assembled — combine HTML, CSS &amp; JavaScript from L1–L8</div>
+      </div>
+      <div class="ringwrap"><b id="ringn">0/9</b><span>made</span></div>
+    </div>
+    <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    <div class="who">
+      <label>Name <input id="sName" placeholder="your name"></label>
+      <label>Class <input id="sClass" value="9 COTYC" style="min-width:88px"></label>
+      <label>Date <input id="sDate" placeholder="__ / __ / 2026" style="min-width:120px"></label>
+    </div>
+  </div>
+</header>
+
 <div class="wrap">
-  <header class="wc-hero">
-    <div class="wc-stripe"></div>
-    <div class="wc-inner">
-      <div class="wc-emblem">26</div>
-      <div class="wc-titles">
-        <div class="wc-kicker">&#127918; Exam revision &middot; Year 9 Computing Technology</div>
-        <h1>Revision Arcade <span class="wc-pill">Guided Practice L8</span></h1>
-        <div class="wc-ul"></div>
-        <p class="wc-sub"><b>Revise the whole unit, arcade-style.</b> HTML, CSS, buttons, functions, if/else, lists &amp; random - one tile each. Clear them all and you are exam-ready for 30 June.</p>
-        <a class="scrollcue" href="#ex1">Scroll to kick off &darr;</a>
-      </div>
-      <div class="wc-trophy">&#127918;</div>
-    </div>
-  </header>
-
-  <section class="mission">
-    <div class="mission-txt">
-      <span class="mtag">&#11088; Your mission today</span>
-      <h3>Level up for the exam</h3>
-      <p>This is your <b>revision arcade</b>: every tile is one skill the 30 June exam marks. Clear them all and the paper will feel easy. <b>Ready?</b></p>
-      <a class="mbtn" href="#ex13">Jump to the boss level &rarr;</a>
-    </div>
-    <div class="mission-card"><div class="refcard"><span class="rc1">REVISE</span><span class="rc2">every</span><span class="rc3">skill</span></div></div>
-  </section>
-
-  <section class="anatomy">
-    <div class="ana-head"><h2>The 5 skills your exam marks</h2>
-      <span class="ana-sub">Every tile today revises one of these. On 30 June you show all five &mdash; tick them off as you go:</span></div>
-    <div class="ana-grid">
-      <pre class="ana-code"><span class="ap">1. HTML</span>       a heading with an id + a button
-<span class="ac">2. CSS</span>        your own colours / a class
-<span class="ak">3. JavaScript</span> a click that CHANGES the page
-<span class="abd">4. A decision</span> an if/else OR Math.random
-<span class="an">5. Testing</span>    it works + you can explain it</pre>
-      <ul class="ana-key">
-        <li><span class="chip ap">HTML</span> the parts &mdash; tiles 1, 12, 13</li>
-        <li><span class="chip ac">CSS</span> the style &mdash; tiles 2, 12, 13</li>
-        <li><span class="chip ak">JavaScript</span> the actions &mdash; tiles 3, 4, 13</li>
-        <li><span class="chip abd">if/else &amp; random</span> the decision &mdash; tiles 4, 5, 6, 7, 10</li>
-        <li><span class="chip an">predict / fix / write</span> the exam question types &mdash; tiles 5&ndash;11</li>
-      </ul>
-    </div>
-  </section>
-
-  <div class="strip">
-    <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
-    <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
-    <label>Date <input id="sdate" type="date"></label>
-    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 13 done</span></span>
-    <button class="btn save" onclick="save()">Save my work</button>
+  <div class="lead">
+    <div class="col"><h3><span class="n">1</span>Build it in parts</h3><p>Each part is one piece of a real <b>game hub</b> — the bar, the avatar, a button, a loop. Recreate each part’s <b>Target</b> with your own code.</p></div>
+    <div class="col"><h3><span class="n">2</span>Then assemble</h3><p>The gold <b>🧩 Assemble</b> task combines the parts into one page — first the LOOK, then the WORKING hub.</p></div>
+    <div class="col"><h3><span class="n">3</span>Use everything</h3><p><b>Project 1</b> = HTML + CSS. <b>Project 2</b> = JavaScript (function, if/else, loop, random). Type the code (no pasting); it <b>auto-saves</b>.</p></div>
   </div>
+  <div id="board"></div>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">HTML</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">CSS</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">if/else</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">Predict</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">Random</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">Write it</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">Fix it</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Combine</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Shootout</span></a></div></div></nav>
-
-  <section class="band kickoff"><div class="bnum">1 / Warm up</div><h2>Recall the basics</h2><p>HTML, CSS, a button, an if/else - the foundations you'll be marked on. Type each one back.</p></section>
-  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
-  <section class="ex must" id="ex1">
-    <div class="h"><span class="n">1</span><h3>Revise HTML - id + button</h3></div>
-    <p class="lead">Skill 1 on your exam: a <b>heading with an id</b> and a <b>button</b>. The id is the name JavaScript uses to find the heading.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref1">&lt;h1 id="title"&gt;My Web Page&lt;/h1&gt;
-&lt;button onclick="go()"&gt;Click me&lt;/button&gt;
-
-&lt;script&gt;
-  function go() {
-    document.getElementById("title").innerHTML = "You clicked it!";
-  }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred1" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed1" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(1)">Run</button>
-          <button class="btn ghost" onclick="resetEx(1)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done1" onchange="toggleDone(1)"> Done</label>
-        </div>
-        <div class="guesscheck" id="gc1" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
-        <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; you wrote HTML - a heading with an id + a button.</span></div>
-        <div class="try"><b>Now change it:</b> change the heading text and the button label to your own.</div>
-      </div>
-    </div>
-  </section>
-  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
-  <section class="ex must" id="ex2">
-    <div class="h"><span class="n">2</span><h3>Revise CSS - a style rule</h3></div>
-    <p class="lead">Skill 2: <b>CSS</b> in a <code>&lt;style&gt;</code> block. The shape is <code>selector { property: value; }</code> - here it colours and centres the heading.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref2">&lt;style&gt;
-  h1 { color: teal; text-align: center; }
-&lt;/style&gt;
-&lt;h1 id="out"&gt;Style me!&lt;/h1&gt;
-&lt;button onclick="done()"&gt;I styled it!&lt;/button&gt;
-
-&lt;script&gt;
-  function done() {
-    document.getElementById("out").innerHTML = "Teal and centred!";
-  }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred2" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed2" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(2)">Run</button>
-          <button class="btn ghost" onclick="resetEx(2)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done2" onchange="toggleDone(2)"> Done</label>
-        </div>
-        <div class="guesscheck" id="gc2" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
-        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you wrote a CSS rule.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>teal</code> to another colour, and add <code>font-size: 30px;</code>.</div>
-      </div>
-    </div>
-  </section>
-  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
-  <section class="ex must" id="ex3">
-    <div class="h"><span class="n">3</span><h3>Revise the DOM - a click changes the page</h3></div>
-    <p class="lead">Skill 3: a <b>button click that CHANGES the page</b> (not a pop-up). <code>getElementById</code> finds the heading by its id; <code>innerHTML</code> sets new text.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref3">&lt;h2 id="out"&gt;Press the button&lt;/h2&gt;
-&lt;button onclick="change()"&gt;Change it&lt;/button&gt;
-
-&lt;script&gt;
-  function change() {
-    document.getElementById("out").innerHTML = "Changed by JavaScript!";
-  }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred3" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed3" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(3)">Run</button>
-          <button class="btn ghost" onclick="resetEx(3)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done3" onchange="toggleDone(3)"> Done</label>
-        </div>
-        <div class="guesscheck" id="gc3" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
-        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your click changed the page - skill 3.</span></div>
-        <div class="try"><b>Now change it:</b> make the button change the text to something of your own.</div>
-      </div>
-    </div>
-  </section>
-  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
-  <section class="ex must" id="ex4">
-    <div class="h"><span class="n">4</span><h3>Revise if/else - a decision</h3></div>
-    <p class="lead">Skill 4 (one half): an <b>if/else</b> decision. The condition <code>score &gt;= 50</code> chooses PASS or Try again.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref4">&lt;h2 id="out"&gt;Pass or fail?&lt;/h2&gt;
-&lt;button onclick="check()"&gt;Check the score&lt;/button&gt;
-
-&lt;script&gt;
-  function check() {
-    let score = 72;
-    if (score &gt;= 50) {
-      document.getElementById("out").innerHTML = "PASS!";
-    } else {
-      document.getElementById("out").innerHTML = "Try again";
-    }
-  }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred4" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed4" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(4)">Run</button>
-          <button class="btn ghost" onclick="resetEx(4)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done4" onchange="toggleDone(4)"> Done</label>
-        </div>
-        <div class="guesscheck" id="gc4" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
-        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your if/else made a decision.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>score</code> to 40 and Run - now it fails. Then try exactly 50.</div>
-      </div>
-    </div>
-  </section>
-  <section class="band buildup"><div class="bnum">2 / Level up</div><h2>Big skills + exam style</h2><p>if/else and random - plus the exam question types: predict the output, complete it, write it, fix it.</p></section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal predict" id="ex5">
-    <div class="h"><span class="n">5</span><h3>Predict: which branch? <span class="ctype predict">PREDICT</span></h3></div>
-    <p class="lead">Exam style (predict the output). Only ONE branch runs. Write the message, then check.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code</div>
-        <pre class="code-ref" id="ref5">&lt;p id="out"&gt;&lt;/p&gt;
-&lt;script&gt;
-  let age = 16;
-  if (age &gt;= 18) {
-    out.innerHTML = "Adult";
-  } else if (age &gt;= 13) {
-    out.innerHTML = "Teen";
-  } else {
-    out.innerHTML = "Child";
-  }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Your prediction</div>
-        <textarea class="editor short" id="ed5" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runPredict(5)">Run &amp; check</button>
-          <button class="btn ghost" onclick="resetEx(5)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done5" onchange="toggleDone(5)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
-        <div class="reveal ans" id="ans5" hidden>It shows <b>Teen</b>. <code>age &gt;= 18</code> is false (16 is not 18+), so it checks the next: <code>age &gt;= 13</code> is true (16 is 13+), so that branch runs.</div>
-        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; you traced the if / else if / else.</span></div>
-      </div>
-    </div>
-  </section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal tweak" id="ex6">
-    <div class="h"><span class="n">6</span><h3>Random quote (complete the pick) <span class="ctype tweak">TWEAK</span></h3></div>
-    <p class="lead">Skill 4, the other half: a <b>random</b> pick. The quote list is ready, the pick is blank - <b>complete it</b>.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
-        <div class="goalbox">Replace <code>PICK</code> with <code>Math.floor(Math.random() * quotes.length)</code>, then click a few times.
-          <div class="chal-btns"><button class="btn ghost" onclick="showHint(6)">Show a hint</button></div>
-          <div class="reveal hint" id="hint6" hidden>The pick is always the same shape: <code>Math.floor(Math.random() * LIST.length)</code>. Here the list is called <code>quotes</code>.</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
-        <textarea class="editor" id="ed6" spellcheck="false">&lt;h2 id="out"&gt;Click for a quote&lt;/h2&gt;
-&lt;button onclick="quote()"&gt;Inspire me&lt;/button&gt;
-
-&lt;script&gt;
-  function quote() {
-    let quotes = ["You can do this!", "Keep going!", "Almost there!"];
-    let pick = quotes[PICK];
-    document.getElementById("out").innerHTML = pick;
-  }
-&lt;/script&gt;</textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(6)">Run</button>
-          <button class="btn ghost" onclick="resetEx(6)">Reset</button>
-          <label class="donebox"><input type="checkbox" id="done6" onchange="toggleDone(6)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
-        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; you recalled the random pick - skill 4.</span></div>
-      </div>
-    </div>
-  </section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal create" id="ex7">
-    <div class="h"><span class="n">7</span><h3>Write a decision <span class="ctype create">CREATE</span></h3></div>
-    <p class="lead">Exam style (write the code). No code given - write an if/else from the goal.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Make a <b>button</b> and a function: if a <code>price</code> is <code>&gt; 100</code> show <b>Expensive</b>, otherwise show <b>Cheap</b>.
-          <div class="eg">Expected: Expensive or Cheap</div>
-          <div class="chal-btns">
-            <button class="btn ghost" onclick="showHint(7)">Show a hint</button>
-          </div>
-          <div class="reveal hint" id="hint7" hidden><code>function check() { let price = 150; if (price &gt; 100) { out.innerHTML = "Expensive"; } else { out.innerHTML = "Cheap"; } }</code> - add a <code>&lt;p id="out"&gt;</code> + a button.</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
-        <textarea class="editor" id="ed7" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(7)">Run</button>
-          <button class="btn ghost" onclick="resetEx(7)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
-        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; you wrote a working if/else.</span></div>
-      </div>
-    </div>
-  </section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal debug" id="ex8">
-    <div class="h"><span class="n">8</span><h3>Fix the bug: a capital id <span class="ctype debug">DEBUG</span></h3></div>
-    <p class="lead">Exam style (find the bug). Click <b>Show</b> - nothing happens (open the red error line). The id does not match.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">The heading id is <code>out</code> (lowercase) but the code looks for <code>Out</code> (capital O). JavaScript is case-sensitive - fix it so the heading changes.
-          <div class="chal-btns"><button class="btn ghost" onclick="showHint(8)">Show a hint</button></div>
-          <div class="reveal hint" id="hint8" hidden>Make them match exactly: change <code>getElementById("Out")</code> to <code>getElementById("out")</code>.</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Fix it here</div>
-        <textarea class="editor" id="ed8" spellcheck="false">&lt;h2 id="out"&gt;Hello&lt;/h2&gt;
-&lt;button onclick="show()"&gt;Show&lt;/button&gt;
-
-&lt;script&gt;
-  function show() {
-    document.getElementById("Out").innerHTML = "It works!";
-  }
-&lt;/script&gt;</textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(8)">Run</button>
-          <button class="btn ghost" onclick="resetEx(8)">Reset</button>
-          <label class="donebox"><input type="checkbox" id="done8" onchange="toggleDone(8)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
-        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; you fixed a case-sensitive id - a top exam bug.</span></div>
-      </div>
-    </div>
-  </section>
-  <section class="band glory"><div class="bnum">3 / Boss fight</div><h2>Exam-style challenges</h2><p>Predict the output, find the bug, write it from scratch - just like the paper.</p></section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal predict" id="ex9">
-    <div class="h"><span class="n">9</span><h3>Predict: text + number <span class="ctype predict">PREDICT</span></h3></div>
-    <p class="lead">Exam style (predict the output). Numbers and text behave differently with <code>+</code>.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code</div>
-        <pre class="code-ref" id="ref9">&lt;p id="out"&gt;&lt;/p&gt;
-&lt;script&gt;
-  let x = "5" + 1;
-  out.innerHTML = x;
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Your prediction</div>
-        <textarea class="editor short" id="ed9" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runPredict(9)">Run &amp; check</button>
-          <button class="btn ghost" onclick="resetEx(9)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done9" onchange="toggleDone(9)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
-        <div class="reveal ans" id="ans9" hidden>It shows <b>51</b>, not 6! <code>"5"</code> is text (in quotes), so <code>+</code> JOINS instead of adding: <code>"5" + 1</code> = <code>"51"</code>.</div>
-        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you spotted text + number = join.</span></div>
-      </div>
-    </div>
-  </section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal debug" id="ex10">
-    <div class="h"><span class="n">10</span><h3>Fix the condition (= vs ===) <span class="ctype debug">DEBUG</span></h3></div>
-    <p class="lead">Exam style (find the bug). Click <b>Decide</b> - it always says WIN, even at 0. The condition is wrong.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">The condition uses <code>=</code> (assign) instead of a compare. Fix it so 0 goals shows "No win".
-          <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
-          <div class="reveal hint" id="hint10" hidden>To COMPARE use <code>&gt;</code> or <code>===</code>. Change <code>if (goals = 1)</code> to <code>if (goals &gt; 0)</code>.</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Fix it here</div>
-        <textarea class="editor" id="ed10" spellcheck="false">&lt;button onclick="decide()"&gt;Decide&lt;/button&gt;
-&lt;p id="out"&gt;&lt;/p&gt;
-
-&lt;script&gt;
-  function decide() {
-    let goals = 0;
-    if (goals = 1) {
-      document.getElementById("out").innerHTML = "WIN!";
-    } else {
-      document.getElementById("out").innerHTML = "No win";
-    }
-  }
-&lt;/script&gt;</textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(10)">Run</button>
-          <button class="btn ghost" onclick="resetEx(10)">Reset</button>
-          <label class="donebox"><input type="checkbox" id="done10" onchange="toggleDone(10)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
-        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed = vs === - compare, don't assign.</span></div>
-      </div>
-    </div>
-  </section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal create" id="ex11">
-    <div class="h"><span class="n">11</span><h3>Build a random app <span class="ctype create">CREATE</span></h3></div>
-    <p class="lead">Exam style (write the code). Build a random picker - your own list, your own theme.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Make a <b>button</b> and a function with your OWN list that shows a <b>random</b> item (foods, games, jokes - anything).
-          <div class="eg">Expected: a random item from your list</div>
-          <div class="chal-btns">
-            <button class="btn ghost" onclick="showHint(11)">Show a hint</button>
-          </div>
-          <div class="reveal hint" id="hint11" hidden><code>function pick() { let things = ["a","b","c"]; let i = Math.floor(Math.random()*things.length); document.getElementById("out").innerHTML = things[i]; }</code> + a <code>&lt;p id="out"&gt;</code> and a button.</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
-        <textarea class="editor" id="ed11" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(11)">Run</button>
-          <button class="btn ghost" onclick="resetEx(11)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done11" onchange="toggleDone(11)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
-        <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you built a random app from scratch.</span></div>
-      </div>
-    </div>
-  </section>
-  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal create" id="ex12">
-    <div class="h"><span class="n">12</span><h3>Build a mini app (all skills) <span class="ctype create">CREATE</span></h3></div>
-    <p class="lead">The big one: HTML + CSS + JS + a decision, like the assessment. The hint shows one way.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Build a small app: a heading with an <b>id</b>, a <b>button</b>, some <b>CSS</b> (a colour), and a click that uses <b>if/else OR random</b> to change the heading.
-          <div class="eg">Expected: a styled page that reacts on click</div>
-          <div class="chal-btns">
-            <button class="btn ghost" onclick="showHint(12)">Show a hint</button>
-          </div>
-          <div class="reveal hint" id="hint12" hidden>Copy the Lucky Number capstone idea (tile 13): a styled heading + button, then a function with <code>Math.random</code> or an <code>if/else</code> that sets <code>innerHTML</code>.</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
-        <textarea class="editor" id="ed12" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(12)">Run</button>
-          <button class="btn ghost" onclick="resetEx(12)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done12" onchange="toggleDone(12)"> Done</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> What happens</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
-        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; you combined all the skills - exam ready!</span></div>
-      </div>
-    </div>
-  </section>
-  <section class="band trophy"><div class="bnum">4 / Final boss</div><h2>Build a complete app</h2><p>All 5 skills in one tiny app - exactly what 30 June asks of you.</p></section>
-  <div class="divide cap"><span class="lab">Capstone &mdash; build the thing you&rsquo;d screenshot</span><span class="ln"></span></div>
-  <section class="ex could capstone" id="ex13">
-    <div class="h"><span class="n">13</span><h3>Boss level: a complete app</h3></div>
-    <p class="lead">The boss level &mdash; a complete tiny app with <b>all 5 exam skills</b> in it: HTML (a heading with an id + a button), CSS (a class + a colour), JavaScript (a click changes the page), a decision (Math.random + if/else), and you can test &amp; explain it. Type it, Run it, then make it yours.</p>
-    <div class="cols">
-      <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref13">&lt;style&gt;
-  .card { text-align: center; font-family: Arial; }
-  h1 { color: #2563eb; }
-&lt;/style&gt;
-&lt;div class="card"&gt;
-  &lt;h1 id="out"&gt;Lucky number?&lt;/h1&gt;
-  &lt;button onclick="lucky()"&gt;Roll my luck&lt;/button&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-  function lucky() {
-    let n = Math.floor(Math.random() * 10) + 1;
-    if (n &gt;= 5) {
-      document.getElementById("out").innerHTML = n + " - Lucky!";
-    } else {
-      document.getElementById("out").innerHTML = n + " - try again";
-    }
-  }
-&lt;/script&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred13" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed13" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
-        <div class="act">
-          <button class="btn run" onclick="runEx(13)">Run</button>
-          <button class="btn ghost" onclick="resetEx(13)">Clear</button>
-          <label class="donebox"><input type="checkbox" id="done13" onchange="toggleDone(13)"> Done</label>
-        </div>
-        <div class="guesscheck" id="gc13" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">3</span> Your app</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your game</div>
-          <iframe class="out" id="out13" title="your game"></iframe></div>
-        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you built a complete app with all 5 exam skills.</span></div>
-        <div class="try"><b>Now make it yours:</b> change <code>5</code> to <code>7</code> so you are luckier, change the colour, or add a second button &mdash; this is exactly what 30 June asks you to build.</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="closing">
-    <div class="finale">
-      <h3>You are exam-ready.</h3>
-      <p>You just revised every skill the 30 June paper marks &mdash; <b>HTML</b>, <b>CSS</b>, <b>JavaScript</b>, a <b>decision</b>, and <b>testing</b>. On the day: read carefully, work the checklist, and stay calm. You have done this all term. <b>You've got this!</b></p>
-    </div>
-    <h3>Show the class</h3>
-    <p>Put your best mini-app on the board &mdash; we will name the 5 skills in it: the <b>HTML</b>, the <b>CSS</b>, the <b>JavaScript</b>, the <b>decision</b>, and how you <b>tested</b> it.</p>
+  <div class="save-card" style="margin-top:26px">
+    <h3>Reflect &amp; save</h3>
     <div class="reflect">
-      <div><label>What I built</label><textarea id="rbuilt" placeholder="In a sentence..."></textarea></div>
-      <div><label>I got stuck on</label><textarea id="rstuck" placeholder="What tripped you up?"></textarea></div>
-    </div>
-    <div class="row">
-      <button class="btn save" onclick="save()">Save my work (one file)</button>
-      <button class="btn load" onclick="document.getElementById('lf').click()">Load my file</button>
-      <input id="lf" type="file" accept=".html,text/html" hidden onchange="loadFile(this)">
+      <div><label>The part I am most proud of building was…</label><input id="r1" placeholder="type here"></div>
+      <div><label>One skill from L1–L8 I used a lot was…</label><input id="r2" placeholder="e.g. function, if/else, loop, Math.random"></div>
+      <div><label>One thing I want to get better at is…</label><input id="r3" placeholder="type here"></div>
     </div>
   </div>
-  <footer>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; JavaScript Revision Arcade &mdash; Guided Practice L8</footer>
+  <footer>JavaScript · Game Hub · Guided Practice L8 · 9 COTYC · <b>L8 build v1</b> · auto-saves in this browser</footer>
 </div>
-<div class="toast" id="toast"></div>
+
+<div class="savebar"><button class="btn" onclick="saveWork()">Save my work</button><span class="msg" id="saveMsg">Put your name in at the top, then build Project 1.</span></div>
+<div id="toast"></div>
+
 <script>
-var STARTERS = {"1": {"worldcup": "<h1 id=\"title\">My Web Page<\/h1>\n<button onclick=\"go()\">Click me<\/button>\n\n<script>\n  function go() {\n    document.getElementById(\"title\").innerHTML = \"You clicked it!\";\n  }\n<\/script>"}, "2": {"worldcup": "<style>\n  h1 { color: teal; text-align: center; }\n<\/style>\n<h1 id=\"out\">Style me!<\/h1>\n<button onclick=\"done()\">I styled it!<\/button>\n\n<script>\n  function done() {\n    document.getElementById(\"out\").innerHTML = \"Teal and centred!\";\n  }\n<\/script>"}, "3": {"worldcup": "<h2 id=\"out\">Press the button<\/h2>\n<button onclick=\"change()\">Change it<\/button>\n\n<script>\n  function change() {\n    document.getElementById(\"out\").innerHTML = \"Changed by JavaScript!\";\n  }\n<\/script>"}, "4": {"worldcup": "<h2 id=\"out\">Pass or fail?<\/h2>\n<button onclick=\"check()\">Check the score<\/button>\n\n<script>\n  function check() {\n    let score = 72;\n    if (score >= 50) {\n      document.getElementById(\"out\").innerHTML = \"PASS!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Try again\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<style>\n  .card { text-align: center; font-family: Arial; }\n  h1 { color: #2563eb; }\n<\/style>\n<div class=\"card\">\n  <h1 id=\"out\">Lucky number?<\/h1>\n  <button onclick=\"lucky()\">Roll my luck<\/button>\n<\/div>\n\n<script>\n  function lucky() {\n    let n = Math.floor(Math.random() * 10) + 1;\n    if (n >= 5) {\n      document.getElementById(\"out\").innerHTML = n + \" - Lucky!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = n + \" - try again\";\n    }\n  }\n<\/script>"}};
-var WANT = {"7": "Expensive", "8": "It works", "10": "No win"};
-var OKTX = {"1": "you wrote HTML - a heading with an id + a button.", "2": "you wrote a CSS rule.", "3": "your click changed the page - skill 3.", "4": "your if/else made a decision.", "5": "you traced the if / else if / else.", "6": "you recalled the random pick - skill 4.", "7": "you wrote a working if/else.", "8": "you fixed a case-sensitive id - a top exam bug.", "9": "you spotted text + number = join.", "10": "you fixed = vs === - compare, don't assign.", "11": "you built a random app from scratch.", "12": "you combined all the skills - exam ready!", "13": "you built a complete app with all 5 exam skills."};
-var MODES = {"5": "predict", "6": "tweak", "7": "create", "8": "debug", "9": "predict", "10": "debug", "11": "create", "12": "create"};
-var PREDICT = {"5": "<p id=\"out\"><\/p>\n<script>\n  let age = 16;\n  if (age >= 18) {\n    out.innerHTML = \"Adult\";\n  } else if (age >= 13) {\n    out.innerHTML = \"Teen\";\n  } else {\n    out.innerHTML = \"Child\";\n  }\n<\/script>", "9": "<p id=\"out\"><\/p>\n<script>\n  let x = \"5\" + 1;\n  out.innerHTML = x;\n<\/script>"};
-var DEBUGC = {"8": "<h2 id=\"out\">Hello<\/h2>\n<button onclick=\"show()\">Show<\/button>\n\n<script>\n  function show() {\n    document.getElementById(\"Out\").innerHTML = \"It works!\";\n  }\n<\/script>", "10": "<button onclick=\"decide()\">Decide<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function decide() {\n    let goals = 0;\n    if (goals = 1) {\n      document.getElementById(\"out\").innerHTML = \"WIN!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No win\";\n    }\n  }\n<\/script>"};
-var TWEAKC = {"6": "<h2 id=\"out\">Click for a quote<\/h2>\n<button onclick=\"quote()\">Inspire me<\/button>\n\n<script>\n  function quote() {\n    let quotes = [\"You can do this!\", \"Keep going!\", \"Almost there!\"];\n    let pick = quotes[PICK];\n    document.getElementById(\"out\").innerHTML = pick;\n  }\n<\/script>"};
-var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-var THEME_LIST = ["worldcup"];
-var IDS = Object.keys(STARTERS).map(Number);
-var THEME = "worldcup";
-var LSKEY = "l8-state-v1";
-var BASE = {};
+/* ===== TILES — 3 projects, each: parts then a 🧩 Assemble. want=technique tokens; text=words in YOUR result ===== */
+const TILES=[
+ /* ============ PROJECT 1 · BUILD THE LOOK (HTML + CSS) ============ */
+ {proj:'p1',title:'Part 1 · The top bar',
+  spec:'A dark top bar: the logo <b>BLOX ARCADE</b> (neon green) on the LEFT and a player chip <b>Player1 &middot; R$ 250</b> on the RIGHT. Use <b>flexbox</b> (display:flex, justify-content:space-between).',
+  want:['display:flex','justify-content','fa-'], text:['BLOX ARCADE','Player1','250'],
+  target:`<style>.bar{display:flex;justify-content:space-between;align-items:center;background:#16131f;padding:14px 20px;font-family:Arial}.logo{color:#27e07a;font-weight:bold;font-size:20px}.chip{color:#ffd34d;font-weight:bold}</style><div class="bar"><span class="logo"><i class="fa-solid fa-gamepad"></i> BLOX ARCADE</span><span class="chip">Player1 &middot; R$ 250</span></div>`},
 
-function $(id){return document.getElementById(id);}
+ {proj:'p1',title:'Part 2 · Your avatar card',
+  spec:'A dark <b>avatar card</b>: a blocky green avatar (a rounded square), the username <b>Player1</b>, and a gold <b>Level 7</b> badge. Centre everything.',
+  want:['border-radius','background','<h3'], text:['Player1','Level 7'],
+  target:`<style>.card{background:#1d1a2b;color:#fff;text-align:center;padding:20px;border-radius:14px;font-family:Arial;width:200px}.av{width:70px;height:70px;background:#27e07a;border-radius:16px;margin:0 auto 10px}.lvl{background:#ffd34d;color:#241a00;font-weight:bold;border-radius:20px;padding:3px 12px;font-size:13px}</style><div class="card"><div class="av"></div><h3>Player1</h3><span class="lvl">Level 7</span></div>`},
 
-function setTheme(t){
-  if(THEME_LIST.indexOf(t)<0) t=THEME_LIST[0];
-  THEME=t;
-  document.querySelectorAll(".theme").forEach(function(b){ b.classList.toggle("on", b.dataset.theme===t); });
-  IDS.forEach(function(i){ $("ref"+i).textContent = STARTERS[String(i)][t]; });
-  persist();
-  var nm=document.querySelector('.theme[data-theme="'+t+'"]');
-  toast("Theme: "+(nm?nm.textContent.trim():t));
-}
+ {proj:'p1',title:'Part 3 · A game card',
+  spec:'A <b>game card</b> with a coloured banner, the title <b>Tower Climb</b>, and a green <b>Play</b> button. Round the corners and add a <b>box-shadow</b>.',
+  want:['border-radius','box-shadow','<button'], text:['Tower Climb','Play'],
+  target:`<style>.game{background:#1d1a2b;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.45);overflow:hidden;width:200px;font-family:Arial}.banner{height:80px;background:#7c5cff}.game h3{color:#fff;margin:12px 12px 8px}.play{display:block;width:90%;margin:0 auto 14px;background:#27e07a;color:#06301c;border:none;border-radius:10px;padding:9px;font-weight:bold;cursor:pointer}</style><div class="game"><div class="banner"></div><h3>Tower Climb</h3><button class="play"><i class="fa-solid fa-play"></i> Play</button></div>`},
 
-function wrap(i, code){
-  var head='<!doctype html><html><head><meta charset="utf-8"><style>'
-   + 'body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:16px;color:#16202e}'
-   + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:6px;background:#e8edf3;cursor:pointer;margin:2px 4px 2px 0}'
-   + 'input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid #cbd5e1;border-radius:6px;margin:2px 4px 2px 0}'
-   + 'h1,h2{margin:.3em 0}'
-   + '.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}'
-   + '#__l4err{position:fixed;left:0;right:0;bottom:0;background:#fef2f2;color:#b91c1c;border-top:2px solid #ef4444;font-family:Consolas,monospace;font-size:12.5px;padding:8px 12px;white-space:pre-wrap;z-index:9}'
-   + '</style><scr'+'ipt>window.onerror=function(m){'
-   + 'var b=document.body||document.documentElement;'
-   + 'var e=document.getElementById("__l4err");if(!e){e=document.createElement("div");e.id="__l4err";b.appendChild(e);}'
-   + 'e.textContent="Error: "+m;'
-   + 'try{parent.postMessage({l4:1,id:'+i+',err:String(m)},"*");}catch(_){}return false;};<\/scr'+'ipt></head>';
-  var body='<body><div id="__l4app">'+code+'</div>'
-   + '<scr'+'ipt>(function(){'
-   + 'function tx(){var a=document.getElementById("__l4app");return a?(a.innerText||"").trim():"";}'
-   + 'function p(at){try{parent.postMessage({l4:1,id:'+i+',text:tx(),attr:at?1:0},"*");}catch(e){}}'
-   + 'try{new MutationObserver(function(ms){var a=false;'
-   + 'for(var k=0;k<ms.length;k++){if(ms[k].type==="attributes"){a=true;break;}}'
-   + 'p(a);}).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true});}catch(e){}'
-   + 'setTimeout(function(){p(false);},60);})();<\/scr'+'ipt></body></html>';
-  return head+body;
-}
+ {proj:'p1',final:true,title:'🧩 Assemble the hub look',
+  spec:'Combine the top bar, your avatar card, and a <b>row of two game cards</b> into ONE dark arcade homepage (set the body background dark).',
+  want:['display:flex','border-radius','box-shadow','<button'], text:['BLOX ARCADE','Player1','Tower Climb'],
+  parts:'Part 1 (top bar) &middot; Part 2 (avatar card) &middot; Part 3 (game cards)',
+  target:`<style>body{margin:0;background:#0f0d18;font-family:Arial}.bar{display:flex;justify-content:space-between;align-items:center;background:#16131f;padding:14px 20px}.logo{color:#27e07a;font-weight:bold;font-size:20px}.chip{color:#ffd34d;font-weight:bold}.row{display:flex;gap:16px;padding:18px;flex-wrap:wrap}.card{background:#1d1a2b;color:#fff;text-align:center;padding:18px;border-radius:14px;width:170px}.av{width:60px;height:60px;background:#27e07a;border-radius:14px;margin:0 auto 8px}.lvl{background:#ffd34d;color:#241a00;font-weight:bold;border-radius:20px;padding:3px 12px;font-size:13px}.game{background:#1d1a2b;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.45);overflow:hidden;width:180px}.banner{height:70px;background:#7c5cff}.banner.r{background:#ff5c7c}.game h3{color:#fff;margin:12px 12px 8px}.play{display:block;width:88%;margin:0 auto 14px;background:#27e07a;color:#06301c;border:none;border-radius:10px;padding:9px;font-weight:bold}</style><div class="bar"><span class="logo">BLOX ARCADE</span><span class="chip">Player1 &middot; R$ 250</span></div><div class="row"><div class="card"><div class="av"></div><h3>Player1</h3><span class="lvl">Level 7</span></div><div class="game"><div class="banner"></div><h3>Tower Climb</h3><button class="play">Play</button></div><div class="game"><div class="banner r"></div><h3>Lava Run</h3><button class="play">Play</button></div></div>`,
+  starter:`<style>
+  body { margin:0; background:#0f0d18; font-family:Arial; }
+  /* .bar (flex), .card (avatar), .game (rounded + box-shadow), .play button */
+</style>
 
-var PRED_NUDGED = {};
-function runEx(i){
-  var pin=$("pred"+i), dn=$("done"+i);
-  if(pin && !(pin.value||"").trim() && !PRED_NUDGED[i] && !(dn&&dn.checked)){
-    PRED_NUDGED[i]=true; toast("🔮 Quick — type your guess first, then Run.");
-    pin.focus(); return;
+<!-- top bar: logo + player chip -->
+<!-- a row: avatar card + two game cards -->
+`},
+
+ /* ============ PROJECT 2 · MAKE IT WORK (JavaScript) ============ */
+ {proj:'p2',title:'Part 1 · The Play button',
+  spec:'Make the Play button DO something. A <b>function</b> runs on <b>onclick</b> and uses <b>innerHTML</b> to show <b>Launching Tower Climb...</b>. Type it, Run, then click Play.',
+  want:['function','onclick','innerhtml'], text:['Play','Press Play'],
+  target:`<style>body{background:#16131f;color:#fff;font-family:Arial;text-align:center;padding:20px}button{background:#27e07a;color:#06301c;border:none;border-radius:10px;padding:11px 22px;font-weight:bold;font-size:15px;cursor:pointer}</style><h2 id="msg">Press Play to start</h2><button onclick="launch()">Play</button><script>
+  function launch() {
+    document.getElementById("msg").innerHTML = "Launching Tower Climb...";
   }
-  delete BASE[i];
-  $("ok"+i).hidden=true;
-  $("out"+i).srcdoc = wrap(i, $("ed"+i).value);
-  var gc=$("gc"+i); if(gc) gc.hidden=false;
-}
+<\/script>`},
 
-function runPredict(i){
-  if(!($("ed"+i).value||"").trim()){ toast("Write your prediction first, then check."); $("ed"+i).focus(); return; }
-  delete BASE[i];
-  $("out"+i).srcdoc = wrap(i, PREDICT[String(i)]);
-  var a=$("ans"+i); if(a) a.hidden=false;
-  showOk(i);
-  persist();
-}
-function showHint(i){ var h=$("hint"+i); if(h) h.hidden=false; }
-
-function waveFlag(){
-  var v=($("meline").value||"stronger");
-  $("flagout").innerHTML='<div class="wflag">When I get older, I will be '+esc(v)+'</div>';
-  persist();
-}
-
-function resetEx(i){
-  var m=MODES[String(i)]||"type";
-  $("ed"+i).value = (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : "");
-  if(m=="predict"){ var a=$("ans"+i); if(a) a.hidden=true; }
-  delete BASE[i];
-  $("out"+i).srcdoc="";
-  $("ok"+i).hidden=true;
-  persist();
-}
-
-window.addEventListener("message", function(e){
-  var d=e.data; if(!d || d.l4!==1) return;
-  var i=d.id;
-  if(d.err) return;
-  var text=d.text||"";
-  if(BASE[i]===undefined){ BASE[i]=text; return; }
-  var want=WANT[String(i)];
-  var ok = want ? (text.indexOf(want)>=0)
-                : ((text!==BASE[i] && text.trim().length>0) || d.attr===1);
-  if(ok) showOk(i);
-});
-
-function showOk(i){
-  $("ok"+i).hidden=false;
-  var cb=$("done"+i);
-  if(cb && !cb.checked){ cb.checked=true; toggleDone(i, true); }
-}
-
-function toggleDone(i, quiet){
-  var done=$("done"+i).checked;
-  var pill=document.querySelector('.pill[href="#ex'+i+'"]');
-  if(pill) pill.classList.toggle("is-done", done);
-  if(!done) $("ok"+i).hidden=true;
-  updateProgress();
-  persist();
-}
-
-function updateProgress(){
-  var n=ALL_IDS.filter(function(i){var c=$("done"+i);return c&&c.checked;}).length;
-  $("pfill").style.width = Math.round(n/ALL_IDS.length*100)+"%";
-  $("ptext").textContent = n+" of "+ALL_IDS.length+" done";
-}
-
-function gather(){
-  var code={}, done=[];
-  ALL_IDS.forEach(function(i){
-    code[i]=$("ed"+i).value;
-    if($("done"+i).checked) done.push(i);
-  });
-  return {v:1, name:$("sname").value, klass:$("sclass").value, date:$("sdate").value,
-          theme:THEME, code:code, done:done,
-          built:$("rbuilt").value, stuck:$("rstuck").value,
-          me:($("meline")?$("meline").value:"")};
-}
-function persist(){ try{ localStorage.setItem(LSKEY, JSON.stringify(gather())); }catch(e){} }
-
-function apply(s){
-  if(!s) return;
-  var th=(s.theme && THEME_LIST.indexOf(s.theme)>=0)? s.theme : THEME_LIST[0];
-  THEME=th; document.querySelectorAll(".theme").forEach(function(b){b.classList.toggle("on",b.dataset.theme===th);});
-  $("sname").value=s.name||""; $("sclass").value=s.klass||"9 COTYC"; $("sdate").value=s.date||"";
-  $("rbuilt").value=s.built||""; $("rstuck").value=s.stuck||""; if($("meline")) $("meline").value=s.me||"";
-  ALL_IDS.forEach(function(i){
-    if(STARTERS[String(i)]) $("ref"+i).textContent = STARTERS[String(i)][THEME];
-    var c=s.code&&s.code[i], m=MODES[String(i)]||"type";
-    $("ed"+i).value = (c!=null ? c : (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : ""));
-    var on=(s.done||[]).indexOf(i)>=0; $("done"+i).checked=on;
-    var pill=document.querySelector('.pill[href="#ex'+i+'"]'); if(pill) pill.classList.toggle("is-done",on);
-  });
-  updateProgress();
-}
-
-function save(){
-  var s=gather();
-  if(!s.name){ if(!confirm("No name entered. Save anyway?")) { $("sname").focus(); return; } }
-  var rows="";
-  ALL_IDS.forEach(function(i){
-    rows+='<h3>Tile '+i+'</h3><pre>'+esc(s.code[i]||"")+'</pre>';
-  });
-  var meta='Name: '+esc(s.name||'-')+' &middot; Class: '+esc(s.klass||'-')+' &middot; Date: '+esc(s.date||'-')
-          +' &middot; Theme: '+esc(s.theme)+' &middot; Progress: '+s.done.length+'/'+ALL_IDS.length;
-  var doc='<!doctype html><meta charset="utf-8"><title>JS Revision Arcade L8 -'+esc(s.name||'')+'</title>'
-    +'<body style="font-family:Segoe UI,Arial;max-width:800px;margin:30px auto;padding:0 16px;color:#16202e">'
-    +'<h1>JavaScript Revision Arcade - Guided Practice L8</h1><p>'+meta+'</p>'
-    +'<p><b>What I built:</b> '+esc(s.built||'-')+'<br><b>Stuck on:</b> '+esc(s.stuck||'-')+'</p><hr>'
-    +rows
-    +'<scr'+'ipt type="application/json" id="l8-state">'+JSON.stringify(s).replace(/</g,"\\u003c")+'<\/scr'+'ipt>'
-    +'<p style="color:#94a3b8;font-size:12px;margin-top:30px">This file is your save. Open it in the workshop with '
-    +'&ldquo;Load my file&rdquo; to keep working, or hand it in on Google Classroom.</p></body>';
-  var blob=new Blob([doc],{type:"text/html"});
-  var a=document.createElement("a");
-  var fn=("JS-L8_"+(s.name||"student")+"_"+(s.klass||"")).replace(/[^a-z0-9_-]+/gi,"-")+".html";
-  a.href=URL.createObjectURL(blob); a.download=fn; document.body.appendChild(a); a.click();
-  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
-  toast("Saved "+fn+" - now upload it to Google Classroom");
-}
-function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-
-function loadFile(input){
-  var f=input.files[0]; if(!f) return;
-  var r=new FileReader();
-  r.onload=function(){
-    try{
-      var doc=new DOMParser().parseFromString(r.result,"text/html");
-      var node=doc.getElementById("l8-state");
-      if(!node){ toast("That file has no saved L6 work."); return; }
-      apply(JSON.parse(node.textContent)); persist();
-      toast("Loaded - carry on where you left off");
-    }catch(e){ toast("Could not read that file."); }
-  };
-  r.readAsText(f); input.value="";
-}
-
-var _tt;
-function toast(m){ var t=$("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(_tt); _tt=setTimeout(function(){t.classList.remove("show");},2600); }
-
-document.addEventListener("DOMContentLoaded", function(){
-  ALL_IDS.forEach(function(i){ $("ed"+i).addEventListener("input", persist); });
-  ["sname","sclass","sdate","rbuilt","rstuck","meline"].forEach(function(id){ var el=$(id); if(el) el.addEventListener("input",persist); });
-  var saved=null; try{ saved=JSON.parse(localStorage.getItem(LSKEY)); }catch(e){}
-  if(saved) apply(saved); else updateProgress();
-
-  // ---- advanced motion effects ----
-  try{
-    if(document.documentElement.classList.contains("anim")){
-      var io=new IntersectionObserver(function(es){es.forEach(function(en){
-        if(en.isIntersecting){ en.target.classList.add("is-in"); io.unobserve(en.target); }
-      });},{threshold:0.08});
-      document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ io.observe(el); });
-      setTimeout(function(){ document.querySelectorAll(".mission,.anatomy,.band,.ex,.closing").forEach(function(el){ el.classList.add("is-in"); }); }, 4000);
+ {proj:'p2',title:'Part 2 · Is the server full?',
+  spec:'Add an <b>if / else</b> decision. When you click <b>Join</b>, if <code>full</code> is true show <b>Server full!</b>, else show <b>Join now!</b>.',
+  want:['if(','else','onclick'], text:['Join','Check the server'],
+  target:`<style>body{background:#16131f;color:#fff;font-family:Arial;text-align:center;padding:20px}button{background:#2b9cff;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-weight:bold;cursor:pointer}</style><h2 id="msg">Check the server</h2><button onclick="join()">Join</button><script>
+  function join() {
+    let full = false;
+    if (full === true) {
+      document.getElementById("msg").innerHTML = "Server full!";
+    } else {
+      document.getElementById("msg").innerHTML = "Join now!";
     }
-    var mc=document.querySelector(".mission-card .refcard");
-    if(mc && !window.matchMedia("(prefers-reduced-motion:reduce)").matches){
-      var mw=mc.parentElement;
-      mw.addEventListener("mousemove",function(e){
-        var r=mc.getBoundingClientRect();
-        var px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
-        mc.style.transform="rotateY("+(px*16).toFixed(2)+"deg) rotateX("+(-py*16).toFixed(2)+"deg)";
-      });
-      mw.addEventListener("mouseleave",function(){ mc.style.transform=""; });
+  }
+<\/script>`},
+
+ {proj:'p2',title:'Part 3 · Build the games list',
+  spec:'A <b>loop</b> builds the games list. Loop a <b>list</b> of games (using <code>.length</code>) and add each one to the page. (This loop runs by itself.)',
+  want:['for(','.length','innerhtml'], text:['Tower Climb','Lava Run','Pet Sim'],
+  target:`<style>body{background:#16131f;color:#fff;font-family:Arial;padding:20px}h2{margin:0 0 10px}.g{background:#1d1a2b;border-radius:10px;padding:12px;margin:8px 0}</style><h2>Games</h2><div id="list"></div><script>
+  let games = ["Tower Climb", "Lava Run", "Pet Sim"];
+  let html = "";
+  for (let i = 0; i < games.length; i = i + 1) {
+    html = html + "<div class='g'>" + games[i] + "</div>";
+  }
+  document.getElementById("list").innerHTML = html;
+<\/script>`},
+
+ {proj:'p2',title:'Part 4 · Random featured game',
+  spec:'Pick a <b>random</b> featured game. When you click <b>Spin</b>, use <b>Math.random</b> and <b>Math.floor</b> to choose one game from the list.',
+  want:['math.random','math.floor','onclick'], text:['Featured','Spin'],
+  target:`<style>body{background:#16131f;color:#fff;font-family:Arial;text-align:center;padding:20px}button{background:#ffd34d;color:#241a00;border:none;border-radius:10px;padding:11px 22px;font-weight:bold;cursor:pointer}#f{font-size:22px;color:#27e07a;margin:16px;font-weight:bold}</style><h2>Featured game</h2><div id="f">?</div><button onclick="spin()">Spin</button><script>
+  let games = ["Tower Climb", "Lava Run", "Pet Sim", "Sky Race"];
+  function spin() {
+    let pick = games[Math.floor(Math.random() * games.length)];
+    document.getElementById("f").innerHTML = pick;
+  }
+<\/script>`},
+
+ {proj:'p2',final:true,title:'🧩 Assemble the working Game Hub',
+  spec:'The big one — combine EVERYTHING: the dark hub look, the games list (<b>loop</b>), a working <b>Play</b> button (<b>function</b>), the <b>if/else</b> join check, and the <b>random</b> Spin. One complete, interactive Game Hub.',
+  want:['display:flex','function','onclick','if(','else','for(','math.random'], text:['BLOX ARCADE','Tower Climb','Player1'],
+  parts:'the look (bar + avatar) &middot; games list (loop) &middot; Play (function) &middot; join check (if/else) &middot; Spin (random)',
+  target:`<style>body{margin:0;background:#0f0d18;color:#fff;font-family:Arial}.bar{display:flex;justify-content:space-between;align-items:center;background:#16131f;padding:14px 20px}.logo{color:#27e07a;font-weight:bold;font-size:20px}.chip{color:#ffd34d;font-weight:bold}.av{width:54px;height:54px;background:#27e07a;border-radius:14px;display:inline-block;vertical-align:middle}.me{padding:16px 20px}.me b{font-size:16px}.g{background:#1d1a2b;border-radius:10px;padding:11px 14px;margin:8px 20px;display:flex;justify-content:space-between;align-items:center}button{background:#27e07a;color:#06301c;border:none;border-radius:8px;padding:7px 16px;font-weight:bold;cursor:pointer}.spin{background:#ffd34d;color:#241a00;margin:6px 20px}#msg{margin:10px 20px;color:#9fe8c4;font-weight:bold}</style><div class="bar"><span class="logo">BLOX ARCADE</span><span class="chip">Player1 &middot; R$ 250</span></div><div class="me"><span class="av"></span> <b>Player1</b> &middot; Level 7</div><h3 id="msg">Pick a game to play</h3><div id="list"></div><button class="spin" onclick="spin()">Spin a random game</button><div id="f" style="margin:10px 20px;color:#27e07a;font-weight:bold"></div><script>
+  let games = ["Tower Climb", "Lava Run", "Pet Sim"];
+  let html = "";
+  for (let i = 0; i < games.length; i = i + 1) {
+    html = html + "<div class='g'>" + games[i] + " <button onclick=\\"launch('" + games[i] + "')\\">Play</button></div>";
+  }
+  document.getElementById("list").innerHTML = html;
+  function launch(name) {
+    let full = false;
+    if (full === true) {
+      document.getElementById("msg").innerHTML = "Server full!";
+    } else {
+      document.getElementById("msg").innerHTML = "Launching " + name + "...";
     }
-    var pt=document.getElementById("ptop");
-    if(pt){ var ticking=false; window.addEventListener("scroll",function(){
-      if(ticking) return; ticking=true;
-      requestAnimationFrame(function(){ var h=document.documentElement.scrollHeight-window.innerHeight;
-        pt.style.width=(h>0?(window.scrollY/h*100):0)+"%"; ticking=false; });
-    },{passive:true}); }
-  }catch(e){}
-});
+  }
+  function spin() {
+    let pick = games[Math.floor(Math.random() * games.length)];
+    document.getElementById("f").innerHTML = "Featured: " + pick;
+  }
+<\/script>`,
+  starter:`<style>
+  body { margin:0; background:#0f0d18; color:#fff; font-family:Arial; }
+  /* .bar (flex), avatar, .g game rows, buttons, .spin */
+</style>
+
+<!-- the look: top bar + your avatar line -->
+<div id="list"></div>
+<!-- a Spin button + a featured slot -->
+
+<script>
+  let games = ["Tower Climb", "Lava Run", "Pet Sim"];
+  // 1) a LOOP that builds the games list (each row has a Play button)
+  // 2) a FUNCTION launch(name) with an IF/ELSE server check
+  // 3) a FUNCTION spin() that picks a RANDOM game with Math.random + Math.floor
+<\/script>
+`}
+];
+
+/* ===== engine (same proven core as L1) ===== */
+const PROJECT={p1:['PROJECT 1 · BUILD THE LOOK','HTML + CSS — the top bar, your avatar, game cards, then assemble','p1'],
+               p2:['PROJECT 2 · MAKE IT WORK','JavaScript — a Play function, an if/else check, a loop, and a random Spin','p2']};
+const LSKEY='practice-l8-v1';
+const $=id=>document.getElementById(id);
+const norm=s=>(s||'').toLowerCase().replace(/\s+/g,'');
+const reqMet=(req,v)=>Array.isArray(req)?req.some(x=>v.includes(norm(x))):v.includes(norm(req));
+function wrapDoc(code){return '<!doctype html><meta charset="utf-8"><base href="https://yunshugao.github.io/year9-computing/"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>html,body{margin:0}body{font-family:Nunito,Segoe UI,Arial,sans-serif;padding:12px;color:#3c3c3c;display:flow-root}</style>'+(code||'');}
+let ready=false;
+function codeOf(i){ return $('ed'+i).value.replace(/\/\*[\s\S]*?\*\//g,'').replace(/<!--[\s\S]*?-->/g,''); }
+function resultText(i){ try{const d=$('yr'+i).contentDocument; return norm(d.body?d.body.innerText||d.body.textContent:'');}catch(e){return '';} }
+function matched(t){ const code=norm(codeOf(t.i));
+  const okCode=(t.want||[]).every(r=>reqMet(r,code));
+  const okText=(t.text||[]).every(w=>resultText(t.i).includes(norm(w)));
+  return okCode && okText; }
+function updateTile(t){ const was=t.done, ok=matched(t);
+  $('tile'+t.i).classList.toggle('done',ok);
+  $('badge'+t.i).textContent = ok?'✓ Made':'not yet'; t.done=ok; updateCounts();
+  if(ready && ok && !was) onProgress(t); }
+function updateCounts(){ const done=TILES.filter(t=>t.done).length;
+  $('ringn').textContent=done+'/'+TILES.length; $('pfill').style.width=(done/TILES.length*100)+'%';
+  ['p1','p2'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), c=$('cnt-'+k); if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length; }); }
+/* Scroll stability: pin the tile's header to its viewport position and re-assert through
+   every async reflow (image loads from Pages, font swaps) so Run never makes the page jump.
+   Anchoring to an element beats restoring an absolute scrollY because the browser's own
+   scroll-anchoring fights back on each growth — we just keep correcting it back. */
+let runAnchor=null;
+function anchorNow(){ if(!runAnchor)return; const dy=runAnchor.el.getBoundingClientRect().top-runAnchor.top; if(Math.abs(dy)>0.5) window.scrollBy(0,dy); }
+function startAnchor(i){ const el=$('tile'+i); if(el) runAnchor={el:el, top:el.getBoundingClientRect().top, until:Date.now()+1700}; }
+function render(i){ startAnchor(i); $('yr'+i).srcdoc=wrapDoc($('ed'+i).value); persist();
+  requestAnimationFrame(anchorNow); requestAnimationFrame(()=>requestAnimationFrame(anchorNow));
+  setTimeout(anchorNow,90); setTimeout(anchorNow,260); setTimeout(anchorNow,560); }
+function reset(i){ $('ed'+i).value=TILES[i].starter||''; render(i); }
+function run(i){ render(i); }
+function fitFrame(id){ try{ const f=$(id); if(!f)return; const d=f.contentDocument; if(!d||!d.body)return;
+  const h=Math.max(d.body.scrollHeight, d.body.offsetHeight, 90);   /* body.scrollHeight is content-based (not viewport-clamped) so no growth loop, and no collapse = no scroll oscillation */
+  f.style.height=Math.max(90,Math.min(2400,h+16))+'px'; }catch(_){} }
+function fitSoon(id){ fitFrame(id); setTimeout(()=>fitFrame(id),160); setTimeout(()=>fitFrame(id),460); }
+function tileHTML(t){
+  return `<div class="tile ${t.proj}${t.final?' final':''}" id="tile${t.i}">
+    <div class="th"><span class="num">${t.final?'🧩':(t.i+1)}</span>
+      <div><div class="ttl">${t.title}</div><div class="spec">${t.spec}</div></div>
+      <span class="badge2" id="badge${t.i}">not yet</span></div>
+    ${t.parts?`<div class="partslist">🧩 <b>Assemble</b> — bring together: ${t.parts}</div>`:''}
+    <div class="preview">
+      <div class="panel target"><div class="lab">🎯 Target — the page to match</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
+      <div class="panel yours"><div class="lab">▶ Your result</div><iframe id="yr${t.i}" scrolling="no" title="your result ${t.i+1}"></iframe></div>
+    </div>
+    <div class="codewrap"><div class="clab">⌨ Your code — type it, no pasting</div>
+      <textarea id="ed${t.i}" spellcheck="false" data-gramm="false" placeholder="Write your HTML and CSS here..."></textarea>
+      <div class="runrow"><button class="runb" onclick="run(${t.i})">▶ Run</button><button class="resetb" onclick="reset(${t.i})">Clear</button></div></div>
+  </div>`;
+}
+function build(){
+  TILES.forEach((t,i)=>t.i=i);
+  let html='';
+  ['p1','p2'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), m=PROJECT[k];
+    html+=`<div class="projbar ${k}"><span class="badge">${m[0]}</span><span class="desc">${m[1]}</span><span class="count" id="cnt-${k}">0 / ${g.length}</span></div>`;
+    html+=`<div class="tiergroup">`+g.map(tileHTML).join('')+`</div>`; });
+  $('board').innerHTML=html;
+  TILES.forEach(t=>{ const ed=$('ed'+t.i);
+    if(t.starter) ed.value=t.starter;
+    let obTg=null, obYr=null;
+    $('tg'+t.i).addEventListener('load',()=>{ fitSoon('tg'+t.i);
+      try{ if(obTg)obTg.disconnect(); obTg=new ResizeObserver(()=>fitFrame('tg'+t.i)); obTg.observe($('tg'+t.i).contentDocument.body); }catch(_){} });
+    $('yr'+t.i).addEventListener('load',()=>{ fitSoon('yr'+t.i); updateTile(t); anchorNow();
+      try{ if(obYr)obYr.disconnect(); obYr=new ResizeObserver(()=>{ fitFrame('yr'+t.i); if(runAnchor&&Date.now()<runAnchor.until) anchorNow(); }); obYr.observe($('yr'+t.i).contentDocument.body); }catch(_){} });
+    $('tg'+t.i).srcdoc=wrapDoc(t.target);
+    $('yr'+t.i).srcdoc=wrapDoc(ed.value);
+    ed.addEventListener('input',()=>{ persist(); });
+    ed.addEventListener('paste',e=>{ e.preventDefault(); toast('Type it yourself — pasting is off'); });
+    ed.addEventListener('drop',e=>e.preventDefault());
+  });
+}
+let toT; function toast(msg){ const e=$('toast'); e.textContent=msg; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),1800); }
+function gather(){ return {name:$('sName').value,cls:$('sClass').value,date:$('sDate').value,r1:$('r1').value,r2:$('r2').value,r3:$('r3').value,code:TILES.map(t=>$('ed'+t.i).value)}; }
+function persist(){ try{localStorage.setItem(LSKEY,JSON.stringify(gather()));}catch(e){} }
+function restore(){ let s=null; try{s=JSON.parse(localStorage.getItem(LSKEY));}catch(e){} if(!s)return;
+  $('sName').value=s.name||''; if(s.cls)$('sClass').value=s.cls; $('sDate').value=s.date||'';
+  $('r1').value=s.r1||''; $('r2').value=s.r2||''; $('r3').value=s.r3||'';
+  if(Array.isArray(s.code)) TILES.forEach(t=>{ if(s.code[t.i]!=null){ $('ed'+t.i).value=s.code[t.i]; $('yr'+t.i).srcdoc=wrapDoc(s.code[t.i]); } }); }
+document.addEventListener('input',e=>{ if(['sName','sClass','sDate','r1','r2','r3'].includes(e.target.id))persist(); });
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function attr(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
+function saveWork(){
+  TILES.forEach(t=>updateTile(t)); persist();
+  const g=gather(), nm=(g.name||'student').replace(/[^a-z0-9]+/gi,'-');
+  const tally=k=>{const a=TILES.filter(t=>t.proj===k);return a.filter(t=>t.done).length+'/'+a.length;};
+  let body='';
+  TILES.forEach((t,i)=>{ const has=(g.code[i]||'').trim();
+    body+=`<section><h2>${i+1}. ${t.title} <small style="color:#8a8a8a">(${t.proj.toUpperCase()})</small></h2>`
+      +(has?`<iframe class="r" sandbox srcdoc="${attr(wrapDoc(g.code[i]))}" title="result ${i+1}"></iframe>`:`<div class="r"><em style="color:#999">not attempted</em></div>`)
+      +`<details><summary>my code</summary><pre>${esc(g.code[i])}</pre></details></section>`; });
+  const out=`<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><title>JavaScript Game Hub L8 — ${esc(g.name)}</title>
+<style>body{font-family:Nunito,Segoe UI,Arial,sans-serif;max-width:880px;margin:0 auto;padding:26px;color:#3c3c3c;background:#f7f7f5}
+h1{color:#0d1b2a;margin-bottom:2px} .meta{color:#8a8a8a;margin-bottom:6px}
+.tiers{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:12px 16px;margin:12px 0;font-weight:800}.tiers span{display:inline-block;margin-right:18px}
+section{background:#fff;border:2px solid #e5e5e5;border-radius:14px;padding:15px 18px;margin:13px 0}
+h2{font-size:16px;margin:0 0 9px} .r{width:100%;height:200px;border:2px dashed #d9d9d9;border-radius:10px;background:#fff;display:block}
+pre{background:#0d1b2a;color:#eafff0;padding:12px;border-radius:10px;overflow:auto;font-size:12.5px;font-family:Consolas,monospace}
+summary{cursor:pointer;color:#1899d6;margin-top:8px} .refl{background:#fffceb;border:2px solid #ffd900;border-radius:14px;padding:14px 16px;margin:14px 0}</style></head>
+<body><h1>JavaScript Game Hub — Guided Practice L8 — ${esc(g.name)||'(no name)'}</h1>
+<div class="meta">${esc(g.cls)} · ${esc(g.date)}</div>
+<div class="tiers"><span>PROJECT 1 (look) ${tally('p1')}</span><span>PROJECT 2 (JS) ${tally('p2')}</span> &nbsp; → made ${TILES.filter(t=>t.done).length}/${TILES.length}</div>
+<div class="refl"><b>My reflection</b><br>Proudest page: ${esc(g.r1)}<br>Skill I used a lot: ${esc(g.r2)}<br>Want to improve: ${esc(g.r3)}</div>
+${body}</body></html>`;
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/html'}));
+  a.download='GameHub-L8-'+nm+'.html'; document.body.appendChild(a); a.click(); a.remove();
+  $('saveMsg').textContent='Saved! Upload GameHub-L8-'+nm+'.html to Google Classroom.';
+}
+function onProgress(t){ const done=TILES.filter(x=>x.done).length;
+  if(done===TILES.length){ toast('🎉 Game Hub complete — now hit Save my work!'); confetti(); return; }
+  if(t.final){ toast('🧩 Page assembled — brilliant!'); confetti(); return; }
+  const g=TILES.filter(x=>x.proj===t.proj); if(g.every(x=>x.done)) toast('Whole project done — nice work!'); }
+function confetti(){ const cols=['#1cb0f6','#3a5a40','#ffba08','#ef476f','#13a08e'];
+  for(let i=0;i<28;i++){ const c=document.createElement('div'); c.className='conf';
+    c.style.left=(8+Math.random()*84)+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDelay=(Math.random()*0.35)+'s'; document.body.appendChild(c); setTimeout(()=>c.remove(),2700);} }
+build(); restore(); updateCounts();
+setTimeout(()=>{ready=true;},1000);
 </script>
-</body></html>
+</body>
+</html>
