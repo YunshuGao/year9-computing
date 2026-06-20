@@ -317,6 +317,14 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 
 .cols>*{min-width:0}
 .code-ref,.editor{min-width:0;max-width:100%}
+
+/* bigger layout: wider page + larger type & output columns */
+.wrap{max-width:1340px}
+.cols{grid-template-columns:1fr 1.14fr 1.08fr}
+.code-ref{height:340px}
+.editor{height:340px}
+.out{height:300px}
+#ex13 .out{height:340px}
 </style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
