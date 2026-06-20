@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build Your Arcade (HTML + CSS + JS) - Guided Practice L8</title>
-<style>
+<title>Build a Minecraft Page (HTML + CSS + JS) - Guided Practice L8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><style>
 :root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
   --gold:#ffd34d;--brand:#7c3aed;
   --spectrum:linear-gradient(100deg,#ff3d77 0%,#a855f7 50%,#36e0c0 100%);}
@@ -219,7 +219,134 @@ html{scroll-behavior:smooth}
 .mission-card .refcard{transition:transform .12s ease;will-change:transform}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
 @media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}body{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
-.refcard{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;width:170px;height:170px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#a855f7,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#36e0c0;font-size:25px}.refcard .rc2{font-size:16px;opacity:.85}.refcard .rc3{color:#ffd34d;font-size:25px}</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
+.refcard{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;width:170px;height:170px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#a855f7,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#36e0c0;font-size:25px}.refcard .rc2{font-size:16px;opacity:.85}.refcard .rc3{color:#ffd34d;font-size:25px}
+/* ===================== MINECRAFT SKIN (ported L7 -> L8) ===================== */
+:root{--mc-grass:#6abe30;--mc-grass-d:#4e9c28;--mc-dirt:#8a6240;--mc-dirt-d:#6e4d2f;
+  --mc-stone:#8a8a8a;--mc-ink:#2a2a2a;--mc-gold:#f9c52b;}
+.pixel,.wc-hero h1,.wc-emblem,.wc-kicker,.wc-pill,.tier-zone h3,.divide .lab,.band .bnum,
+.band h2,.mtag,.soc-tag,.finale h3,.btn,.zone-tag,.lbl,#buddyBubble,.pill .ttl,.ana-head h2,
+.closing h3,.mission h3{font-family:'Press Start 2P','Segoe UI',monospace !important;letter-spacing:0}
+/* pixel font is wide: shrink the big text so it still fits */
+.wc-hero h1{font-size:18px;line-height:1.6;display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px}
+.band h2{font-size:15px;line-height:1.55} .ana-head h2{font-size:13px}
+.tier-zone h3{font-size:11px} .divide .lab{font-size:9px} .band .bnum{font-size:9px}
+.mission h3{font-size:13px;line-height:1.5} .closing h3{font-size:13px;line-height:1.5}
+.finale h3{font-size:13px;line-height:1.6} .lbl{font-size:8.5px} .zone-tag{font-size:8px}
+.pill .ttl{font-size:8px;line-height:1.3} .wc-kicker{font-size:9px} .wc-pill{font-size:8.5px}
+.btn{font-size:9.5px}
+/* blocky world background: faint block grid over a sky/grass wash */
+body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
+  background-image:linear-gradient(rgba(0,0,0,.045) 2px,transparent 2px),
+                  linear-gradient(90deg,rgba(0,0,0,.045) 2px,transparent 2px);
+  background-size:auto,42px 42px,42px 42px;background-attachment:fixed}
+/* sharp corners everywhere + chunky pixel shadow (the Minecraft GUI block look) */
+.ex,.anatomy,.tier-zone,.win,.code-ref,.editor,.goalbox,.reveal,.closing,.strip,.mission,
+.predict-row,.guesscheck,.try,.socceroos,.finale,.code-ref,.ana-code,.out{border-radius:0 !important}
+.ex{border:3px solid var(--mc-ink);border-left-width:9px;box-shadow:5px 5px 0 rgba(0,0,0,.16)}
+.anatomy,.mission,.closing,.strip{border:3px solid var(--mc-ink);box-shadow:5px 5px 0 rgba(0,0,0,.14)}
+.tier-zone{border:3px solid var(--mc-ink) !important;box-shadow:4px 4px 0 rgba(0,0,0,.14)}
+.tier-zone.must{background:#dff3cf}.tier-zone.should{background:#d4eef0}.tier-zone.could{background:#efe4cf}
+.win{border:3px solid var(--mc-ink)}
+/* 3D stone/wood Minecraft buttons */
+.btn{border-radius:0 !important;border:3px solid var(--mc-ink);text-transform:uppercase;padding:11px 15px;
+  box-shadow:inset 3px 3px 0 rgba(255,255,255,.32),inset -3px -3px 0 rgba(0,0,0,.32),4px 4px 0 rgba(0,0,0,.22)}
+.btn:active{transform:translate(3px,3px);box-shadow:inset 3px 3px 0 rgba(0,0,0,.28)}
+.ex.must .btn.run{background:#6abe30;color:#16310a}.ex.should .btn.run{background:#36a3a3;color:#06302f}
+.ex.could .btn.run{background:#b07a3a;color:#2a1700}
+.btn.ghost{background:#b9b9b9;color:#222}.btn.save,.btn.load{background:var(--mc-gold);color:#2a2200}
+/* blocky pills */
+.pill{border-radius:0 !important;border:2px solid var(--mc-ink);box-shadow:3px 3px 0 rgba(0,0,0,.2)}
+.pill.must{background:#6abe30}.pill.should{background:#36a3a3}.pill.could{background:#b07a3a}
+.pill.is-done{outline:3px solid var(--mc-gold);outline-offset:2px}
+/* HERO = a grass-and-dirt block scene with white pixel text */
+.wc-hero{border-radius:0 !important;border-bottom:7px solid var(--mc-ink);box-shadow:0 7px 0 rgba(0,0,0,.18);
+  background:linear-gradient(180deg,#8fd0f5 0%,#8fd0f5 30%,#6abe30 30%,#5aa828 46%,#8a6240 46%,#6e4d2f 100%);
+  padding:30px 34px 26px}
+.wc-hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,0,0,.05) 3px,transparent 3px),linear-gradient(90deg,rgba(0,0,0,.05) 3px,transparent 3px);
+  background-size:48px 48px}
+.wc-stripe{display:none}
+.wc-emblem{background:none !important;-webkit-text-fill-color:#fff;color:#fff;font-style:normal;font-size:26px;
+  text-shadow:3px 3px 0 var(--mc-ink);filter:none}
+.wc-hero h1{color:#fff;text-shadow:3px 3px 0 var(--mc-ink)}
+.wc-kicker{color:#fff2b0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.wc-sub{color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.55)}.wc-sub b{color:#fff2b0}
+.wc-ul{display:none}
+.wc-pill{border-radius:0;background:var(--mc-gold);color:#2a2200;border:2px solid var(--mc-ink);box-shadow:2px 2px 0 rgba(0,0,0,.3)}
+.scrollcue{border-radius:0;border:2px solid var(--mc-ink);background:rgba(255,255,255,.9);color:#2a2a2a;box-shadow:2px 2px 0 rgba(0,0,0,.25)}
+.wc-trophy{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.4))}
+/* bands = solid blocks */
+.band{border-radius:0 !important;border:4px solid var(--mc-ink);box-shadow:6px 6px 0 rgba(0,0,0,.18)}
+.band.html{background:#5aa828}.band.js{background:#8a6240}.band.your{background:#6f6f6f}.band.ship{background:#b8902a}
+.band::before{background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.12))}
+.band h2,.band p{text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+/* anatomy + mission accents */
+.anatomy{border-top:7px solid var(--mc-grass-d)}
+.ex.must{border-color:var(--mc-ink)} .ex .n{border-radius:0;border:2px solid var(--mc-ink)}
+.ex.capstone{border:4px solid var(--mc-gold);box-shadow:6px 6px 0 rgba(212,175,55,.3)}
+.refcard{border-radius:0 !important;border:3px solid var(--mc-ink);box-shadow:5px 5px 0 rgba(0,0,0,.3)}
+/* ---- mascot: Digger ---- */
+.hero-buddy{position:absolute;right:30px;bottom:-2px;z-index:3}
+.hero-buddy svg{width:118px;height:auto;image-rendering:pixelated;filter:drop-shadow(3px 4px 0 rgba(0,0,0,.32))}
+#buddy{position:fixed;right:18px;bottom:16px;z-index:70;display:flex;flex-direction:column;align-items:flex-end;
+  cursor:pointer;animation:dig-bob 2.8s ease-in-out infinite}
+#buddy svg{width:80px;height:auto;image-rendering:pixelated;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.25))}
+@keyframes dig-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#buddyBubble{max-width:206px;background:#fff;border:3px solid var(--mc-ink);box-shadow:4px 4px 0 rgba(0,0,0,.2);
+  padding:9px 11px;font-size:8px;line-height:1.85;color:#2a2a2a;margin-bottom:9px;
+  opacity:0;transform:translateY(10px);transition:.18s;pointer-events:none}
+#buddyBubble.show{opacity:1;transform:translateY(0)}
+.buddy-cheer{animation:dig-cheer .55s ease}
+@keyframes dig-cheer{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-14px) rotate(-7deg)}70%{transform:translateY(-9px) rotate(7deg)}}
+@media(max-width:820px){.hero-buddy{display:none}#buddy svg{width:60px}#buddyBubble{max-width:160px}}
+
+/* ===== L7 v2 calm-down pass (overrides the busy bits) ===== */
+.btn,.lbl,.zone-tag,.pill .ttl,.mtag,.soc-tag,.finale h3,.closing h3,.mission h3,.ana-head h2,.wc-sub,.wc-kicker{
+  font-family:'Segoe UI',system-ui,Arial,sans-serif !important;letter-spacing:0}
+.btn{font-size:13px !important;text-transform:none}
+.lbl{font-size:11.5px !important}.zone-tag{font-size:10.5px !important}.pill .ttl{font-size:10.5px !important}
+.finale h3,.closing h3,.mission h3{font-size:19px !important;line-height:1.3 !important}
+.ana-head h2{font-size:18px !important}.wc-kicker{font-size:11px !important}
+/* pixel font now stays ONLY on: hero h1/emblem, tier headings, band titles + numbers, dividers, wc-pill, mascot */
+/* calmer plain background (drop the busy block grid) */
+body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important}
+/* softer, consistent block shadows */
+.ex{box-shadow:3px 3px 0 rgba(0,0,0,.10) !important}
+.anatomy,.mission,.closing,.strip,.tier-zone{box-shadow:3px 3px 0 rgba(0,0,0,.07) !important}
+.band{box-shadow:4px 4px 0 rgba(0,0,0,.12) !important}
+/* drop the redundant 'why loops matter' strip */
+.socceroos{display:none !important}
+
+/* ---- engagement: XP badge, confetti, mute ---- */
+#lvBadge{font-family:'Press Start 2P',monospace;font-size:9px;background:#2e4d2e;color:#ffd54f;border:2px solid #1a2a14;padding:6px 9px;margin-right:10px;box-shadow:2px 2px 0 rgba(0,0,0,.2);white-space:nowrap}
+#muteBtn{font-size:15px !important;padding:5px 10px !important}
+.cfx{position:fixed;top:-18px;width:15px;height:15px;border:2px solid rgba(0,0,0,.3);z-index:300;pointer-events:none;animation:cfxfall 2.4s linear forwards}
+@keyframes cfxfall{to{transform:translateY(106vh) rotate(560deg);opacity:.25}}
+/* BUG FIX 1: restore mobile column stacking (width override had killed it) + kill stray h-scroll */
+@media(max-width:1040px){.cols{grid-template-columns:1fr !important}.wrap{padding:0 14px}.band{margin-left:-14px;margin-right:-14px}html,body{overflow-x:hidden}}
+/* BUG FIX 2: wrap long reference lines instead of horizontal-scrolling */
+.code-ref{white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* ---- 'what you will build' showcase ---- */
+.showcase{margin:16px 0 6px;border:3px solid #2a2a2a;background:#fff;box-shadow:5px 5px 0 rgba(0,0,0,.14)}
+.sc-head{background:#4e9c28;color:#fff;padding:11px 16px;font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.7;text-shadow:2px 2px 0 rgba(0,0,0,.35)}
+.sc-head .star{color:#f9c52b}
+.sc-body{padding:16px;display:grid;grid-template-columns:1fr .92fr;gap:18px;align-items:center}
+.sc-note{font-size:14.5px;color:#2a2a2a;line-height:1.65}
+.sc-note b{color:#2a5d12}.sc-note code{background:#eef2f6;padding:1px 5px;font-family:Consolas,monospace;font-size:.92em}
+.sc-win{border:3px solid #2a2a2a;background:#8fd0f5;box-shadow:3px 3px 0 rgba(0,0,0,.2)}
+.sc-bar{background:#d8d8d8;border-bottom:3px solid #2a2a2a;padding:6px 9px;display:flex;align-items:center;gap:6px}
+.sc-bar i{width:11px;height:11px;border:2px solid #2a2a1a;display:inline-block}
+.sc-bar .url{margin-left:8px;font-family:monospace;font-size:11px;color:#444;background:#fff;border:2px solid #2a2a1a;padding:2px 9px}
+.sc-page{padding:18px 16px;text-align:center}
+.sc-page h3{font-family:'Press Start 2P',monospace;font-size:15px;color:#2a5d12;margin:2px 0 13px;text-shadow:2px 2px 0 rgba(255,255,255,.6)}
+.sc-banner{background:#6abe30;color:#fff;border:3px solid #1f3d10;padding:10px;font-family:monospace;font-weight:bold;margin-bottom:13px}
+.sc-blocks{display:flex;justify-content:center;gap:8px;margin-bottom:14px}
+.sc-blk{width:36px;height:36px;border:3px solid #2a2a1a}
+.sc-btn{background:#8a6240;color:#fff;border:3px solid #3a2a1a;padding:9px 14px;font-family:monospace;font-weight:bold;margin:0 4px;cursor:default}
+.sc-found{margin-top:12px;font-family:monospace;font-weight:bold;color:#2a5d12}
+@media(max-width:820px){.sc-body{grid-template-columns:1fr}}
+</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
   <header class="wc-hero">
@@ -227,21 +354,44 @@ html{scroll-behavior:smooth}
     <div class="wc-inner">
       <div class="wc-emblem">L8</div>
       <div class="wc-titles">
-        <div class="wc-kicker">&#127918; Year 9 Computing Technology &middot; the whole term, on one page</div>
-        <h1>Build Your Arcade <span class="wc-pill">Guided Practice L8</span></h1>
+        <div class="wc-kicker">&#9935; Minecraft mode &middot; Year 9 Computing Technology</div>
+        <h1>Build a Minecraft Page <span class="wc-pill">Guided Practice L8</span></h1>
         <div class="wc-ul"></div>
-        <p class="wc-sub"><b>Three languages, one page: HTML builds it, CSS paints it, JavaScript makes it play.</b> Everything here you have already learned - now put it all together into your own arcade.</p>
+        <p class="wc-sub"><b>HTML builds it, CSS paints it, JavaScript makes it work.</b> Today you put all three together and build a CRAFT WORLD page - with the skills you have already learned this term.</p>
         <a class="scrollcue" href="#ex1">Start building &darr;</a>
       </div>
-      <div class="wc-trophy">&#127919;</div>
+      <div class="wc-trophy">&#9935;</div>
     </div>
+  <div class="hero-buddy"><svg viewBox="0 0 72 92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-label="Digger the block miner"><rect x="54" y="18" width="6" height="36" fill="#7a5230"/><rect x="46" y="12" width="20" height="9" fill="#bfc8d0"/><rect x="46" y="12" width="7" height="9" fill="#8fa0ad"/><rect x="14" y="8" width="40" height="40" fill="#8a6240"/><rect x="14" y="8" width="40" height="10" fill="#6abe30"/><rect x="14" y="16" width="40" height="3" fill="#4e9c28"/><rect x="20" y="27" width="5" height="5" fill="#74502f"/><rect x="42" y="38" width="5" height="5" fill="#74502f"/><rect x="31" y="33" width="4" height="4" fill="#9c7144"/><rect x="22" y="26" width="7" height="8" fill="#ffffff"/><rect x="24" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="39" y="26" width="7" height="8" fill="#ffffff"/><rect x="41" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="28" y="41" width="12" height="3" fill="#3a2a1a"/><rect x="18" y="48" width="32" height="22" fill="#2a8c8c"/><rect x="18" y="48" width="32" height="4" fill="#37a3a3"/><rect x="30" y="52" width="8" height="14" fill="#1f6f6f"/><rect x="10" y="50" width="8" height="18" fill="#8a6240"/><rect x="50" y="50" width="8" height="16" fill="#8a6240"/><rect x="20" y="70" width="11" height="16" fill="#39516a"/><rect x="37" y="70" width="11" height="16" fill="#39516a"/><rect x="20" y="83" width="11" height="4" fill="#2a2a2a"/><rect x="37" y="83" width="11" height="4" fill="#2a2a2a"/></svg></div>
   </header>
+
+  <section class="showcase">
+    <div class="sc-head"><span class="star">&#9733;</span> TODAY YOU&rsquo;LL BUILD THIS <span class="star">&#9733;</span> &mdash; a real Minecraft web page</div>
+    <div class="sc-body">
+      <div class="sc-win">
+        <div class="sc-bar"><i style="background:#e0564a"></i><i style="background:#f4c12b"></i><i style="background:#5fb74e"></i><span class="url">craftworld.html</span></div>
+        <div class="sc-page">
+          <h3>CRAFT WORLD</h3>
+          <div class="sc-banner">Welcome, Player!</div>
+          <div class="sc-blocks"><div class="sc-blk" style="background:#6abe30"></div><div class="sc-blk" style="background:#8a6240"></div><div class="sc-blk" style="background:#8a8a8a"></div><div class="sc-blk" style="background:#5fe0d6"></div><div class="sc-blk" style="background:#f4c12b"></div></div>
+          <button class="sc-btn">Mine a block</button><button class="sc-btn">Open chest</button>
+          <div class="sc-found">You found: Diamond!</div>
+        </div>
+      </div>
+      <div class="sc-note">
+        <p><b>Look familiar?</b> Every piece of this page is something you have already learned this term:</p>
+        <p>&#129521; the heading, banner and blocks are <b>HTML + CSS</b> &mdash; colours, borders and padding.<br>
+        &#9935; the buttons run <b>JavaScript</b> &mdash; a <code>function</code>, <code>innerHTML</code>, and <code>Math.random</code> for the loot.</p>
+        <p><b>By the end of this lesson, you will have built it yourself.</b> Start at tile 1 and work down &mdash; let&rsquo;s go!</p>
+      </div>
+    </div>
+  </section>
 
   <section class="mission">
     <div class="mission-txt">
-      <span class="mtag">&#127918; Your mission today</span>
-      <h3>Build the whole arcade</h3>
-      <p>Every tile adds one piece. The last one puts <b>HTML</b>, <b>CSS</b> and <b>JavaScript</b> together into one arcade page you would actually play.</p>
+      <span class="mtag">&#9935; Your mission today</span>
+      <h3>Build the whole world</h3>
+      <p>Every tile adds one piece. The last one puts <b>HTML</b>, <b>CSS</b> and <b>JavaScript</b> together into one CRAFT WORLD page you would actually share.</p>
       <a class="mbtn" href="#ex13">Jump to the build &rarr;</a>
     </div>
     <div class="mission-card"><div class="refcard"><span class="rc1">HTML</span><span class="rc2">+ CSS +</span><span class="rc3">JS</span></div></div>
@@ -253,15 +403,15 @@ html{scroll-behavior:smooth}
       <span class="ana-sub">Three languages on one page: <b>HTML</b> builds it, <b>CSS</b> paints it, <b>JavaScript</b> makes it move. Here they are side by side:</span></div>
     <div class="ana-grid">
       <pre class="ana-code"><span class="ak">&lt;style&gt;</span>
-  <span class="ap">body { background-color: #11132a; }</span>
+  <span class="ap">body { background-color: #8fd0f5; }</span>
 <span class="ak">&lt;/style&gt;</span>
 
-<span class="ab">&lt;h1 id="screen"&gt;</span>NEON ARCADE<span class="ab">&lt;/h1&gt;</span>
-<span class="ab">&lt;button onclick="start()"&gt;</span>Play<span class="ab">&lt;/button&gt;</span>
+<span class="ab">&lt;h1 id="screen"&gt;</span>CRAFT WORLD<span class="ab">&lt;/h1&gt;</span>
+<span class="ab">&lt;button onclick="mine()"&gt;</span>Mine<span class="ab">&lt;/button&gt;</span>
 
 <span class="ak">&lt;script&gt;</span>
-  <span class="an">function start() {</span>
-    <span class="abd">screen.innerHTML = "Game on!";</span>
+  <span class="an">function mine() {</span>
+    <span class="abd">screen.innerHTML = "Mined!";</span>
   <span class="an">}</span>
 <span class="ak">&lt;/script&gt;</span></pre>
       <ul class="ana-key">
@@ -282,23 +432,23 @@ html{scroll-behavior:smooth}
     <button class="btn save" onclick="save()">Save my work</button>
   </div>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">build it, paint it, code it</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Page</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Paint it</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Colour</span></a><a class="pill must" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Ask</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more JavaScript</span></div><div class="pills"><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Lucky Spin</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Guess game</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Show all</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">combine & stretch</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">⑩ Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">⑪ Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑫ Complete it</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Arcade</span></a></div></div></nav>
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">build it, paint it, code it</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Page</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Paint it</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Colour</span></a><a class="pill must" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Log in</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more JavaScript</span></div><div class="pills"><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Lucky mine</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Find the diamond</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Inventory</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">combine & stretch</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">⑩ Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">⑪ Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑫ Complete it</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Arcade</span></a></div></div></nav>
 
   <section class="band html"><div class="bnum">1 / The basics</div><h2>Build it, paint it, code it</h2><p>Everything starts here. Build the page (HTML), paint it (CSS), then make buttons actually work (JavaScript) - the core of all three, and the JS you have practised for weeks. Finish THIS and you have built a real web page.</p></section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex1">
-    <div class="h"><span class="n">1</span><h3>Lay out the arcade (HTML)</h3></div>
-    <p class="lead"><b>HTML</b> builds the structure. A heading, a paragraph and a <code>&lt;ul&gt;</code> list of games - the same tags as your website project. Type it, then Run.</p>
+    <div class="h"><span class="n">1</span><h3>Lay out the page (HTML)</h3></div>
+    <p class="lead"><b>HTML</b> builds the structure. A heading, a paragraph and a <code>&lt;ul&gt;</code> list of blocks - the same tags as your website project. Type it, then Run.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref1">&lt;h1&gt;NEON ARCADE&lt;/h1&gt;
-&lt;p&gt;Welcome to my arcade. Pick a game and play!&lt;/p&gt;
-&lt;h2&gt;My games&lt;/h2&gt;
+        <pre class="code-ref" id="ref1">&lt;h1&gt;CRAFT WORLD&lt;/h1&gt;
+&lt;p&gt;Welcome to my Minecraft fan page. Grab a pickaxe and explore!&lt;/p&gt;
+&lt;h2&gt;My favourite blocks&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;Guess the Number&lt;/li&gt;
-  &lt;li&gt;Dice Duel&lt;/li&gt;
-  &lt;li&gt;Lucky Spin&lt;/li&gt;
+  &lt;li&gt;Grass&lt;/li&gt;
+  &lt;li&gt;Diamond&lt;/li&gt;
+  &lt;li&gt;TNT&lt;/li&gt;
 &lt;/ul&gt;</pre>
       </div>
       <div class="col">
@@ -320,25 +470,26 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
         <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; you laid out the page with HTML.</span></div>
-        <div class="try"><b>Now change it:</b> add a fourth game as a new <code>&lt;li&gt;</code>, then Run.</div>
+        <div class="try"><b>Now change it:</b> add a fourth block as a new <code>&lt;li&gt;</code>, then Run.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex2">
-    <div class="h"><span class="n">2</span><h3>Paint the arcade (CSS)</h3></div>
-    <p class="lead"><b>CSS</b> styles the page. One <code>&lt;style&gt;</code> block sets the dark <code>background-color</code>, the neon heading <code>color</code> and the <code>font-family</code>, and gives the <code>button</code> some <code>padding</code> and a <code>border-radius</code>.</p>
+    <div class="h"><span class="n">2</span><h3>Paint it Minecraft-style (CSS)</h3></div>
+    <p class="lead"><b>CSS</b> styles the page. One <code>&lt;style&gt;</code> block gives a sky <code>background-color</code>, a grass-green <code>&lt;h2&gt;</code> banner with a thick <code>border</code>, and a dirt-brown <code>button</code> - the blocky Minecraft look, all from CSS you already know.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
         <pre class="code-ref" id="ref2">&lt;style&gt;
-  body { background-color: #11132a; font-family: Arial; color: white; }
-  h1 { color: #36e0c0; }
-  button { background: #ff3d77; color: white; padding: 12px 22px;
-           border: 0; border-radius: 10px; font-weight: bold; }
+  body { background-color: #8fd0f5; font-family: monospace; text-align: center; }
+  h1 { color: #2a5d12; }
+  h2 { background-color: #6abe30; color: white; border: 4px solid #1f3d10; padding: 12px; }
+  button { background-color: #8a6240; color: white; border: 4px solid #3a2a1a; padding: 12px 20px; }
 &lt;/style&gt;
-&lt;h1&gt;NEON ARCADE&lt;/h1&gt;
-&lt;button&gt;Press Start&lt;/button&gt;</pre>
+&lt;h1&gt;CRAFT WORLD&lt;/h1&gt;
+&lt;h2&gt;Welcome to my world!&lt;/h2&gt;
+&lt;button&gt;Mine a block&lt;/button&gt;</pre>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
@@ -359,23 +510,23 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
         <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you styled the page with CSS.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>#36e0c0</code> to <code>hotpink</code> and Run to recolour the heading.</div>
+        <div class="try"><b>Now change it:</b> change the <code>h2</code> <code>background-color</code> to <code>#8a8a8a</code> for a stone block.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex3">
     <div class="h"><span class="n">3</span><h3>Make a button work (JS)</h3></div>
-    <p class="lead"><b>JavaScript</b> - the part you have spent weeks on. A <code>&lt;button&gt;</code> calls a <code>function</code>, and the function uses <code>innerHTML</code> to change the heading. Type it, Run, then click the button.</p>
+    <p class="lead"><b>JavaScript</b> - the part you have spent weeks on. A <code>&lt;button&gt;</code> calls a <code>function</code>, and the function uses <code>innerHTML</code> to change the heading. Type it, Run, then click Mine a block.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref3">&lt;h1 id="screen"&gt;NEON ARCADE&lt;/h1&gt;
-&lt;button onclick="start()"&gt;Press Start&lt;/button&gt;
+        <pre class="code-ref" id="ref3">&lt;h1 id="screen"&gt;CRAFT WORLD&lt;/h1&gt;
+&lt;button onclick="mine()"&gt;Mine a block&lt;/button&gt;
 
 &lt;script&gt;
-  function start() {
-    document.getElementById("screen").innerHTML = "Game on, Player 1!";
+  function mine() {
+    document.getElementById("screen").innerHTML = "You mined a block!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -398,23 +549,23 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
         <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your button changed the page.</span></div>
-        <div class="try"><b>Now change it:</b> change the message to your own, then click Press Start again.</div>
+        <div class="try"><b>Now change it:</b> change the message to your own, then click Mine a block again.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex4">
     <div class="h"><span class="n">4</span><h3>Change the look in code (JS)</h3></div>
-    <p class="lead">Code can change the <b>style</b> too. <code>.style.color</code> recolours the heading the moment the button is clicked - JavaScript reaching into the page. Run it, then click Neon mode.</p>
+    <p class="lead">Code can change the <b>style</b> too. <code>.style.color</code> turns the heading grass-green the moment the button is clicked - JavaScript reaching into the page. Run it, then click Grass mode.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref4">&lt;h1 id="screen"&gt;NEON ARCADE&lt;/h1&gt;
-&lt;button onclick="paint()"&gt;Neon mode&lt;/button&gt;
+        <pre class="code-ref" id="ref4">&lt;h1 id="screen"&gt;CRAFT WORLD&lt;/h1&gt;
+&lt;button onclick="grass()"&gt;Grass mode&lt;/button&gt;
 
 &lt;script&gt;
-  function paint() {
-    document.getElementById("screen").style.color = "#36e0c0";
+  function grass() {
+    document.getElementById("screen").style.color = "#3a8c1e";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -437,24 +588,24 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
         <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your code changed the colour.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>"#36e0c0"</code> to <code>"gold"</code>, then click again.</div>
+        <div class="try"><b>Now change it:</b> change <code>"#3a8c1e"</code> to <code>"gold"</code>, then click again.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex5">
     <div class="h"><span class="n">5</span><h3>Ask the player (prompt + variable)</h3></div>
-    <p class="lead">Make it personal. <code>prompt</code> asks a question, a <code>let</code> variable remembers the answer, and <code>+</code> joins it into a welcome message. Run, click Sign in, and type a name.</p>
+    <p class="lead">Make it personal. <code>prompt</code> asks for a Minecraft name, a <code>let</code> variable remembers it, and <code>+</code> joins it into a welcome message. Run, click Log in, and type a name.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref5">&lt;h2 id="out"&gt;Press to sign in&lt;/h2&gt;
-&lt;button onclick="signin()"&gt;Sign in&lt;/button&gt;
+        <pre class="code-ref" id="ref5">&lt;h2 id="out"&gt;Press to log in&lt;/h2&gt;
+&lt;button onclick="login()"&gt;Log in&lt;/button&gt;
 
 &lt;script&gt;
-  function signin() {
-    let name = prompt("Your gamer tag?");
-    document.getElementById("out").innerHTML = "Welcome, " + name;
+  function login() {
+    let name = prompt("Your Minecraft name?");
+    document.getElementById("out").innerHTML = "Welcome to CRAFT WORLD, " + name;
   }
 &lt;/script&gt;</pre>
       </div>
@@ -477,26 +628,26 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
         <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; you asked the player and used their answer.</span></div>
-        <div class="try"><b>Now change it:</b> add the player&rsquo;s score to the message with another <code>prompt</code>.</div>
+        <div class="try"><b>Now change it:</b> add the player&rsquo;s favourite block with another <code>prompt</code>.</div>
       </div>
     </div>
   </section>
-  <section class="band js"><div class="bnum">2 / Go further</div><h2>More JavaScript</h2><p>Now the powerful moves: pick a game at random, judge a guess with if/else, and build the whole list with a loop.</p></section>
+  <section class="band js"><div class="bnum">2 / Go further</div><h2>More JavaScript</h2><p>Now the powerful moves: open a chest at random, find the diamond with if/else, and build the whole inventory with a loop.</p></section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex6">
-    <div class="h"><span class="n">6</span><h3>Pick a random game (JS)</h3></div>
-    <p class="lead">The magic trick: a <b>list</b> plus <code>Math.random</code> picks a different game every click. <code>Math.floor(Math.random() * games.length)</code> gives a random spot in the list.</p>
+    <div class="h"><span class="n">6</span><h3>Open a random chest (JS)</h3></div>
+    <p class="lead">The magic trick: a <b>list</b> plus <code>Math.random</code> gives a different block every click. <code>Math.floor(Math.random() * blocks.length)</code> picks a random spot in the list.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref6">&lt;h2 id="out"&gt;Spin to pick a game!&lt;/h2&gt;
-&lt;button onclick="spin()"&gt;Lucky Spin&lt;/button&gt;
+        <pre class="code-ref" id="ref6">&lt;h2 id="out"&gt;Open the chest!&lt;/h2&gt;
+&lt;button onclick="loot()"&gt;Lucky mine&lt;/button&gt;
 
 &lt;script&gt;
-  function spin() {
-    let games = ["Guess the Number", "Dice Duel", "Maze Run"];
-    let i = Math.floor(Math.random() * games.length);
-    document.getElementById("out").innerHTML = games[i];
+  function loot() {
+    let blocks = ["Diamond", "Gold", "Redstone"];
+    let i = Math.floor(Math.random() * blocks.length);
+    document.getElementById("out").innerHTML = "You found: " + blocks[i];
   }
 &lt;/script&gt;</pre>
       </div>
@@ -518,31 +669,31 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
-        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; your random picker chose a game.</span></div>
-        <div class="try"><b>Now change it:</b> add a fourth game to the list, then keep spinning.</div>
+        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; your random picker chose a block.</span></div>
+        <div class="try"><b>Now change it:</b> add a fourth block to the list, then keep mining.</div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex7">
-    <div class="h"><span class="n">7</span><h3>Guess the number (if/else)</h3></div>
-    <p class="lead">A real mini-game. <code>prompt</code> asks for a guess, then <code>if / else if / else</code> decides: you win, too low, or too high.</p>
+    <div class="h"><span class="n">7</span><h3>Guess the block (if/else)</h3></div>
+    <p class="lead">A real mini-game. <code>prompt</code> asks which block hides the diamond, then <code>if / else if / else</code> decides: found it, dig right, or dig left.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref7">&lt;h2 id="out"&gt;Guess my number (1-5)&lt;/h2&gt;
-&lt;button onclick="play()"&gt;Take a guess&lt;/button&gt;
+        <pre class="code-ref" id="ref7">&lt;h2 id="out"&gt;Which block hides the diamond? (1-5)&lt;/h2&gt;
+&lt;button onclick="dig()"&gt;Dig&lt;/button&gt;
 
 &lt;script&gt;
-  function play() {
-    let guess = Number(prompt("Pick 1 to 5"));
-    let secret = 3;
-    if (guess === secret) {
-      document.getElementById("out").innerHTML = "You win!";
-    } else if (guess &lt; secret) {
-      document.getElementById("out").innerHTML = "Too low";
+  function dig() {
+    let guess = Number(prompt("Pick a block, 1 to 5"));
+    let diamond = 3;
+    if (guess === diamond) {
+      document.getElementById("out").innerHTML = "Diamond found!";
+    } else if (guess &lt; diamond) {
+      document.getElementById("out").innerHTML = "Dig further right";
     } else {
-      document.getElementById("out").innerHTML = "Too high";
+      document.getElementById("out").innerHTML = "Dig further left";
     }
   }
 &lt;/script&gt;</pre>
@@ -566,27 +717,27 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
         <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your if/else judged the guess.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>secret</code> to a new number, then play again.</div>
+        <div class="try"><b>Now change it:</b> change <code>diamond</code> to a new number, then dig again.</div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex8">
-    <div class="h"><span class="n">8</span><h3>List the games with a loop (JS)</h3></div>
-    <p class="lead">A <code>for</code> loop does the boring work. It walks the games list and builds a <code>&lt;p&gt;</code> for each one with <code>innerHTML</code> - one piece of code, the whole list on screen.</p>
+    <div class="h"><span class="n">8</span><h3>Build the inventory with a loop (JS)</h3></div>
+    <p class="lead">A <code>for</code> loop does the boring work. It walks the blocks list and builds a <code>&lt;p&gt;</code> for each one with <code>innerHTML</code> - one piece of code, the whole inventory on screen.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref8">&lt;h2&gt;All my games&lt;/h2&gt;
+        <pre class="code-ref" id="ref8">&lt;h2&gt;My inventory&lt;/h2&gt;
 &lt;div id="out"&gt;&lt;/div&gt;
-&lt;button onclick="list()"&gt;Show all games&lt;/button&gt;
+&lt;button onclick="show()"&gt;Open inventory&lt;/button&gt;
 
 &lt;script&gt;
-  function list() {
-    let games = ["Guess the Number", "Dice Duel", "Lucky Spin"];
+  function show() {
+    let blocks = ["Grass", "Stone", "Diamond"];
     let html = "";
-    for (let i = 0; i &lt; games.length; i = i + 1) {
-      html = html + "&lt;p&gt;" + games[i] + "&lt;/p&gt;";
+    for (let i = 0; i &lt; blocks.length; i = i + 1) {
+      html = html + "&lt;p&gt;" + blocks[i] + "&lt;/p&gt;";
     }
     document.getElementById("out").innerHTML = html;
   }
@@ -610,8 +761,8 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
-        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your loop built the whole list.</span></div>
-        <div class="try"><b>Now change it:</b> add more games to the list - the loop shows them all, with no extra code.</div>
+        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your loop built the whole inventory.</span></div>
+        <div class="try"><b>Now change it:</b> add more blocks to the list - the loop shows them all, with no extra code.</div>
       </div>
     </div>
   </section>
@@ -627,7 +778,7 @@ html{scroll-behavior:smooth}
 &lt;script&gt;
   let s = "";
   for (let i = 1; i &lt;= 3; i = i + 1) {
-    s = s + "Game " + i + " ";
+    s = s + "Block " + i + " ";
   }
   document.getElementById("out").innerHTML = s;
 &lt;/script&gt;</pre>
@@ -645,7 +796,7 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
-        <div class="reveal ans" id="ans9" hidden>It shows <b>Game 1 Game 2 Game 3</b>. The loop runs with i = 1, then 2, then 3, joining "Game " + i + " " each time into one line.</div>
+        <div class="reveal ans" id="ans9" hidden>It shows <b>Block 1 Block 2 Block 3</b>. The loop runs with i = 1, then 2, then 3, joining "Block " + i + " " each time into one line.</div>
         <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you traced the loop and predicted the output.</span></div>
       </div>
     </div>
@@ -653,23 +804,23 @@ html{scroll-behavior:smooth}
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal debug" id="ex10">
     <div class="h"><span class="n">10</span><h3>Fix the bug <span class="ctype debug">DEBUG</span></h3></div>
-    <p class="lead">Click <b>Change it</b> - nothing happens and a red error appears. The id in the JavaScript does not match the id on the heading. Read the error, find the slip, fix it.</p>
+    <p class="lead">Click <b>Mine</b> - nothing happens and a red error appears. The id in the JavaScript does not match the id on the heading. Read the error, find the slip, fix it.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Nothing changes because <code>getElementById("titel")</code> is misspelled - the heading&rsquo;s id is <code>title</code>. Fix the spelling so clicking shows "Changed!".
+        <div class="goalbox">Nothing changes because <code>getElementById("blok")</code> is misspelled - the heading&rsquo;s id is <code>block</code>. Fix the spelling so clicking shows "Mined!".
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
-          <div class="reveal hint" id="hint10" hidden>The heading is <code>id="title"</code> but the JS looks for <code>"titel"</code>. Make them match: <code>getElementById("title")</code>.</div>
+          <div class="reveal hint" id="hint10" hidden>The heading is <code>id="block"</code> but the JS looks for <code>"blok"</code>. Make them match: <code>getElementById("block")</code>.</div>
         </div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Fix it here</div>
-        <textarea class="editor" id="ed10" spellcheck="false">&lt;h1 id="title"&gt;Hello&lt;/h1&gt;
-&lt;button onclick="go()"&gt;Change it&lt;/button&gt;
+        <textarea class="editor" id="ed10" spellcheck="false">&lt;h1 id="block"&gt;Stone&lt;/h1&gt;
+&lt;button onclick="mine()"&gt;Mine&lt;/button&gt;
 
 &lt;script&gt;
-  function go() {
-    document.getElementById("titel").innerHTML = "Changed!";
+  function mine() {
+    document.getElementById("blok").innerHTML = "Mined!";
   }
 &lt;/script&gt;</textarea>
         <div class="act">
@@ -689,16 +840,16 @@ html{scroll-behavior:smooth}
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal create" id="ex11">
     <div class="h"><span class="n">11</span><h3>Build your own button <span class="ctype create">CREATE</span></h3></div>
-    <p class="lead">No code to copy this time. Build a button that, when clicked, shows your favourite game in a paragraph.</p>
+    <p class="lead">No code to copy this time. Build a button that, when clicked, shows your favourite block in a paragraph.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Make a <code>&lt;button&gt;</code> and a <code>&lt;p id="out"&gt;</code>. When the button is clicked, a function puts your favourite game into the <code>&lt;p&gt;</code> using <code>innerHTML</code>.
-          <div class="eg">Expected: click -&amp;gt; the page shows "My favourite: Minecraft"</div>
+        <div class="goalbox">Make a <code>&lt;button&gt;</code> and a <code>&lt;p id="out"&gt;</code>. When the button is clicked, a function puts your favourite block into the <code>&lt;p&gt;</code> using <code>innerHTML</code>.
+          <div class="eg">Expected: click -&amp;gt; the page shows "My favourite: Diamond"</div>
           <div class="chal-btns">
             <button class="btn ghost" onclick="showHint(11)">Show a hint</button>
           </div>
-          <div class="reveal hint" id="hint11" hidden>Copy the shape from tile 5: <code>&lt;button onclick="show()"&gt;</code>, then <code>function show() { document.getElementById("out").innerHTML = "My favourite: ..."; }</code>.</div>
+          <div class="reveal hint" id="hint11" hidden>Copy the shape from tile 3: <code>&lt;button onclick="show()"&gt;</code>, then <code>function show() { document.getElementById("out").innerHTML = "My favourite: ..."; }</code>.</div>
         </div>
       </div>
       <div class="col">
@@ -721,27 +872,27 @@ html{scroll-behavior:smooth}
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal tweak" id="ex12">
     <div class="h"><span class="n">12</span><h3>Complete the condition <span class="ctype tweak">TWEAK</span></h3></div>
-    <p class="lead">This high-score check is wired up, but the deciding line is blank. <b>Complete the condition</b> so a score of 80 counts as a high score.</p>
+    <p class="lead">This diamond check is wired up, but the deciding line is blank. <b>Complete the condition</b> so 5 diamonds counts as a full stack.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
-        <div class="goalbox">Replace <code>CONDITION</code> with <code>score &gt;= 50</code>, then click Check my score.
+        <div class="goalbox">Replace <code>CONDITION</code> with <code>diamonds &gt;= 5</code>, then click Check my stack.
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(12)">Show a hint</button></div>
-          <div class="reveal hint" id="hint12" hidden>A high score means the score is at least 50: <code>score &gt;= 50</code>.</div>
+          <div class="reveal hint" id="hint12" hidden>A full stack means at least 5: <code>diamonds &gt;= 5</code>.</div>
         </div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
-        <textarea class="editor" id="ed12" spellcheck="false">&lt;h2 id="out"&gt;Score check&lt;/h2&gt;
-&lt;button onclick="check()"&gt;Check my score&lt;/button&gt;
+        <textarea class="editor" id="ed12" spellcheck="false">&lt;h2 id="out"&gt;Diamond check&lt;/h2&gt;
+&lt;button onclick="check()"&gt;Check my stack&lt;/button&gt;
 
 &lt;script&gt;
   function check() {
-    let score = 80;
+    let diamonds = 5;
     if (CONDITION) {
-      document.getElementById("out").innerHTML = "New high score!";
+      document.getElementById("out").innerHTML = "Full stack!";
     } else {
-      document.getElementById("out").innerHTML = "Keep trying";
+      document.getElementById("out").innerHTML = "Keep mining";
     }
   }
 &lt;/script&gt;</textarea>
@@ -755,40 +906,40 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
-        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your condition checked the score.</span></div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your condition checked the stack.</span></div>
       </div>
     </div>
   </section>
-  <section class="band ship"><div class="bnum">4 / Ship it</div><h2>The whole arcade</h2><p>HTML + CSS + JavaScript on ONE page - the arcade you would actually share.</p></section>
+  <section class="band ship"><div class="bnum">4 / Ship it</div><h2>The whole world</h2><p>HTML + CSS + JavaScript on ONE page - the CRAFT WORLD page you would actually share.</p></section>
   <div class="divide cap"><span class="lab">Capstone &mdash; put all three together</span><span class="ln"></span></div>
   <section class="ex could capstone" id="ex13">
     <div class="h"><span class="n">13</span><h3>Build the whole arcade</h3></div>
-    <p class="lead">This is the capstone &mdash; the whole arcade on ONE page. A <code>&lt;style&gt;</code> block paints it, the HTML lays out the heading and buttons, and the <code>&lt;script&gt;</code> makes Press Start and Lucky Spin work. Type it, press Run, then play your arcade.</p>
+    <p class="lead">This is the capstone &mdash; the whole CRAFT WORLD page on ONE screen, the same page you saw at the very top. A <code>&lt;style&gt;</code> block paints it, the HTML lays out the heading and buttons, and the <code>&lt;script&gt;</code> makes Mine and Open chest work. Type it, press Run, then play your page.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
         <pre class="code-ref" id="ref13">&lt;style&gt;
-  body { background-color: #11132a; font-family: Arial; color: white;
+  body { background-color: #8fd0f5; font-family: monospace; color: #2a2a1a;
          text-align: center; }
-  h1 { color: #36e0c0; }
-  button { background: #ff3d77; color: white; padding: 12px 22px;
-           border: 0; border-radius: 10px; font-weight: bold; }
+  h1 { color: #2a5d12; }
+  h2 { background-color: #6abe30; color: white; border: 4px solid #1f3d10; padding: 10px; }
+  button { background-color: #8a6240; color: white; border: 4px solid #3a2a1a; padding: 12px 20px; }
 &lt;/style&gt;
 
-&lt;h1 id="screen"&gt;NEON ARCADE&lt;/h1&gt;
-&lt;p&gt;Pick a game, Player 1!&lt;/p&gt;
-&lt;button onclick="start()"&gt;Press Start&lt;/button&gt;
-&lt;button onclick="spin()"&gt;Lucky Spin&lt;/button&gt;
+&lt;h1&gt;CRAFT WORLD&lt;/h1&gt;
+&lt;h2&gt;Welcome, Player!&lt;/h2&gt;
+&lt;button onclick="mine()"&gt;Mine a block&lt;/button&gt;
+&lt;button onclick="loot()"&gt;Open chest&lt;/button&gt;
 &lt;div id="out"&gt;&lt;/div&gt;
 
 &lt;script&gt;
-  function start() {
-    document.getElementById("screen").innerHTML = "Game on!";
+  function mine() {
+    document.getElementById("out").innerHTML = "You mined a block!";
   }
-  function spin() {
-    let games = ["Guess the Number", "Dice Duel", "Maze Run"];
-    let i = Math.floor(Math.random() * games.length);
-    document.getElementById("out").innerHTML = "Now playing: " + games[i];
+  function loot() {
+    let blocks = ["Diamond", "Gold", "Redstone"];
+    let i = Math.floor(Math.random() * blocks.length);
+    document.getElementById("out").innerHTML = "You found: " + blocks[i];
   }
 &lt;/script&gt;</pre>
       </div>
@@ -810,19 +961,19 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> Your arcade</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your arcade</div>
           <iframe class="out" id="out13" title="your arcade"></iframe></div>
-        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you combined HTML, CSS and JavaScript into one arcade.</span></div>
-        <div class="try"><b>Now make it yours:</b> add a third button that runs your guess game from tile 7, or change the colours in the <code>&lt;style&gt;</code> block to make the arcade your own.</div>
+        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you combined HTML, CSS and JavaScript into one Minecraft page.</span></div>
+        <div class="try"><b>Now make it yours:</b> add a third button that runs your diamond game from tile 7, or change the colours in the <code>&lt;style&gt;</code> block to build your own world.</div>
       </div>
     </div>
   </section>
 
   <div class="closing">
     <div class="finale">
-      <h3>You built a whole web page - HTML, CSS and JavaScript together.</h3>
-      <p>That is exactly how every real website works: <b>HTML</b> for the structure, <b>CSS</b> for the look, <b>JavaScript</b> for what happens when you click. You started the term with one tag, and you just shipped a working arcade. <b>That is the whole job.</b> &#127918;</p>
+      <h3>You built a whole Minecraft web page - HTML, CSS and JavaScript together.</h3>
+      <p>That is exactly how every real website works: <b>HTML</b> for the structure, <b>CSS</b> for the look, <b>JavaScript</b> for what happens when you click. You started the term with one tag, and you just shipped your own CRAFT WORLD page. <b>That is the whole job.</b> &#9935;</p>
     </div>
     <h3>Show the class</h3>
-    <p>Finished, or out of time? Put your <b>arcade</b> on the board &mdash; we will look at a few together and name the three parts: the <b>HTML</b> that builds it, the <b>CSS</b> that paints it, and the <b>JavaScript</b> that makes it play.</p>
+    <p>Finished, or out of time? Put your <b>CRAFT WORLD</b> page on the board &mdash; we will look at a few together and name the three parts: the <b>HTML</b> that builds it, the <b>CSS</b> that paints it, and the <b>JavaScript</b> that makes it work.</p>
     <div class="reflect">
       <div><label>What I built</label><textarea id="rbuilt" placeholder="In a sentence..."></textarea></div>
       <div><label>I got stuck on</label><textarea id="rstuck" placeholder="What tripped you up?"></textarea></div>
@@ -833,17 +984,18 @@ html{scroll-behavior:smooth}
       <input id="lf" type="file" accept=".html,text/html" hidden onchange="loadFile(this)">
     </div>
   </div>
-  <footer>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; Build Your Arcade (HTML + CSS + JS) &mdash; Guided Practice L8</footer>
+  <footer>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; Build a Minecraft Page (HTML + CSS + JS) &mdash; Guided Practice L8</footer>
 </div>
+<div id="buddy" title="Click Digger for a tip"><div id="buddyBubble"></div><svg viewBox="0 0 72 92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-label="Digger the block miner"><rect x="54" y="18" width="6" height="36" fill="#7a5230"/><rect x="46" y="12" width="20" height="9" fill="#bfc8d0"/><rect x="46" y="12" width="7" height="9" fill="#8fa0ad"/><rect x="14" y="8" width="40" height="40" fill="#8a6240"/><rect x="14" y="8" width="40" height="10" fill="#6abe30"/><rect x="14" y="16" width="40" height="3" fill="#4e9c28"/><rect x="20" y="27" width="5" height="5" fill="#74502f"/><rect x="42" y="38" width="5" height="5" fill="#74502f"/><rect x="31" y="33" width="4" height="4" fill="#9c7144"/><rect x="22" y="26" width="7" height="8" fill="#ffffff"/><rect x="24" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="39" y="26" width="7" height="8" fill="#ffffff"/><rect x="41" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="28" y="41" width="12" height="3" fill="#3a2a1a"/><rect x="18" y="48" width="32" height="22" fill="#2a8c8c"/><rect x="18" y="48" width="32" height="4" fill="#37a3a3"/><rect x="30" y="52" width="8" height="14" fill="#1f6f6f"/><rect x="10" y="50" width="8" height="18" fill="#8a6240"/><rect x="50" y="50" width="8" height="16" fill="#8a6240"/><rect x="20" y="70" width="11" height="16" fill="#39516a"/><rect x="37" y="70" width="11" height="16" fill="#39516a"/><rect x="20" y="83" width="11" height="4" fill="#2a2a2a"/><rect x="37" y="83" width="11" height="4" fill="#2a2a2a"/></svg></div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"arcade": "<h1>NEON ARCADE<\/h1>\n<p>Welcome to my arcade. Pick a game and play!<\/p>\n<h2>My games<\/h2>\n<ul>\n  <li>Guess the Number<\/li>\n  <li>Dice Duel<\/li>\n  <li>Lucky Spin<\/li>\n<\/ul>"}, "2": {"arcade": "<style>\n  body { background-color: #11132a; font-family: Arial; color: white; }\n  h1 { color: #36e0c0; }\n  button { background: #ff3d77; color: white; padding: 12px 22px;\n           border: 0; border-radius: 10px; font-weight: bold; }\n<\/style>\n<h1>NEON ARCADE<\/h1>\n<button>Press Start<\/button>"}, "3": {"arcade": "<h1 id=\"screen\">NEON ARCADE<\/h1>\n<button onclick=\"start()\">Press Start<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"screen\").innerHTML = \"Game on, Player 1!\";\n  }\n<\/script>"}, "4": {"arcade": "<h1 id=\"screen\">NEON ARCADE<\/h1>\n<button onclick=\"paint()\">Neon mode<\/button>\n\n<script>\n  function paint() {\n    document.getElementById(\"screen\").style.color = \"#36e0c0\";\n  }\n<\/script>"}, "5": {"arcade": "<h2 id=\"out\">Press to sign in<\/h2>\n<button onclick=\"signin()\">Sign in<\/button>\n\n<script>\n  function signin() {\n    let name = prompt(\"Your gamer tag?\");\n    document.getElementById(\"out\").innerHTML = \"Welcome, \" + name;\n  }\n<\/script>"}, "6": {"arcade": "<h2 id=\"out\">Spin to pick a game!<\/h2>\n<button onclick=\"spin()\">Lucky Spin<\/button>\n\n<script>\n  function spin() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Maze Run\"];\n    let i = Math.floor(Math.random() * games.length);\n    document.getElementById(\"out\").innerHTML = games[i];\n  }\n<\/script>"}, "7": {"arcade": "<h2 id=\"out\">Guess my number (1-5)<\/h2>\n<button onclick=\"play()\">Take a guess<\/button>\n\n<script>\n  function play() {\n    let guess = Number(prompt(\"Pick 1 to 5\"));\n    let secret = 3;\n    if (guess === secret) {\n      document.getElementById(\"out\").innerHTML = \"You win!\";\n    } else if (guess < secret) {\n      document.getElementById(\"out\").innerHTML = \"Too low\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Too high\";\n    }\n  }\n<\/script>"}, "8": {"arcade": "<h2>All my games<\/h2>\n<div id=\"out\"><\/div>\n<button onclick=\"list()\">Show all games<\/button>\n\n<script>\n  function list() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Lucky Spin\"];\n    let html = \"\";\n    for (let i = 0; i < games.length; i = i + 1) {\n      html = html + \"<p>\" + games[i] + \"<\/p>\";\n    }\n    document.getElementById(\"out\").innerHTML = html;\n  }\n<\/script>"}, "13": {"arcade": "<style>\n  body { background-color: #11132a; font-family: Arial; color: white;\n         text-align: center; }\n  h1 { color: #36e0c0; }\n  button { background: #ff3d77; color: white; padding: 12px 22px;\n           border: 0; border-radius: 10px; font-weight: bold; }\n<\/style>\n\n<h1 id=\"screen\">NEON ARCADE<\/h1>\n<p>Pick a game, Player 1!<\/p>\n<button onclick=\"start()\">Press Start<\/button>\n<button onclick=\"spin()\">Lucky Spin<\/button>\n<div id=\"out\"><\/div>\n\n<script>\n  function start() {\n    document.getElementById(\"screen\").innerHTML = \"Game on!\";\n  }\n  function spin() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Maze Run\"];\n    let i = Math.floor(Math.random() * games.length);\n    document.getElementById(\"out\").innerHTML = \"Now playing: \" + games[i];\n  }\n<\/script>"}};
-var WANT = {"1": "Dice Duel", "2": "NEON ARCADE", "3": "Game on", "5": "Welcome", "8": "Dice Duel", "10": "Changed!", "12": "New high score!"};
-var OKTX = {"1": "you laid out the page with HTML.", "2": "you styled the page with CSS.", "3": "your button changed the page.", "4": "your code changed the colour.", "5": "you asked the player and used their answer.", "6": "your random picker chose a game.", "7": "your if/else judged the guess.", "8": "your loop built the whole list.", "9": "you traced the loop and predicted the output.", "10": "you matched the id and fixed the bug.", "11": "you built your own button from scratch.", "12": "your condition checked the score.", "13": "you combined HTML, CSS and JavaScript into one arcade."};
+var STARTERS = {"1": {"arcade": "<h1>CRAFT WORLD<\/h1>\n<p>Welcome to my Minecraft fan page. Grab a pickaxe and explore!<\/p>\n<h2>My favourite blocks<\/h2>\n<ul>\n  <li>Grass<\/li>\n  <li>Diamond<\/li>\n  <li>TNT<\/li>\n<\/ul>"}, "2": {"arcade": "<style>\n  body { background-color: #8fd0f5; font-family: monospace; text-align: center; }\n  h1 { color: #2a5d12; }\n  h2 { background-color: #6abe30; color: white; border: 4px solid #1f3d10; padding: 12px; }\n  button { background-color: #8a6240; color: white; border: 4px solid #3a2a1a; padding: 12px 20px; }\n<\/style>\n<h1>CRAFT WORLD<\/h1>\n<h2>Welcome to my world!<\/h2>\n<button>Mine a block<\/button>"}, "3": {"arcade": "<h1 id=\"screen\">CRAFT WORLD<\/h1>\n<button onclick=\"mine()\">Mine a block<\/button>\n\n<script>\n  function mine() {\n    document.getElementById(\"screen\").innerHTML = \"You mined a block!\";\n  }\n<\/script>"}, "4": {"arcade": "<h1 id=\"screen\">CRAFT WORLD<\/h1>\n<button onclick=\"grass()\">Grass mode<\/button>\n\n<script>\n  function grass() {\n    document.getElementById(\"screen\").style.color = \"#3a8c1e\";\n  }\n<\/script>"}, "5": {"arcade": "<h2 id=\"out\">Press to log in<\/h2>\n<button onclick=\"login()\">Log in<\/button>\n\n<script>\n  function login() {\n    let name = prompt(\"Your Minecraft name?\");\n    document.getElementById(\"out\").innerHTML = \"Welcome to CRAFT WORLD, \" + name;\n  }\n<\/script>"}, "6": {"arcade": "<h2 id=\"out\">Open the chest!<\/h2>\n<button onclick=\"loot()\">Lucky mine<\/button>\n\n<script>\n  function loot() {\n    let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n    let i = Math.floor(Math.random() * blocks.length);\n    document.getElementById(\"out\").innerHTML = \"You found: \" + blocks[i];\n  }\n<\/script>"}, "7": {"arcade": "<h2 id=\"out\">Which block hides the diamond? (1-5)<\/h2>\n<button onclick=\"dig()\">Dig<\/button>\n\n<script>\n  function dig() {\n    let guess = Number(prompt(\"Pick a block, 1 to 5\"));\n    let diamond = 3;\n    if (guess === diamond) {\n      document.getElementById(\"out\").innerHTML = \"Diamond found!\";\n    } else if (guess < diamond) {\n      document.getElementById(\"out\").innerHTML = \"Dig further right\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Dig further left\";\n    }\n  }\n<\/script>"}, "8": {"arcade": "<h2>My inventory<\/h2>\n<div id=\"out\"><\/div>\n<button onclick=\"show()\">Open inventory<\/button>\n\n<script>\n  function show() {\n    let blocks = [\"Grass\", \"Stone\", \"Diamond\"];\n    let html = \"\";\n    for (let i = 0; i < blocks.length; i = i + 1) {\n      html = html + \"<p>\" + blocks[i] + \"<\/p>\";\n    }\n    document.getElementById(\"out\").innerHTML = html;\n  }\n<\/script>"}, "13": {"arcade": "<style>\n  body { background-color: #8fd0f5; font-family: monospace; color: #2a2a1a;\n         text-align: center; }\n  h1 { color: #2a5d12; }\n  h2 { background-color: #6abe30; color: white; border: 4px solid #1f3d10; padding: 10px; }\n  button { background-color: #8a6240; color: white; border: 4px solid #3a2a1a; padding: 12px 20px; }\n<\/style>\n\n<h1>CRAFT WORLD<\/h1>\n<h2>Welcome, Player!<\/h2>\n<button onclick=\"mine()\">Mine a block<\/button>\n<button onclick=\"loot()\">Open chest<\/button>\n<div id=\"out\"><\/div>\n\n<script>\n  function mine() {\n    document.getElementById(\"out\").innerHTML = \"You mined a block!\";\n  }\n  function loot() {\n    let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n    let i = Math.floor(Math.random() * blocks.length);\n    document.getElementById(\"out\").innerHTML = \"You found: \" + blocks[i];\n  }\n<\/script>"}};
+var WANT = {"1": "TNT", "2": "CRAFT WORLD", "3": "mined", "5": "Welcome", "8": "Stone", "10": "Mined!", "12": "Full stack!"};
+var OKTX = {"1": "you laid out the page with HTML.", "2": "you styled the page with CSS.", "3": "your button changed the page.", "4": "your code changed the colour.", "5": "you asked the player and used their answer.", "6": "your random picker chose a block.", "7": "your if/else judged the guess.", "8": "your loop built the whole inventory.", "9": "you traced the loop and predicted the output.", "10": "you matched the id and fixed the bug.", "11": "you built your own button from scratch.", "12": "your condition checked the stack.", "13": "you combined HTML, CSS and JavaScript into one Minecraft page."};
 var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "tweak"};
-var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let s = \"\";\n  for (let i = 1; i <= 3; i = i + 1) {\n    s = s + \"Game \" + i + \" \";\n  }\n  document.getElementById(\"out\").innerHTML = s;\n<\/script>"};
-var DEBUGC = {"10": "<h1 id=\"title\">Hello<\/h1>\n<button onclick=\"go()\">Change it<\/button>\n\n<script>\n  function go() {\n    document.getElementById(\"titel\").innerHTML = \"Changed!\";\n  }\n<\/script>"};
-var TWEAKC = {"12": "<h2 id=\"out\">Score check<\/h2>\n<button onclick=\"check()\">Check my score<\/button>\n\n<script>\n  function check() {\n    let score = 80;\n    if (CONDITION) {\n      document.getElementById(\"out\").innerHTML = \"New high score!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Keep trying\";\n    }\n  }\n<\/script>"};
+var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let s = \"\";\n  for (let i = 1; i <= 3; i = i + 1) {\n    s = s + \"Block \" + i + \" \";\n  }\n  document.getElementById(\"out\").innerHTML = s;\n<\/script>"};
+var DEBUGC = {"10": "<h1 id=\"block\">Stone<\/h1>\n<button onclick=\"mine()\">Mine<\/button>\n\n<script>\n  function mine() {\n    document.getElementById(\"blok\").innerHTML = \"Mined!\";\n  }\n<\/script>"};
+var TWEAKC = {"12": "<h2 id=\"out\">Diamond check<\/h2>\n<button onclick=\"check()\">Check my stack<\/button>\n\n<script>\n  function check() {\n    let diamonds = 5;\n    if (CONDITION) {\n      document.getElementById(\"out\").innerHTML = \"Full stack!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Keep mining\";\n    }\n  }\n<\/script>"};
 var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 var THEME_LIST = ["arcade"];
 var IDS = Object.keys(STARTERS).map(Number);
@@ -866,7 +1018,7 @@ function setTheme(t){
 function wrap(i, code){
   var head='<!doctype html><html><head><meta charset="utf-8"><style>'
    + 'body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:16px;color:#16202e}'
-   + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:6px;background:#e8edf3;cursor:pointer;margin:2px 4px 2px 0}'
+   + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:0;background:#e8edf3;cursor:pointer;margin:2px 4px 2px 0}'  /* sharp (blocky) - Minecraft */
    + 'input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid #cbd5e1;border-radius:6px;margin:2px 4px 2px 0}'
    + 'h1,h2{margin:.3em 0}'
    + '.refcard{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;width:170px;height:170px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#a855f7,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#36e0c0;font-size:25px}.refcard .rc2{font-size:16px;opacity:.85}.refcard .rc3{color:#ffd34d;font-size:25px}'
@@ -1073,5 +1225,104 @@ document.addEventListener("DOMContentLoaded", function(){
     },{passive:true}); }
   }catch(e){}
 });
+</script>
+<script>
+(function(){
+  var buddy=document.getElementById('buddy'), bubble=document.getElementById('buddyBubble');
+  if(!buddy||!bubble) return;
+  var tips=["HTML builds it, CSS paints it, JS makes it move.",
+            "A <style> block goes at the top of your page.",
+            "Stuck? Read the Anatomy block up the top.",
+            "A loop's best friend is a LIST.",
+            "id on the tag must match getElementById.",
+            "Tap a tile number to teleport there."];
+  var cheers=["Block placed!","Nice mining!","Loop crafted!","Diamond!","Level up!","Keep building!"];
+  var bt=null;
+  function say(msg,ms){ bubble.textContent=msg; bubble.classList.add('show'); clearTimeout(bt);
+    bt=setTimeout(function(){bubble.classList.remove('show');}, ms||4200); }
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function cheer(){ say(pick(cheers),3000);
+    buddy.classList.remove('buddy-cheer'); void buddy.offsetWidth; buddy.classList.add('buddy-cheer'); }
+  if(typeof showOk==='function'){ var _o=showOk; showOk=function(i){ _o(i); try{cheer();}catch(e){} }; window.showOk=showOk; }
+  buddy.addEventListener('click', function(){ say(pick(tips),5000); });
+  setTimeout(function(){ say("Hi! I'm Digger. Let's build a whole page!",5200); }, 900);
+  var ti=0; setInterval(function(){ if(!bubble.classList.contains('show')){ say(tips[ti%tips.length],4200); ti++; } }, 34000);
+})();
+</script>
+<script>
+(function(){
+  // BUG FIX 3: block paste/drop in the editors (type it yourself)
+  document.querySelectorAll('.editor').forEach(function(t){
+    t.addEventListener('paste', function(e){ e.preventDefault(); if(window.toast) toast('Type it yourself — pasting is off'); });
+    t.addEventListener('drop', function(e){ e.preventDefault(); });
+  });
+
+  // ---- synth sound (no files) ----
+  var AC=window.AudioContext||window.webkitAudioContext, ac=null;
+  var muted=false; try{ muted=localStorage.getItem('l8-mute')==='1'; }catch(e){}
+  function ensure(){ if(!ac&&AC) ac=new AC(); if(ac&&ac.state==='suspended') ac.resume(); return ac; }
+  function note(f,start,dur,type,vol){ var o=ac.createOscillator(),g=ac.createGain();
+    o.type=type||'square'; o.frequency.value=f; o.connect(g); g.connect(ac.destination);
+    var t=ac.currentTime+start; g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(vol||0.16,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur); o.start(t); o.stop(t+dur+0.03); }
+  function sfx(name){ if(muted||!ensure()) return; try{
+    if(name==='place'){ note(170+Math.random()*70,0,0.06,'square',0.10); }
+    else if(name==='done'){ note(523,0,0.10,'square',0.16); note(659,0.085,0.14,'square',0.16); }
+    else if(name==='level'){ note(523,0,0.1,'square',0.18); note(659,0.1,0.1,'square',0.18); note(784,0.2,0.2,'square',0.18); }
+    else if(name==='diamond'){ note(988,0,0.08,'sine',0.13); note(1319,0.07,0.12,'sine',0.11); }
+    else if(name==='win'){ [523,659,784,1047].forEach(function(f,k){ note(f,k*0.12,0.18,'square',0.18); }); }
+  }catch(e){} }
+  // mute toggle in the strip
+  var strip=document.querySelector('.strip');
+  if(strip){ var mb=document.createElement('button'); mb.className='btn ghost'; mb.id='muteBtn';
+    mb.title='Sound on/off'; mb.style.marginLeft='6px'; mb.textContent=muted?'🔇':'🔊';
+    mb.onclick=function(){ muted=!muted; mb.textContent=muted?'🔇':'🔊';
+      try{localStorage.setItem('l8-mute',muted?'1':'0');}catch(e){} if(!muted) sfx('place'); };
+    strip.appendChild(mb); }
+  // a soft 'place' when any Run button is pressed
+  document.addEventListener('click', function(e){ var t=e.target.closest&&e.target.closest('.btn.run'); if(t) sfx('place'); }, true);
+
+  // ---- XP / levels ----
+  var LV=['Novice','Apprentice','Builder','Expert','Master'];
+  function allIds(){ return window.ALL_IDS||[]; }
+  function doneCount(){ return allIds().filter(function(i){var c=document.getElementById('done'+i);return c&&c.checked;}).length; }
+  function levelOf(n){ return Math.min(5, Math.floor(n/3)+1); }
+  var badge=document.createElement('span'); badge.id='lvBadge';
+  var prog=document.querySelector('.strip .prog'); if(prog) prog.parentNode.insertBefore(badge, prog);
+  var lastLevel=1;
+  function refreshXP(quiet){ var n=doneCount(), L=levelOf(n); if(badge) badge.textContent='Lv '+L+' '+LV[L-1];
+    if(L>lastLevel){ lastLevel=L; if(!quiet){ sfx('level'); if(window.toast) toast('⛏ LEVEL '+L+' — '+LV[L-1]+' Builder!');
+      var bb=document.getElementById('buddyBubble'); if(bb){ bb.textContent='Level '+L+'! '+LV[L-1]+'!'; bb.classList.add('show'); setTimeout(function(){bb.classList.remove('show');},3000);} } }
+  }
+
+  // ---- achievement badges ----
+  var earned={}; try{ earned=JSON.parse(localStorage.getItem('l8-badges')||'{}'); }catch(e){}
+  function unlock(id,label){ if(earned[id]) return; earned[id]=1;
+    try{localStorage.setItem('l8-badges',JSON.stringify(earned));}catch(e){}
+    if(window.toast) toast('🏅 Achievement — '+label); }
+
+  // ---- confetti block-burst ----
+  function burst(){ var cols=['#6abe30','#8a6240','#2fc7bd','#f4b400','#d12a1a'];
+    for(var i=0;i<28;i++){ (function(){ var c=document.createElement('div'); c.className='cfx';
+      c.style.left=(6+Math.random()*88)+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDelay=(Math.random()*0.35)+'s'; document.body.appendChild(c);
+      setTimeout(function(){ c.remove(); },2700); })(); } }
+
+  // ---- hook the tick (after engine + mascot) ----
+  if(typeof showOk==='function'){ var prev=showOk;
+    showOk=function(i){ var cb=document.getElementById('done'+i); var was=cb&&cb.checked;
+      prev(i);
+      if(!was){ sfx('done'); refreshXP(false);
+        if(i===1) unlock('first','First Block 🟩');
+        if(i===7) unlock('healer','Crafter ⛏');
+        if(i===8){ unlock('diamond','Diamond Finder 💎'); sfx('diamond'); }
+        if(i===13){ unlock('cap','Master Builder 🏆'); sfx('win'); burst(); }
+        if(doneCount()===allIds().length){ unlock('all','World Builder 👑'); sfx('win'); burst(); }
+      }
+    };
+    window.showOk=showOk;
+  }
+  setTimeout(function(){ refreshXP(true); }, 1300);  // seed level from any loaded progress
+})();
 </script>
 </body></html>
