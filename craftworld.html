@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Craft World</title>
+<style>
+  body { background-color: #8fd0f5; font-family: monospace; text-align: center; color: #20331a; }
+  h1 { color: #2a5d12; font-size: 42px; letter-spacing: 2px; }
+  h2 { background-color: #6abe30; color: white; border: 5px solid #1f3d10; padding: 14px; max-width: 470px; margin: 14px auto; }
+  button { background-color: #8a6240; color: white; border: 4px solid #3a2a1a; padding: 13px 22px; font-family: monospace; font-weight: bold; font-size: 16px; cursor: pointer; }
+  p { font-size: 18px; }
+</style>
+</head>
+<body>
+
+  <h1>CRAFT WORLD</h1>
+  <h2>Welcome, Player!</h2>
+
+  <p>My favourite blocks:</p>
+  <table align="center" cellspacing="7">
+    <tr>
+      <td bgcolor="#6abe30" width="48" height="48" style="border:4px solid #2a2a1a"></td>
+      <td bgcolor="#8a6240" width="48" height="48" style="border:4px solid #2a2a1a"></td>
+      <td bgcolor="#8a8a8a" width="48" height="48" style="border:4px solid #2a2a1a"></td>
+      <td bgcolor="#5fe0d6" width="48" height="48" style="border:4px solid #2a2a1a"></td>
+      <td bgcolor="#f4c12b" width="48" height="48" style="border:4px solid #2a2a1a"></td>
+    </tr>
+  </table>
+
+  <p>
+    <button onclick="mine()">Mine a block</button>
+    <button onclick="loot()">Open chest</button>
+  </p>
+
+  <h2 id="out">Press a button to play!</h2>
+
+  <script>
+    function mine() {
+      document.getElementById("out").innerHTML = "You mined a block!";
+    }
+    function loot() {
+      let blocks = ["Diamond", "Gold", "Redstone", "Emerald"];
+      let i = Math.floor(Math.random() * blocks.length);
+      document.getElementById("out").innerHTML = "You found: " + blocks[i] + "!";
+    }
+  </script>
+
+</body>
+</html>
