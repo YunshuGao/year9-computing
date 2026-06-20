@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Design Studio · 9IMMXA</title>
+<style>
+  :root{
+    --ink:#1f2447; --violet:#5b3fb0; --violet2:#7c5cd6; --coral:#ff6b6b; --teal:#16b8a6;
+    --orange:#e8590c; --gold:#f2b705; --bg:#f4f2fb; --card:#ffffff; --line:#e3def4; --muted:#6b6790;
+    --good:#15a36e; --goodbg:#e8f8f0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  code,kbd{font-family:'Consolas','SF Mono',monospace}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 16px 80px}
+
+  header{background:linear-gradient(120deg,#4b2f9e,#7c5cd6 60%,#b07cf0);color:#fff;
+         padding:22px 0 18px;box-shadow:0 4px 18px rgba(75,47,158,.25)}
+  header .wrap{padding-bottom:0}
+  .brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{font-size:30px}
+  h1{margin:0;font-size:27px;letter-spacing:.3px}
+  .sub{opacity:.92;font-size:14px;margin-top:2px}
+  .who{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .who input{border:none;border-radius:8px;padding:8px 11px;font-size:14px;min-width:150px}
+  .who label{font-size:13px;opacity:.95}
+  .prog{margin-left:auto;background:rgba(255,255,255,.18);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;white-space:nowrap}
+
+  .phase{display:flex;align-items:center;gap:12px;margin:30px 0 6px}
+  .phase .pill{background:var(--violet);color:#fff;border-radius:20px;padding:5px 14px;font-weight:700;font-size:13px;white-space:nowrap}
+  .phase .ln{flex:1;height:2px;background:var(--line)}
+  .phase .mins{color:var(--muted);font-size:13px;font-weight:600}
+  .phase.donow .pill{background:var(--orange)} .phase.teach .pill{background:var(--teal)} .phase.wrapup .pill{background:var(--coral)}
+
+  /* do-now quiz */
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin:10px 0}
+  .qq{font-weight:600;font-size:15px;margin-bottom:9px}
+  .qq b{color:var(--violet)}
+  .qopts{display:flex;gap:8px;flex-wrap:wrap}
+  .qopt{background:#f4f2fb;border:1.5px solid var(--line);border-radius:9px;padding:8px 14px;font-size:14px;cursor:pointer;color:var(--ink);font-family:inherit}
+  .qopt:hover:not(:disabled){background:#e9e3fa}
+  .qopt:disabled{cursor:default;opacity:.85}
+  .qopt.right{background:var(--goodbg);border-color:var(--good);color:var(--good);font-weight:700}
+  .qopt.wrong{background:#fdecec;border-color:#e2b6b6;color:#c0392b}
+  .qfb{font-size:13px;margin-top:8px;font-weight:600}
+  .qfb.ok{color:var(--good)} .qfb.no{color:#c0392b}
+
+  .intro{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:10px 0}
+  .ic{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px}
+  .ic h3{margin:0 0 6px;font-size:16px;color:var(--violet)}
+  .ic p{margin:0;font-size:14px;color:#3a3760}
+  .ic code{background:#f0ecfb;border-radius:5px;padding:1px 6px;color:var(--violet);font-size:13px}
+
+  .tier{font-size:15px;font-weight:800;letter-spacing:.5px;margin:26px 0 4px;display:flex;align-items:center;gap:9px}
+  .tag{border-radius:7px;padding:3px 10px;color:#fff;font-size:12px;font-weight:800}
+  .t-must{background:var(--teal)} .t-should{background:var(--violet2)} .t-could{background:var(--coral)} .t-int{background:var(--orange)}
+  .tier small{color:var(--muted);font-weight:500;font-size:13px}
+
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:14px 0;overflow:hidden;box-shadow:0 2px 10px rgba(40,30,90,.05)}
+  .tile.done{border-color:var(--good);box-shadow:0 2px 14px rgba(21,163,110,.18)}
+  .th{display:flex;align-items:flex-start;gap:10px;padding:14px 18px 10px}
+  .th .num{background:#efeafb;color:var(--violet);font-weight:800;border-radius:9px;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .th .ttl{font-weight:700;font-size:17px}
+  .th .task{font-size:14px;color:#46426e;margin-top:2px}
+  .th .task b{color:var(--violet)}
+  .badge{margin-left:auto;font-size:13px;font-weight:800;color:var(--muted);white-space:nowrap;border:1.5px solid var(--line);border-radius:20px;padding:4px 12px}
+  .tile.done .badge{color:#fff;background:var(--good);border-color:var(--good)}
+  .pane{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line)}
+  @media(max-width:760px){.pane{grid-template-columns:1fr}}
+  .edwrap{position:relative;border-right:1px solid var(--line)}
+  @media(max-width:760px){.edwrap{border-right:none;border-bottom:1px solid var(--line)}}
+  .edlabel,.pvlabel{font-size:11px;font-weight:700;letter-spacing:.6px;color:var(--muted);padding:7px 14px 3px;text-transform:uppercase}
+  textarea{width:100%;border:none;resize:vertical;min-height:200px;padding:6px 14px 14px;font-family:'Consolas',monospace;font-size:13.5px;line-height:1.55;color:#26224a;outline:none;background:#fcfbff}
+  .pv{min-height:200px}
+  iframe{width:100%;height:100%;min-height:210px;border:none;background:#fff;display:block}
+  .hintbar{padding:9px 16px;background:#faf8ff;border-top:1px solid var(--line);font-size:13px;color:#5a5680;display:flex;gap:8px;align-items:center}
+  .hintbar b{color:var(--violet)}
+  .resetb{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:4px 10px;font-size:12px;cursor:pointer}
+  .resetb:hover{background:#f0ecfb}
+
+  .save-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:12px 0}
+  .save-card h3{margin:0 0 8px;color:var(--coral)}
+  .reflect{display:grid;gap:10px;margin:10px 0}
+  .reflect label{font-size:14px;font-weight:600;color:#3a3760}
+  .reflect input{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:14px}
+  .btn{background:var(--violet);color:#fff;border:none;border-radius:11px;padding:13px 22px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(91,63,176,.3)}
+  .btn.save{background:var(--coral);box-shadow:0 3px 10px rgba(255,107,107,.3)}
+  .btn.save:hover{background:#ef5757}
+  .savebar{position:sticky;bottom:0;background:rgba(244,242,251,.94);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:12px;align-items:center;margin-top:20px}
+  .savebar .msg{font-size:13px;color:var(--muted)}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <span class="logo">🎨</span>
+      <div>
+        <h1>Web Design Studio</h1>
+        <div class="sub">Year 9 Computing · 9IMMXA · design with HTML + CSS + JavaScript</div>
+      </div>
+      <div class="prog" id="prog">0 / 0 done</div>
+    </div>
+    <div class="who">
+      <label>Name <input id="sName" placeholder="your name"></label>
+      <label>Class <input id="sClass" value="9IMMXA" style="min-width:90px"></label>
+      <label>Date <input id="sDate" placeholder="__/__/2026" style="min-width:110px"></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ DO NOW ============ -->
+  <div class="phase donow"><span class="pill">🔥 Do Now</span><span class="ln"></span>
+    <span class="mins">~5 min · what do you remember from Grok? · <b id="quizscore">0 / 0</b> correct</span></div>
+  <div id="quiz"></div>
+
+  <!-- ============ TEACH ============ -->
+  <div class="phase teach"><span class="pill">▶ Watch &amp; learn</span><span class="ln"></span><span class="mins">~20 min · with your teacher</span></div>
+  <div class="intro">
+    <div class="ic"><h3>3 languages, 1 page</h3><p><b>HTML</b> builds it, <b>CSS</b> styles it, <b>JavaScript</b> makes it react. Today you use all three.</p></div>
+    <div class="ic"><h3>Type → see it</h3><p>Edit the code on the <b>left</b>; the page updates live on the <b>right</b>. For JS tiles, <b>click the button in the preview</b> to test it.</p></div>
+    <div class="ic"><h3>Get the tick</h3><p>Each task lights up <b style="color:var(--good)">✓ Styled!</b> when your code works. Work down: <b>Must → Should → Could → Interactive</b>.</p></div>
+    <div class="ic"><h3>Keep your work</h3><p>At the end, click <b>Save my work</b> for one file with everything — your Do Now score, your code, your reflection.</p></div>
+  </div>
+
+  <!-- ============ PRACTISE ============ -->
+  <div class="phase"><span class="pill">✎ Your turn</span><span class="ln"></span><span class="mins">~50 min · build down the tiers as far as you can</span></div>
+  <div id="tiles"></div>
+
+  <!-- ============ WRAP UP ============ -->
+  <div class="phase wrapup"><span class="pill">★ Wrap up</span><span class="ln"></span><span class="mins">~5 min · save &amp; reflect</span></div>
+  <div class="save-card">
+    <h3>Save your studio</h3>
+    <div class="reflect">
+      <div><label>The best thing I designed today was…</label><input id="r1" placeholder="type here"></div>
+      <div><label>One NEW thing I learned (CSS or JavaScript) is…</label><input id="r2" placeholder="e.g. :hover, a class, onclick, display:none"></div>
+      <div><label>One thing I'd design or build next is…</label><input id="r3" placeholder="type here"></div>
+    </div>
+  </div>
+
+  <footer>Web Design Studio · made for 9IMMXA · your work auto-saves in this browser</footer>
+</div>
+
+<div class="savebar">
+  <button class="btn save" onclick="saveWork()">💾 Save my work (one file)</button>
+  <span class="msg" id="saveMsg">Tip: put your name in at the top first.</span>
+</div>
+
+<script>
+/* ---------------- DO NOW quiz (checks Grok prior knowledge) ---------------- */
+const QUIZ=[
+  {q:'Which tag makes the <b>biggest, most important</b> heading?', a:['&lt;h1&gt;','&lt;h6&gt;','&lt;p&gt;','&lt;strong&gt;'], c:0},
+  {q:'Where do your <b>CSS</b> style rules go?', a:['inside &lt;style&gt; or a stylesheet','inside &lt;title&gt;','inside a &lt;p&gt;'], c:0},
+  {q:'In the box model, which adds space <b>INSIDE</b> the border?', a:['padding','margin','border'], c:0},
+  {q:'Which adds space <b>OUTSIDE</b>, between elements?', a:['margin','padding','font-size'], c:0},
+  {q:'What does <b>&lt;span&gt;</b> do?', a:['groups inline text so you can style it','starts a new paragraph','adds an image'], c:0},
+  {q:'How do you style <b>h1 AND h2</b> with ONE rule?', a:['h1, h2 { }','h1 h2 { }','h1.h2 { }'], c:0},
+  {q:'What does <b>display: none;</b> do?', a:['hides the element','makes it bold','centres it'], c:0},
+  {q:'What does <b>:hover</b> do?', a:['styles it when the mouse is over it','styles it on page load','deletes it'], c:0}
+];
+let answered={};
+function buildQuiz(){
+  let h='';
+  QUIZ.forEach((it,qi)=>{
+    h+='<div class="qcard" id="q'+qi+'"><div class="qq">'+(qi+1)+'. '+it.q+'</div><div class="qopts">';
+    it.a.forEach((opt,oi)=>{ h+='<button class="qopt" onclick="ans('+qi+','+oi+')">'+opt+'</button>'; });
+    h+='</div><div class="qfb" id="fb'+qi+'"></div></div>';
+  });
+  document.getElementById('quiz').innerHTML=h;
+  Object.keys(answered).forEach(qi=>applyAns(+qi,answered[qi]));
+  quizScore();
+}
+function applyAns(qi,oi){
+  const it=QUIZ[qi], card=document.getElementById('q'+qi), ok=(oi===it.c);
+  card.querySelectorAll('.qopt').forEach((b,bi)=>{ b.disabled=true;
+    if(bi===it.c)b.classList.add('right'); if(bi===oi&&!ok)b.classList.add('wrong'); });
+  const fb=document.getElementById('fb'+qi);
+  fb.innerHTML=ok?'✓ Correct!':'✗ The answer is: '+it.a[it.c]; fb.className='qfb '+(ok?'ok':'no');
+}
+function ans(qi,oi){ if(answered[qi]!=null)return; answered[qi]=oi; applyAns(qi,oi); quizScore(); persist(); }
+function quizScore(){
+  const right=Object.keys(answered).filter(qi=>answered[qi]===QUIZ[qi].c).length;
+  document.getElementById('quizscore').textContent=right+' / '+QUIZ.length;
+}
+
+/* ---------------- TILES (HTML + CSS + JS) ---------------- */
+const TILES=[
+  { tier:'must', title:'Colour the text', want:['color:'],
+    task:'Add <b>color:</b> inside the h1 rule to give the heading a colour you like.',
+    hint:'Try <code>color: teal;</code> between the { } brackets.',
+    code:`<style>
+  h1 {
+    /* add a colour here */
+  }
+</style>
+<h1>Style me!</h1>` },
+
+  { tier:'must', title:'Background colour', want:['background'],
+    task:'Add a <b>background-color:</b> to the body so the whole page has colour.',
+    hint:'Try <code>background-color: #fff0d9;</code> (or any colour name).',
+    code:`<style>
+  body { /* add a background-color */ }
+  h1   { color: #5b3fb0; }
+</style>
+<h1>My Page</h1>
+<p>Make the whole page colourful.</p>` },
+
+  { tier:'must', title:'Fonts &amp; size', want:['font-family','font-size'],
+    task:'Add <b>font-family</b> AND <b>font-size</b> to the body.',
+    hint:'<code>font-family: Arial;</code> and <code>font-size: 18px;</code>',
+    code:`<style>
+  body {
+    /* add font-family and font-size */
+  }
+</style>
+<h1>Big idea</h1>
+<p>Change how the letters look and how big they are.</p>` },
+
+  { tier:'should', title:'The box model: padding, border', want:['padding','border'],
+    task:'Add <b>padding</b> and a <b>border</b> to the box (you used these in Grok).',
+    hint:'<code>padding: 16px;</code> and <code>border: 2px solid #5b3fb0;</code>',
+    code:`<style>
+  .box {
+    background: #f0ecfb;
+    /* add padding and a border */
+  }
+</style>
+<div class="box">I am a box. Give me space and an edge.</div>` },
+
+  { tier:'should', title:'Make &amp; use a class', want:['class='],
+    task:'Make a <b>.card</b> class with a style, then <b>use it</b> on an element with <code>class="card"</code>.',
+    hint:'A class starts with a dot in CSS, but no dot in the HTML.',
+    code:`<style>
+  /* make a .card class, e.g. a background + padding */
+</style>
+
+<p>Plain paragraph.</p>
+<p>Turn me into a card!</p>` },
+
+  { tier:'should', title:'Combine selectors', want:[','],
+    task:'Style <b>h1 and h2 together</b> in one rule by separating them with a <b>comma</b>.',
+    hint:'<code>h1, h2 { color: #16b8a6; }</code> styles both at once.',
+    code:`<style>
+  /* style h1 AND h2 in ONE rule using a comma */
+</style>
+<h1>Heading one</h1>
+<h2>Heading two</h2>` },
+
+  { tier:'should', title:'Group with a container', want:['<div'],
+    task:'Wrap both paragraphs in a <b>&lt;div&gt;</b> container, then style that container.',
+    hint:'Put <code>&lt;div class="card"&gt; ... &lt;/div&gt;</code> around both lines, then style <code>.card</code>.',
+    code:`<style>
+  /* style a .card container */
+</style>
+
+<p>Line one.</p>
+<p>Line two.</p>` },
+
+  { tier:'could', title:'Hover effect', want:[':hover'],
+    task:'Add a <b>:hover</b> rule so the button changes when the mouse is over it.',
+    hint:'<code>button:hover { background: #16b8a6; }</code> — then point at the button.',
+    code:`<style>
+  button { background: #ddd; padding: 10px 18px; border:none; border-radius:8px; }
+  /* add a button:hover rule */
+</style>
+<button>Hover over me</button>` },
+
+  { tier:'could', title:'Two-column layout', want:[['inline-block','flex','grid']],
+    task:'Put the two boxes <b>side by side</b> (inline-block, like the multi-column work in Grok).',
+    hint:'<code>.col { display: inline-block; width: 45%; }</code>',
+    code:`<style>
+  .col { background:#efeafb; padding:14px; width:90%; }
+  /* make the columns sit side by side */
+</style>
+<div class="col">Column A</div>
+<div class="col">Column B</div>` },
+
+  { tier:'could', title:'Centre it', want:[['text-align:center','margin:0auto','align-items','justify-content']],
+    task:'<b>Centre</b> the card on the page (any way you like).',
+    hint:'Easiest: <code>text-align: center;</code> on the body. Or <code>margin: 0 auto;</code>.',
+    code:`<style>
+  body { background:#f4f2fb; }
+  .card { background:#fff; border:1px solid #ddd; padding:20px; width:220px; }
+  /* now centre the card */
+</style>
+<div class="card">Centre me on the page.</div>` },
+
+  { tier:'int', title:'Button changes the text  (JavaScript)', want:['innerhtml'],
+    task:'Make the button <b>change the heading</b> when clicked — add JavaScript inside change().',
+    hint:'<code>document.getElementById("out").innerHTML = "Changed!";</code>  Then click the button in the preview.',
+    code:`<style> button{ padding:8px 16px; border:none; border-radius:8px; background:#5b3fb0; color:#fff } </style>
+<h2 id="out">Click the button...</h2>
+<button onclick="change()">Click me</button>
+<script>
+  function change() {
+    /* change the words inside "out" */
+  }
+<\/script>` },
+
+  { tier:'int', title:'Show &amp; hide  (JavaScript)', want:['display'],
+    task:'You used <b>display: none</b> in Grok. Now make the button <b>hide</b> the panel with JavaScript.',
+    hint:'<code>document.getElementById("panel").style.display = "none";</code>',
+    code:`<style> #panel{ background:#dcd0f5; padding:16px; border-radius:10px } button{ margin-top:8px } </style>
+<div id="panel">Now you see me!</div>
+<button onclick="hide()">Hide it</button>
+<script>
+  function hide() {
+    /* set the panel's display to none */
+  }
+<\/script>` },
+
+  { tier:'int', title:'Design your own interactive card', want:[],
+    task:'<b>Capstone:</b> design a card (class, colours, padding, a hover) AND give it a button that DOES something in JavaScript. All three languages together.',
+    hint:'This ticks when you SAVE. Combine your best CSS with one JavaScript action.',
+    code:`<style>
+  .me { background:#5b3fb0; color:#fff; padding:22px; border-radius:16px; width:260px; font-family:Arial; }
+  .me button { margin-top:10px; border:none; border-radius:8px; padding:6px 12px; cursor:pointer; }
+</style>
+
+<div class="me">
+  <h2>Your Name</h2>
+  <p id="info">Year 9 · click the button!</p>
+  <button onclick="surprise()">Surprise me</button>
+</div>
+<script>
+  function surprise() {
+    /* change #info, or change a colour... make it interactive */
+  }
+<\/script>` }
+];
+
+/* ---------------- engine ---------------- */
+const LSKEY='designstudio-9immxa-v1';
+const $=id=>document.getElementById(id);
+const norm=s=>s.toLowerCase().replace(/\s+/g,'');
+const TIER={must:['t-must','Must'],should:['t-should','Should'],could:['t-could','Could'],int:['t-int','Interactive']};
+function wrapDoc(code){
+  return '<!doctype html><html><head><meta charset="utf-8">'+
+         '<style>body{font-family:Segoe UI,Arial,sans-serif;margin:12px;color:#222}</style>'+
+         '</head><body>'+code+'</body></html>';
+}
+function reqMet(req,v){ return Array.isArray(req)?req.some(x=>v.includes(norm(x))):v.includes(norm(req)); }
+function checkDone(t){
+  if(!t.want.length) return false;            // create tile: ticks on save
+  const v=norm($('ed'+t.i).value.replace(/\/\*[\s\S]*?\*\//g,'').replace(/<!--[\s\S]*?-->/g,''));  // ignore comments
+  return t.want.every(req=>reqMet(req,v));
+}
+let createdSaved={};
+function render(t){
+  $('pv'+t.i).srcdoc=wrapDoc($('ed'+t.i).value);
+  const done=!!(checkDone(t)||(!t.want.length && createdSaved[t.i]));
+  $('tile'+t.i).classList.toggle('done',done);
+  $('badge'+t.i).textContent=done?'✓ Done!':(t.want.length?'not yet':'free build');
+  t.done=done; updateProg();
+}
+function updateProg(){ $('prog').textContent=TILES.filter(t=>t.done).length+' / '+TILES.length+' done'; }
+function reset(i){ const t=TILES[i]; $('ed'+i).value=t.code.replace(/&amp;/g,'&'); render(t); persist(); }
+
+function build(){
+  const order=['must','should','could','int'];
+  const groups={must:[],should:[],could:[],int:[]};
+  TILES.forEach((t,i)=>{t.i=i; groups[t.tier].push(t);});
+  const labels={must:'Must — warm-up CSS',should:'Should — structure &amp; selectors',
+                could:'Could — advanced layout &amp; effects',int:'Make it interactive — HTML + CSS + JavaScript'};
+  let html='';
+  order.forEach(tier=>{
+    const cls=TIER[tier][0], nm=TIER[tier][1];
+    html+='<div class="tier"><span class="tag '+cls+'">'+nm+'</span><small>'+labels[tier]+'</small></div>';
+    groups[tier].forEach(t=>{
+      html+=`<div class="tile" id="tile${t.i}">
+        <div class="th"><span class="num">${t.i+1}</span>
+          <div><div class="ttl">${t.title}</div><div class="task">${t.task}</div></div>
+          <span class="badge" id="badge${t.i}">not yet</span></div>
+        <div class="pane">
+          <div class="edwrap"><div class="edlabel">✎ Your code</div><textarea id="ed${t.i}" spellcheck="false"></textarea></div>
+          <div class="pv"><div class="pvlabel">▶ Live preview</div><iframe id="pv${t.i}" title="preview ${t.i+1}"></iframe></div>
+        </div>
+        <div class="hintbar"><b>Hint:</b> <span>${t.hint}</span><button class="resetb" onclick="reset(${t.i})">↺ reset</button></div>
+      </div>`;
+    });
+  });
+  $('tiles').innerHTML=html;
+  TILES.forEach(t=>{ const ed=$('ed'+t.i); ed.value=t.code.replace(/&amp;/g,'&');
+    ed.addEventListener('input',()=>{render(t);persist();}); render(t); });
+}
+
+/* ---------------- save / persist ---------------- */
+function gather(){
+  return { name:$('sName').value, cls:$('sClass').value, date:$('sDate').value,
+           r1:$('r1').value, r2:$('r2').value, r3:$('r3').value,
+           code:TILES.map(t=>$('ed'+t.i).value), created:createdSaved, quiz:answered };
+}
+function persist(){ try{localStorage.setItem(LSKEY,JSON.stringify(gather()));}catch(e){} }
+function restore(){
+  let s=null; try{s=JSON.parse(localStorage.getItem(LSKEY));}catch(e){}
+  if(!s) return;
+  $('sName').value=s.name||''; if(s.cls)$('sClass').value=s.cls; $('sDate').value=s.date||'';
+  $('r1').value=s.r1||''; $('r2').value=s.r2||''; $('r3').value=s.r3||'';
+  createdSaved=s.created||{}; answered=s.quiz||{}; buildQuiz();
+  if(Array.isArray(s.code)) TILES.forEach(t=>{ if(s.code[t.i]!=null) $('ed'+t.i).value=s.code[t.i]; });
+  TILES.forEach(t=>render(t));
+}
+['sName','sClass','sDate','r1','r2','r3'].forEach(id=>document.addEventListener('input',e=>{if(e.target.id===id)persist();}));
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function saveWork(){
+  TILES.forEach(t=>{ if(!t.want.length) createdSaved[t.i]=true; });
+  TILES.forEach(t=>render(t)); persist();
+  const g=gather(); const nm=(g.name||'student').replace(/[^a-z0-9]+/gi,'-');
+  const qright=Object.keys(answered).filter(qi=>answered[qi]===QUIZ[qi].c).length;
+  let body='';
+  TILES.forEach((t,i)=>{
+    body+=`<section><h2>${i+1}. ${t.title.replace(/&amp;/g,'&')}</h2>
+      <div class="result">${g.code[i]}</div>
+      <details><summary>my code</summary><pre>${esc(g.code[i])}</pre></details></section>`;
+  });
+  const done=TILES.filter(t=>t.done).length;
+  const out=`<!doctype html><html lang="en-AU"><head><meta charset="utf-8">
+<title>Web Design Studio — ${esc(g.name)}</title>
+<style>body{font-family:Segoe UI,Arial,sans-serif;max-width:820px;margin:0 auto;padding:24px;color:#222;background:#f4f2fb}
+h1{color:#5b3fb0} .meta{color:#666;margin-bottom:18px}
+section{background:#fff;border:1px solid #e3def4;border-radius:14px;padding:16px 18px;margin:14px 0}
+h2{margin:0 0 10px;font-size:18px;color:#46426e}
+.result{border:1px dashed #ccc;border-radius:8px;padding:8px;background:#fff}
+pre{background:#1f2447;color:#dfe;padding:12px;border-radius:8px;overflow:auto;font-size:13px}
+summary{cursor:pointer;color:#5b3fb0;margin-top:8px}
+.refl{background:#fff7e6;border:1px solid #f2b705;border-radius:12px;padding:14px 16px;margin:16px 0}</style></head>
+<body>
+<h1>🎨 Web Design Studio</h1>
+<div class="meta"><b>${esc(g.name)||'(no name)'}</b> · ${esc(g.cls)} · ${esc(g.date)} · Do Now ${qright}/${QUIZ.length} · styled ${done}/${TILES.length} tiles</div>
+<div class="refl"><b>My reflection</b><br>
+Best thing I designed: ${esc(g.r1)}<br>Something new I learned: ${esc(g.r2)}<br>I'd build next: ${esc(g.r3)}</div>
+${body}
+</body></html>`;
+  const blob=new Blob([out],{type:'text/html'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='WebDesign-'+nm+'.html'; document.body.appendChild(a); a.click(); a.remove();
+  $('saveMsg').textContent='Saved! Upload WebDesign-'+nm+'.html to Google Classroom.';
+}
+
+buildQuiz(); build(); restore();
+</script>
+</body>
+</html>
