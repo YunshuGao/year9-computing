@@ -35,7 +35,7 @@
 
   <div class="top">
     <h1>&#9935; Make your OWN inventory!</h1>
-    <p>Put your own things in the <b>&#9999;&#65039;</b> list, then press <span class="key">&#9654; Run</span>. The loop does the rest.</p>
+    <p>Put your blocks in the <b>&#9999;&#65039;</b> list, then press <span class="key">&#9654; Run</span>. The loop fills a slot for each one.</p>
   </div>
 
   <div class="bar">
@@ -53,39 +53,35 @@
 
 <!-- The CSS below is DONE for you. Don't touch it. -->
 <style>
-  body { margin:0; background:#11151c; color:#fff; font-family:'Segoe UI',system-ui,sans-serif; text-align:center; }
-  header { background:#1f3d10; border-bottom:5px solid #0a1408; padding:20px; }
-  h1 { margin:0; font-size:34px; }
-  .panel { max-width:640px; margin:28px auto; background:#2b2b2b; border:5px solid #0a0a0a; border-radius:6px; padding:20px; }
-  .panel-h { color:#ffd54f; font-weight:bold; text-align:left; margin-bottom:14px; text-transform:uppercase; letter-spacing:2px; }
-  #bag { display:flex; flex-wrap:wrap; gap:9px; justify-content:center; }
-  .slot { width:124px; height:62px; display:flex; align-items:center; justify-content:center; background:#c7b29a; border:3px solid #5d4037; border-radius:4px; color:#3e2723; font-weight:700; font-size:15px; }
-  .count { color:#9fe06a; font-weight:bold; margin-top:16px; }
+  body { margin:0; background:#12161d; text-align:center; padding:20px 0; font-family:'Segoe UI',sans-serif; }
+  .mc-window { display:inline-block; background:#c6c6c6; padding:16px; box-shadow: inset 3px 3px 0 #fefefe, inset -3px -3px 0 #8b8b8b, 0 0 0 4px #2b2b2b; }
+  .grid { display:grid; grid-template-columns:repeat(5,50px); gap:4px; }
+  .slot { position:relative; width:50px; height:50px; background:#8b8b8b; box-shadow: inset 3px 3px 0 #373737, inset -3px -3px 0 #fff; }
+  .item { position:absolute; inset:9px; box-shadow: inset 2px 2px 0 rgba(255,255,255,.35), inset -2px -2px 0 rgba(0,0,0,.32); }
+  .diamond{background:linear-gradient(135deg,#a7f3ec,#2fc7bd)} .gold{background:linear-gradient(135deg,#ffe9a8,#f4b400)}
+  .iron{background:linear-gradient(135deg,#f2f2f2,#b9b9b9)} .emerald{background:linear-gradient(135deg,#7cf0a8,#1f9d57)}
+  .redstone{background:linear-gradient(135deg,#f0604a,#a3160c)} .coal{background:linear-gradient(135deg,#5a5a5a,#1a1a1a)}
+  .bread{background:linear-gradient(135deg,#dcae5a,#a9701f)} .apple{background:linear-gradient(135deg,#f0584a,#b01a14)}
+  .grass{background:linear-gradient(135deg,#86cf57,#5a9c2e)} .lapis{background:linear-gradient(135deg,#5b7be0,#27409c)}
 </style>
 </head>
 <body>
 
-  <header>
-    <h1>&#9935; MY INVENTORY</h1>   <!-- ✏️ your title -->
-  </header>
-
-  <div class="panel">
-    <div class="panel-h">★ Hotbar</div>
-    <div id="bag"></div>
-    <div class="count" id="count"></div>
+  <div class="mc-window">
+    <div id="bag" class="grid"></div>
   </div>
 
   <script>
-    // ✏️ CHANGE THIS LIST to your own things (add as many as you like!)
-    let items = ["Sword", "Apple", "Diamond", "Torch", "Map"];
+    // ✏️ CHANGE THIS LIST. You can use:
+    //   diamond  gold  iron  emerald  redstone  coal  bread  apple  grass  lapis
+    let blocks = ["diamond", "gold", "iron", "apple", "bread"];
 
-    // The loop below builds a slot for EVERY item. You do NOT change it.
+    // The loop builds a slot for EVERY block in your list. You do NOT change it.
     let bag = "";
-    for (let i = 0; i < items.length; i = i + 1) {
-      bag = bag + "<span class='slot'>" + items[i] + "</span>";
+    for (let i = 0; i < blocks.length; i = i + 1) {
+      bag = bag + "<div class='slot'><span class='item " + blocks[i] + "'></span></div>";
     }
     document.getElementById("bag").innerHTML = bag;
-    document.getElementById("count").innerHTML = items.length + " items, built by ONE loop!";
   </script>
 </body>
 </html></textarea>
