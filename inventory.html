@@ -41,6 +41,15 @@
   .plank    { background: linear-gradient(135deg,#c19a5b,#90672f); }
   .stick    { background: linear-gradient(135deg,#b0823c,#7a5a25); }
 
+  /* Digger the mascot + speech bubble, beside the inventory */
+  .scene { display: flex; align-items: center; justify-content: center; gap: 26px; flex-wrap: wrap; }
+  .digger { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+  .bubble { background: #fff; border: 3px solid #2a2a2a; padding: 8px 12px; font-size: 12.5px;
+            font-weight: bold; color: #2a2a2a; box-shadow: 3px 3px 0 rgba(0,0,0,.2); max-width: 140px; }
+  .bubble b { color: #2a7d12; }
+  .digger svg { width: 132px; height: auto; image-rendering: pixelated;
+                filter: drop-shadow(4px 5px 0 rgba(0,0,0,.32)); }
+
   footer { color: #8aa17c; font-size: 13px; padding-top: 20px; }
 </style>
 </head>
@@ -49,9 +58,15 @@
   <h1>&#9935; My Inventory</h1>
   <div class="sub">Every slot below was placed by ONE loop.</div>
 
-  <div class="mc-window">
-    <div class="mc-title">INVENTORY</div>
-    <div id="bag" class="grid"></div>
+  <div class="scene">
+    <div class="digger">
+      <div class="bubble">ONE loop placed <b>every</b> block!</div>
+      <svg viewBox="0 0 72 92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-label="Digger the block miner"><rect x="54" y="18" width="6" height="36" fill="#7a5230"/><rect x="46" y="12" width="20" height="9" fill="#bfc8d0"/><rect x="46" y="12" width="7" height="9" fill="#8fa0ad"/><rect x="14" y="8" width="40" height="40" fill="#8a6240"/><rect x="14" y="8" width="40" height="10" fill="#6abe30"/><rect x="14" y="16" width="40" height="3" fill="#4e9c28"/><rect x="20" y="27" width="5" height="5" fill="#74502f"/><rect x="42" y="38" width="5" height="5" fill="#74502f"/><rect x="31" y="33" width="4" height="4" fill="#9c7144"/><rect x="22" y="26" width="7" height="8" fill="#ffffff"/><rect x="24" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="39" y="26" width="7" height="8" fill="#ffffff"/><rect x="41" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="28" y="41" width="12" height="3" fill="#3a2a1a"/><rect x="18" y="48" width="32" height="22" fill="#2a8c8c"/><rect x="18" y="48" width="32" height="4" fill="#37a3a3"/><rect x="30" y="52" width="8" height="14" fill="#1f6f6f"/><rect x="10" y="50" width="8" height="18" fill="#8a6240"/><rect x="50" y="50" width="8" height="16" fill="#8a6240"/><rect x="20" y="70" width="11" height="16" fill="#39516a"/><rect x="37" y="70" width="11" height="16" fill="#39516a"/><rect x="20" y="83" width="11" height="4" fill="#2a2a2a"/><rect x="37" y="83" width="11" height="4" fill="#2a2a2a"/></svg>
+    </div>
+    <div class="mc-window">
+      <div class="mc-title">INVENTORY</div>
+      <div id="bag" class="grid"></div>
+    </div>
   </div>
 
   <footer>15 items, 0 copied lines &mdash; built by one JavaScript loop.</footer>
