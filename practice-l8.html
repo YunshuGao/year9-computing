@@ -282,20 +282,24 @@ html{scroll-behavior:smooth}
     <button class="btn save" onclick="save()">Save my work</button>
   </div>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">build it & paint it</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Page</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Game list</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Paint it</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Style a button</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">make it play</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Start button</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Lucky Spin</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Guess game</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Show all</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">combine & stretch</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">⑩ Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">⑪ Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑫ Complete it</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Arcade</span></a></div></div></nav>
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">build it, paint it, code it</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Page</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Paint it</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Colour</span></a><a class="pill must" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Ask</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more JavaScript</span></div><div class="pills"><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Lucky Spin</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Guess game</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Show all</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">combine & stretch</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">⑩ Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">⑪ Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑫ Complete it</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Arcade</span></a></div></div></nav>
 
-  <section class="band html"><div class="bnum">1 / HTML + CSS</div><h2>Build it &amp; paint it</h2><p>Start with the bones and the paint. HTML lays out the arcade; CSS gives it that neon glow - every tag and style you already know.</p></section>
+  <section class="band html"><div class="bnum">1 / The basics</div><h2>Build it, paint it, code it</h2><p>Everything starts here. Build the page (HTML), paint it (CSS), then make buttons actually work (JavaScript) - the core of all three, and the JS you have practised for weeks. Finish THIS and you have built a real web page.</p></section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex1">
     <div class="h"><span class="n">1</span><h3>Lay out the arcade (HTML)</h3></div>
-    <p class="lead"><b>HTML</b> builds the structure - the bones of the page. Headings (<code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>) and paragraphs (<code>&lt;p&gt;</code>), exactly like the website you built earlier this term. Type it, then Run.</p>
+    <p class="lead"><b>HTML</b> builds the structure. A heading, a paragraph and a <code>&lt;ul&gt;</code> list of games - the same tags as your website project. Type it, then Run.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
         <pre class="code-ref" id="ref1">&lt;h1&gt;NEON ARCADE&lt;/h1&gt;
 &lt;p&gt;Welcome to my arcade. Pick a game and play!&lt;/p&gt;
-&lt;h2&gt;Player 1&lt;/h2&gt;
-&lt;p&gt;Coins: 3&lt;/p&gt;</pre>
+&lt;h2&gt;My games&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Guess the Number&lt;/li&gt;
+  &lt;li&gt;Dice Duel&lt;/li&gt;
+  &lt;li&gt;Lucky Spin&lt;/li&gt;
+&lt;/ul&gt;</pre>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
@@ -316,23 +320,25 @@ html{scroll-behavior:smooth}
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
         <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; you laid out the page with HTML.</span></div>
-        <div class="try"><b>Now change it:</b> add another <code>&lt;p&gt;</code> with your own high score, then Run again.</div>
+        <div class="try"><b>Now change it:</b> add a fourth game as a new <code>&lt;li&gt;</code>, then Run.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex2">
-    <div class="h"><span class="n">2</span><h3>List your games (ul / li)</h3></div>
-    <p class="lead">A <b>list</b> is perfect for a menu of games. <code>&lt;ul&gt;</code> starts the list and each <code>&lt;li&gt;</code> is one item - the same tags from your website project.</p>
+    <div class="h"><span class="n">2</span><h3>Paint the arcade (CSS)</h3></div>
+    <p class="lead"><b>CSS</b> styles the page. One <code>&lt;style&gt;</code> block sets the dark <code>background-color</code>, the neon heading <code>color</code> and the <code>font-family</code>, and gives the <code>button</code> some <code>padding</code> and a <code>border-radius</code>.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref2">&lt;h2&gt;My games&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Guess the Number&lt;/li&gt;
-  &lt;li&gt;Dice Duel&lt;/li&gt;
-  &lt;li&gt;Lucky Spin&lt;/li&gt;
-&lt;/ul&gt;</pre>
+        <pre class="code-ref" id="ref2">&lt;style&gt;
+  body { background-color: #11132a; font-family: Arial; color: white; }
+  h1 { color: #36e0c0; }
+  button { background: #ff3d77; color: white; padding: 12px 22px;
+           border: 0; border-radius: 10px; font-weight: bold; }
+&lt;/style&gt;
+&lt;h1&gt;NEON ARCADE&lt;/h1&gt;
+&lt;button&gt;Press Start&lt;/button&gt;</pre>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
@@ -352,24 +358,26 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
-        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you made a menu with ul and li.</span></div>
-        <div class="try"><b>Now change it:</b> add a fourth game as a new <code>&lt;li&gt;</code>, then Run.</div>
+        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you styled the page with CSS.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>#36e0c0</code> to <code>hotpink</code> and Run to recolour the heading.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex3">
-    <div class="h"><span class="n">3</span><h3>Paint the arcade (CSS)</h3></div>
-    <p class="lead"><b>CSS</b> styles the page. A <code>&lt;style&gt;</code> block sets the <code>background-color</code>, the <code>font-family</code> and the text <code>color</code> - dark, with a neon heading, like a real arcade.</p>
+    <div class="h"><span class="n">3</span><h3>Make a button work (JS)</h3></div>
+    <p class="lead"><b>JavaScript</b> - the part you have spent weeks on. A <code>&lt;button&gt;</code> calls a <code>function</code>, and the function uses <code>innerHTML</code> to change the heading. Type it, Run, then click the button.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref3">&lt;style&gt;
-  body { background-color: #11132a; font-family: Arial; color: white; }
-  h1 { color: #36e0c0; }
-&lt;/style&gt;
-&lt;h1&gt;NEON ARCADE&lt;/h1&gt;
-&lt;p&gt;Now my arcade is dark and glowing.&lt;/p&gt;</pre>
+        <pre class="code-ref" id="ref3">&lt;h1 id="screen"&gt;NEON ARCADE&lt;/h1&gt;
+&lt;button onclick="start()"&gt;Press Start&lt;/button&gt;
+
+&lt;script&gt;
+  function start() {
+    document.getElementById("screen").innerHTML = "Game on, Player 1!";
+  }
+&lt;/script&gt;</pre>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
@@ -389,24 +397,26 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
-        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; you styled the page with CSS.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>#36e0c0</code> to <code>hotpink</code> and Run to recolour the heading.</div>
+        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your button changed the page.</span></div>
+        <div class="try"><b>Now change it:</b> change the message to your own, then click Press Start again.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex4">
-    <div class="h"><span class="n">4</span><h3>Style a button (CSS)</h3></div>
-    <p class="lead">Style any element by its name. Here <code>button</code> gets a bright <code>background</code>, white <code>color</code>, some <code>padding</code> and rounded corners with <code>border-radius</code> - all CSS you have used before.</p>
+    <div class="h"><span class="n">4</span><h3>Change the look in code (JS)</h3></div>
+    <p class="lead">Code can change the <b>style</b> too. <code>.style.color</code> recolours the heading the moment the button is clicked - JavaScript reaching into the page. Run it, then click Neon mode.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref4">&lt;style&gt;
-  body { background-color: #11132a; font-family: Arial; }
-  button { background: #ff3d77; color: white; padding: 12px 22px;
-           border: 0; border-radius: 10px; font-weight: bold; }
-&lt;/style&gt;
-&lt;button&gt;Press Start&lt;/button&gt;</pre>
+        <pre class="code-ref" id="ref4">&lt;h1 id="screen"&gt;NEON ARCADE&lt;/h1&gt;
+&lt;button onclick="paint()"&gt;Neon mode&lt;/button&gt;
+
+&lt;script&gt;
+  function paint() {
+    document.getElementById("screen").style.color = "#36e0c0";
+  }
+&lt;/script&gt;</pre>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type it here</div>
@@ -426,27 +436,25 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
-        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; you styled a button with CSS.</span></div>
-        <div class="try"><b>Now change it:</b> change the <code>background</code> to <code>#36e0c0</code> for a different button colour.</div>
+        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your code changed the colour.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>"#36e0c0"</code> to <code>"gold"</code>, then click again.</div>
       </div>
     </div>
   </section>
-  <section class="band js"><div class="bnum">2 / JavaScript</div><h2>Make it play</h2><p>Now bring it to life. A button that reacts, a random pick, a guessing game, a list built by a loop - your JavaScript from this term.</p></section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex5">
-    <div class="h"><span class="n">5</span><h3>A button that reacts (JS)</h3></div>
-    <p class="lead"><b>JavaScript</b> makes it move. A <code>&lt;button&gt;</code> calls a <code>function</code>; the function uses <code>innerHTML</code> to change the heading and <code>.style.color</code> to recolour it.</p>
+  <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
+  <section class="ex must" id="ex5">
+    <div class="h"><span class="n">5</span><h3>Ask the player (prompt + variable)</h3></div>
+    <p class="lead">Make it personal. <code>prompt</code> asks a question, a <code>let</code> variable remembers the answer, and <code>+</code> joins it into a welcome message. Run, click Sign in, and type a name.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref5">&lt;h1 id="screen"&gt;NEON ARCADE&lt;/h1&gt;
-&lt;button onclick="start()"&gt;Press Start&lt;/button&gt;
+        <pre class="code-ref" id="ref5">&lt;h2 id="out"&gt;Press to sign in&lt;/h2&gt;
+&lt;button onclick="signin()"&gt;Sign in&lt;/button&gt;
 
 &lt;script&gt;
-  function start() {
-    let s = document.getElementById("screen");
-    s.innerHTML = "Game on, Player 1!";
-    s.style.color = "#36e0c0";
+  function signin() {
+    let name = prompt("Your gamer tag?");
+    document.getElementById("out").innerHTML = "Welcome, " + name;
   }
 &lt;/script&gt;</pre>
       </div>
@@ -468,15 +476,16 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
-        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; your button changed the page.</span></div>
-        <div class="try"><b>Now change it:</b> change the message to your own, then click Press Start.</div>
+        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; you asked the player and used their answer.</span></div>
+        <div class="try"><b>Now change it:</b> add the player&rsquo;s score to the message with another <code>prompt</code>.</div>
       </div>
     </div>
   </section>
+  <section class="band js"><div class="bnum">2 / Go further</div><h2>More JavaScript</h2><p>Now the powerful moves: pick a game at random, judge a guess with if/else, and build the whole list with a loop.</p></section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex6">
     <div class="h"><span class="n">6</span><h3>Pick a random game (JS)</h3></div>
-    <p class="lead">The magic trick again: a <b>list</b> plus <code>Math.random</code> picks a different game every click. <code>Math.floor(Math.random() * games.length)</code> gives a random spot in the list.</p>
+    <p class="lead">The magic trick: a <b>list</b> plus <code>Math.random</code> picks a different game every click. <code>Math.floor(Math.random() * games.length)</code> gives a random spot in the list.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
@@ -828,9 +837,9 @@ html{scroll-behavior:smooth}
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"arcade": "<h1>NEON ARCADE<\/h1>\n<p>Welcome to my arcade. Pick a game and play!<\/p>\n<h2>Player 1<\/h2>\n<p>Coins: 3<\/p>"}, "2": {"arcade": "<h2>My games<\/h2>\n<ul>\n  <li>Guess the Number<\/li>\n  <li>Dice Duel<\/li>\n  <li>Lucky Spin<\/li>\n<\/ul>"}, "3": {"arcade": "<style>\n  body { background-color: #11132a; font-family: Arial; color: white; }\n  h1 { color: #36e0c0; }\n<\/style>\n<h1>NEON ARCADE<\/h1>\n<p>Now my arcade is dark and glowing.<\/p>"}, "4": {"arcade": "<style>\n  body { background-color: #11132a; font-family: Arial; }\n  button { background: #ff3d77; color: white; padding: 12px 22px;\n           border: 0; border-radius: 10px; font-weight: bold; }\n<\/style>\n<button>Press Start<\/button>"}, "5": {"arcade": "<h1 id=\"screen\">NEON ARCADE<\/h1>\n<button onclick=\"start()\">Press Start<\/button>\n\n<script>\n  function start() {\n    let s = document.getElementById(\"screen\");\n    s.innerHTML = \"Game on, Player 1!\";\n    s.style.color = \"#36e0c0\";\n  }\n<\/script>"}, "6": {"arcade": "<h2 id=\"out\">Spin to pick a game!<\/h2>\n<button onclick=\"spin()\">Lucky Spin<\/button>\n\n<script>\n  function spin() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Maze Run\"];\n    let i = Math.floor(Math.random() * games.length);\n    document.getElementById(\"out\").innerHTML = games[i];\n  }\n<\/script>"}, "7": {"arcade": "<h2 id=\"out\">Guess my number (1-5)<\/h2>\n<button onclick=\"play()\">Take a guess<\/button>\n\n<script>\n  function play() {\n    let guess = Number(prompt(\"Pick 1 to 5\"));\n    let secret = 3;\n    if (guess === secret) {\n      document.getElementById(\"out\").innerHTML = \"You win!\";\n    } else if (guess < secret) {\n      document.getElementById(\"out\").innerHTML = \"Too low\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Too high\";\n    }\n  }\n<\/script>"}, "8": {"arcade": "<h2>All my games<\/h2>\n<div id=\"out\"><\/div>\n<button onclick=\"list()\">Show all games<\/button>\n\n<script>\n  function list() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Lucky Spin\"];\n    let html = \"\";\n    for (let i = 0; i < games.length; i = i + 1) {\n      html = html + \"<p>\" + games[i] + \"<\/p>\";\n    }\n    document.getElementById(\"out\").innerHTML = html;\n  }\n<\/script>"}, "13": {"arcade": "<style>\n  body { background-color: #11132a; font-family: Arial; color: white;\n         text-align: center; }\n  h1 { color: #36e0c0; }\n  button { background: #ff3d77; color: white; padding: 12px 22px;\n           border: 0; border-radius: 10px; font-weight: bold; }\n<\/style>\n\n<h1 id=\"screen\">NEON ARCADE<\/h1>\n<p>Pick a game, Player 1!<\/p>\n<button onclick=\"start()\">Press Start<\/button>\n<button onclick=\"spin()\">Lucky Spin<\/button>\n<div id=\"out\"><\/div>\n\n<script>\n  function start() {\n    document.getElementById(\"screen\").innerHTML = \"Game on!\";\n  }\n  function spin() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Maze Run\"];\n    let i = Math.floor(Math.random() * games.length);\n    document.getElementById(\"out\").innerHTML = \"Now playing: \" + games[i];\n  }\n<\/script>"}};
-var WANT = {"1": "NEON ARCADE", "2": "Dice Duel", "3": "NEON ARCADE", "4": "Press Start", "10": "Changed!", "12": "New high score!"};
-var OKTX = {"1": "you laid out the page with HTML.", "2": "you made a menu with ul and li.", "3": "you styled the page with CSS.", "4": "you styled a button with CSS.", "5": "your button changed the page.", "6": "your random picker chose a game.", "7": "your if/else judged the guess.", "8": "your loop built the whole list.", "9": "you traced the loop and predicted the output.", "10": "you matched the id and fixed the bug.", "11": "you built your own button from scratch.", "12": "your condition checked the score.", "13": "you combined HTML, CSS and JavaScript into one arcade."};
+var STARTERS = {"1": {"arcade": "<h1>NEON ARCADE<\/h1>\n<p>Welcome to my arcade. Pick a game and play!<\/p>\n<h2>My games<\/h2>\n<ul>\n  <li>Guess the Number<\/li>\n  <li>Dice Duel<\/li>\n  <li>Lucky Spin<\/li>\n<\/ul>"}, "2": {"arcade": "<style>\n  body { background-color: #11132a; font-family: Arial; color: white; }\n  h1 { color: #36e0c0; }\n  button { background: #ff3d77; color: white; padding: 12px 22px;\n           border: 0; border-radius: 10px; font-weight: bold; }\n<\/style>\n<h1>NEON ARCADE<\/h1>\n<button>Press Start<\/button>"}, "3": {"arcade": "<h1 id=\"screen\">NEON ARCADE<\/h1>\n<button onclick=\"start()\">Press Start<\/button>\n\n<script>\n  function start() {\n    document.getElementById(\"screen\").innerHTML = \"Game on, Player 1!\";\n  }\n<\/script>"}, "4": {"arcade": "<h1 id=\"screen\">NEON ARCADE<\/h1>\n<button onclick=\"paint()\">Neon mode<\/button>\n\n<script>\n  function paint() {\n    document.getElementById(\"screen\").style.color = \"#36e0c0\";\n  }\n<\/script>"}, "5": {"arcade": "<h2 id=\"out\">Press to sign in<\/h2>\n<button onclick=\"signin()\">Sign in<\/button>\n\n<script>\n  function signin() {\n    let name = prompt(\"Your gamer tag?\");\n    document.getElementById(\"out\").innerHTML = \"Welcome, \" + name;\n  }\n<\/script>"}, "6": {"arcade": "<h2 id=\"out\">Spin to pick a game!<\/h2>\n<button onclick=\"spin()\">Lucky Spin<\/button>\n\n<script>\n  function spin() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Maze Run\"];\n    let i = Math.floor(Math.random() * games.length);\n    document.getElementById(\"out\").innerHTML = games[i];\n  }\n<\/script>"}, "7": {"arcade": "<h2 id=\"out\">Guess my number (1-5)<\/h2>\n<button onclick=\"play()\">Take a guess<\/button>\n\n<script>\n  function play() {\n    let guess = Number(prompt(\"Pick 1 to 5\"));\n    let secret = 3;\n    if (guess === secret) {\n      document.getElementById(\"out\").innerHTML = \"You win!\";\n    } else if (guess < secret) {\n      document.getElementById(\"out\").innerHTML = \"Too low\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Too high\";\n    }\n  }\n<\/script>"}, "8": {"arcade": "<h2>All my games<\/h2>\n<div id=\"out\"><\/div>\n<button onclick=\"list()\">Show all games<\/button>\n\n<script>\n  function list() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Lucky Spin\"];\n    let html = \"\";\n    for (let i = 0; i < games.length; i = i + 1) {\n      html = html + \"<p>\" + games[i] + \"<\/p>\";\n    }\n    document.getElementById(\"out\").innerHTML = html;\n  }\n<\/script>"}, "13": {"arcade": "<style>\n  body { background-color: #11132a; font-family: Arial; color: white;\n         text-align: center; }\n  h1 { color: #36e0c0; }\n  button { background: #ff3d77; color: white; padding: 12px 22px;\n           border: 0; border-radius: 10px; font-weight: bold; }\n<\/style>\n\n<h1 id=\"screen\">NEON ARCADE<\/h1>\n<p>Pick a game, Player 1!<\/p>\n<button onclick=\"start()\">Press Start<\/button>\n<button onclick=\"spin()\">Lucky Spin<\/button>\n<div id=\"out\"><\/div>\n\n<script>\n  function start() {\n    document.getElementById(\"screen\").innerHTML = \"Game on!\";\n  }\n  function spin() {\n    let games = [\"Guess the Number\", \"Dice Duel\", \"Maze Run\"];\n    let i = Math.floor(Math.random() * games.length);\n    document.getElementById(\"out\").innerHTML = \"Now playing: \" + games[i];\n  }\n<\/script>"}};
+var WANT = {"1": "Dice Duel", "2": "NEON ARCADE", "3": "Game on", "5": "Welcome", "8": "Dice Duel", "10": "Changed!", "12": "New high score!"};
+var OKTX = {"1": "you laid out the page with HTML.", "2": "you styled the page with CSS.", "3": "your button changed the page.", "4": "your code changed the colour.", "5": "you asked the player and used their answer.", "6": "your random picker chose a game.", "7": "your if/else judged the guess.", "8": "your loop built the whole list.", "9": "you traced the loop and predicted the output.", "10": "you matched the id and fixed the bug.", "11": "you built your own button from scratch.", "12": "your condition checked the score.", "13": "you combined HTML, CSS and JavaScript into one arcade."};
 var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "tweak"};
 var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let s = \"\";\n  for (let i = 1; i <= 3; i = i + 1) {\n    s = s + \"Game \" + i + \" \";\n  }\n  document.getElementById(\"out\").innerHTML = s;\n<\/script>"};
 var DEBUGC = {"10": "<h1 id=\"title\">Hello<\/h1>\n<button onclick=\"go()\">Change it<\/button>\n\n<script>\n  function go() {\n    document.getElementById(\"titel\").innerHTML = \"Changed!\";\n  }\n<\/script>"};
