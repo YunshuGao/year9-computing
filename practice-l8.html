@@ -327,7 +327,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 /* BUG FIX 2: wrap long reference lines instead of horizontal-scrolling */
 .code-ref{white-space:pre-wrap;overflow-wrap:anywhere}
 
-/* ---- 'what you will build' showcase (complete poster + one big button) ---- */
+/* ---- 'your goal today' poster + 3-step roadmap (NOT a build door) ---- */
 .showcase{margin:16px 0 8px;border:3px solid #0a1408;background:#12161d;box-shadow:5px 5px 0 rgba(0,0,0,.18)}
 .sc-head{background:#4e9c28;color:#fff;padding:11px 16px;text-align:center;font-family:'Press Start 2P',monospace;font-size:12px;line-height:1.7;text-shadow:2px 2px 0 rgba(0,0,0,.35)}
 .sc-head .sc-star{color:#f9c52b}
@@ -337,16 +337,18 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .sc-bar{background:#d8d8d8;border-bottom:3px solid #000;padding:6px 9px;display:flex;align-items:center;gap:6px}
 .sc-bar i{width:11px;height:11px;border:2px solid #2a2a1a;display:inline-block}
 .sc-bar .sc-url{margin-left:8px;font-family:monospace;font-size:11px;color:#444;background:#fff;border:2px solid #2a2a1a;padding:2px 9px}
-.sc-img{display:block;max-height:560px;width:auto;max-width:100%}
+.sc-img{display:block;max-height:520px;width:auto;max-width:100%}
 .sc-note{text-align:center}
-.sc-lead{font-size:18px;color:#fff;margin:0 0 12px;font-weight:bold}
-.sc-chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-.sc-chip{color:#fff;font-weight:bold;font-size:15px;padding:7px 16px;border:3px solid rgba(0,0,0,.4)}
-.sc-html{background:#c0563a}.sc-css{background:#2f8f86}.sc-js{background:#c79a2b}
-.sc-cta{display:inline-block;text-decoration:none;background:#6abe30;color:#16310a;font-family:'Press Start 2P',monospace;font-size:17px;line-height:1.5;padding:20px 30px;border:5px solid #0a1408;box-shadow:6px 6px 0 rgba(0,0,0,.45)}
-.sc-cta:hover{background:#7ed957}.sc-cta:active{transform:translate(6px,6px);box-shadow:none}
-.sc-mini{font-size:13.5px;color:#9fb892;margin:16px 0 4px}
-.sc-see{color:#ffd54f;font-size:13.5px;text-decoration:none}.sc-see:hover{text-decoration:underline}
+.sc-lead{font-size:17px;color:#fff;margin:0 0 14px;font-weight:bold}
+.sc-road{display:flex;align-items:stretch;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.rd{background:#0e1f0a;border:3px solid #355c22;padding:9px 13px;min-width:94px;display:flex;flex-direction:column;gap:2px;color:#dfeecf;font-size:13px;font-weight:bold}
+.rd b{font-size:18px;color:#fff}.rd small{font-weight:normal;font-size:11px;color:#9fb892}
+.rd1{border-color:#6abe30}.rd2{border-color:#5fa8d8}.rd3{border-color:#c79bff;background:#19112a}
+.rd-go{align-self:center;color:#7ed957;font-weight:bold;font-size:20px}
+.sc-cta{display:inline-block;text-decoration:none;background:#6abe30;color:#16310a;font-family:'Press Start 2P',monospace;font-size:14px;line-height:1.5;padding:16px 26px;border:4px solid #0a1408;box-shadow:5px 5px 0 rgba(0,0,0,.45)}
+.sc-cta:hover{background:#7ed957}.sc-cta:active{transform:translate(5px,5px);box-shadow:none}
+.sc-mini{font-size:13px;color:#9fb892;margin:15px 0 0}.sc-mini b{color:#ffd54f}
+.sc-see{color:#ffd54f;text-decoration:none}.sc-see:hover{text-decoration:underline}
 @media(max-width:820px){.sc-body{grid-template-columns:1fr}}
 
 .cols>*{min-width:0}
@@ -398,6 +400,15 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .predict-in,.reflect textarea{border-radius:0 !important;border:2px solid #2a2a2a !important}
 .ok,.toast,.ctype,.strip .track,.lbl .cn{border-radius:0 !important}
 .ok{border:2px solid #2a2a2a}
+
+/* ---- the build door: the big 'make my game' button AFTER the tiles (reward) ---- */
+.builddoor{margin:26px 0 10px;border:3px solid #0a1408;background:#13230d;text-align:center;padding:28px 18px;box-shadow:6px 6px 0 rgba(0,0,0,.3)}
+.bd-badge{display:inline-block;background:#4e9c28;color:#fff;font-family:'Press Start 2P',monospace;font-size:10px;padding:8px 14px;border:3px solid #0a1408;margin-bottom:14px;text-shadow:2px 2px 0 rgba(0,0,0,.35)}
+.builddoor h2{color:#fff;font-size:25px;margin:6px 0 8px}
+.bd-lead{color:#cfe7bf;font-size:15px;margin:0 auto 20px;max-width:560px;line-height:1.5}
+.bd-btn{display:inline-block;text-decoration:none;background:#6abe30;color:#16310a;font-family:'Press Start 2P',monospace;font-size:18px;line-height:1.5;padding:22px 38px;border:5px solid #0a1408;box-shadow:6px 6px 0 rgba(0,0,0,.45)}
+.bd-btn:hover{background:#7ed957}.bd-btn:active{transform:translate(6px,6px);box-shadow:none}
+.bd-see{margin-top:16px}.bd-see a{color:#ffd54f;font-size:13.5px;text-decoration:none}.bd-see a:hover{text-decoration:underline}
 </style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
@@ -410,7 +421,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <h1>Build a Minecraft Page <span class="wc-pill">Guided Practice L8</span></h1>
         <div class="wc-ul"></div>
         <p class="wc-sub"><b>HTML builds it, CSS paints it, JavaScript makes it work.</b> Today you put all three together and build a CRAFT WORLD page - with the skills you have already learned this term.</p>
-        <a class="scrollcue" href="#ex1">Start building &darr;</a>
+        <a class="scrollcue" href="#start">Let&rsquo;s start &darr;</a>
       </div>
       <div class="wc-trophy">&#9935;</div>
     </div>
@@ -421,7 +432,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   </header>
 
   <section class="showcase">
-    <div class="sc-head"><span class="sc-star">&#9733;</span> BUILD THIS WHOLE PAGE TODAY <span class="sc-star">&#9733;</span></div>
+    <div class="sc-head"><span class="sc-star">&#9733;</span> YOUR GOAL TODAY: BUILD THIS WHOLE PAGE <span class="sc-star">&#9733;</span></div>
     <div class="sc-body">
       <div class="sc-left">
         <div class="sc-win">
@@ -430,21 +441,33 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         </div>
       </div>
       <div class="sc-note">
-        <p class="sc-lead">You already know every piece:</p>
-        <div class="sc-chips"><span class="sc-chip sc-html">HTML</span><span class="sc-chip sc-css">CSS</span><span class="sc-chip sc-js">JavaScript</span></div>
-        <a class="sc-cta" href="craftworld-starter.html" target="_blank" rel="noopener">&#127918; Make MY game page</a>
-        <p class="sc-mini">The hard CSS is done. You just type your own words.</p>
-        <a class="sc-see" href="craftworld.html" target="_blank" rel="noopener">&#9654; see it finished</a>
+        <p class="sc-lead">You already know every piece. Here&rsquo;s the plan:</p>
+        <div class="sc-road">
+          <span class="rd rd1"><b>1</b> Warm-up<small>MUST do</small></span>
+          <span class="rd-go">&rarr;</span>
+          <span class="rd rd2"><b>2</b> Level-up<small>Should / Could</small></span>
+          <span class="rd-go">&rarr;</span>
+          <span class="rd rd3"><b>&#127918;</b> Build it!<small>your game page</small></span>
+        </div>
+        <a class="sc-cta" href="#start">&darr; Start &mdash; write your name</a>
+        <p class="sc-mini">You&rsquo;ll build the real thing at the <b>end</b>. <a class="sc-see" href="craftworld.html" target="_blank" rel="noopener">&#9654; peek at it</a></p>
       </div>
     </div>
   </section>
+  <div class="strip" id="start">
+    <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
+    <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
+    <label>Date <input id="sdate" type="date"></label>
+    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 13 done</span></span>
+    <button class="btn save" onclick="save()">Save my work</button>
+  </div>
 
   <section class="mission">
     <div class="mission-txt">
       <span class="mtag">&#9935; Your mission today</span>
       <h3>Build the whole world</h3>
       <p>Every tile adds one piece. The last one puts <b>HTML</b>, <b>CSS</b> and <b>JavaScript</b> together into one CRAFT WORLD page you would actually share.</p>
-      <a class="mbtn" href="#ex13">Jump to the build &rarr;</a>
+      <a class="mbtn" href="#ex1">Start with Tile 1 &darr;</a>
     </div>
     <div class="mission-card"><div class="refcard"><span class="rc1">HTML</span><span class="rc2">+ CSS +</span><span class="rc3">JS</span></div></div>
   </section>
@@ -475,14 +498,6 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
       </ul>
     </div>
   </section>
-
-  <div class="strip">
-    <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
-    <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
-    <label>Date <input id="sdate" type="date"></label>
-    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 13 done</span></span>
-    <button class="btn save" onclick="save()">Save my work</button>
-  </div>
 
   <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">build it, paint it, code it</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Page</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Paint it</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Colour</span></a><a class="pill must" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Log in</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more JavaScript</span></div><div class="pills"><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Lucky mine</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Find the diamond</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Inventory</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">combine & stretch</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">⑩ Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">⑪ Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑫ Complete it</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Arcade</span></a></div></div></nav>
 
@@ -1017,6 +1032,14 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="try"><b>Now make it yours:</b> add a third button that runs your diamond game from tile 7, or change the colours in the <code>&lt;style&gt;</code> block to build your own world.</div>
       </div>
     </div>
+  </section>
+
+  <section class="builddoor" id="build">
+    <div class="bd-badge">&#127918; FINAL BUILD</div>
+    <h2>Done the tiles? Now build YOUR OWN game page!</h2>
+    <p class="bd-lead">The hard CSS is already written for you &mdash; you just type in your own words, then press Run.</p>
+    <a class="bd-btn" href="craftworld-starter.html" target="_blank" rel="noopener">&#127918; Make MY game page</a>
+    <div class="bd-see"><a href="craftworld.html" target="_blank" rel="noopener">&#9654; or see the finished example</a></div>
   </section>
 
   <div class="closing">
