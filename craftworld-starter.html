@@ -2,33 +2,33 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Craft World - Starter File</title>
+<title>Make My Game Page</title>
 <style>
   body { margin: 0; background: #11151c; color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; }
-  .top { background: #1f3d10; border-bottom: 5px solid #0a1408; padding: 14px 22px; }
-  .top h1 { margin: 0 0 4px; font-size: 22px; letter-spacing: 1px; }
-  .top h1 .pix { font-family: monospace; color: #7ed957; }
-  .top p { margin: 4px 0 0; font-size: 14.5px; color: #d7e8cc; line-height: 1.5; }
-  .top b { color: #ffd54f; }
-  .key { display: inline-block; background: #0a1408; border: 2px solid #3a5a22; color: #ffd54f;
-         padding: 1px 8px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+  .top { background: #1f3d10; border-bottom: 5px solid #0a1408; padding: 13px 22px; display: flex;
+         align-items: center; gap: 18px; flex-wrap: wrap; }
+  .top h1 { margin: 0; font-size: 21px; }
+  .top p { margin: 0; font-size: 16px; color: #e7f3dd; }
+  .top b { color: #ffd54f; font-size: 19px; }
+  .key { display: inline-block; background: #6abe30; border: 2px solid #0a1408; color: #16310a;
+         padding: 2px 9px; font-family: monospace; font-weight: bold; }
 
-  .bar { background: #161b24; padding: 10px 22px; border-bottom: 2px solid #000;
+  .bar { background: #161b24; padding: 12px 22px; border-bottom: 2px solid #000;
          display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .run { font-family: monospace; cursor: pointer; background: #6abe30; color: #16310a;
-         border: 4px solid #0a1408; padding: 11px 26px; font-size: 17px; font-weight: bold; }
+         border: 4px solid #0a1408; padding: 13px 34px; font-size: 19px; font-weight: bold;
+         box-shadow: 4px 4px 0 rgba(0,0,0,.45); }
   .run:hover { background: #7ed957; }
   .reset { font-family: monospace; cursor: pointer; background: #3a2a1a; color: #fff;
-           border: 4px solid #000; padding: 11px 18px; font-size: 14px; }
-  .hint { font-size: 13.5px; color: #9fb892; }
+           border: 4px solid #000; padding: 13px 16px; font-size: 14px; }
 
-  .wrap { display: flex; gap: 0; height: calc(100vh - 132px); }
+  .wrap { display: flex; gap: 0; height: calc(100vh - 128px); }
   .pane { flex: 1; display: flex; flex-direction: column; min-width: 0; }
   .pane .lbl { background: #0d1118; color: #8fb36e; font-family: monospace; font-size: 13px;
                padding: 7px 16px; border-bottom: 2px solid #000; }
   #code { flex: 1; width: 100%; box-sizing: border-box; border: 0; resize: none;
           background: #0d1320; color: #e8f0e0; font-family: 'Consolas', monospace;
-          font-size: 14px; line-height: 1.5; padding: 14px 16px; outline: none; }
+          font-size: 14.5px; line-height: 1.55; padding: 14px 16px; outline: none; }
   #out { flex: 1; width: 100%; border: 0; background: #fff; }
   .divider { width: 5px; background: #0a1408; }
 </style>
@@ -36,31 +36,24 @@
 <body>
 
   <div class="top">
-    <h1>&#129513; YOUR STARTER FILE &mdash; <span class="pix">Craft World</span></h1>
-    <p>The <b>tricky CSS is already done</b> for you. Your job: find every <b>&#9999;&#65039;</b> in the code on the left and
-       type in your <b>own words</b> (your game name, your slogan, your treasure&hellip;). Then press
-       <span class="key">&#9654; Run</span> and watch your page appear. Nothing is broken &mdash; you are just making it <b>yours</b>.</p>
+    <h1>&#127918; Make your OWN game page!</h1>
+    <p>Type your words next to each <b>&#9999;&#65039;</b>, then press <span class="key">&#9654; Run</span>.</p>
   </div>
 
   <div class="bar">
     <button class="run" onclick="run()">&#9654; Run my page</button>
     <button class="reset" onclick="resetCode()">&#8635; Start again</button>
-    <span class="hint">Tip: only change the lines with a &#9999;&#65039; pencil. Leave the <code>&lt;style&gt;</code> part alone &mdash; it is done!</span>
   </div>
 
   <div class="wrap">
     <div class="pane">
-      <div class="lbl">your-page.html &nbsp;&mdash;&nbsp; type here</div>
+      <div class="lbl">your code &nbsp;&mdash;&nbsp; change the &#9999;&#65039; bits</div>
       <textarea id="code" spellcheck="false"><!DOCTYPE html>
 <html>
 <head>
 <title>My Game Page</title>
 
-<!-- ============================================================ -->
-<!--  DO NOT CHANGE the CSS below. It is already done for you :)   -->
-<!--  It sets all the colours, borders and spacing on the page.    -->
-<!--  Scroll down past </style> to add YOUR words.                 -->
-<!-- ============================================================ -->
+<!-- The CSS below is DONE for you. Don't touch it. Scroll past </style>. -->
 <style>
   body { margin: 0; background-color: #12161d; font-family: monospace; color: #ffffff; text-align: center; }
   nav { background-color: #1f3d10; padding: 14px; border-bottom: 4px solid #0a1408; }
@@ -78,6 +71,8 @@
 </head>
 <body>
 
+<!-- ========== TYPE YOUR WORDS BELOW. Look for the ✏️ ========== -->
+
   <nav>
     <a href="#play">Play</a>
     <a href="#mobs">Mobs</a>
@@ -87,11 +82,9 @@
   <header>
     <img src="img/mc-hero.png" alt="My world" style="width:100%; border:6px solid #0a1408">
 
-    <!-- ✏️ 1. Type your game's NAME between <h1> and </h1> -->
-    <h1>My Game</h1>
+    <h1>My Game</h1>                       <!-- ✏️ your game name -->
 
-    <!-- ✏️ 2. Write a short slogan for your game -->
-    <p style="font-size:22px">Type your slogan here.</p>
+    <p style="font-size:22px">Type your slogan here.</p>   <!-- ✏️ your slogan -->
 
     <button onclick="play()" style="background-color:#6abe30; color:#16310a; border:5px solid #0a1408; padding:16px 40px; font-size:24px">&#9654; PLAY FREE</button>
   </header>
@@ -101,21 +94,18 @@
     <tr>
       <td style="padding:18px 24px; width:230px">
         <img src="img/mob-cube.png" width="76"><br>
-        <!-- ✏️ 3. Change the name and the sentence -->
-        <b style="font-size:20px; color:#7ed957">BUILD</b>
-        <p>Write what players do here.</p>
+        <b style="font-size:20px; color:#7ed957">BUILD</b>      <!-- ✏️ a way to play -->
+        <p>What do players do?</p>
       </td>
       <td style="padding:18px 24px; width:230px">
         <img src="img/icon-diamond.png" width="76"><br>
-        <!-- ✏️ 4. Change the name and the sentence -->
-        <b style="font-size:20px; color:#5fe0d6">MINE</b>
-        <p>Write what players do here.</p>
+        <b style="font-size:20px; color:#5fe0d6">MINE</b>       <!-- ✏️ a way to play -->
+        <p>What do players do?</p>
       </td>
       <td style="padding:18px 24px; width:230px">
         <img src="img/mob-monster.png" width="76"><br>
-        <!-- ✏️ 5. Change the name and the sentence -->
-        <b style="font-size:20px; color:#ff7a7a">SURVIVE</b>
-        <p>Write what players do here.</p>
+        <b style="font-size:20px; color:#ff7a7a">SURVIVE</b>    <!-- ✏️ a way to play -->
+        <p>What do players do?</p>
       </td>
     </tr>
   </table>
@@ -123,11 +113,10 @@
   <h2 id="mobs">Meet the mobs</h2>
   <table align="center">
     <tr>
-      <!-- ✏️ 6. Type a name under each character -->
-      <td style="padding:12px"><img src="img/mob-cube.png" width="88"><br>Name 1</td>
-      <td style="padding:12px"><img src="img/mob-pig.png" width="88"><br>Name 2</td>
-      <td style="padding:12px"><img src="img/mob-sheep.png" width="88"><br>Name 3</td>
-      <td style="padding:12px"><img src="img/mob-monster.png" width="88"><br>Name 4</td>
+      <td style="padding:12px"><img src="img/mob-cube.png" width="88"><br>Name 1</td>     <!-- ✏️ name it -->
+      <td style="padding:12px"><img src="img/mob-pig.png" width="88"><br>Name 2</td>      <!-- ✏️ name it -->
+      <td style="padding:12px"><img src="img/mob-sheep.png" width="88"><br>Name 3</td>    <!-- ✏️ name it -->
+      <td style="padding:12px"><img src="img/mob-monster.png" width="88"><br>Name 4</td>  <!-- ✏️ name it -->
     </tr>
   </table>
 
@@ -136,32 +125,14 @@
   <button onclick="loot()">Open chest</button>
   <button onclick="roll()">Roll the dice</button>
   <h2 id="out" style="background-color:#6abe30; color:#ffffff; border:4px solid #1f3d10; max-width:560px; margin:16px auto; padding:12px">Press a button to play!</h2>
-  <p id="count">Blocks mined: 0</p>
 
-  <h2 id="stats">By the numbers</h2>
-  <table align="center">
-    <!-- ✏️ 7. Change these numbers to anything you like -->
-    <td style="padding:18px 32px; background-color:#1f3d10; border:3px solid #0a1408"><b style="font-size:30px; color:#ffd54f">1B+</b><br>Blocks placed</td>
-    <td style="width:18px"></td>
-    <td style="padding:18px 32px; background-color:#1f3d10; border:3px solid #0a1408"><b style="font-size:30px; color:#ffd54f">10M</b><br>Players</td>
-  </table>
-
-  <!-- ✏️ 8. Put your OWN name here -->
-  <footer>Made by your name.</footer>
+  <footer>Made by your name.</footer>      <!-- ✏️ your name -->
 
   <script>
-    let mined = 0;
-    function play() {
-      document.getElementById("out").innerHTML = "Loading your world...";
-    }
-    function mine() {
-      mined = mined + 1;
-      document.getElementById("out").innerHTML = "You mined a block!";
-      document.getElementById("count").innerHTML = "Blocks mined: " + mined;
-    }
+    function play() { document.getElementById("out").innerHTML = "Loading your world..."; }
+    function mine() { document.getElementById("out").innerHTML = "You mined a block!"; }
     function loot() {
-      // ✏️ 9. Change these treasure words to your own!
-      let blocks = ["Diamond", "Gold", "Redstone"];
+      let blocks = ["Diamond", "Gold", "Emerald"];   // ✏️ your treasure words
       let i = Math.floor(Math.random() * blocks.length);
       document.getElementById("out").innerHTML = "You found: " + blocks[i] + "!";
     }
@@ -184,13 +155,8 @@
 
   <script>
     var START = document.getElementById("code").value;
-    function run() {
-      document.getElementById("out").srcdoc = document.getElementById("code").value;
-    }
-    function resetCode() {
-      document.getElementById("code").value = START;
-      run();
-    }
+    function run() { document.getElementById("out").srcdoc = document.getElementById("code").value; }
+    function resetCode() { document.getElementById("code").value = START; run(); }
     run();
   </script>
 
