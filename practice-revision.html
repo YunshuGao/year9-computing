@@ -1,12 +1,12 @@
 <!DOCTYPE html><html lang="en-AU"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JavaScript Loops (Repetition) - Guided Practice L7</title>
+<title>JavaScript Revision Arcade - Guided Practice L8</title>
 <style>
 :root{--ink:#16202e;--mut:#5d6b7d;--line:#e8edf3;--soft:#f6f9fb;--code:#16202b;
   --gold:#ffcd00;--brand:#00843d;
   --spectrum:linear-gradient(100deg,#00843d 0%,#2bb673 45%,#ffcd00 100%);}
 *{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#eef3e6,#e7eede) fixed #eef3e6;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
+body{margin:0;background:linear-gradient(rgba(238,242,247,.87),rgba(238,242,247,.9)),url('img/bg.jpg') center top/cover fixed #eef2f7;color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding:0 30px}
 /* ---- Predict-before-Run beat (type-it tiles) ---- */
 .predict-row{display:flex;flex-direction:column;gap:5px;margin:0 0 9px;padding:9px 11px;border:1px dashed #d9b400;border-radius:9px;background:linear-gradient(180deg,#fffdf3,#fffaef)}
@@ -18,7 +18,9 @@ body{margin:0;background:linear-gradient(180deg,#eef3e6,#e7eede) fixed #eef3e6;c
 /* ---- FIFA-inspired dark hero ---- */
 .wc-hero{position:relative;margin:0 0 4px;border-radius:0 0 22px 22px;overflow:hidden;color:#fff;
   padding:32px 34px 18px;
-  background:linear-gradient(135deg,#23401d,#33500f 55%,#1c3315);
+  background:linear-gradient(rgba(8,12,28,.72),rgba(8,12,28,.82)),
+            url('img/hero.jpg') center/cover no-repeat,
+            linear-gradient(135deg,#0b1020,#141b34 55%,#0b1020);
   box-shadow:0 10px 26px rgba(8,12,28,.30)}
 .wc-stripe{position:absolute;top:0;left:0;right:0;height:6px;background:var(--spectrum)}
 .wc-inner{display:flex;align-items:center;gap:22px;margin-top:8px}
@@ -184,15 +186,15 @@ footer{color:#9aa6b5;font-size:12px;text-align:center;padding:18px 0 46px}
 .pill.cap{background:linear-gradient(135deg,#f9e08b,#d4af37);color:#3a2e00}
 .scrollcue{display:inline-block;margin-top:14px;color:rgba(255,255,255,.9);font-weight:700;font-size:13.5px;text-decoration:none;border:1.5px solid rgba(255,255,255,.32);border-radius:999px;padding:7px 16px}
 .band{position:relative;margin:30px -30px 8px;padding:46px 32px;color:#fff;overflow:hidden;background-position:center;background-size:cover;border-radius:14px}
-.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,20,8,.78),rgba(10,20,8,.35))}
+.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,28,.9),rgba(8,12,28,.5))}
 .band>*{position:relative}
 .band .bnum{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
 .band h2{margin:5px 0 6px;font-size:27px;font-weight:900;letter-spacing:-.5px}
 .band p{margin:0;font-size:15.5px;color:rgba(255,255,255,.9);max-width:620px}
-.band.kickoff{background:linear-gradient(120deg,#3a5a2a,#243d18)}
-.band.buildup{background:linear-gradient(120deg,#5d4037,#3e2723)}
-.band.glory{background:linear-gradient(120deg,#37474f,#1c272c)}
-.band.trophy{background:linear-gradient(120deg,#9a7d2e,#5d4a14)}
+.band.kickoff{background-image:url('img/kickoff.jpg')}
+.band.buildup{background-image:url('img/buildup.jpg')}
+.band.glory{background-image:url('img/glory.jpg')}
+.band.trophy{background-image:url('img/trophy.jpg')}
 .anthem{border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 24px;margin-bottom:22px;background:linear-gradient(rgba(8,12,28,.8),rgba(8,12,28,.88)),url('img/flag.jpg') center/cover;color:#fff;text-align:center}
 .anthem-quote{font-size:25px;font-weight:900;letter-spacing:-.4px}
 .anthem-attr{font-size:12.5px;color:var(--gold);letter-spacing:.05em;margin-top:5px;font-weight:700}
@@ -217,57 +219,56 @@ html{scroll-behavior:smooth}
 .mission-card .refcard{transition:transform .12s ease;will-change:transform}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
 @media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}body{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
-.block{display:inline-block;width:30px;height:30px;margin:2px;background:linear-gradient(#8bc34a,#558b2f);border:2px solid #33691e;border-radius:3px}.card{display:inline-block;min-width:84px;text-align:center;margin:5px;padding:12px 10px;background:#eef3e2;border:3px solid #8d6e63;border-radius:6px;font-weight:700;color:#33691e}.slot{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:52px;margin:5px;background:#c7b29a;border:3px solid #5d4037;border-radius:6px;font-weight:700;font-size:15px;color:#3e2723;box-shadow:inset 0 0 0 2px #e8dcc8}.refcard{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;width:170px;height:150px;border-radius:14px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#5b8c3a,#2e4d2e);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#ffd54f;font-size:26px}.refcard .rc2{font-size:18px;opacity:.9}.refcard .rc3{color:#fff;font-size:26px}</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
+.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}
+/* ===== DECORATION SKIN: L8 "Arcade" (electric blue) ===== */
+:root{--brand:#0284c7;--gold:#22d3ee;--spectrum:linear-gradient(100deg,#2563eb 0%,#0ea5e9 45%,#22d3ee 100%)}
+body{background:linear-gradient(rgba(240,249,255,.93),rgba(240,249,255,.95)),repeating-linear-gradient(45deg,rgba(2,132,199,.05) 0 2px,transparent 2px 26px) #f0f9ff!important}
+.wc-hero{background:radial-gradient(130% 150% at 82% 4%,#0ea5e9 0%,#1e40af 52%,#0b1530 100%)!important}
+.band,.band.kickoff,.band.buildup,.band.glory,.band.trophy{background-image:linear-gradient(115deg,#1e3a8a,#0284c7 58%,#06b6d4)!important}
+.refcard{background:linear-gradient(160deg,#38bdf8,#1e3a8a)!important}
+</style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
   <header class="wc-hero">
     <div class="wc-stripe"></div>
     <div class="wc-inner">
-      <div class="wc-emblem">for</div>
+      <div class="wc-emblem">26</div>
       <div class="wc-titles">
-        <div class="wc-kicker">&#9935; Minecraft mode &middot; Year 9 Computing Technology</div>
-        <h1>JavaScript Loops <span class="wc-pill">Guided Practice L7</span></h1>
+        <div class="wc-kicker">&#127918; Exam revision &middot; Year 9 Computing Technology</div>
+        <h1>Revision Arcade <span class="wc-pill">Guided Practice L8</span></h1>
         <div class="wc-ul"></div>
-        <p class="wc-sub"><b>A loop REPEATS code, so you do it once instead of 100 times.</b> Place blocks, build walls, and generate a whole inventory page - type the code, press Run, then make it your own.</p>
+        <p class="wc-sub"><b>Revise the whole unit, arcade-style.</b> HTML, CSS, buttons, functions, if/else, lists &amp; random - one tile each. Clear them all and you are exam-ready for 30 June.</p>
         <a class="scrollcue" href="#ex1">Scroll to kick off &darr;</a>
       </div>
-      <div class="wc-trophy">&#9935;</div>
+      <div class="wc-trophy">&#127918;</div>
     </div>
   </header>
 
   <section class="mission">
     <div class="mission-txt">
-      <span class="mtag">⭐ Your mission today</span>
-      <h3>Build a thousand blocks with ONE loop</h3>
-      <p>In Minecraft, every wall, tower and farm is the same block, <b>over and over</b>. That is a <b>loop</b>. Today your code does the repeating &mdash; the last tile <b>generates a whole inventory page</b> from one loop.</p>
-      <a class="mbtn" href="#ex13">Jump to the inventory &rarr;</a>
+      <span class="mtag">&#11088; Your mission today</span>
+      <h3>Level up for the exam</h3>
+      <p>This is your <b>revision arcade</b>: every tile is one skill the 30 June exam marks. Clear them all and the paper will feel easy. <b>Ready?</b></p>
+      <a class="mbtn" href="#ex13">Jump to the boss level &rarr;</a>
     </div>
-    <div class="mission-card"><div class="refcard"><span class="rc1">for</span><span class="rc2">( i )</span><span class="rc3">{ }</span></div></div>
-  </section>
-
-  <section class="socceroos">
-    <div class="soc-flag">⛏️</div>
-    <div class="soc-txt">
-      <span class="soc-tag">Why loops matter</span>
-      <h3>Real apps are built with loops</h3>
-      <p>Every list you scroll &mdash; YouTube videos, a shop&rsquo;s products, a game&rsquo;s leaderboard &mdash; is a <b>loop</b> going through a list and building the page. Learn this, and you can build any of them.</p>
-    </div>
+    <div class="mission-card"><div class="refcard"><span class="rc1">REVISE</span><span class="rc2">every</span><span class="rc3">skill</span></div></div>
   </section>
 
   <section class="anatomy">
-    <div class="ana-head"><h2>Anatomy of a Loop</h2>
-      <span class="ana-sub">A <b>loop</b> repeats code so you don&rsquo;t write it 100 times. Here are the parts of a <code>for</code> loop:</span></div>
+    <div class="ana-head"><h2>The 5 skills your exam marks</h2>
+      <span class="ana-sub">Every tile today revises one of these. On 30 June you show all five &mdash; tick them off as you go:</span></div>
     <div class="ana-grid">
-      <pre class="ana-code"><span class="ak">for</span> <span class="ap">(let i = 1; i &lt;= 5; i = i + 1)</span> <span class="ab">{</span>
-    <span class="abd">blocks = blocks + "Mine! ";</span>
-<span class="ab">}</span></pre>
+      <pre class="ana-code"><span class="ap">1. HTML</span>       a heading with an id + a button
+<span class="ac">2. CSS</span>        your own colours / a class
+<span class="ak">3. JavaScript</span> a click that CHANGES the page
+<span class="abd">4. A decision</span> an if/else OR Math.random
+<span class="an">5. Testing</span>    it works + you can explain it</pre>
       <ul class="ana-key">
-        <li><span class="chip ak">for</span> starts the loop</li>
-        <li><span class="chip ap">let i = 1</span> the <b>start</b> &mdash; where the counter begins</li>
-        <li><span class="chip ap">i &lt;= 5</span> the <b>condition</b> &mdash; keep looping while this is true</li>
-        <li><span class="chip ap">i = i + 1</span> the <b>step</b> &mdash; add 1 to the counter each time</li>
-        <li><span class="chip ab">{ }</span> the <b>body</b> &mdash; the code that repeats</li>
-        <li><span class="chip an">while</span> a second kind of loop &mdash; repeat <b>until</b> something becomes true</li>
+        <li><span class="chip ap">HTML</span> the parts &mdash; tiles 1, 12, 13</li>
+        <li><span class="chip ac">CSS</span> the style &mdash; tiles 2, 12, 13</li>
+        <li><span class="chip ak">JavaScript</span> the actions &mdash; tiles 3, 4, 13</li>
+        <li><span class="chip abd">if/else &amp; random</span> the decision &mdash; tiles 4, 5, 6, 7, 10</li>
+        <li><span class="chip an">predict / fix / write</span> the exam question types &mdash; tiles 5&ndash;11</li>
       </ul>
     </div>
   </section>
@@ -280,26 +281,22 @@ html{scroll-behavior:smooth}
     <button class="btn save" onclick="save()">Save my work</button>
   </div>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Place</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Number them</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Countdown</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Build a wall</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Inventory</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Spawn mobs</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Count diamonds</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Mine for diamond</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Trace it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Build a tower</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Inventory</span></a></div></div></nav>
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">HTML</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">CSS</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">if/else</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">Predict</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">Random</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">Write it</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">Fix it</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Combine</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Shootout</span></a></div></div></nav>
 
-  <section class="band kickoff"><div class="bnum">1 / First blocks</div><h2>Meet the loop</h2><p>A loop repeats code for you. Place blocks, number them, count down, then build a wall on the page - all with ONE for loop.</p></section>
+  <section class="band kickoff"><div class="bnum">1 / Warm up</div><h2>Recall the basics</h2><p>HTML, CSS, a button, an if/else - the foundations you'll be marked on. Type each one back.</p></section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex1">
-    <div class="h"><span class="n">1</span><h3>Place 5 blocks - your first loop</h3></div>
-    <p class="lead">A <code>for</code> loop repeats code so you don&rsquo;t write it 5 times. This one runs the body <b>5 times</b> - one block per loop. Type it, press Run, then click Build.</p>
+    <div class="h"><span class="n">1</span><h3>Revise HTML - id + button</h3></div>
+    <p class="lead">Skill 1 on your exam: a <b>heading with an id</b> and a <b>button</b>. The id is the name JavaScript uses to find the heading.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref1">&lt;h2 id="out"&gt;Press Build to place blocks&lt;/h2&gt;
-&lt;button onclick="build()"&gt;Build it&lt;/button&gt;
+        <pre class="code-ref" id="ref1">&lt;h1 id="title"&gt;My Web Page&lt;/h1&gt;
+&lt;button onclick="go()"&gt;Click me&lt;/button&gt;
 
 &lt;script&gt;
-  function build() {
-    let blocks = "";
-    for (let i = 1; i &lt;= 5; i = i + 1) {
-      blocks = blocks + "Mine! ";
-    }
-    document.getElementById("out").innerHTML = blocks;
+  function go() {
+    document.getElementById("title").innerHTML = "You clicked it!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -321,28 +318,27 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
-        <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; your loop repeated the code 5 times.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 20</code> and Run - 20 blocks from ONE line!</div>
+        <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; you wrote HTML - a heading with an id + a button.</span></div>
+        <div class="try"><b>Now change it:</b> change the heading text and the button label to your own.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex2">
-    <div class="h"><span class="n">2</span><h3>Use the counter &lt;code&gt;i&lt;/code&gt;</h3></div>
-    <p class="lead">The loop has a counter called <code>i</code> that goes 1, 2, 3... Use it inside the body to <b>number</b> each block.</p>
+    <div class="h"><span class="n">2</span><h3>Revise CSS - a style rule</h3></div>
+    <p class="lead">Skill 2: <b>CSS</b> in a <code>&lt;style&gt;</code> block. The shape is <code>selector { property: value; }</code> - here it colours and centres the heading.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref2">&lt;h2 id="out"&gt;Press Build&lt;/h2&gt;
-&lt;button onclick="build()"&gt;Build it&lt;/button&gt;
+        <pre class="code-ref" id="ref2">&lt;style&gt;
+  h1 { color: teal; text-align: center; }
+&lt;/style&gt;
+&lt;h1 id="out"&gt;Style me!&lt;/h1&gt;
+&lt;button onclick="done()"&gt;I styled it!&lt;/button&gt;
 
 &lt;script&gt;
-  function build() {
-    let list = "";
-    for (let i = 1; i &lt;= 5; i = i + 1) {
-      list = list + "Block " + i + "&lt;br&gt;";
-    }
-    document.getElementById("out").innerHTML = list;
+  function done() {
+    document.getElementById("out").innerHTML = "Teal and centred!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -364,29 +360,24 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
-        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you used the counter i inside the loop.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 10</code> - now it counts to Block 10.</div>
+        <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you wrote a CSS rule.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>teal</code> to another colour, and add <code>font-size: 30px;</code>.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex3">
-    <div class="h"><span class="n">3</span><h3>Count DOWN to TNT</h3></div>
-    <p class="lead">Loops can count <b>down</b> too. Start high and use <code>i = i - 1</code> to go down to 1, then BOOM.</p>
+    <div class="h"><span class="n">3</span><h3>Revise the DOM - a click changes the page</h3></div>
+    <p class="lead">Skill 3: a <b>button click that CHANGES the page</b> (not a pop-up). <code>getElementById</code> finds the heading by its id; <code>innerHTML</code> sets new text.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref3">&lt;h2 id="out"&gt;Light the fuse&lt;/h2&gt;
-&lt;button onclick="countdown()"&gt;Light it&lt;/button&gt;
+        <pre class="code-ref" id="ref3">&lt;h2 id="out"&gt;Press the button&lt;/h2&gt;
+&lt;button onclick="change()"&gt;Change it&lt;/button&gt;
 
 &lt;script&gt;
-  function countdown() {
-    let txt = "";
-    for (let i = 5; i &gt;= 1; i = i - 1) {
-      txt = txt + i + "... ";
-    }
-    txt = txt + "TNT!";
-    document.getElementById("out").innerHTML = txt;
+  function change() {
+    document.getElementById("out").innerHTML = "Changed by JavaScript!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -408,30 +399,29 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
-        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your loop counted down with i = i - 1.</span></div>
-        <div class="try"><b>Now change it:</b> start at 10 instead of 5 for a longer fuse.</div>
+        <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your click changed the page - skill 3.</span></div>
+        <div class="try"><b>Now change it:</b> make the button change the text to something of your own.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex4">
-    <div class="h"><span class="n">4</span><h3>Build blocks ON the page</h3></div>
-    <p class="lead">Now the loop builds <b>real HTML</b> - a row of blocks you can SEE. Each time round, it adds one block <code>&lt;span&gt;</code> to the page. This is how a loop <b>generates a webpage</b>.</p>
+    <div class="h"><span class="n">4</span><h3>Revise if/else - a decision</h3></div>
+    <p class="lead">Skill 4 (one half): an <b>if/else</b> decision. The condition <code>score &gt;= 50</code> chooses PASS or Try again.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref4">&lt;div id="wall"&gt;&lt;/div&gt;
-&lt;p id="msg"&gt;&lt;/p&gt;
-&lt;button onclick="build()"&gt;Build the wall&lt;/button&gt;
+        <pre class="code-ref" id="ref4">&lt;h2 id="out"&gt;Pass or fail?&lt;/h2&gt;
+&lt;button onclick="check()"&gt;Check the score&lt;/button&gt;
 
 &lt;script&gt;
-  function build() {
-    let wall = "";
-    for (let i = 1; i &lt;= 8; i = i + 1) {
-      wall = wall + "&lt;span class='block'&gt;&lt;/span&gt;";
+  function check() {
+    let score = 72;
+    if (score &gt;= 50) {
+      document.getElementById("out").innerHTML = "PASS!";
+    } else {
+      document.getElementById("out").innerHTML = "Try again";
     }
-    document.getElementById("wall").innerHTML = wall;
-    document.getElementById("msg").innerHTML = "Wall of 8 blocks built!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -453,207 +443,167 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
-        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your loop generated blocks on the page.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>8</code> to <code>15</code> for a longer wall.</div>
+        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your if/else made a decision.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>score</code> to 40 and Run - now it fails. Then try exactly 50.</div>
       </div>
     </div>
   </section>
-  <section class="band buildup"><div class="bnum">2 / Build with loops</div><h2>Loops do the work</h2><p>Now loops build real things: an inventory from a list, a row of mob cards, a running total, and a while loop that mines until it finds diamond.</p></section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex5">
-    <div class="h"><span class="n">5</span><h3>Loop a LIST</h3></div>
-    <p class="lead">A loop&rsquo;s best friend is a <b>list</b>. <code>items.length</code> is how many are in the list; the loop visits each one (index 0, 1, 2...) and adds it to your inventory.</p>
+  <section class="band buildup"><div class="bnum">2 / Level up</div><h2>Big skills + exam style</h2><p>if/else and random - plus the exam question types: predict the output, complete it, write it, fix it.</p></section>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal predict" id="ex5">
+    <div class="h"><span class="n">5</span><h3>Predict: which branch? <span class="ctype predict">PREDICT</span></h3></div>
+    <p class="lead">Exam style (predict the output). Only ONE branch runs. Write the message, then check.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref5">&lt;h2&gt;My inventory&lt;/h2&gt;
-&lt;ul id="inv"&gt;&lt;/ul&gt;
-&lt;button onclick="show()"&gt;Open inventory&lt;/button&gt;
-
+        <div class="lbl"><span class="cn">1</span> Read this code</div>
+        <pre class="code-ref" id="ref5">&lt;p id="out"&gt;&lt;/p&gt;
 &lt;script&gt;
-  function show() {
-    let items = ["Sword", "Pickaxe", "Torch", "Apple"];
-    let html = "";
-    for (let i = 0; i &lt; items.length; i = i + 1) {
-      html = html + "&lt;li&gt;" + items[i] + "&lt;/li&gt;";
-    }
-    document.getElementById("inv").innerHTML = html;
+  let age = 16;
+  if (age &gt;= 18) {
+    out.innerHTML = "Adult";
+  } else if (age &gt;= 13) {
+    out.innerHTML = "Teen";
+  } else {
+    out.innerHTML = "Child";
   }
 &lt;/script&gt;</pre>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred5" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed5" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="lbl"><span class="cn">2</span> Your prediction</div>
+        <textarea class="editor short" id="ed5" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
         <div class="act">
-          <button class="btn run" onclick="runEx(5)">Run</button>
+          <button class="btn run" onclick="runPredict(5)">Run &amp; check</button>
           <button class="btn ghost" onclick="resetEx(5)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done5" onchange="toggleDone(5)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc5" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
-        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; your loop went through the whole list.</span></div>
-        <div class="try"><b>Now change it:</b> add <code>"Shield"</code> to the list - the loop shows it with no extra code!</div>
+        <div class="reveal ans" id="ans5" hidden>It shows <b>Teen</b>. <code>age &gt;= 18</code> is false (16 is not 18+), so it checks the next: <code>age &gt;= 13</code> is true (16 is 13+), so that branch runs.</div>
+        <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; you traced the if / else if / else.</span></div>
       </div>
     </div>
   </section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex6">
-    <div class="h"><span class="n">6</span><h3>Build a card for each</h3></div>
-    <p class="lead">Same idea, fancier output: loop a list of mobs and build a styled <b>card</b> for each. One loop, a whole row of cards - that&rsquo;s a webpage section generated by code.</p>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal tweak" id="ex6">
+    <div class="h"><span class="n">6</span><h3>Random quote (complete the pick) <span class="ctype tweak">TWEAK</span></h3></div>
+    <p class="lead">Skill 4, the other half: a <b>random</b> pick. The quote list is ready, the pick is blank - <b>complete it</b>.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref6">&lt;div id="mobs"&gt;&lt;/div&gt;
-&lt;button onclick="spawn()"&gt;Spawn mobs&lt;/button&gt;
-
-&lt;script&gt;
-  function spawn() {
-    let mobs = ["Creeper", "Zombie", "Skeleton"];
-    let html = "";
-    for (let i = 0; i &lt; mobs.length; i = i + 1) {
-      html = html + "&lt;div class='card'&gt;" + mobs[i] + "&lt;/div&gt;";
-    }
-    document.getElementById("mobs").innerHTML = html;
-  }
-&lt;/script&gt;</pre>
+        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
+        <div class="goalbox">Replace <code>PICK</code> with <code>Math.floor(Math.random() * quotes.length)</code>, then click a few times.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(6)">Show a hint</button></div>
+          <div class="reveal hint" id="hint6" hidden>The pick is always the same shape: <code>Math.floor(Math.random() * LIST.length)</code>. Here the list is called <code>quotes</code>.</div>
+        </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred6" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed6" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
+        <textarea class="editor" id="ed6" spellcheck="false">&lt;h2 id="out"&gt;Click for a quote&lt;/h2&gt;
+&lt;button onclick="quote()"&gt;Inspire me&lt;/button&gt;
+
+&lt;script&gt;
+  function quote() {
+    let quotes = ["You can do this!", "Keep going!", "Almost there!"];
+    let pick = quotes[PICK];
+    document.getElementById("out").innerHTML = pick;
+  }
+&lt;/script&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(6)">Run</button>
-          <button class="btn ghost" onclick="resetEx(6)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(6)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done6" onchange="toggleDone(6)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc6" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
-        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; you generated a card for every item in the list.</span></div>
-        <div class="try"><b>Now change it:</b> add another mob to the list and Run - a new card appears.</div>
+        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; you recalled the random pick - skill 4.</span></div>
       </div>
     </div>
   </section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex7">
-    <div class="h"><span class="n">7</span><h3>Add them all up</h3></div>
-    <p class="lead">A loop can keep a <b>running total</b>. Start <code>total</code> at 0, then add each number in the list as the loop visits it.</p>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal create" id="ex7">
+    <div class="h"><span class="n">7</span><h3>Write a decision <span class="ctype create">CREATE</span></h3></div>
+    <p class="lead">Exam style (write the code). No code given - write an if/else from the goal.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref7">&lt;h2 id="out"&gt;Count your diamonds&lt;/h2&gt;
-&lt;button onclick="count()"&gt;Count&lt;/button&gt;
-
-&lt;script&gt;
-  function count() {
-    let diamonds = [3, 5, 2, 4];
-    let total = 0;
-    for (let i = 0; i &lt; diamonds.length; i = i + 1) {
-      total = total + diamonds[i];
-    }
-    document.getElementById("out").innerHTML = "Total diamonds: " + total;
-  }
-&lt;/script&gt;</pre>
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">Make a <b>button</b> and a function: if a <code>price</code> is <code>&gt; 100</code> show <b>Expensive</b>, otherwise show <b>Cheap</b>.
+          <div class="eg">Expected: Expensive or Cheap</div>
+          <div class="chal-btns">
+            <button class="btn ghost" onclick="showHint(7)">Show a hint</button>
+          </div>
+          <div class="reveal hint" id="hint7" hidden><code>function check() { let price = 150; if (price &gt; 100) { out.innerHTML = "Expensive"; } else { out.innerHTML = "Cheap"; } }</code> - add a <code>&lt;p id="out"&gt;</code> + a button.</div>
+        </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred7" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed7" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
+        <textarea class="editor" id="ed7" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(7)">Run</button>
           <button class="btn ghost" onclick="resetEx(7)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc7" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
-        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your loop added up the whole list.</span></div>
-        <div class="try"><b>Now change it:</b> change a number in the list - the total updates when you Run.</div>
+        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; you wrote a working if/else.</span></div>
       </div>
     </div>
   </section>
-  <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex8">
-    <div class="h"><span class="n">8</span><h3>The &lt;code&gt;while&lt;/code&gt; loop</h3></div>
-    <p class="lead">A <code>while</code> loop repeats <b>until</b> something becomes true - perfect when you don&rsquo;t know how many tries it takes. Keep mining until you hit diamond!</p>
+  <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
+  <section class="ex could chal debug" id="ex8">
+    <div class="h"><span class="n">8</span><h3>Fix the bug: a capital id <span class="ctype debug">DEBUG</span></h3></div>
+    <p class="lead">Exam style (find the bug). Click <b>Show</b> - nothing happens (open the red error line). The id does not match.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref8">&lt;h2 id="out"&gt;Start mining&lt;/h2&gt;
-&lt;button onclick="mine()"&gt;Mine&lt;/button&gt;
-
-&lt;script&gt;
-  function mine() {
-    let blocks = 0;
-    let found = false;
-    while (found === false) {
-      blocks = blocks + 1;
-      if (Math.random() &lt; 0.2) {
-        found = true;
-      }
-    }
-    document.getElementById("out").innerHTML = "Diamond after " + blocks + " blocks!";
-  }
-&lt;/script&gt;</pre>
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">The heading id is <code>out</code> (lowercase) but the code looks for <code>Out</code> (capital O). JavaScript is case-sensitive - fix it so the heading changes.
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(8)">Show a hint</button></div>
+          <div class="reveal hint" id="hint8" hidden>Make them match exactly: change <code>getElementById("Out")</code> to <code>getElementById("out")</code>.</div>
+        </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred8" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed8" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <div class="lbl"><span class="cn">2</span> Fix it here</div>
+        <textarea class="editor" id="ed8" spellcheck="false">&lt;h2 id="out"&gt;Hello&lt;/h2&gt;
+&lt;button onclick="show()"&gt;Show&lt;/button&gt;
+
+&lt;script&gt;
+  function show() {
+    document.getElementById("Out").innerHTML = "It works!";
+  }
+&lt;/script&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(8)">Run</button>
-          <button class="btn ghost" onclick="resetEx(8)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(8)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done8" onchange="toggleDone(8)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc8" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
-        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your while loop kept going until it found diamond.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>0.2</code> to <code>0.5</code> - diamond comes faster.</div>
+        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; you fixed a case-sensitive id - a top exam bug.</span></div>
       </div>
     </div>
   </section>
-  <section class="band glory"><div class="bnum">3 / Push yourself</div><h2>Predict, fix, build</h2><p>Predict a loop's output, fix a loop that stops one too early, write your own from scratch, and complete a tower.</p></section>
+  <section class="band glory"><div class="bnum">3 / Boss fight</div><h2>Exam-style challenges</h2><p>Predict the output, find the bug, write it from scratch - just like the paper.</p></section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal predict" id="ex9">
-    <div class="h"><span class="n">9</span><h3>Predict the loop <span class="ctype predict">PREDICT</span></h3></div>
-    <p class="lead">Read the loop carefully. It runs 3 times. Write what the page will show, then check.</p>
+    <div class="h"><span class="n">9</span><h3>Predict: text + number <span class="ctype predict">PREDICT</span></h3></div>
+    <p class="lead">Exam style (predict the output). Numbers and text behave differently with <code>+</code>.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code</div>
         <pre class="code-ref" id="ref9">&lt;p id="out"&gt;&lt;/p&gt;
 &lt;script&gt;
-  let s = "";
-  for (let i = 1; i &lt;= 3; i = i + 1) {
-    s = s + "Block " + i + " ";
-  }
-  document.getElementById("out").innerHTML = s;
+  let x = "5" + 1;
+  out.innerHTML = x;
 &lt;/script&gt;</pre>
       </div>
       <div class="col">
@@ -669,35 +619,36 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
-        <div class="reveal ans" id="ans9" hidden>It shows <b>Block 1 Block 2 Block 3</b>. The loop runs with i = 1, then 2, then 3 (it stops when i becomes 4 because 4 is not &lt;= 3). Each time it adds "Block " + i.</div>
-        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you traced the loop round by round.</span></div>
+        <div class="reveal ans" id="ans9" hidden>It shows <b>51</b>, not 6! <code>"5"</code> is text (in quotes), so <code>+</code> JOINS instead of adding: <code>"5" + 1</code> = <code>"51"</code>.</div>
+        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you spotted text + number = join.</span></div>
       </div>
     </div>
   </section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal debug" id="ex10">
-    <div class="h"><span class="n">10</span><h3>Fix the loop (off by one) <span class="ctype debug">DEBUG</span></h3></div>
-    <p class="lead">It should build 5 fence posts (Post 1 to Post 5), but it stops at Post 4. The condition is wrong by one. Find it and fix it.</p>
+    <div class="h"><span class="n">10</span><h3>Fix the condition (= vs ===) <span class="ctype debug">DEBUG</span></h3></div>
+    <p class="lead">Exam style (find the bug). Click <b>Decide</b> - it always says WIN, even at 0. The condition is wrong.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">It only builds 4 posts, but we need 5. The condition <code>i &lt; 5</code> stops one too early.
+        <div class="goalbox">The condition uses <code>=</code> (assign) instead of a compare. Fix it so 0 goals shows "No win".
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
-          <div class="reveal hint" id="hint10" hidden><code>i &lt; 5</code> stops at 4. To include 5, use <code>i &lt;= 5</code> (less-than-OR-equal).</div>
+          <div class="reveal hint" id="hint10" hidden>To COMPARE use <code>&gt;</code> or <code>===</code>. Change <code>if (goals = 1)</code> to <code>if (goals &gt; 0)</code>.</div>
         </div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Fix it here</div>
-        <textarea class="editor" id="ed10" spellcheck="false">&lt;button onclick="build()"&gt;Build&lt;/button&gt;
+        <textarea class="editor" id="ed10" spellcheck="false">&lt;button onclick="decide()"&gt;Decide&lt;/button&gt;
 &lt;p id="out"&gt;&lt;/p&gt;
 
 &lt;script&gt;
-  function build() {
-    let s = "";
-    for (let i = 1; i &lt; 5; i = i + 1) {
-      s = s + "Post " + i + " ";
+  function decide() {
+    let goals = 0;
+    if (goals = 1) {
+      document.getElementById("out").innerHTML = "WIN!";
+    } else {
+      document.getElementById("out").innerHTML = "No win";
     }
-    document.getElementById("out").innerHTML = s;
   }
 &lt;/script&gt;</textarea>
         <div class="act">
@@ -710,23 +661,23 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
-        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed the off-by-one - i &amp;lt;= 5 reaches the last post.</span></div>
+        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed = vs === - compare, don't assign.</span></div>
       </div>
     </div>
   </section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
   <section class="ex could chal create" id="ex11">
-    <div class="h"><span class="n">11</span><h3>Write your own loop <span class="ctype create">CREATE</span></h3></div>
-    <p class="lead">From scratch: write a loop that prints the numbers <b>1 to 10</b> on the page. Use the anatomy panel at the top if you get stuck.</p>
+    <div class="h"><span class="n">11</span><h3>Build a random app <span class="ctype create">CREATE</span></h3></div>
+    <p class="lead">Exam style (write the code). Build a random picker - your own list, your own theme.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Make a <code>for</code> loop that shows 1 2 3 4 5 6 7 8 9 10. Put the numbers into an element with <code>innerHTML</code>.
-          <div class="eg">Expected: 1 2 3 4 5 6 7 8 9 10</div>
+        <div class="goalbox">Make a <b>button</b> and a function with your OWN list that shows a <b>random</b> item (foods, games, jokes - anything).
+          <div class="eg">Expected: a random item from your list</div>
           <div class="chal-btns">
             <button class="btn ghost" onclick="showHint(11)">Show a hint</button>
           </div>
-          <div class="reveal hint" id="hint11" hidden>Start a counter at 1, keep going while <code>i &lt;= 10</code>, add 1 each time: <code>for (let i = 1; i &lt;= 10; i = i + 1) { ... }</code>. Build a text like <code>out = out + i + " ";</code></div>
+          <div class="reveal hint" id="hint11" hidden><code>function pick() { let things = ["a","b","c"]; let i = Math.floor(Math.random()*things.length); document.getElementById("out").innerHTML = things[i]; }</code> + a <code>&lt;p id="out"&gt;</code> and a button.</div>
         </div>
       </div>
       <div class="col">
@@ -742,39 +693,31 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
-        <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you wrote a working loop from scratch.</span></div>
+        <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you built a random app from scratch.</span></div>
       </div>
     </div>
   </section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal tweak" id="ex12">
-    <div class="h"><span class="n">12</span><h3>Complete the loop (tower) <span class="ctype tweak">TWEAK</span></h3></div>
-    <p class="lead">This tower builder is wired up - but the loop&rsquo;s <b>condition</b> is blank. Complete it so the tower is <b>10 blocks tall</b>.</p>
+  <section class="ex could chal create" id="ex12">
+    <div class="h"><span class="n">12</span><h3>Build a mini app (all skills) <span class="ctype create">CREATE</span></h3></div>
+    <p class="lead">The big one: HTML + CSS + JS + a decision, like the assessment. The hint shows one way.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
-        <div class="goalbox">Replace <code>CONDITION</code> so the loop runs until the tower is 10 high (Block 1 up to Block 10).
-          <div class="chal-btns"><button class="btn ghost" onclick="showHint(12)">Show a hint</button></div>
-          <div class="reveal hint" id="hint12" hidden>You want i to count up to 10: <code>i &lt;= 10</code>.</div>
+        <div class="lbl"><span class="cn">1</span> The goal</div>
+        <div class="goalbox">Build a small app: a heading with an <b>id</b>, a <b>button</b>, some <b>CSS</b> (a colour), and a click that uses <b>if/else OR random</b> to change the heading.
+          <div class="eg">Expected: a styled page that reacts on click</div>
+          <div class="chal-btns">
+            <button class="btn ghost" onclick="showHint(12)">Show a hint</button>
+          </div>
+          <div class="reveal hint" id="hint12" hidden>Copy the Lucky Number capstone idea (tile 13): a styled heading + button, then a function with <code>Math.random</code> or an <code>if/else</code> that sets <code>innerHTML</code>.</div>
         </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
-        <textarea class="editor" id="ed12" spellcheck="false">&lt;button onclick="build()"&gt;Build tower&lt;/button&gt;
-&lt;div id="t"&gt;&lt;/div&gt;
-
-&lt;script&gt;
-  function build() {
-    let tower = "";
-    for (let i = 1; CONDITION; i = i + 1) {
-      tower = "Block " + i + "&lt;br&gt;" + tower;
-    }
-    document.getElementById("t").innerHTML = tower;
-  }
-&lt;/script&gt;</textarea>
+        <div class="lbl"><span class="cn">2</span> Write it yourself</div>
+        <textarea class="editor" id="ed12" spellcheck="false" placeholder="Write your code from scratch, then Run..."></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(12)">Run</button>
-          <button class="btn ghost" onclick="resetEx(12)">Reset</button>
+          <button class="btn ghost" onclick="resetEx(12)">Clear</button>
           <label class="donebox"><input type="checkbox" id="done12" onchange="toggleDone(12)"> Done</label>
         </div>
       </div>
@@ -782,30 +725,35 @@ html{scroll-behavior:smooth}
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
-        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your condition built a 10-block tower.</span></div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; you combined all the skills - exam ready!</span></div>
       </div>
     </div>
   </section>
-  <section class="band trophy"><div class="bnum">4 / Build the inventory</div><h2>Capstone</h2><p>One loop + one list = a whole inventory page generated by code. Build it, then make it yours.</p></section>
+  <section class="band trophy"><div class="bnum">4 / Final boss</div><h2>Build a complete app</h2><p>All 5 skills in one tiny app - exactly what 30 June asks of you.</p></section>
   <div class="divide cap"><span class="lab">Capstone &mdash; build the thing you&rsquo;d screenshot</span><span class="ln"></span></div>
   <section class="ex could capstone" id="ex13">
-    <div class="h"><span class="n">13</span><h3>Build your inventory</h3></div>
-    <p class="lead">The capstone &mdash; <b>generate a whole inventory page with ONE loop</b>. The loop goes through your list of items and builds a slot for each. This is exactly how real websites build menus, galleries and lists. Type it, Run it, then fill your bag.</p>
+    <div class="h"><span class="n">13</span><h3>Boss level: a complete app</h3></div>
+    <p class="lead">The boss level &mdash; a complete tiny app with <b>all 5 exam skills</b> in it: HTML (a heading with an id + a button), CSS (a class + a colour), JavaScript (a click changes the page), a decision (Math.random + if/else), and you can test &amp; explain it. Type it, Run it, then make it yours.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref13">&lt;h2&gt;My Minecraft Inventory&lt;/h2&gt;
-&lt;div id="bag"&gt;&lt;/div&gt;
-&lt;button onclick="fill()"&gt;Fill my bag&lt;/button&gt;
+        <pre class="code-ref" id="ref13">&lt;style&gt;
+  .card { text-align: center; font-family: Arial; }
+  h1 { color: #2563eb; }
+&lt;/style&gt;
+&lt;div class="card"&gt;
+  &lt;h1 id="out"&gt;Lucky number?&lt;/h1&gt;
+  &lt;button onclick="lucky()"&gt;Roll my luck&lt;/button&gt;
+&lt;/div&gt;
 
 &lt;script&gt;
-  let items = ["Sword", "Pickaxe", "Torch", "Apple", "Diamond", "Bricks"];
-  function fill() {
-    let bag = "";
-    for (let i = 0; i &lt; items.length; i = i + 1) {
-      bag = bag + "&lt;div class='slot'&gt;" + items[i] + "&lt;/div&gt;";
+  function lucky() {
+    let n = Math.floor(Math.random() * 10) + 1;
+    if (n &gt;= 5) {
+      document.getElementById("out").innerHTML = n + " - Lucky!";
+    } else {
+      document.getElementById("out").innerHTML = n + " - try again";
     }
-    document.getElementById("bag").innerHTML = bag;
   }
 &lt;/script&gt;</pre>
       </div>
@@ -824,22 +772,22 @@ html{scroll-behavior:smooth}
         <div class="guesscheck" id="gc13" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">3</span> Your inventory</div>
-        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
-          <iframe class="out" id="out13" title="your inventory"></iframe></div>
-        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you generated a whole inventory page with one loop over a list.</span></div>
-        <div class="try"><b>Now make it yours:</b> add your own items to the <code>items</code> list (a Bow, a Map, an Emerald...) and Run - the loop builds a slot for every one, no extra code.</div>
+        <div class="lbl"><span class="cn">3</span> Your app</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your game</div>
+          <iframe class="out" id="out13" title="your game"></iframe></div>
+        <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you built a complete app with all 5 exam skills.</span></div>
+        <div class="try"><b>Now make it yours:</b> change <code>5</code> to <code>7</code> so you are luckier, change the colour, or add a second button &mdash; this is exactly what 30 June asks you to build.</div>
       </div>
     </div>
   </section>
 
   <div class="closing">
     <div class="finale">
-      <h3>You taught the computer to REPEAT.</h3>
-      <p>Every list you scroll, every gallery, every leaderboard is built by a <b>loop</b> going through a list &mdash; just like the inventory you just generated. One loop did the work of a hundred lines. <b>That is the power of repetition.</b></p>
+      <h3>You are exam-ready.</h3>
+      <p>You just revised every skill the 30 June paper marks &mdash; <b>HTML</b>, <b>CSS</b>, <b>JavaScript</b>, a <b>decision</b>, and <b>testing</b>. On the day: read carefully, work the checklist, and stay calm. You have done this all term. <b>You've got this!</b></p>
     </div>
     <h3>Show the class</h3>
-    <p>Finished, or out of time? Put your best <b>loop</b> or your inventory on the board &mdash; we will look at a few together and name the parts: the <b>start</b>, the <b>condition</b>, the <b>step</b>, and the <b>body</b>.</p>
+    <p>Put your best mini-app on the board &mdash; we will name the 5 skills in it: the <b>HTML</b>, the <b>CSS</b>, the <b>JavaScript</b>, the <b>decision</b>, and how you <b>tested</b> it.</p>
     <div class="reflect">
       <div><label>What I built</label><textarea id="rbuilt" placeholder="In a sentence..."></textarea></div>
       <div><label>I got stuck on</label><textarea id="rstuck" placeholder="What tripped you up?"></textarea></div>
@@ -850,22 +798,22 @@ html{scroll-behavior:smooth}
       <input id="lf" type="file" accept=".html,text/html" hidden onchange="loadFile(this)">
     </div>
   </div>
-  <footer>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; JavaScript Loops (Repetition) &mdash; Guided Practice L7</footer>
+  <footer>Year 9 Computing Technology &middot; 9 COTYB &amp; 9 COTYC &middot; JavaScript Revision Arcade &mdash; Guided Practice L8</footer>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"minecraft": "<h2 id=\"out\">Press Build to place blocks<\/h2>\n<button onclick=\"build()\">Build it<\/button>\n\n<script>\n  function build() {\n    let blocks = \"\";\n    for (let i = 1; i <= 5; i = i + 1) {\n      blocks = blocks + \"Mine! \";\n    }\n    document.getElementById(\"out\").innerHTML = blocks;\n  }\n<\/script>"}, "2": {"minecraft": "<h2 id=\"out\">Press Build<\/h2>\n<button onclick=\"build()\">Build it<\/button>\n\n<script>\n  function build() {\n    let list = \"\";\n    for (let i = 1; i <= 5; i = i + 1) {\n      list = list + \"Block \" + i + \"<br>\";\n    }\n    document.getElementById(\"out\").innerHTML = list;\n  }\n<\/script>"}, "3": {"minecraft": "<h2 id=\"out\">Light the fuse<\/h2>\n<button onclick=\"countdown()\">Light it<\/button>\n\n<script>\n  function countdown() {\n    let txt = \"\";\n    for (let i = 5; i >= 1; i = i - 1) {\n      txt = txt + i + \"... \";\n    }\n    txt = txt + \"TNT!\";\n    document.getElementById(\"out\").innerHTML = txt;\n  }\n<\/script>"}, "4": {"minecraft": "<div id=\"wall\"><\/div>\n<p id=\"msg\"><\/p>\n<button onclick=\"build()\">Build the wall<\/button>\n\n<script>\n  function build() {\n    let wall = \"\";\n    for (let i = 1; i <= 8; i = i + 1) {\n      wall = wall + \"<span class='block'><\/span>\";\n    }\n    document.getElementById(\"wall\").innerHTML = wall;\n    document.getElementById(\"msg\").innerHTML = \"Wall of 8 blocks built!\";\n  }\n<\/script>"}, "5": {"minecraft": "<h2>My inventory<\/h2>\n<ul id=\"inv\"><\/ul>\n<button onclick=\"show()\">Open inventory<\/button>\n\n<script>\n  function show() {\n    let items = [\"Sword\", \"Pickaxe\", \"Torch\", \"Apple\"];\n    let html = \"\";\n    for (let i = 0; i < items.length; i = i + 1) {\n      html = html + \"<li>\" + items[i] + \"<\/li>\";\n    }\n    document.getElementById(\"inv\").innerHTML = html;\n  }\n<\/script>"}, "6": {"minecraft": "<div id=\"mobs\"><\/div>\n<button onclick=\"spawn()\">Spawn mobs<\/button>\n\n<script>\n  function spawn() {\n    let mobs = [\"Creeper\", \"Zombie\", \"Skeleton\"];\n    let html = \"\";\n    for (let i = 0; i < mobs.length; i = i + 1) {\n      html = html + \"<div class='card'>\" + mobs[i] + \"<\/div>\";\n    }\n    document.getElementById(\"mobs\").innerHTML = html;\n  }\n<\/script>"}, "7": {"minecraft": "<h2 id=\"out\">Count your diamonds<\/h2>\n<button onclick=\"count()\">Count<\/button>\n\n<script>\n  function count() {\n    let diamonds = [3, 5, 2, 4];\n    let total = 0;\n    for (let i = 0; i < diamonds.length; i = i + 1) {\n      total = total + diamonds[i];\n    }\n    document.getElementById(\"out\").innerHTML = \"Total diamonds: \" + total;\n  }\n<\/script>"}, "8": {"minecraft": "<h2 id=\"out\">Start mining<\/h2>\n<button onclick=\"mine()\">Mine<\/button>\n\n<script>\n  function mine() {\n    let blocks = 0;\n    let found = false;\n    while (found === false) {\n      blocks = blocks + 1;\n      if (Math.random() < 0.2) {\n        found = true;\n      }\n    }\n    document.getElementById(\"out\").innerHTML = \"Diamond after \" + blocks + \" blocks!\";\n  }\n<\/script>"}, "13": {"minecraft": "<h2>My Minecraft Inventory<\/h2>\n<div id=\"bag\"><\/div>\n<button onclick=\"fill()\">Fill my bag<\/button>\n\n<script>\n  let items = [\"Sword\", \"Pickaxe\", \"Torch\", \"Apple\", \"Diamond\", \"Bricks\"];\n  function fill() {\n    let bag = \"\";\n    for (let i = 0; i < items.length; i = i + 1) {\n      bag = bag + \"<div class='slot'>\" + items[i] + \"<\/div>\";\n    }\n    document.getElementById(\"bag\").innerHTML = bag;\n  }\n<\/script>"}};
-var WANT = {"7": "Total diamonds: 14", "8": "Diamond after", "10": "Post 5", "11": "10", "12": "Block 10"};
-var OKTX = {"1": "your loop repeated the code 5 times.", "2": "you used the counter i inside the loop.", "3": "your loop counted down with i = i - 1.", "4": "your loop generated blocks on the page.", "5": "your loop went through the whole list.", "6": "you generated a card for every item in the list.", "7": "your loop added up the whole list.", "8": "your while loop kept going until it found diamond.", "9": "you traced the loop round by round.", "10": "you fixed the off-by-one - i &lt;= 5 reaches the last post.", "11": "you wrote a working loop from scratch.", "12": "your condition built a 10-block tower.", "13": "you generated a whole inventory page with one loop over a list."};
-var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "tweak"};
-var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let s = \"\";\n  for (let i = 1; i <= 3; i = i + 1) {\n    s = s + \"Block \" + i + \" \";\n  }\n  document.getElementById(\"out\").innerHTML = s;\n<\/script>"};
-var DEBUGC = {"10": "<button onclick=\"build()\">Build<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function build() {\n    let s = \"\";\n    for (let i = 1; i < 5; i = i + 1) {\n      s = s + \"Post \" + i + \" \";\n    }\n    document.getElementById(\"out\").innerHTML = s;\n  }\n<\/script>"};
-var TWEAKC = {"12": "<button onclick=\"build()\">Build tower<\/button>\n<div id=\"t\"><\/div>\n\n<script>\n  function build() {\n    let tower = \"\";\n    for (let i = 1; CONDITION; i = i + 1) {\n      tower = \"Block \" + i + \"<br>\" + tower;\n    }\n    document.getElementById(\"t\").innerHTML = tower;\n  }\n<\/script>"};
+var STARTERS = {"1": {"worldcup": "<h1 id=\"title\">My Web Page<\/h1>\n<button onclick=\"go()\">Click me<\/button>\n\n<script>\n  function go() {\n    document.getElementById(\"title\").innerHTML = \"You clicked it!\";\n  }\n<\/script>"}, "2": {"worldcup": "<style>\n  h1 { color: teal; text-align: center; }\n<\/style>\n<h1 id=\"out\">Style me!<\/h1>\n<button onclick=\"done()\">I styled it!<\/button>\n\n<script>\n  function done() {\n    document.getElementById(\"out\").innerHTML = \"Teal and centred!\";\n  }\n<\/script>"}, "3": {"worldcup": "<h2 id=\"out\">Press the button<\/h2>\n<button onclick=\"change()\">Change it<\/button>\n\n<script>\n  function change() {\n    document.getElementById(\"out\").innerHTML = \"Changed by JavaScript!\";\n  }\n<\/script>"}, "4": {"worldcup": "<h2 id=\"out\">Pass or fail?<\/h2>\n<button onclick=\"check()\">Check the score<\/button>\n\n<script>\n  function check() {\n    let score = 72;\n    if (score >= 50) {\n      document.getElementById(\"out\").innerHTML = \"PASS!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Try again\";\n    }\n  }\n<\/script>"}, "13": {"worldcup": "<style>\n  .card { text-align: center; font-family: Arial; }\n  h1 { color: #2563eb; }\n<\/style>\n<div class=\"card\">\n  <h1 id=\"out\">Lucky number?<\/h1>\n  <button onclick=\"lucky()\">Roll my luck<\/button>\n<\/div>\n\n<script>\n  function lucky() {\n    let n = Math.floor(Math.random() * 10) + 1;\n    if (n >= 5) {\n      document.getElementById(\"out\").innerHTML = n + \" - Lucky!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = n + \" - try again\";\n    }\n  }\n<\/script>"}};
+var WANT = {"7": "Expensive", "8": "It works", "10": "No win"};
+var OKTX = {"1": "you wrote HTML - a heading with an id + a button.", "2": "you wrote a CSS rule.", "3": "your click changed the page - skill 3.", "4": "your if/else made a decision.", "5": "you traced the if / else if / else.", "6": "you recalled the random pick - skill 4.", "7": "you wrote a working if/else.", "8": "you fixed a case-sensitive id - a top exam bug.", "9": "you spotted text + number = join.", "10": "you fixed = vs === - compare, don't assign.", "11": "you built a random app from scratch.", "12": "you combined all the skills - exam ready!", "13": "you built a complete app with all 5 exam skills."};
+var MODES = {"5": "predict", "6": "tweak", "7": "create", "8": "debug", "9": "predict", "10": "debug", "11": "create", "12": "create"};
+var PREDICT = {"5": "<p id=\"out\"><\/p>\n<script>\n  let age = 16;\n  if (age >= 18) {\n    out.innerHTML = \"Adult\";\n  } else if (age >= 13) {\n    out.innerHTML = \"Teen\";\n  } else {\n    out.innerHTML = \"Child\";\n  }\n<\/script>", "9": "<p id=\"out\"><\/p>\n<script>\n  let x = \"5\" + 1;\n  out.innerHTML = x;\n<\/script>"};
+var DEBUGC = {"8": "<h2 id=\"out\">Hello<\/h2>\n<button onclick=\"show()\">Show<\/button>\n\n<script>\n  function show() {\n    document.getElementById(\"Out\").innerHTML = \"It works!\";\n  }\n<\/script>", "10": "<button onclick=\"decide()\">Decide<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function decide() {\n    let goals = 0;\n    if (goals = 1) {\n      document.getElementById(\"out\").innerHTML = \"WIN!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"No win\";\n    }\n  }\n<\/script>"};
+var TWEAKC = {"6": "<h2 id=\"out\">Click for a quote<\/h2>\n<button onclick=\"quote()\">Inspire me<\/button>\n\n<script>\n  function quote() {\n    let quotes = [\"You can do this!\", \"Keep going!\", \"Almost there!\"];\n    let pick = quotes[PICK];\n    document.getElementById(\"out\").innerHTML = pick;\n  }\n<\/script>"};
 var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-var THEME_LIST = ["minecraft"];
+var THEME_LIST = ["worldcup"];
 var IDS = Object.keys(STARTERS).map(Number);
-var THEME = "minecraft";
-var LSKEY = "l7-loops-v1";
+var THEME = "worldcup";
+var LSKEY = "l8-state-v1";
 var BASE = {};
 
 function $(id){return document.getElementById(id);}
@@ -886,7 +834,7 @@ function wrap(i, code){
    + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:6px;background:#e8edf3;cursor:pointer;margin:2px 4px 2px 0}'
    + 'input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid #cbd5e1;border-radius:6px;margin:2px 4px 2px 0}'
    + 'h1,h2{margin:.3em 0}'
-   + '.block{display:inline-block;width:30px;height:30px;margin:2px;background:linear-gradient(#8bc34a,#558b2f);border:2px solid #33691e;border-radius:3px}.card{display:inline-block;min-width:84px;text-align:center;margin:5px;padding:12px 10px;background:#eef3e2;border:3px solid #8d6e63;border-radius:6px;font-weight:700;color:#33691e}.slot{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:52px;margin:5px;background:#c7b29a;border:3px solid #5d4037;border-radius:6px;font-weight:700;font-size:15px;color:#3e2723;box-shadow:inset 0 0 0 2px #e8dcc8}.refcard{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;width:170px;height:150px;border-radius:14px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#5b8c3a,#2e4d2e);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#ffd54f;font-size:26px}.refcard .rc2{font-size:18px;opacity:.9}.refcard .rc3{color:#fff;font-size:26px}'
+   + '.refcard{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;width:160px;height:160px;border-radius:18px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#10b981,#0b1020);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#7dd3fc;font-size:30px}.refcard .rc2{font-size:20px;opacity:.85}.refcard .rc3{color:#fbbf24;font-size:30px}'
    + '#__l4err{position:fixed;left:0;right:0;bottom:0;background:#fef2f2;color:#b91c1c;border-top:2px solid #ef4444;font-family:Consolas,monospace;font-size:12.5px;padding:8px 12px;white-space:pre-wrap;z-index:9}'
    + '</style><scr'+'ipt>window.onerror=function(m){'
    + 'var b=document.body||document.documentElement;'
@@ -1014,17 +962,17 @@ function save(){
   });
   var meta='Name: '+esc(s.name||'-')+' &middot; Class: '+esc(s.klass||'-')+' &middot; Date: '+esc(s.date||'-')
           +' &middot; Theme: '+esc(s.theme)+' &middot; Progress: '+s.done.length+'/'+ALL_IDS.length;
-  var doc='<!doctype html><meta charset="utf-8"><title>JS Loops Practice L7 - '+esc(s.name||'')+'</title>'
+  var doc='<!doctype html><meta charset="utf-8"><title>JS Revision Arcade L8 -'+esc(s.name||'')+'</title>'
     +'<body style="font-family:Segoe UI,Arial;max-width:800px;margin:30px auto;padding:0 16px;color:#16202e">'
-    +'<h1>JavaScript Loops - Guided Practice L7</h1><p>'+meta+'</p>'
+    +'<h1>JavaScript Revision Arcade - Guided Practice L8</h1><p>'+meta+'</p>'
     +'<p><b>What I built:</b> '+esc(s.built||'-')+'<br><b>Stuck on:</b> '+esc(s.stuck||'-')+'</p><hr>'
     +rows
-    +'<scr'+'ipt type="application/json" id="l7-state">'+JSON.stringify(s).replace(/</g,"\\u003c")+'<\/scr'+'ipt>'
+    +'<scr'+'ipt type="application/json" id="l8-state">'+JSON.stringify(s).replace(/</g,"\\u003c")+'<\/scr'+'ipt>'
     +'<p style="color:#94a3b8;font-size:12px;margin-top:30px">This file is your save. Open it in the workshop with '
     +'&ldquo;Load my file&rdquo; to keep working, or hand it in on Google Classroom.</p></body>';
   var blob=new Blob([doc],{type:"text/html"});
   var a=document.createElement("a");
-  var fn=("JS-L7_"+(s.name||"student")+"_"+(s.klass||"")).replace(/[^a-z0-9_-]+/gi,"-")+".html";
+  var fn=("JS-L8_"+(s.name||"student")+"_"+(s.klass||"")).replace(/[^a-z0-9_-]+/gi,"-")+".html";
   a.href=URL.createObjectURL(blob); a.download=fn; document.body.appendChild(a); a.click();
   setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
   toast("Saved "+fn+" - now upload it to Google Classroom");
@@ -1037,8 +985,8 @@ function loadFile(input){
   r.onload=function(){
     try{
       var doc=new DOMParser().parseFromString(r.result,"text/html");
-      var node=doc.getElementById("l7-state");
-      if(!node){ toast("That file has no saved L7 work."); return; }
+      var node=doc.getElementById("l8-state");
+      if(!node){ toast("That file has no saved L6 work."); return; }
       apply(JSON.parse(node.textContent)); persist();
       toast("Loaded - carry on where you left off");
     }catch(e){ toast("Could not read that file."); }
