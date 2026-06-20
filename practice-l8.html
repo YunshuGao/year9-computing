@@ -331,7 +331,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .showcase{margin:16px 0 6px;border:3px solid #2a2a2a;background:#fff;box-shadow:5px 5px 0 rgba(0,0,0,.14)}
 .sc-head{background:#4e9c28;color:#fff;padding:11px 16px;font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.7;text-shadow:2px 2px 0 rgba(0,0,0,.35)}
 .sc-head .star{color:#f9c52b}
-.sc-body{padding:16px;display:grid;grid-template-columns:1fr .82fr;gap:18px;align-items:center}
+.sc-body{padding:16px;display:grid;grid-template-columns:1.22fr .78fr;gap:18px;align-items:center}
 .sc-note{font-size:14.5px;color:#2a2a2a;line-height:1.65}
 .sc-note b{color:#2a5d12}.sc-note code{background:#eef2f6;padding:1px 5px;font-family:Consolas,monospace;font-size:.92em}
 .sc-win{border:3px solid #2a2a2a;box-shadow:3px 3px 0 rgba(0,0,0,.2)}
@@ -360,10 +360,16 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .band.js{background:url('img/tex-dirt.png')}
 .band.your{background:url('img/tex-stone.png')}
 .band.ship{background:url('img/tex-plank.png')}
-.hero-mob{position:absolute;bottom:0;z-index:3;height:auto;image-rendering:pixelated;filter:drop-shadow(2px 3px 0 rgba(0,0,0,.32));animation:dig-bob 3s ease-in-out infinite}
-.hero-mob.mob-cube{right:168px;width:60px;animation-delay:.4s}
-.hero-mob.mob-pig{right:256px;bottom:4px;width:62px;animation-delay:.9s}
-@media(max-width:980px){.hero-mob{display:none}}
+.talkmob{position:absolute;bottom:0;z-index:3;cursor:pointer}
+.talkmob img{display:block;width:100%;height:auto;image-rendering:pixelated;filter:drop-shadow(2px 3px 0 rgba(0,0,0,.32));animation:dig-bob 3s ease-in-out infinite}
+.tm-cube{right:150px;width:56px}.tm-cube img{animation-delay:.3s}
+.tm-pig{right:232px;width:60px;bottom:2px}.tm-pig img{animation-delay:.7s}
+.tm-sheep{right:316px;width:62px;bottom:2px}.tm-sheep img{animation-delay:1.1s}
+.mob-bub{position:absolute;left:50%;bottom:110%;transform:translateX(-50%) translateY(6px);background:#fff;border:3px solid var(--mc-ink);box-shadow:3px 3px 0 rgba(0,0,0,.2);padding:7px 10px;font-family:'Press Start 2P',monospace;font-size:8px;line-height:1.7;color:#2a2a2a;max-width:150px;white-space:normal;text-align:center;opacity:0;pointer-events:none;transition:.16s;z-index:6}
+.talkmob.say .mob-bub{opacity:1;transform:translateX(-50%) translateY(0)}
+.finale{position:relative;overflow:visible}.closing{overflow:visible}
+.tm-monster{position:absolute;right:16px;bottom:-10px;width:64px}.tm-monster img{animation-delay:.5s}
+@media(max-width:980px){.talkmob{display:none}}
 </style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
@@ -381,8 +387,9 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
       <div class="wc-trophy">&#9935;</div>
     </div>
   <div class="hero-buddy"><svg viewBox="0 0 72 92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-label="Digger the block miner"><rect x="54" y="18" width="6" height="36" fill="#7a5230"/><rect x="46" y="12" width="20" height="9" fill="#bfc8d0"/><rect x="46" y="12" width="7" height="9" fill="#8fa0ad"/><rect x="14" y="8" width="40" height="40" fill="#8a6240"/><rect x="14" y="8" width="40" height="10" fill="#6abe30"/><rect x="14" y="16" width="40" height="3" fill="#4e9c28"/><rect x="20" y="27" width="5" height="5" fill="#74502f"/><rect x="42" y="38" width="5" height="5" fill="#74502f"/><rect x="31" y="33" width="4" height="4" fill="#9c7144"/><rect x="22" y="26" width="7" height="8" fill="#ffffff"/><rect x="24" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="39" y="26" width="7" height="8" fill="#ffffff"/><rect x="41" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="28" y="41" width="12" height="3" fill="#3a2a1a"/><rect x="18" y="48" width="32" height="22" fill="#2a8c8c"/><rect x="18" y="48" width="32" height="4" fill="#37a3a3"/><rect x="30" y="52" width="8" height="14" fill="#1f6f6f"/><rect x="10" y="50" width="8" height="18" fill="#8a6240"/><rect x="50" y="50" width="8" height="16" fill="#8a6240"/><rect x="20" y="70" width="11" height="16" fill="#39516a"/><rect x="37" y="70" width="11" height="16" fill="#39516a"/><rect x="20" y="83" width="11" height="4" fill="#2a2a2a"/><rect x="37" y="83" width="11" height="4" fill="#2a2a2a"/></svg></div>
-  <img class="hero-mob mob-cube" src="img/mob-cube.png" alt="">
-  <img class="hero-mob mob-pig" src="img/mob-pig.png" alt="">
+  <span class="talkmob tm-cube" data-says="I&rsquo;m Blockie!|HTML builds it.|Stack those blocks!|Nice mining!"><span class="mob-bub"></span><img src="img/mob-cube.png" alt="Blockie the cube"></span>
+  <span class="talkmob tm-pig" data-says="Oink! Keep going.|I dig diamonds.|Off to the mines!|You got this!"><span class="mob-bub"></span><img src="img/mob-pig.png" alt="Pig"></span>
+  <span class="talkmob tm-sheep" data-says="Baa! Click Run.|Soft wool, sharp code.|One more tile!|Don&rsquo;t paste it!"><span class="mob-bub"></span><img src="img/mob-sheep.png" alt="Sheep"></span>
   </header>
 
   <section class="showcase">
@@ -984,6 +991,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 
   <div class="closing">
     <div class="finale">
+      <span class="talkmob tm-monster" data-says="GRR! You beat me.|Nice page, human.|Built it&hellip; impressive.|See you in L9!"><span class="mob-bub"></span><img src="img/mob-monster.png" alt="Grumble the monster"></span>
       <h3>You built a whole Minecraft web page - HTML, CSS and JavaScript together.</h3>
       <p>That is exactly how every real website works: <b>HTML</b> for the structure, <b>CSS</b> for the look, <b>JavaScript</b> for what happens when you click. You started the term with one tag, and you just shipped your own CRAFT WORLD page. <b>That is the whole job.</b> &#9935;</p>
     </div>
@@ -1340,4 +1348,18 @@ document.addEventListener("DOMContentLoaded", function(){
   setTimeout(function(){ refreshXP(true); }, 1300);  // seed level from any loaded progress
 })();
 </script>
+<script>(function(){
+  var mobs=document.querySelectorAll('.talkmob'); if(!mobs.length) return;
+  mobs.forEach(function(m){
+    var says=(m.getAttribute('data-says')||'').split('|').filter(Boolean);
+    var bub=m.querySelector('.mob-bub'); if(!says.length||!bub) return;
+    var last=-1;
+    function say(){ var i=Math.floor(Math.random()*says.length);
+      if(says.length>1){ while(i===last) i=Math.floor(Math.random()*says.length); } last=i;
+      bub.innerHTML=says[i]; m.classList.add('say'); clearTimeout(m._t);
+      m._t=setTimeout(function(){ m.classList.remove('say'); }, 2800); }
+    m.addEventListener('click', say);
+    m.addEventListener('mouseenter', say);
+  });
+})();</script>
 </body></html>
