@@ -217,7 +217,7 @@ html{scroll-behavior:smooth}
 .mission-card .refcard{transition:transform .12s ease;will-change:transform}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.band{background-attachment:scroll}*{animation-duration:.001s!important}}
 @media(max-width:1040px){.cols{grid-template-columns:1fr}.ana-grid{grid-template-columns:1fr}.mission{grid-template-columns:1fr}.band{background-attachment:scroll}body{background-attachment:scroll}}@media(max-width:880px){.tier-bar{grid-template-columns:1fr}}
-.block{display:inline-block;width:30px;height:30px;margin:2px;background:linear-gradient(#8bc34a,#558b2f);border:2px solid #33691e;border-radius:3px}.card{display:inline-block;min-width:84px;text-align:center;margin:5px;padding:12px 10px;background:#eef3e2;border:3px solid #8d6e63;border-radius:6px;font-weight:700;color:#33691e}.slot{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:52px;margin:5px;background:#c7b29a;border:3px solid #5d4037;border-radius:6px;font-weight:700;font-size:15px;color:#3e2723;box-shadow:inset 0 0 0 2px #e8dcc8}.refcard{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;width:170px;height:150px;border-radius:14px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#5b8c3a,#2e4d2e);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#ffd54f;font-size:26px}.refcard .rc2{font-size:18px;opacity:.9}.refcard .rc3{color:#fff;font-size:26px}
+.blk{display:inline-block;width:26px;height:26px;margin:2px;border:2px solid rgba(0,0,0,.3);border-radius:2px;vertical-align:middle}.grass{background:linear-gradient(#7cc24a,#5a9c2e)}.dirt{background:linear-gradient(#a97c52,#7a5230)}.stone{background:linear-gradient(#ababab,#7c7c7c)}.gold{background:linear-gradient(#ffe082,#f4b400)}.diamond{background:linear-gradient(#86f2e8,#2fc7bd)}.tnt{background:linear-gradient(#e8503c,#a81e14)}.num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin:3px;background:#5a9c2e;color:#fff;border:2px solid #2e5a18;border-radius:3px;font-weight:800;font-family:Consolas,monospace}.mob{display:inline-block;min-width:60px;text-align:center;margin:5px;padding:9px 6px;background:#3b3b3b;border:3px solid #161616;border-radius:4px;color:#eafff0;font-weight:700;font-size:12px}.bar{display:inline-block;padding:3px;background:#222;border:3px solid #000;border-radius:4px}.seg{display:inline-block;width:15px;height:20px;margin:1px;background:#555;border-radius:1px}.seg.full{background:linear-gradient(#ff6a5a,#d12a1a)}.slot{display:inline-flex;align-items:center;justify-content:center;width:90px;height:48px;margin:4px;background:#c7b29a;border:3px solid #5d4037;border-radius:4px;font-weight:700;font-size:13px;color:#3e2723}.refcard{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;width:170px;height:150px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#5b8c3a,#2e4d2e);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#ffd54f;font-size:26px}.refcard .rc2{font-size:18px;opacity:.9}.refcard .rc3{color:#fff;font-size:26px}
 /* ===================== MINECRAFT SKIN (L7) ===================== */
 :root{--mc-grass:#6abe30;--mc-grass-d:#4e9c28;--mc-dirt:#8a6240;--mc-dirt-d:#6e4d2f;
   --mc-stone:#8a8a8a;--mc-ink:#2a2a2a;--mc-gold:#f9c52b;}
@@ -297,6 +297,23 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
 .buddy-cheer{animation:dig-cheer .55s ease}
 @keyframes dig-cheer{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-14px) rotate(-7deg)}70%{transform:translateY(-9px) rotate(7deg)}}
 @media(max-width:820px){.hero-buddy{display:none}#buddy svg{width:60px}#buddyBubble{max-width:160px}}
+
+/* ===== L7 v2 calm-down pass (overrides the busy bits) ===== */
+.btn,.lbl,.zone-tag,.pill .ttl,.mtag,.soc-tag,.finale h3,.closing h3,.mission h3,.ana-head h2,.wc-sub,.wc-kicker{
+  font-family:'Segoe UI',system-ui,Arial,sans-serif !important;letter-spacing:0}
+.btn{font-size:13px !important;text-transform:none}
+.lbl{font-size:11.5px !important}.zone-tag{font-size:10.5px !important}.pill .ttl{font-size:10.5px !important}
+.finale h3,.closing h3,.mission h3{font-size:19px !important;line-height:1.3 !important}
+.ana-head h2{font-size:18px !important}.wc-kicker{font-size:11px !important}
+/* pixel font now stays ONLY on: hero h1/emblem, tier headings, band titles + numbers, dividers, wc-pill, mascot */
+/* calmer plain background (drop the busy block grid) */
+body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important}
+/* softer, consistent block shadows */
+.ex{box-shadow:3px 3px 0 rgba(0,0,0,.10) !important}
+.anatomy,.mission,.closing,.strip,.tier-zone{box-shadow:3px 3px 0 rgba(0,0,0,.07) !important}
+.band{box-shadow:4px 4px 0 rgba(0,0,0,.12) !important}
+/* drop the redundant 'why loops matter' strip */
+.socceroos{display:none !important}
 </style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
@@ -361,26 +378,27 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
     <button class="btn save" onclick="save()">Save my work</button>
   </div>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Place</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Number them</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Countdown</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Build a wall</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Inventory</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Spawn mobs</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Count diamonds</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Mine for diamond</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Trace it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Build a tower</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Inventory</span></a></div></div></nav>
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Place</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Number them</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Countdown</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Build a tower</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Inventory</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Mob army</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Health bar</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Mine for diamond</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Trace it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Build a tower</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Inventory</span></a></div></div></nav>
 
   <section class="band kickoff"><div class="bnum">1 / First blocks</div><h2>Meet the loop</h2><p>A loop repeats code for you. Place blocks, number them, count down, then build a wall on the page - all with ONE for loop.</p></section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex1">
-    <div class="h"><span class="n">1</span><h3>Place 5 blocks - your first loop</h3></div>
-    <p class="lead">A <code>for</code> loop repeats code so you don&rsquo;t write it 5 times. This one runs the body <b>5 times</b> - one block per loop. Type it, press Run, then click Build.</p>
+    <div class="h"><span class="n">1</span><h3>Place a row of blocks</h3></div>
+    <p class="lead">A <code>for</code> loop repeats code so you don&rsquo;t write it 5 times. This one places one green block per loop &mdash; 5 in a row. Type it, press Run, then click Build.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref1">&lt;h2 id="out"&gt;Press Build to place blocks&lt;/h2&gt;
+        <pre class="code-ref" id="ref1">&lt;div id="out"&gt;&lt;/div&gt;&lt;p id="msg"&gt;&lt;/p&gt;
 &lt;button onclick="build()"&gt;Build it&lt;/button&gt;
 
 &lt;script&gt;
   function build() {
-    let blocks = "";
+    let row = "";
     for (let i = 1; i &lt;= 5; i = i + 1) {
-      blocks = blocks + "Mine! ";
+      row = row + "&lt;span class='blk grass'&gt;&lt;/span&gt;";
     }
-    document.getElementById("out").innerHTML = blocks;
+    document.getElementById("out").innerHTML = row;
+    document.getElementById("msg").innerHTML = "Placed 5 blocks!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -402,28 +420,28 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
-        <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; your loop repeated the code 5 times.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 20</code> and Run - 20 blocks from ONE line!</div>
+        <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; your loop placed a whole row of blocks.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 20</code> &mdash; 20 blocks from ONE line!</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex2">
     <div class="h"><span class="n">2</span><h3>Use the counter &lt;code&gt;i&lt;/code&gt;</h3></div>
-    <p class="lead">The loop has a counter called <code>i</code> that goes 1, 2, 3... Use it inside the body to <b>number</b> each block.</p>
+    <p class="lead">The loop has a counter, <code>i</code>, that goes 1, 2, 3... Drop <code>i</code> inside a block to number each one.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref2">&lt;h2 id="out"&gt;Press Build&lt;/h2&gt;
+        <pre class="code-ref" id="ref2">&lt;div id="out"&gt;&lt;/div&gt;
 &lt;button onclick="build()"&gt;Build it&lt;/button&gt;
 
 &lt;script&gt;
   function build() {
-    let list = "";
+    let row = "";
     for (let i = 1; i &lt;= 5; i = i + 1) {
-      list = list + "Block " + i + "&lt;br&gt;";
+      row = row + "&lt;span class='num'&gt;" + i + "&lt;/span&gt;";
     }
-    document.getElementById("out").innerHTML = list;
+    document.getElementById("out").innerHTML = row;
   }
 &lt;/script&gt;</pre>
       </div>
@@ -446,28 +464,28 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
         <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you used the counter i inside the loop.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 10</code> - now it counts to Block 10.</div>
+        <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 9</code> for a full hot-bar of numbers.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex3">
     <div class="h"><span class="n">3</span><h3>Count DOWN to TNT</h3></div>
-    <p class="lead">Loops can count <b>down</b> too. Start high and use <code>i = i - 1</code> to go down to 1, then BOOM.</p>
+    <p class="lead">Loops can count <b>down</b> too &mdash; start high and use <code>i = i - 1</code>. 3... 2... 1... boom.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref3">&lt;h2 id="out"&gt;Light the fuse&lt;/h2&gt;
-&lt;button onclick="countdown()"&gt;Light it&lt;/button&gt;
+        <pre class="code-ref" id="ref3">&lt;div id="out"&gt;&lt;/div&gt;
+&lt;button onclick="go()"&gt;Light the fuse&lt;/button&gt;
 
 &lt;script&gt;
-  function countdown() {
-    let txt = "";
-    for (let i = 5; i &gt;= 1; i = i - 1) {
-      txt = txt + i + "... ";
+  function go() {
+    let row = "";
+    for (let i = 3; i &gt;= 1; i = i - 1) {
+      row = row + "&lt;span class='num'&gt;" + i + "&lt;/span&gt;";
     }
-    txt = txt + "TNT!";
-    document.getElementById("out").innerHTML = txt;
+    row = row + "&lt;span class='blk tnt'&gt;&lt;/span&gt; BOOM!";
+    document.getElementById("out").innerHTML = row;
   }
 &lt;/script&gt;</pre>
       </div>
@@ -490,29 +508,28 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
         <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your loop counted down with i = i - 1.</span></div>
-        <div class="try"><b>Now change it:</b> start at 10 instead of 5 for a longer fuse.</div>
+        <div class="try"><b>Now change it:</b> start at <code>10</code> for a longer fuse.</div>
       </div>
     </div>
   </section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
   <section class="ex must" id="ex4">
     <div class="h"><span class="n">4</span><h3>Build blocks ON the page</h3></div>
-    <p class="lead">Now the loop builds <b>real HTML</b> - a row of blocks you can SEE. Each time round, it adds one block <code>&lt;span&gt;</code> to the page. This is how a loop <b>generates a webpage</b>.</p>
+    <p class="lead">Now the loop builds <b>real HTML</b> &mdash; a tower of blocks you can SEE. Each loop adds one block to the page. This is how a loop <b>generates a webpage</b>.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref4">&lt;div id="wall"&gt;&lt;/div&gt;
-&lt;p id="msg"&gt;&lt;/p&gt;
-&lt;button onclick="build()"&gt;Build the wall&lt;/button&gt;
+        <pre class="code-ref" id="ref4">&lt;div id="out"&gt;&lt;/div&gt;&lt;p id="msg"&gt;&lt;/p&gt;
+&lt;button onclick="build()"&gt;Build the tower&lt;/button&gt;
 
 &lt;script&gt;
   function build() {
-    let wall = "";
-    for (let i = 1; i &lt;= 8; i = i + 1) {
-      wall = wall + "&lt;span class='block'&gt;&lt;/span&gt;";
+    let tower = "";
+    for (let i = 1; i &lt;= 6; i = i + 1) {
+      tower = "&lt;span class='blk grass'&gt;&lt;/span&gt;&lt;br&gt;" + tower;
     }
-    document.getElementById("wall").innerHTML = wall;
-    document.getElementById("msg").innerHTML = "Wall of 8 blocks built!";
+    document.getElementById("out").innerHTML = tower;
+    document.getElementById("msg").innerHTML = "Tower is 6 blocks tall!";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -534,8 +551,8 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
-        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your loop generated blocks on the page.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>8</code> to <code>15</code> for a longer wall.</div>
+        <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your loop generated a tower on the page.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>6</code> to <code>12</code> for a giant tower.</div>
       </div>
     </div>
   </section>
@@ -543,22 +560,21 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex5">
     <div class="h"><span class="n">5</span><h3>Loop a LIST</h3></div>
-    <p class="lead">A loop&rsquo;s best friend is a <b>list</b>. <code>items.length</code> is how many are in the list; the loop visits each one (index 0, 1, 2...) and adds it to your inventory.</p>
+    <p class="lead">A loop&rsquo;s best friend is a <b>list</b>. <code>items.length</code> is how many there are; the loop visits each (index 0, 1, 2...) and drops it into a slot.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref5">&lt;h2&gt;My inventory&lt;/h2&gt;
-&lt;ul id="inv"&gt;&lt;/ul&gt;
+        <pre class="code-ref" id="ref5">&lt;h3&gt;My inventory&lt;/h3&gt;&lt;div id="out"&gt;&lt;/div&gt;
 &lt;button onclick="show()"&gt;Open inventory&lt;/button&gt;
 
 &lt;script&gt;
   function show() {
     let items = ["Sword", "Pickaxe", "Torch", "Apple"];
-    let html = "";
+    let inv = "";
     for (let i = 0; i &lt; items.length; i = i + 1) {
-      html = html + "&lt;li&gt;" + items[i] + "&lt;/li&gt;";
+      inv = inv + "&lt;span class='slot'&gt;" + items[i] + "&lt;/span&gt;";
     }
-    document.getElementById("inv").innerHTML = html;
+    document.getElementById("out").innerHTML = inv;
   }
 &lt;/script&gt;</pre>
       </div>
@@ -581,28 +597,28 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
         <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; your loop went through the whole list.</span></div>
-        <div class="try"><b>Now change it:</b> add <code>"Shield"</code> to the list - the loop shows it with no extra code!</div>
+        <div class="try"><b>Now change it:</b> add <code>"Shield"</code> to the list &mdash; the loop shows it with no extra code!</div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex6">
-    <div class="h"><span class="n">6</span><h3>Build a card for each</h3></div>
-    <p class="lead">Same idea, fancier output: loop a list of mobs and build a styled <b>card</b> for each. One loop, a whole row of cards - that&rsquo;s a webpage section generated by code.</p>
+    <div class="h"><span class="n">6</span><h3>A card for each mob</h3></div>
+    <p class="lead">Same idea, more fun: loop a list of mobs and build a <b>card</b> for each. One loop, a whole army &mdash; a webpage section made by code.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref6">&lt;div id="mobs"&gt;&lt;/div&gt;
-&lt;button onclick="spawn()"&gt;Spawn mobs&lt;/button&gt;
+        <pre class="code-ref" id="ref6">&lt;div id="out"&gt;&lt;/div&gt;
+&lt;button onclick="spawn()"&gt;Spawn the mobs&lt;/button&gt;
 
 &lt;script&gt;
   function spawn() {
     let mobs = ["Creeper", "Zombie", "Skeleton"];
-    let html = "";
+    let army = "";
     for (let i = 0; i &lt; mobs.length; i = i + 1) {
-      html = html + "&lt;div class='card'&gt;" + mobs[i] + "&lt;/div&gt;";
+      army = army + "&lt;span class='mob'&gt;" + mobs[i] + "&lt;/span&gt;";
     }
-    document.getElementById("mobs").innerHTML = html;
+    document.getElementById("out").innerHTML = army;
   }
 &lt;/script&gt;</pre>
       </div>
@@ -624,29 +640,33 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
-        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; you generated a card for every item in the list.</span></div>
-        <div class="try"><b>Now change it:</b> add another mob to the list and Run - a new card appears.</div>
+        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; you spawned a card for every item in the list.</span></div>
+        <div class="try"><b>Now change it:</b> add another mob to the list and Run &mdash; a new card spawns.</div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex7">
-    <div class="h"><span class="n">7</span><h3>Add them all up</h3></div>
-    <p class="lead">A loop can keep a <b>running total</b>. Start <code>total</code> at 0, then add each number in the list as the loop visits it.</p>
+    <div class="h"><span class="n">7</span><h3>A loop + if/else</h3></div>
+    <p class="lead">Put <b>last lesson&rsquo;s if/else INSIDE a loop</b>: for each of 10 hearts, if it&rsquo;s within your health it&rsquo;s full (red), else it&rsquo;s empty &mdash; a real game health bar.</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref7">&lt;h2 id="out"&gt;Count your diamonds&lt;/h2&gt;
-&lt;button onclick="count()"&gt;Count&lt;/button&gt;
+        <pre class="code-ref" id="ref7">&lt;div id="out"&gt;&lt;/div&gt;
+&lt;button onclick="show()"&gt;Show health&lt;/button&gt;
 
 &lt;script&gt;
-  function count() {
-    let diamonds = [3, 5, 2, 4];
-    let total = 0;
-    for (let i = 0; i &lt; diamonds.length; i = i + 1) {
-      total = total + diamonds[i];
+  function show() {
+    let health = 7;
+    let bar = "";
+    for (let i = 1; i &lt;= 10; i = i + 1) {
+      if (i &lt;= health) {
+        bar = bar + "&lt;span class='seg full'&gt;&lt;/span&gt;";
+      } else {
+        bar = bar + "&lt;span class='seg'&gt;&lt;/span&gt;";
+      }
     }
-    document.getElementById("out").innerHTML = "Total diamonds: " + total;
+    document.getElementById("out").innerHTML = "&lt;span class='bar'&gt;" + bar + "&lt;/span&gt;&lt;p&gt;Health: " + health + "/10&lt;/p&gt;";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -668,32 +688,33 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
-        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your loop added up the whole list.</span></div>
-        <div class="try"><b>Now change it:</b> change a number in the list - the total updates when you Run.</div>
+        <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your loop + if/else drew a health bar.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>health = 7</code> to <code>health = 3</code> &mdash; watch the bar shrink.</div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
   <section class="ex should" id="ex8">
     <div class="h"><span class="n">8</span><h3>The &lt;code&gt;while&lt;/code&gt; loop</h3></div>
-    <p class="lead">A <code>while</code> loop repeats <b>until</b> something becomes true - perfect when you don&rsquo;t know how many tries it takes. Keep mining until you hit diamond!</p>
+    <p class="lead">A <code>while</code> loop repeats <b>until</b> something is true &mdash; perfect when you don&rsquo;t know how many tries. Dig stone until you hit diamond!</p>
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref8">&lt;h2 id="out"&gt;Start mining&lt;/h2&gt;
+        <pre class="code-ref" id="ref8">&lt;div id="out"&gt;&lt;/div&gt;
 &lt;button onclick="mine()"&gt;Mine&lt;/button&gt;
 
 &lt;script&gt;
   function mine() {
-    let blocks = 0;
+    let dug = "";
     let found = false;
     while (found === false) {
-      blocks = blocks + 1;
+      dug = dug + "&lt;span class='blk stone'&gt;&lt;/span&gt;";
       if (Math.random() &lt; 0.2) {
+        dug = dug + "&lt;span class='blk diamond'&gt;&lt;/span&gt;";
         found = true;
       }
     }
-    document.getElementById("out").innerHTML = "Diamond after " + blocks + " blocks!";
+    document.getElementById("out").innerHTML = dug + "&lt;p&gt;Found diamond!&lt;/p&gt;";
   }
 &lt;/script&gt;</pre>
       </div>
@@ -715,8 +736,8 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
-        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your while loop kept going until it found diamond.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>0.2</code> to <code>0.5</code> - diamond comes faster.</div>
+        <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your while loop dug until it struck diamond.</span></div>
+        <div class="try"><b>Now change it:</b> change <code>0.2</code> to <code>0.5</code> &mdash; diamond comes sooner.</div>
       </div>
     </div>
   </section>
@@ -762,23 +783,25 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">It only builds 4 posts, but we need 5. The condition <code>i &lt; 5</code> stops one too early.
+        <div class="goalbox">The bridge should be 5 blocks long but it builds only 4. The condition <code>i &lt; 5</code> stops one too early.
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
-          <div class="reveal hint" id="hint10" hidden><code>i &lt; 5</code> stops at 4. To include 5, use <code>i &lt;= 5</code> (less-than-OR-equal).</div>
+          <div class="reveal hint" id="hint10" hidden><code>i &lt; 5</code> stops at 4. To reach 5, use <code>i &lt;= 5</code> (less-than-OR-equal).</div>
         </div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Fix it here</div>
         <textarea class="editor" id="ed10" spellcheck="false">&lt;button onclick="build()"&gt;Build&lt;/button&gt;
-&lt;p id="out"&gt;&lt;/p&gt;
+&lt;div id="out"&gt;&lt;/div&gt;
 
 &lt;script&gt;
   function build() {
-    let s = "";
+    let bridge = "";
+    let n = 0;
     for (let i = 1; i &lt; 5; i = i + 1) {
-      s = s + "Post " + i + " ";
+      bridge = bridge + "&lt;span class='blk dirt'&gt;&lt;/span&gt;";
+      n = n + 1;
     }
-    document.getElementById("out").innerHTML = s;
+    document.getElementById("out").innerHTML = bridge + "&lt;p&gt;Bridge: " + n + " blocks&lt;/p&gt;";
   }
 &lt;/script&gt;</textarea>
         <div class="act">
@@ -791,7 +814,7 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
-        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed the off-by-one - i &amp;lt;= 5 reaches the last post.</span></div>
+        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed the off-by-one - i &amp;lt;= 5 builds the full bridge.</span></div>
       </div>
     </div>
   </section>
@@ -834,23 +857,24 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Complete the deciding line</div>
-        <div class="goalbox">Replace <code>CONDITION</code> so the loop runs until the tower is 10 high (Block 1 up to Block 10).
+        <div class="goalbox">Replace <code>CONDITION</code> so the loop builds a wall of exactly 8 blocks.
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(12)">Show a hint</button></div>
-          <div class="reveal hint" id="hint12" hidden>You want i to count up to 10: <code>i &lt;= 10</code>.</div>
+          <div class="reveal hint" id="hint12" hidden>You want i to count up to 8: <code>i &lt;= 8</code>.</div>
         </div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">2</span> Type your condition, then Run</div>
-        <textarea class="editor" id="ed12" spellcheck="false">&lt;button onclick="build()"&gt;Build tower&lt;/button&gt;
+        <textarea class="editor" id="ed12" spellcheck="false">&lt;button onclick="build()"&gt;Build wall&lt;/button&gt;
 &lt;div id="t"&gt;&lt;/div&gt;
 
 &lt;script&gt;
   function build() {
-    let tower = "";
-    for (let i = 1; CONDITION; i = i + 1) {
-      tower = "Block " + i + "&lt;br&gt;" + tower;
+    let wall = "";
+    let i = 0;
+    for (i = 1; CONDITION; i = i + 1) {
+      wall = wall + "&lt;span class='blk grass'&gt;&lt;/span&gt;";
     }
-    document.getElementById("t").innerHTML = tower;
+    document.getElementById("t").innerHTML = wall + "&lt;p&gt;Built " + (i - 1) + " blocks&lt;/p&gt;";
   }
 &lt;/script&gt;</textarea>
         <div class="act">
@@ -863,7 +887,7 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
-        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your condition built a 10-block tower.</span></div>
+        <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your condition built a wall of exactly 8 blocks.</span></div>
       </div>
     </div>
   </section>
@@ -875,16 +899,15 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref13">&lt;h2&gt;My Minecraft Inventory&lt;/h2&gt;
-&lt;div id="bag"&gt;&lt;/div&gt;
-&lt;button onclick="fill()"&gt;Fill my bag&lt;/button&gt;
+        <pre class="code-ref" id="ref13">&lt;h3&gt;My hotbar&lt;/h3&gt;&lt;div id="bag"&gt;&lt;/div&gt;
+&lt;button onclick="fill()"&gt;Fill my hotbar&lt;/button&gt;
 
 &lt;script&gt;
-  let items = ["Sword", "Pickaxe", "Torch", "Apple", "Diamond", "Bricks"];
+  let items = ["Sword", "Pickaxe", "Torch", "Apple", "Diamond", "Bow", "Map", "Bread", "Shield"];
   function fill() {
     let bag = "";
     for (let i = 0; i &lt; items.length; i = i + 1) {
-      bag = bag + "&lt;div class='slot'&gt;" + items[i] + "&lt;/div&gt;";
+      bag = bag + "&lt;span class='slot'&gt;" + items[i] + "&lt;/span&gt;";
     }
     document.getElementById("bag").innerHTML = bag;
   }
@@ -936,13 +959,13 @@ body{background:linear-gradient(180deg,#bfe6ff 0%,#dff3e6 55%) fixed #dff3e6;
 <div id="buddy" title="Click Digger for a tip"><div id="buddyBubble"></div><svg viewBox="0 0 72 92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-label="Digger the block miner"><rect x="54" y="18" width="6" height="36" fill="#7a5230"/><rect x="46" y="12" width="20" height="9" fill="#bfc8d0"/><rect x="46" y="12" width="7" height="9" fill="#8fa0ad"/><rect x="14" y="8" width="40" height="40" fill="#8a6240"/><rect x="14" y="8" width="40" height="10" fill="#6abe30"/><rect x="14" y="16" width="40" height="3" fill="#4e9c28"/><rect x="20" y="27" width="5" height="5" fill="#74502f"/><rect x="42" y="38" width="5" height="5" fill="#74502f"/><rect x="31" y="33" width="4" height="4" fill="#9c7144"/><rect x="22" y="26" width="7" height="8" fill="#ffffff"/><rect x="24" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="39" y="26" width="7" height="8" fill="#ffffff"/><rect x="41" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="28" y="41" width="12" height="3" fill="#3a2a1a"/><rect x="18" y="48" width="32" height="22" fill="#2a8c8c"/><rect x="18" y="48" width="32" height="4" fill="#37a3a3"/><rect x="30" y="52" width="8" height="14" fill="#1f6f6f"/><rect x="10" y="50" width="8" height="18" fill="#8a6240"/><rect x="50" y="50" width="8" height="16" fill="#8a6240"/><rect x="20" y="70" width="11" height="16" fill="#39516a"/><rect x="37" y="70" width="11" height="16" fill="#39516a"/><rect x="20" y="83" width="11" height="4" fill="#2a2a2a"/><rect x="37" y="83" width="11" height="4" fill="#2a2a2a"/></svg></div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"minecraft": "<h2 id=\"out\">Press Build to place blocks<\/h2>\n<button onclick=\"build()\">Build it<\/button>\n\n<script>\n  function build() {\n    let blocks = \"\";\n    for (let i = 1; i <= 5; i = i + 1) {\n      blocks = blocks + \"Mine! \";\n    }\n    document.getElementById(\"out\").innerHTML = blocks;\n  }\n<\/script>"}, "2": {"minecraft": "<h2 id=\"out\">Press Build<\/h2>\n<button onclick=\"build()\">Build it<\/button>\n\n<script>\n  function build() {\n    let list = \"\";\n    for (let i = 1; i <= 5; i = i + 1) {\n      list = list + \"Block \" + i + \"<br>\";\n    }\n    document.getElementById(\"out\").innerHTML = list;\n  }\n<\/script>"}, "3": {"minecraft": "<h2 id=\"out\">Light the fuse<\/h2>\n<button onclick=\"countdown()\">Light it<\/button>\n\n<script>\n  function countdown() {\n    let txt = \"\";\n    for (let i = 5; i >= 1; i = i - 1) {\n      txt = txt + i + \"... \";\n    }\n    txt = txt + \"TNT!\";\n    document.getElementById(\"out\").innerHTML = txt;\n  }\n<\/script>"}, "4": {"minecraft": "<div id=\"wall\"><\/div>\n<p id=\"msg\"><\/p>\n<button onclick=\"build()\">Build the wall<\/button>\n\n<script>\n  function build() {\n    let wall = \"\";\n    for (let i = 1; i <= 8; i = i + 1) {\n      wall = wall + \"<span class='block'><\/span>\";\n    }\n    document.getElementById(\"wall\").innerHTML = wall;\n    document.getElementById(\"msg\").innerHTML = \"Wall of 8 blocks built!\";\n  }\n<\/script>"}, "5": {"minecraft": "<h2>My inventory<\/h2>\n<ul id=\"inv\"><\/ul>\n<button onclick=\"show()\">Open inventory<\/button>\n\n<script>\n  function show() {\n    let items = [\"Sword\", \"Pickaxe\", \"Torch\", \"Apple\"];\n    let html = \"\";\n    for (let i = 0; i < items.length; i = i + 1) {\n      html = html + \"<li>\" + items[i] + \"<\/li>\";\n    }\n    document.getElementById(\"inv\").innerHTML = html;\n  }\n<\/script>"}, "6": {"minecraft": "<div id=\"mobs\"><\/div>\n<button onclick=\"spawn()\">Spawn mobs<\/button>\n\n<script>\n  function spawn() {\n    let mobs = [\"Creeper\", \"Zombie\", \"Skeleton\"];\n    let html = \"\";\n    for (let i = 0; i < mobs.length; i = i + 1) {\n      html = html + \"<div class='card'>\" + mobs[i] + \"<\/div>\";\n    }\n    document.getElementById(\"mobs\").innerHTML = html;\n  }\n<\/script>"}, "7": {"minecraft": "<h2 id=\"out\">Count your diamonds<\/h2>\n<button onclick=\"count()\">Count<\/button>\n\n<script>\n  function count() {\n    let diamonds = [3, 5, 2, 4];\n    let total = 0;\n    for (let i = 0; i < diamonds.length; i = i + 1) {\n      total = total + diamonds[i];\n    }\n    document.getElementById(\"out\").innerHTML = \"Total diamonds: \" + total;\n  }\n<\/script>"}, "8": {"minecraft": "<h2 id=\"out\">Start mining<\/h2>\n<button onclick=\"mine()\">Mine<\/button>\n\n<script>\n  function mine() {\n    let blocks = 0;\n    let found = false;\n    while (found === false) {\n      blocks = blocks + 1;\n      if (Math.random() < 0.2) {\n        found = true;\n      }\n    }\n    document.getElementById(\"out\").innerHTML = \"Diamond after \" + blocks + \" blocks!\";\n  }\n<\/script>"}, "13": {"minecraft": "<h2>My Minecraft Inventory<\/h2>\n<div id=\"bag\"><\/div>\n<button onclick=\"fill()\">Fill my bag<\/button>\n\n<script>\n  let items = [\"Sword\", \"Pickaxe\", \"Torch\", \"Apple\", \"Diamond\", \"Bricks\"];\n  function fill() {\n    let bag = \"\";\n    for (let i = 0; i < items.length; i = i + 1) {\n      bag = bag + \"<div class='slot'>\" + items[i] + \"<\/div>\";\n    }\n    document.getElementById(\"bag\").innerHTML = bag;\n  }\n<\/script>"}};
-var WANT = {"7": "Total diamonds: 14", "8": "Diamond after", "10": "Post 5", "11": "10", "12": "Block 10"};
-var OKTX = {"1": "your loop repeated the code 5 times.", "2": "you used the counter i inside the loop.", "3": "your loop counted down with i = i - 1.", "4": "your loop generated blocks on the page.", "5": "your loop went through the whole list.", "6": "you generated a card for every item in the list.", "7": "your loop added up the whole list.", "8": "your while loop kept going until it found diamond.", "9": "you traced the loop round by round.", "10": "you fixed the off-by-one - i &lt;= 5 reaches the last post.", "11": "you wrote a working loop from scratch.", "12": "your condition built a 10-block tower.", "13": "you generated a whole inventory page with one loop over a list."};
+var STARTERS = {"1": {"minecraft": "<div id=\"out\"><\/div><p id=\"msg\"><\/p>\n<button onclick=\"build()\">Build it<\/button>\n\n<script>\n  function build() {\n    let row = \"\";\n    for (let i = 1; i <= 5; i = i + 1) {\n      row = row + \"<span class='blk grass'><\/span>\";\n    }\n    document.getElementById(\"out\").innerHTML = row;\n    document.getElementById(\"msg\").innerHTML = \"Placed 5 blocks!\";\n  }\n<\/script>"}, "2": {"minecraft": "<div id=\"out\"><\/div>\n<button onclick=\"build()\">Build it<\/button>\n\n<script>\n  function build() {\n    let row = \"\";\n    for (let i = 1; i <= 5; i = i + 1) {\n      row = row + \"<span class='num'>\" + i + \"<\/span>\";\n    }\n    document.getElementById(\"out\").innerHTML = row;\n  }\n<\/script>"}, "3": {"minecraft": "<div id=\"out\"><\/div>\n<button onclick=\"go()\">Light the fuse<\/button>\n\n<script>\n  function go() {\n    let row = \"\";\n    for (let i = 3; i >= 1; i = i - 1) {\n      row = row + \"<span class='num'>\" + i + \"<\/span>\";\n    }\n    row = row + \"<span class='blk tnt'><\/span> BOOM!\";\n    document.getElementById(\"out\").innerHTML = row;\n  }\n<\/script>"}, "4": {"minecraft": "<div id=\"out\"><\/div><p id=\"msg\"><\/p>\n<button onclick=\"build()\">Build the tower<\/button>\n\n<script>\n  function build() {\n    let tower = \"\";\n    for (let i = 1; i <= 6; i = i + 1) {\n      tower = \"<span class='blk grass'><\/span><br>\" + tower;\n    }\n    document.getElementById(\"out\").innerHTML = tower;\n    document.getElementById(\"msg\").innerHTML = \"Tower is 6 blocks tall!\";\n  }\n<\/script>"}, "5": {"minecraft": "<h3>My inventory<\/h3><div id=\"out\"><\/div>\n<button onclick=\"show()\">Open inventory<\/button>\n\n<script>\n  function show() {\n    let items = [\"Sword\", \"Pickaxe\", \"Torch\", \"Apple\"];\n    let inv = \"\";\n    for (let i = 0; i < items.length; i = i + 1) {\n      inv = inv + \"<span class='slot'>\" + items[i] + \"<\/span>\";\n    }\n    document.getElementById(\"out\").innerHTML = inv;\n  }\n<\/script>"}, "6": {"minecraft": "<div id=\"out\"><\/div>\n<button onclick=\"spawn()\">Spawn the mobs<\/button>\n\n<script>\n  function spawn() {\n    let mobs = [\"Creeper\", \"Zombie\", \"Skeleton\"];\n    let army = \"\";\n    for (let i = 0; i < mobs.length; i = i + 1) {\n      army = army + \"<span class='mob'>\" + mobs[i] + \"<\/span>\";\n    }\n    document.getElementById(\"out\").innerHTML = army;\n  }\n<\/script>"}, "7": {"minecraft": "<div id=\"out\"><\/div>\n<button onclick=\"show()\">Show health<\/button>\n\n<script>\n  function show() {\n    let health = 7;\n    let bar = \"\";\n    for (let i = 1; i <= 10; i = i + 1) {\n      if (i <= health) {\n        bar = bar + \"<span class='seg full'><\/span>\";\n      } else {\n        bar = bar + \"<span class='seg'><\/span>\";\n      }\n    }\n    document.getElementById(\"out\").innerHTML = \"<span class='bar'>\" + bar + \"<\/span><p>Health: \" + health + \"/10<\/p>\";\n  }\n<\/script>"}, "8": {"minecraft": "<div id=\"out\"><\/div>\n<button onclick=\"mine()\">Mine<\/button>\n\n<script>\n  function mine() {\n    let dug = \"\";\n    let found = false;\n    while (found === false) {\n      dug = dug + \"<span class='blk stone'><\/span>\";\n      if (Math.random() < 0.2) {\n        dug = dug + \"<span class='blk diamond'><\/span>\";\n        found = true;\n      }\n    }\n    document.getElementById(\"out\").innerHTML = dug + \"<p>Found diamond!<\/p>\";\n  }\n<\/script>"}, "13": {"minecraft": "<h3>My hotbar<\/h3><div id=\"bag\"><\/div>\n<button onclick=\"fill()\">Fill my hotbar<\/button>\n\n<script>\n  let items = [\"Sword\", \"Pickaxe\", \"Torch\", \"Apple\", \"Diamond\", \"Bow\", \"Map\", \"Bread\", \"Shield\"];\n  function fill() {\n    let bag = \"\";\n    for (let i = 0; i < items.length; i = i + 1) {\n      bag = bag + \"<span class='slot'>\" + items[i] + \"<\/span>\";\n    }\n    document.getElementById(\"bag\").innerHTML = bag;\n  }\n<\/script>"}};
+var WANT = {"7": "Health: 7/10", "8": "Found diamond", "10": "Bridge: 5 blocks", "11": "10", "12": "Built 8 blocks"};
+var OKTX = {"1": "your loop placed a whole row of blocks.", "2": "you used the counter i inside the loop.", "3": "your loop counted down with i = i - 1.", "4": "your loop generated a tower on the page.", "5": "your loop went through the whole list.", "6": "you spawned a card for every item in the list.", "7": "your loop + if/else drew a health bar.", "8": "your while loop dug until it struck diamond.", "9": "you traced the loop round by round.", "10": "you fixed the off-by-one - i &lt;= 5 builds the full bridge.", "11": "you wrote a working loop from scratch.", "12": "your condition built a wall of exactly 8 blocks.", "13": "you generated a whole inventory page with one loop over a list."};
 var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "tweak"};
 var PREDICT = {"9": "<p id=\"out\"><\/p>\n<script>\n  let s = \"\";\n  for (let i = 1; i <= 3; i = i + 1) {\n    s = s + \"Block \" + i + \" \";\n  }\n  document.getElementById(\"out\").innerHTML = s;\n<\/script>"};
-var DEBUGC = {"10": "<button onclick=\"build()\">Build<\/button>\n<p id=\"out\"><\/p>\n\n<script>\n  function build() {\n    let s = \"\";\n    for (let i = 1; i < 5; i = i + 1) {\n      s = s + \"Post \" + i + \" \";\n    }\n    document.getElementById(\"out\").innerHTML = s;\n  }\n<\/script>"};
-var TWEAKC = {"12": "<button onclick=\"build()\">Build tower<\/button>\n<div id=\"t\"><\/div>\n\n<script>\n  function build() {\n    let tower = \"\";\n    for (let i = 1; CONDITION; i = i + 1) {\n      tower = \"Block \" + i + \"<br>\" + tower;\n    }\n    document.getElementById(\"t\").innerHTML = tower;\n  }\n<\/script>"};
+var DEBUGC = {"10": "<button onclick=\"build()\">Build<\/button>\n<div id=\"out\"><\/div>\n\n<script>\n  function build() {\n    let bridge = \"\";\n    let n = 0;\n    for (let i = 1; i < 5; i = i + 1) {\n      bridge = bridge + \"<span class='blk dirt'><\/span>\";\n      n = n + 1;\n    }\n    document.getElementById(\"out\").innerHTML = bridge + \"<p>Bridge: \" + n + \" blocks<\/p>\";\n  }\n<\/script>"};
+var TWEAKC = {"12": "<button onclick=\"build()\">Build wall<\/button>\n<div id=\"t\"><\/div>\n\n<script>\n  function build() {\n    let wall = \"\";\n    let i = 0;\n    for (i = 1; CONDITION; i = i + 1) {\n      wall = wall + \"<span class='blk grass'><\/span>\";\n    }\n    document.getElementById(\"t\").innerHTML = wall + \"<p>Built \" + (i - 1) + \" blocks<\/p>\";\n  }\n<\/script>"};
 var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 var THEME_LIST = ["minecraft"];
 var IDS = Object.keys(STARTERS).map(Number);
@@ -968,7 +991,7 @@ function wrap(i, code){
    + 'button{font-family:inherit;font-size:14px;padding:6px 12px;border:0;border-radius:6px;background:#e8edf3;cursor:pointer;margin:2px 4px 2px 0}'
    + 'input{font-family:inherit;font-size:14px;padding:6px 9px;border:1px solid #cbd5e1;border-radius:6px;margin:2px 4px 2px 0}'
    + 'h1,h2{margin:.3em 0}'
-   + '.block{display:inline-block;width:30px;height:30px;margin:2px;background:linear-gradient(#8bc34a,#558b2f);border:2px solid #33691e;border-radius:3px}.card{display:inline-block;min-width:84px;text-align:center;margin:5px;padding:12px 10px;background:#eef3e2;border:3px solid #8d6e63;border-radius:6px;font-weight:700;color:#33691e}.slot{display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:52px;margin:5px;background:#c7b29a;border:3px solid #5d4037;border-radius:6px;font-weight:700;font-size:15px;color:#3e2723;box-shadow:inset 0 0 0 2px #e8dcc8}.refcard{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;width:170px;height:150px;border-radius:14px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#5b8c3a,#2e4d2e);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#ffd54f;font-size:26px}.refcard .rc2{font-size:18px;opacity:.9}.refcard .rc3{color:#fff;font-size:26px}'
+   + '.blk{display:inline-block;width:26px;height:26px;margin:2px;border:2px solid rgba(0,0,0,.3);border-radius:2px;vertical-align:middle}.grass{background:linear-gradient(#7cc24a,#5a9c2e)}.dirt{background:linear-gradient(#a97c52,#7a5230)}.stone{background:linear-gradient(#ababab,#7c7c7c)}.gold{background:linear-gradient(#ffe082,#f4b400)}.diamond{background:linear-gradient(#86f2e8,#2fc7bd)}.tnt{background:linear-gradient(#e8503c,#a81e14)}.num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin:3px;background:#5a9c2e;color:#fff;border:2px solid #2e5a18;border-radius:3px;font-weight:800;font-family:Consolas,monospace}.mob{display:inline-block;min-width:60px;text-align:center;margin:5px;padding:9px 6px;background:#3b3b3b;border:3px solid #161616;border-radius:4px;color:#eafff0;font-weight:700;font-size:12px}.bar{display:inline-block;padding:3px;background:#222;border:3px solid #000;border-radius:4px}.seg{display:inline-block;width:15px;height:20px;margin:1px;background:#555;border-radius:1px}.seg.full{background:linear-gradient(#ff6a5a,#d12a1a)}.slot{display:inline-flex;align-items:center;justify-content:center;width:90px;height:48px;margin:4px;background:#c7b29a;border:3px solid #5d4037;border-radius:4px;font-weight:700;font-size:13px;color:#3e2723}.refcard{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;width:170px;height:150px;font-family:Consolas,monospace;font-weight:800;background:linear-gradient(160deg,#5b8c3a,#2e4d2e);color:#fff;box-shadow:0 14px 30px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.15)}.refcard .rc1{color:#ffd54f;font-size:26px}.refcard .rc2{font-size:18px;opacity:.9}.refcard .rc3{color:#fff;font-size:26px}'
    + '#__l4err{position:fixed;left:0;right:0;bottom:0;background:#fef2f2;color:#b91c1c;border-top:2px solid #ef4444;font-family:Consolas,monospace;font-size:12.5px;padding:8px 12px;white-space:pre-wrap;z-index:9}'
    + '</style><scr'+'ipt>window.onerror=function(m){'
    + 'var b=document.body||document.documentElement;'
