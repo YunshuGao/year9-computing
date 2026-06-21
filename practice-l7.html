@@ -402,6 +402,20 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .bd-btn{display:inline-block;text-decoration:none;background:#6abe30;color:#16310a;font-family:'Press Start 2P',monospace;font-size:18px;line-height:1.5;padding:22px 38px;border:5px solid #0a1408;box-shadow:6px 6px 0 rgba(0,0,0,.45)}
 .bd-btn:hover{background:#7ed957}.bd-btn:active{transform:translate(6px,6px);box-shadow:none}
 .bd-see{margin-top:16px}.bd-see a{color:#ffd54f;font-size:13.5px;text-decoration:none}.bd-see a:hover{text-decoration:underline}
+
+/* ---- 'Given styles' collapsible reference (after the loop anatomy) ---- */
+.given{margin:16px 0;border:3px solid #2a2a2a;background:#fff;box-shadow:4px 4px 0 rgba(0,0,0,.1)}
+.given>summary{cursor:pointer;list-style:none;padding:12px 16px;font-weight:bold;color:#2a5d12;font-size:15px;background:#eaf5df}
+.given>summary::-webkit-details-marker{display:none}
+.given>summary::before{content:"\25B8  ";color:#4e9c28}
+.given[open]>summary::before{content:"\25BE  "}
+.given[open]>summary{border-bottom:3px solid #2a2a2a}
+.given-body{padding:14px 18px;font-size:14.5px;line-height:1.65;color:#2a2a2a}
+.given-body p{margin:8px 0}
+.given-body code{background:#eef2f6;padding:1px 6px;font-family:Consolas,monospace;color:#7c3aed;font-weight:bold;border-radius:3px}
+.given-list{list-style:none;margin:12px 0 6px;padding:0}
+.given-list li{display:flex;align-items:center;gap:12px;margin:9px 0;flex-wrap:wrap}
+.given-foot{color:#6b7280;font-style:italic}
 </style><script>(function(){try{var ok=('IntersectionObserver' in window)&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(ok){var s=document.createElement('style');s.textContent='.mission,.anatomy,.band,.ex,.closing{opacity:0;transition:opacity .55s ease}';document.head.appendChild(s);document.documentElement.classList.add('anim');}}catch(e){}})();</script></head><body>
 <div class="progress-top" id="ptop"></div>
 <div class="wrap">
@@ -491,6 +505,21 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
       </ul>
     </div>
   </section>
+
+  <details class="given">
+    <summary>&#128230; Given styles &mdash; the block looks we made for you  (you don&rsquo;t write these)</summary>
+    <div class="given-body">
+      <p>When you use a class name like <code>num</code> or <code>blk</code>, the page <b>already knows</b> how to style it. We set these up so you can focus on the <b>loop</b> &mdash; you never write this CSS yourself.</p>
+      <ul class="given-list">
+        <li><span class="num">7</span> <code>class='num'</code> &mdash; a numbered gold block</li>
+        <li><span class="blk grass"></span><span class="blk stone"></span><span class="blk diamond"></span> <code>class='blk grass'</code> &mdash; a coloured block  (also <code>dirt</code>, <code>stone</code>, <code>gold</code>, <code>diamond</code>, <code>tnt</code>)</li>
+        <li><span class="slot">Sword</span> <code>class='slot'</code> &mdash; an inventory slot</li>
+        <li><span class="rb" style="background:#e0564a"></span><span class="rb" style="background:#f4b400"></span><span class="rb" style="background:#4e9c28"></span> <code>class='rb'</code> &mdash; a rainbow stripe</li>
+      </ul>
+      <p>Used in the harder tiles too: <code>lbrow</code> + <code>pts</code> (a leaderboard row), <code>seg</code> / <code>seg full</code> (a health bar), <code>mob</code> (a creature card).</p>
+      <p class="given-foot">Next lesson you&rsquo;ll write your OWN <code>&lt;style&gt;</code>. For today, these are on the house. &#128736;&#65039;</p>
+    </div>
+  </details>
 
   <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">make a decision</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Place</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Number them</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Countdown</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Build a tower</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more outcomes</span></div><div class="pills"><a class="pill should" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Leaderboard</span></a><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Rainbow</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Health bar</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Mine for diamond</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">push yourself</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">Trace it</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">Build a tower</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Inventory</span></a></div></div></nav>
 
