@@ -404,10 +404,11 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .bd-see{margin-top:16px}.bd-see a{color:#ffd54f;font-size:13.5px;text-decoration:none}.bd-see a:hover{text-decoration:underline}
 
 /* ---- 'Given styles' collapsible reference (after the loop anatomy) ---- */
-.given{margin:16px 0;border:3px solid #2a2a2a;background:#fff;box-shadow:4px 4px 0 rgba(0,0,0,.1)}
-.given>summary{cursor:pointer;list-style:none;padding:12px 16px;font-weight:bold;color:#2a5d12;font-size:15px;background:#eaf5df}
+.given{margin:18px 0;border:3px solid #0a1408;background:#fff;box-shadow:5px 5px 0 rgba(0,0,0,.18)}
+.given>summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:bold;color:#ffffff;font-size:16px;background:#4e9c28;text-shadow:1px 1px 0 rgba(0,0,0,.3)}
+.given>summary:hover{background:#5aad30}
 .given>summary::-webkit-details-marker{display:none}
-.given>summary::before{content:"\25B8  ";color:#4e9c28}
+.given>summary::before{content:"\25B8  ";color:#ffd54f}
 .given[open]>summary::before{content:"\25BE  "}
 .given[open]>summary{border-bottom:3px solid #2a2a2a}
 .given-body{padding:14px 18px;font-size:14.5px;line-height:1.65;color:#2a2a2a}
@@ -507,7 +508,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   </section>
 
   <details class="given">
-    <summary>&#128230; Given styles &mdash; the block looks we made for you  (you don&rsquo;t write these)</summary>
+    <summary>&#128230; Given styles &mdash; click to see the block looks we made for you</summary>
     <div class="given-body">
       <p>When you use a class name like <code>num</code> or <code>blk</code>, the page <b>already knows</b> how to style it. We set these up so you can focus on the <b>loop</b> &mdash; you never write this CSS yourself.</p>
       <ul class="given-list">
