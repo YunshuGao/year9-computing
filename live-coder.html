@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Coder — Loops &amp; Decisions</title>
+<style>
+  :root{ --grass:#7cc24a; --grass2:#5a9c2e; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#eef3ee; color:#11151c; font-family:'Segoe UI',system-ui,Arial,sans-serif; }
+
+  header{ background:#1f3d10; color:#fff; padding:14px 22px; border-bottom:5px solid #0a1408; }
+  header h1{ margin:0; font-size:24px; letter-spacing:.5px; }
+  header p{ margin:4px 0 0; color:#d7e8cc; font-size:15px; }
+
+  .tabs{ display:flex; flex-wrap:wrap; gap:8px; padding:12px 18px; background:#dfe9da; border-bottom:2px solid #b9c8b0; }
+  .tab{ cursor:pointer; font-size:15px; font-weight:bold; padding:9px 14px; border:3px solid #2a3a20;
+        background:#fff; color:#1f3d10; }
+  .tab:hover{ background:#f3f8ef; }
+  .tab.on{ background:#6abe30; color:#10260a; }
+
+  .hint{ padding:10px 20px; background:#fef3c7; border-bottom:2px solid #e7c14a; font-size:16px; color:#5a4300; font-weight:bold; }
+  .hint b{ font-family:Consolas,monospace; color:#7c3aed; }
+
+  .wrap{ display:flex; gap:0; height:calc(100vh - 220px); min-height:360px; }
+  .pane{ flex:1; display:flex; flex-direction:column; min-width:0; }
+  .lbl{ background:#0d1118; color:#8fb36e; font-family:monospace; font-size:14px; padding:8px 16px; }
+  #code{ flex:1; width:100%; border:0; resize:none; outline:none; background:#0d1320; color:#e8f0e0;
+         font-family:Consolas,'Courier New',monospace; font-size:19px; line-height:1.5; padding:16px 18px; }
+  .divider{ width:5px; background:#0a1408; }
+
+  .out-head{ background:#0d1118; color:#8fb36e; font-family:monospace; font-size:14px; padding:8px 16px; }
+  #out{ flex:1; background:#fff; padding:18px 22px; overflow:auto; }
+  #out .line{ font-size:24px; line-height:1.5; margin:2px 0; color:#11151c; }
+  #out .err{ font-size:20px; color:#b91c1c; font-weight:bold; background:#fdecec; border:3px solid #b91c1c; padding:12px 16px; }
+  #out .empty{ font-size:18px; color:#888; font-style:italic; }
+
+  .bar{ background:#161b24; padding:12px 18px; display:flex; gap:14px; align-items:center; }
+  .run{ cursor:pointer; background:#6abe30; color:#10260a; border:4px solid #0a1408; font-weight:bold;
+        font-size:20px; padding:12px 32px; font-family:inherit; box-shadow:4px 4px 0 rgba(0,0,0,.4); }
+  .run:hover{ background:#7ed957; }
+  .reset{ cursor:pointer; background:#3a2a1a; color:#fff; border:4px solid #000; font-size:15px; padding:12px 18px; font-family:inherit; }
+  .bar .tip{ color:#9fb892; font-size:14px; }
+
+  /* ---- block / game styles for the OUTPUT (the same look as the practice site) ---- */
+  .blk{ display:inline-block; width:30px; height:30px; margin:2px; border:2px solid rgba(0,0,0,.3); border-radius:3px; vertical-align:middle; }
+  .grass{ background:linear-gradient(#7cc24a,#5a9c2e); } .dirt{ background:linear-gradient(#a97c52,#7a5230); }
+  .stone{ background:linear-gradient(#ababab,#7c7c7c); } .gold{ background:linear-gradient(#ffe082,#f4b400); }
+  .diamond{ background:linear-gradient(#86f2e8,#2fc7bd); } .tnt{ background:linear-gradient(#e8503c,#a81e14); }
+  .num{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; margin:3px;
+        background:linear-gradient(#ffd54f,#f4b400); color:#5a3e00; border:2px solid #b07d00; border-radius:4px;
+        font-weight:800; font-family:Consolas,monospace; font-size:18px; vertical-align:middle; }
+  .lbrow{ display:block; max-width:340px; margin:7px 0; padding:10px 14px; background:#2e2e2e; border:2px solid #000;
+          border-radius:4px; color:#fff; font-family:Consolas,monospace; font-size:17px; }
+  .lbrow b{ color:#ffd54f; margin-right:8px; } .pts{ float:right; background:#f4b400; color:#3a2a00; font-weight:800; border-radius:3px; padding:1px 10px; }
+  .rb{ display:inline-block; width:34px; height:52px; margin:2px; border:2px solid rgba(0,0,0,.35); border-radius:3px; vertical-align:middle; }
+  .hbar{ display:inline-block; padding:4px; background:#222; border:3px solid #000; border-radius:5px; vertical-align:middle; }
+  .seg{ display:inline-block; width:17px; height:24px; margin:1px; background:#555; border-radius:2px; }
+  .seg.full{ background:linear-gradient(#ff6a5a,#d12a1a); }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>&#9935; Live Coder &mdash; Loops &amp; Decisions</h1>
+    <p>Pick an example &rarr; press <b>&#9654; Run</b> &rarr; change something &rarr; Run again. Watch the code come alive.</p>
+  </header>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="hint" id="hint"></div>
+
+  <div class="wrap">
+    <div class="pane">
+      <div class="lbl">your code  &mdash;  edit me, then press Run</div>
+      <textarea id="code" spellcheck="false"></textarea>
+      <div class="bar">
+        <button class="run" onclick="run()">&#9654; Run</button>
+        <button class="reset" onclick="reload()">&#8635; Reset this example</button>
+        <span class="tip">Tip: change one number, predict, then Run.</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="pane">
+      <div class="out-head">output  &mdash;  what the page shows</div>
+      <div id="out"></div>
+    </div>
+  </div>
+
+<script>
+var EXAMPLES = [
+ {name:"🟩 Place blocks", hint:"change  i &lt;= 5  to  i &lt;= 20  &mdash; 20 blocks from ONE line!",
+  code:'let row = "";\nfor (let i = 1; i <= 5; i = i + 1) {\n  row = row + "<span class=\'blk grass\'></span>";\n}\nshow(row);'},
+ {name:"1⃣ Counter i", hint:"change  i &lt;= 5  to  i &lt;= 9  for a full hot-bar of numbers",
+  code:'let row = "";\nfor (let i = 1; i <= 5; i = i + 1) {\n  row = row + "<span class=\'num\'>" + i + "</span>";\n}\nshow(row);'},
+ {name:"💣 Countdown", hint:"start at  i = 10  for a longer fuse",
+  code:'let row = "";\nfor (let i = 3; i >= 1; i = i - 1) {\n  row = row + "<span class=\'num\'>" + i + "</span>";\n}\nshow(row + " <span class=\'blk tnt\'></span> BOOM!");'},
+ {name:"🏆 Leaderboard", hint:"add a 4th player to BOTH lists &mdash; the loop ranks them, no extra code",
+  code:'let names = ["Alex", "Sam", "Zoe"];\nlet scores = [250, 180, 140];\nfor (let i = 0; i < names.length; i = i + 1) {\n  show("<div class=\'lbrow\'><b>#" + (i + 1) + "</b> " + names[i] + " <span class=\'pts\'>" + scores[i] + "</span></div>");\n}'},
+ {name:"🌈 Rainbow", hint:"add  \"pink\"  to the list for a longer rainbow",
+  code:'let colours = ["red", "orange", "gold", "green", "blue", "purple"];\nlet row = "";\nfor (let i = 0; i < colours.length; i = i + 1) {\n  row = row + "<span class=\'rb\' style=\'background:" + colours[i] + "\'></span>";\n}\nshow(row);'},
+ {name:"❤ Health bar", hint:"change  health = 7  to  health = 3  &mdash; watch the bar shrink  (loop + if/else)",
+  code:'let health = 7;\nlet bar = "";\nfor (let i = 1; i <= 10; i = i + 1) {\n  if (i <= health) {\n    bar = bar + "<span class=\'seg full\'></span>";\n  } else {\n    bar = bar + "<span class=\'seg\'></span>";\n  }\n}\nshow("<span class=\'hbar\'>" + bar + "</span>  Health: " + health + "/10");'},
+ {name:"🥇 if / else medal", hint:"change  score = 8  to  12  (Gold) or  2  (Try again)",
+  code:'let score = 8;\nif (score >= 10) {\n  show("Gold!");\n} else if (score >= 5) {\n  show("Silver!");\n} else {\n  show("Try again");\n}'},
+ {name:"💥 BOSS: loop + if", hint:"a loop with a decision inside &mdash; change  i === 3  to  i === 2",
+  code:'for (let i = 1; i <= 5; i = i + 1) {\n  if (i === 3) {\n    show("BOOM");\n  } else {\n    show(i);\n  }\n}'},
+ {name:"FIZZ challenge", hint:"write your own &mdash; can you make it FIZZ on 10 as well?",
+  code:'for (let i = 1; i <= 10; i = i + 1) {\n  if (i === 5) {\n    show("FIZZ");\n  } else {\n    show(i);\n  }\n}'}
+];
+
+var current = 0;
+
+function buildTabs(){
+  var t = document.getElementById('tabs'); t.innerHTML = "";
+  EXAMPLES.forEach(function(ex, idx){
+    var b = document.createElement('button'); b.className = 'tab'; b.innerHTML = ex.name;
+    b.onclick = function(){ load(idx); };
+    t.appendChild(b);
+  });
+}
+function load(idx){
+  current = idx;
+  document.getElementById('code').value = EXAMPLES[idx].code;
+  document.getElementById('hint').innerHTML = "💡 Try:  " + EXAMPLES[idx].hint;
+  var tabs = document.querySelectorAll('.tab');
+  for (var i=0;i<tabs.length;i++) tabs[i].className = (i===idx) ? 'tab on' : 'tab';
+  run();
+}
+function reload(){ load(current); }
+
+function escapeHtml(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+
+function run(){
+  var code = document.getElementById('code').value;
+  var src = "var __out=[];\n" +
+            "function show(x){ __out.push(x===undefined ? 'undefined' : String(x)); }\n" +
+            "try{\n" + code + "\n" +
+            "postMessage({ok:true, out:__out});\n" +
+            "}catch(e){ postMessage({ok:false, err:String(e && e.message ? e.message : e)}); }\n";
+  var url, w;
+  try{
+    url = URL.createObjectURL(new Blob([src], {type:'application/javascript'}));
+    w = new Worker(url);
+  }catch(err){ renderError("Could not start: " + err); return; }
+  var done = false;
+  var timer = setTimeout(function(){
+    if(done) return; done = true; try{ w.terminate(); }catch(e){}
+    renderError("This is taking too long — probably an INFINITE LOOP. Did you forget  i = i + 1 ?");
+  }, 1500);
+  w.onmessage = function(e){
+    if(done) return; done = true; clearTimeout(timer); try{ w.terminate(); }catch(x){}
+    if(e.data.ok) renderOutput(e.data.out); else renderError(e.data.err);
+  };
+  w.onerror = function(e){
+    if(done) return; done = true; clearTimeout(timer); try{ w.terminate(); }catch(x){}
+    renderError(String((e && e.message) || 'Something went wrong')); if(e && e.preventDefault) e.preventDefault();
+  };
+}
+function renderOutput(items){
+  var out = document.getElementById('out');
+  if(!items || !items.length){ out.innerHTML = '<div class="empty">(nothing shown yet — did you call  show(...)  ?)</div>'; return; }
+  out.innerHTML = items.map(function(x){ return '<div class="line">' + x + '</div>'; }).join('');
+}
+function renderError(msg){
+  document.getElementById('out').innerHTML = '<div class="err">⚠  ' + escapeHtml(msg) + '</div>';
+}
+
+buildTabs();
+load(0);
+</script>
+</body>
+</html>
