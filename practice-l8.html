@@ -362,6 +362,21 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .out{height:340px}
 #ex13 .out{height:390px}
 
+/* Code Check tip: points students straight at a typo, in plain English */
+.l4tip{margin:9px 0 0;background:#fff7ed;border:2px solid #fb923c;border-left:7px solid #ea580c;border-radius:8px;padding:10px 13px;font-size:13.5px;font-weight:700;color:#9a3412;line-height:1.55}
+.l4tip b{color:#7c2d12}
+.l4tip code{background:#ffe4c7;color:#9a3412;padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:12.5px;font-weight:700}
+.l4tip .ln{display:inline-block;background:#ea580c;color:#fff;border-radius:6px;padding:1px 9px;margin-right:7px;font-family:Consolas,monospace;font-weight:800;white-space:nowrap;text-transform:uppercase;font-size:11.5px}
+/* Exam mode on the capstone: hide the reference + run a timer = test conditions */
+.capstone .h{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.exam-btn{background:#0a1408;color:#ffd54f;border:2px solid #ffd54f;border-radius:8px;font-family:'Press Start 2P',monospace;font-size:10px;padding:9px 12px;cursor:pointer;line-height:1.3}
+.exam-btn:hover{background:#16310a}
+.exam-timer{display:inline-block;background:#d12a1a;color:#fff;font-family:Consolas,monospace;font-weight:800;font-size:17px;padding:5px 13px;border-radius:8px;border:2px solid #0a1408}
+/* Revision Arcade hand-off in the build door */
+.bd-arcade{margin-top:16px}
+.bd-arcade a{display:inline-block;color:#0a1408;background:#ffd54f;border:3px solid #0a1408;font-family:'Press Start 2P',monospace;font-size:11px;padding:11px 16px;text-decoration:none;box-shadow:4px 4px 0 rgba(0,0,0,.3)}
+.bd-arcade a:hover{background:#ffe488}
+
 /* === more Minecraft: landscape hero, block-texture bands, extra mobs === */
 .wc-hero{min-height:236px;background:linear-gradient(105deg,rgba(0,0,0,.46),rgba(0,0,0,.14) 46%,rgba(0,0,0,0) 72%),url('img/mc-hero.png') center/cover !important}
 .band.html{background:url('img/tex-grass.png')}
@@ -536,6 +551,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
+        <div class="l4tip" id="tip1" hidden></div>
         <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; you laid out the page with HTML.</span></div>
         <div class="try"><b>Now change it:</b> add a fourth block as a new <code>&lt;li&gt;</code>, then Run.</div>
       </div>
@@ -576,6 +592,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
+        <div class="l4tip" id="tip2" hidden></div>
         <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you styled the page with CSS.</span></div>
         <div class="try"><b>Now change it:</b> change the <code>h2</code> <code>background-color</code> to <code>#8a8a8a</code> for a stone block.</div>
       </div>
@@ -615,6 +632,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
+        <div class="l4tip" id="tip3" hidden></div>
         <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your button changed the page.</span></div>
         <div class="try"><b>Now change it:</b> change the message to your own, then click Mine a block again.</div>
       </div>
@@ -654,6 +672,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
+        <div class="l4tip" id="tip4" hidden></div>
         <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your code changed the colour.</span></div>
         <div class="try"><b>Now change it:</b> change <code>"#3a8c1e"</code> to <code>"gold"</code>, then click again.</div>
       </div>
@@ -694,6 +713,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
+        <div class="l4tip" id="tip5" hidden></div>
         <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; you asked the player and used their answer.</span></div>
         <div class="try"><b>Now change it:</b> add the player&rsquo;s favourite block with another <code>prompt</code>.</div>
       </div>
@@ -736,6 +756,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
+        <div class="l4tip" id="tip6" hidden></div>
         <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; your random picker chose a block.</span></div>
         <div class="try"><b>Now change it:</b> add a fourth block to the list, then keep mining.</div>
       </div>
@@ -783,6 +804,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
+        <div class="l4tip" id="tip7" hidden></div>
         <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your if/else judged the guess.</span></div>
         <div class="try"><b>Now change it:</b> change <code>diamond</code> to a new number, then dig again.</div>
       </div>
@@ -828,6 +850,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
+        <div class="l4tip" id="tip8" hidden></div>
         <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your loop built the whole inventory.</span></div>
         <div class="try"><b>Now change it:</b> add more blocks to the list - the loop shows them all, with no extra code.</div>
       </div>
@@ -864,6 +887,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
         <div class="reveal ans" id="ans9" hidden>It shows <b>Block 1 Block 2 Block 3</b>. The loop runs with i = 1, then 2, then 3, joining "Block " + i + " " each time into one line.</div>
+        <div class="l4tip" id="tip9" hidden></div>
         <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you traced the loop and predicted the output.</span></div>
       </div>
     </div>
@@ -900,6 +924,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
+        <div class="l4tip" id="tip10" hidden></div>
         <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you matched the id and fixed the bug.</span></div>
       </div>
     </div>
@@ -932,6 +957,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
+        <div class="l4tip" id="tip11" hidden></div>
         <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you built your own button from scratch.</span></div>
       </div>
     </div>
@@ -973,6 +999,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
+        <div class="l4tip" id="tip12" hidden></div>
         <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your condition checked the stack.</span></div>
       </div>
     </div>
@@ -980,7 +1007,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   <section class="band ship"><div class="bnum">4 / Ship it</div><h2>The whole world</h2><p>HTML + CSS + JavaScript on ONE page - the CRAFT WORLD page you would actually share.</p></section>
   <div class="divide cap"><span class="lab">Capstone &mdash; put all three together</span><span class="ln"></span></div>
   <section class="ex could capstone" id="ex13">
-    <div class="h"><span class="n">13</span><h3>Build the whole arcade</h3></div>
+    <div class="h"><span class="n">13</span><h3>Build the whole arcade</h3><button class="exam-btn" id="exambtn13" onclick="examMode(13)">&#127937; Exam mode</button><span class="exam-timer" id="examtimer13" hidden></span></div>
     <p class="lead">This is the capstone &mdash; the whole CRAFT WORLD page on ONE screen, the same page you saw at the very top. A <code>&lt;style&gt;</code> block paints it, the HTML lays out the heading and buttons, and the <code>&lt;script&gt;</code> makes Mine and Open chest work. Type it, press Run, then play your page.</p>
     <div class="cols">
       <div class="col">
@@ -1028,6 +1055,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> Your arcade</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your arcade</div>
           <iframe class="out" id="out13" title="your arcade"></iframe></div>
+        <div class="l4tip" id="tip13" hidden></div>
         <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you combined HTML, CSS and JavaScript into one Minecraft page.</span></div>
         <div class="try"><b>Now make it yours:</b> add a third button that runs your diamond game from tile 7, or change the colours in the <code>&lt;style&gt;</code> block to build your own world.</div>
       </div>
@@ -1040,6 +1068,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <p class="bd-lead">The hard CSS is already written for you &mdash; you just type in your own words, then press Run.</p>
     <a class="bd-btn" href="craftworld-starter.html" target="_blank" rel="noopener">&#127918; Make MY game page</a>
     <div class="bd-see"><a href="craftworld.html" target="_blank" rel="noopener">&#9654; or see the finished example</a></div>
+    <div class="bd-arcade"><a href="practice-revision.html">&#127918; Last drill before the test &rarr; Revision Arcade</a></div>
   </section>
 
   <div class="closing">
@@ -1116,6 +1145,67 @@ function wrap(i, code){
 }
 
 var PRED_NUDGED = {};
+
+/* Code Check: scan typed code for the classic beginner typos and point at the line. */
+function lintCode(src){
+  src = src || "";
+  var lines = src.split("\n");
+  var TAGS = "span|div|p|h1|h2|h3|button|script|style|ul|ol|li|table|tr|td|th|a|img|strong|em|br|hr|input|label|select|option|textarea|form|nav|footer|blockquote|head|body|html|title|pre|code";
+  var openTag  = new RegExp("<\\s+\\/?\\s*(" + TAGS + ")\\b", "i");
+  var closeTag = new RegExp("<\\/\\s+(" + TAGS + ")\\b", "i");
+  var opSplit  = /[<>=!]\s+=/;
+  var smart    = /[‘’“”]/;
+  for (var k=0; k<lines.length; k++){
+    var ln = lines[k], n = k+1;
+    if (smart.test(ln))
+      return {line:n, msg:'Those are <b>curly quotes</b>. Use straight quotes <code>"</code> and <code>&#39;</code> instead.'};
+    if (openTag.test(ln) || closeTag.test(ln))
+      return {line:n, msg:'There is a <b>space right after the &lt;</b>. A tag has no space &mdash; write <code>&lt;span&gt;</code>, not <code>&lt; span&gt;</code>.'};
+    if (opSplit.test(ln))
+      return {line:n, msg:'A <b>space split an operator</b>. Write <code>&lt;=</code> (or <code>==</code>, <code>&gt;=</code>) with no space, not <code>&lt; =</code>.'};
+    if (((ln.split('"').length - 1) % 2) === 1)
+      return {line:n, msg:'A <b>"</b> looks unclosed on this line &mdash; every <code>"</code> needs a matching <code>"</code>.'};
+    if (((ln.split("'").length - 1) % 2) === 1 && /(class=|id=|<)/.test(ln))
+      return {line:n, msg:'A <b>&#39;</b> looks unclosed on this line &mdash; every <code>&#39;</code> needs a matching <code>&#39;</code>.'};
+  }
+  function bal(o,c){ return src.split(o).length - src.split(c).length; }
+  if (bal("(",")") !== 0) return {line:0, msg:'Your <b>round brackets</b> ( ) don&rsquo;t match &mdash; count your <code>(</code> and <code>)</code>.'};
+  if (bal("{","}") !== 0) return {line:0, msg:'Your <b>curly brackets</b> { } don&rsquo;t match &mdash; every <code>{</code> needs a <code>}</code>.'};
+  if (bal("[","]") !== 0) return {line:0, msg:'Your <b>square brackets</b> [ ] don&rsquo;t match &mdash; every <code>[</code> needs a <code>]</code>.'};
+  return null;
+}
+function showTip(i){
+  var el = $("tip"+i); if(!el) return;
+  var prob = lintCode($("ed"+i) ? $("ed"+i).value : "");
+  if(prob){ el.hidden=false; el.setAttribute("data-lint","1");
+    el.innerHTML = '<span class="ln">'+(prob.line? 'line '+prob.line : 'check')+'</span> &#128269; '+prob.msg; }
+  else { el.hidden=true; el.removeAttribute("data-lint"); el.innerHTML=""; }
+}
+
+/* Exam rehearsal (capstone): hide the reference + run a timer = test conditions. */
+var EXAM_TIMER=null;
+function examMode(i){
+  var ref=$("ref"+i), btn=$("exambtn"+i), tm=$("examtimer"+i);
+  if(!btn||!tm) return;
+  var lbl = ref ? ref.previousElementSibling : null;
+  if(btn.getAttribute("data-on")==="1"){
+    btn.setAttribute("data-on",""); btn.innerHTML="&#127937; Exam mode";
+    if(ref) ref.style.display="";
+    if(lbl && lbl.getAttribute("data-exam-was")!=null) lbl.innerHTML=lbl.getAttribute("data-exam-was");
+    tm.hidden=true; if(EXAM_TIMER){ clearInterval(EXAM_TIMER); EXAM_TIMER=null; }
+    return;
+  }
+  btn.setAttribute("data-on","1"); btn.innerHTML="&#10006; Exit exam mode";
+  if(ref) ref.style.display="none";
+  if(lbl){ if(lbl.getAttribute("data-exam-was")==null) lbl.setAttribute("data-exam-was", lbl.innerHTML);
+    lbl.innerHTML='<span class="cn">1</span> &#128274; Reference hidden &mdash; build from the goal picture at the top'; }
+  var secs=30*60; tm.hidden=false;
+  function show(){ var m=Math.floor(secs/60), s=secs%60; tm.textContent="⏱ "+m+":"+(s<10?"0":"")+s; }
+  show();
+  if(EXAM_TIMER) clearInterval(EXAM_TIMER);
+  EXAM_TIMER=setInterval(function(){ secs--; if(secs<0){ clearInterval(EXAM_TIMER); EXAM_TIMER=null; tm.textContent="⏱ Time!"; return; } show(); },1000);
+}
+
 function runEx(i){
   var pin=$("pred"+i), dn=$("done"+i);
   if(pin && !(pin.value||"").trim() && !PRED_NUDGED[i] && !(dn&&dn.checked)){
@@ -1124,6 +1214,7 @@ function runEx(i){
   }
   delete BASE[i];
   $("ok"+i).hidden=true;
+  showTip(i);
   $("out"+i).srcdoc = wrap(i, $("ed"+i).value);
   var gc=$("gc"+i); if(gc) gc.hidden=false;
 }
@@ -1151,13 +1242,15 @@ function resetEx(i){
   delete BASE[i];
   $("out"+i).srcdoc="";
   $("ok"+i).hidden=true;
+  var tr=$("tip"+i); if(tr){ tr.hidden=true; tr.innerHTML=""; tr.removeAttribute("data-lint"); }
   persist();
 }
 
 window.addEventListener("message", function(e){
   var d=e.data; if(!d || d.l4!==1) return;
   var i=d.id;
-  if(d.err) return;
+  if(d.err){ var tel=$("tip"+i); if(tel && tel.getAttribute("data-lint")!=="1"){ tel.hidden=false;
+      tel.innerHTML='<span class="ln">check</span> &#128269; Something stopped your code from running. Look for a tiny typo &mdash; a <b>space in an operator</b> (<code>&lt; =</code>), a <b>missing bracket</b> <code>}</code>, or an <b>unclosed quote</b>.'; } return; }
   var text=d.text||"";
   var want=WANT[String(i)];
   // want-tiles (static HTML/CSS, or a fixed result): tick the moment the marker
