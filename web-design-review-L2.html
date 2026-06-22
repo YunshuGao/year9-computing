@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --p1:#1cb0f6; --p1d:#1899d6; --p2:#3a5a40; --p2d:#2c4632; --p3:#0d1b2a; --p3d:#091320; --gold:#ff9600; --gold-d:#e08600;
+    --p1:#1cb0f6; --p1d:#1899d6; --p2:#3a5a40; --p2d:#2c4632; --p3:#0d1b2a; --p3d:#091320; --p4:#7c3aed; --p4d:#5b21b6; --gold:#ff9600; --gold-d:#e08600;
     --teal:#13a08e; --teal-d:#0d7d6e; --red:#ff4b4b;
     --bg:#f7f7f5; --card:#fff; --line:#e5e5e5; --ink:#3c3c3c; --muted:#8a8a8a;
     --font:'Nunito','Segoe UI Rounded','Segoe UI',system-ui,Arial,sans-serif; --mono:'Consolas',Menlo,monospace;
@@ -42,11 +42,11 @@
   .projbar{display:flex;align-items:center;gap:14px;padding:14px 20px;margin-top:30px;color:#fff;border-radius:18px 18px 0 0}
   .projbar .badge{font-weight:900;font-size:17px;letter-spacing:.4px} .projbar .desc{font-size:13px;font-weight:700;opacity:.95}
   .projbar .count{margin-left:auto;font-weight:900;font-size:15px;background:rgba(0,0,0,.18);padding:4px 13px;border-radius:14px;white-space:nowrap}
-  .projbar.p1{background:var(--p1)} .projbar.p2{background:var(--p2)} .projbar.p3{background:var(--p3)}
+  .projbar.p1{background:var(--p1)} .projbar.p2{background:var(--p2)} .projbar.p3{background:var(--p3)} .projbar.p4{background:var(--p4)}
   .tiergroup{border:2px solid var(--line);border-top:none;border-radius:0 0 18px 18px;padding:5px 13px 13px;background:#fbfbfa;margin-bottom:6px}
 
   .tile{background:var(--card);border:2px solid var(--line);border-bottom-width:4px;border-radius:18px;margin:12px 0;overflow:hidden}
-  .tile.p1{border-color:#c4e9fb;border-bottom-color:var(--p1)} .tile.p2{border-color:#cfe0d2;border-bottom-color:var(--p2)} .tile.p3{border-color:#c3cdd8;border-bottom-color:var(--p3)}
+  .tile.p1{border-color:#c4e9fb;border-bottom-color:var(--p1)} .tile.p2{border-color:#cfe0d2;border-bottom-color:var(--p2)} .tile.p3{border-color:#c3cdd8;border-bottom-color:var(--p3)} .tile.p4{border-color:#ddd0fb;border-bottom-color:var(--p4)}
   .tile.final{border-bottom-color:var(--gold);border-color:#ffe2b3;background:#fffdf7}
   .tile.done{border-color:#a8ddd4;border-bottom-color:var(--teal)}
   .th{display:flex;align-items:flex-start;gap:12px;padding:14px 18px 8px}
@@ -76,6 +76,8 @@
   .resetb:hover{background:#f7f7f5} .resetb:active{border-bottom-width:2px;transform:translateY(1px)}
   .partslist{margin:0 18px 14px;font-size:13px;font-weight:700;color:var(--muted);background:#fff8e8;border:2px solid #ffe2b3;border-radius:14px;padding:10px 14px}
   .partslist b{color:var(--gold-d)}
+  .hintbox{margin:0 18px 8px;font-size:13px;font-weight:700;color:#1e5a8a;background:#eaf4fd;border:2px solid #bfe0fb;border-radius:14px;padding:9px 13px}
+  .hintbox b{color:#0d3a5c} .hintbox code{background:#dbeafe;color:#1e40af;padding:1px 5px;border-radius:5px;font-size:12px;font-weight:700;font-family:var(--mono)}
 
   .save-card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px 22px;margin:14px 0}
   .save-card h3{margin:0 0 4px;font-size:18px;font-weight:900}
@@ -105,9 +107,9 @@
       <div class="title">
         <div class="eyebrow">Web Design · Review &amp; Practice · Lesson 2</div>
         <h1>Build a whole webpage</h1>
-        <div class="sub">9IMMXA · 3 real pages, built part by part, then assembled — use everything you learned in Grok</div>
+        <div class="sub">9IMMXA · 4 real pages, built part by part, then assembled — use everything you learned in Grok</div>
       </div>
-      <div class="ringwrap"><b id="ringn">0/14</b><span>made</span></div>
+      <div class="ringwrap"><b id="ringn">0/19</b><span>made</span></div>
     </div>
     <div class="pbar"><div class="pfill" id="pfill"></div></div>
     <div class="who">
@@ -122,7 +124,7 @@
   <div class="lead">
     <div class="col"><h3><span class="n">1</span>Build it in parts</h3><p>Each project is a real page broken into <b>parts</b> (header, hero, columns, footer...). Recreate each part's <b>Target</b> with your own code.</p></div>
     <div class="col"><h3><span class="n">2</span>Then assemble</h3><p>The gold <b>🧩 Assemble</b> task in each project is the whole page — combine the parts you just built into one page.</p></div>
-    <div class="col"><h3><span class="n">3</span>Harder each time</h3><p><b>Project 1</b> simple → <b>Project 2</b> a café site → <b>Project 3</b> a full travel landing page. Type the code (no pasting); it <b>auto-saves</b>.</p></div>
+    <div class="col"><h3><span class="n">3</span>Harder each time</h3><p><b>P1</b> profile → <b>P2</b> café → <b>P3</b> travel page → <b>P4</b> a club page (lots of HTML — lists, a table, a form). Type the code (no pasting); it <b>auto-saves</b>.</p></div>
   </div>
   <div id="board"></div>
 
@@ -134,7 +136,7 @@
       <div><label>One thing I want to get better at is…</label><input id="r3" placeholder="type here"></div>
     </div>
   </div>
-  <footer>Web Design Review &amp; Practice · Lesson 2 · 9IMMXA · <b>L2 build v1</b> · auto-saves in this browser</footer>
+  <footer>Web Design Review &amp; Practice · Lesson 2 · 9IMMXA · <b>L2 build v2</b> · auto-saves in this browser</footer>
 </div>
 
 <div class="savebar"><button class="btn" onclick="saveWork()">Save my work</button><span class="msg" id="saveMsg">Put your name in at the top, then build Project 1.</span></div>
@@ -246,13 +248,74 @@ const TILES=[
 <!-- hero with beach.png background + button -->
 <!-- 3-card grid: Bali / Tokyo / Paris -->
 <!-- footer with Font Awesome icons -->
+`},
+
+ /* ============ PROJECT 4 · HTML POWER — a club page (mostly HTML, light CSS) ============ */
+ {proj:'p4',title:'Part 1 · Heading &amp; text',
+  spec:'Mostly HTML this time. A big heading <b>Parramatta Code Club</b>, an intro <b>&lt;p&gt;</b> with the word <b>free</b> in <b>bold</b> and <b>everyone</b> in <b>italic</b>, then a <b>&lt;blockquote&gt;</b> quote.',
+  want:['<h1','<p',['<strong','<b>'],['<em','<i>'],'<blockquote'], text:['Parramatta Code Club','free','everyone','Best part'],
+  target:`<style>body{font-family:Arial}blockquote{color:#6b21a8;border-left:4px solid #c4b5fd;margin:14px 0;padding-left:14px;font-style:italic}</style><h1>Parramatta Code Club</h1><p>Join our <strong>free</strong> after-school club — <em>everyone</em> is welcome.</p><blockquote>"Best part of my week!"</blockquote>`},
+
+ {proj:'p4',title:'Part 2 · Two lists',
+  spec:'An <b>ordered list</b> (&lt;ol&gt;) — how to join: <b>Come to Room 7</b>, <b>Bring your laptop</b>, <b>Sign up</b>. And an <b>unordered list</b> (&lt;ul&gt;) — what we do: <b>Games</b>, <b>Websites</b>, <b>Robots</b>.',
+  want:['<ol','<ul','<li'], text:['Come to Room 7','Bring your laptop','Games','Websites','Robots'],
+  target:`<style>body{font-family:Arial}h2{color:#6b21a8}</style><h2>How to join</h2><ol><li>Come to Room 7</li><li>Bring your laptop</li><li>Sign up</li></ol><h2>What we do</h2><ul><li>Games</li><li>Websites</li><li>Robots</li></ul>`},
+
+ {proj:'p4',title:'Part 3 · A timetable table',
+  spec:'A <b>table</b>. The top row is headings (&lt;th&gt;): <b>Day</b>, <b>Activity</b>, <b>Time</b>. Then two rows (&lt;tr&gt; with &lt;td&gt;): <b>Tuesday / Game design / 3pm</b> and <b>Thursday / Web design / 3pm</b>.',
+  want:['<table','<tr','<th','<td'], text:['Day','Activity','Tuesday','Web design'],
+  target:`<style>body{font-family:Arial}table{border-collapse:collapse}th,td{border:1px solid #c4b5fd;padding:8px 14px;text-align:left}th{background:#ede9fe;color:#6b21a8}</style><table><tr><th>Day</th><th>Activity</th><th>Time</th></tr><tr><td>Tuesday</td><td>Game design</td><td>3pm</td></tr><tr><td>Thursday</td><td>Web design</td><td>3pm</td></tr></table>`},
+
+ {proj:'p4',title:'Part 4 · A sign-up form',
+  spec:'A <b>form</b>. For each line a <b>&lt;label&gt;</b> and an input: a <b>name</b> box (&lt;input&gt;), an <b>email</b> box, a <b>day</b> dropdown (&lt;select&gt; with &lt;option&gt;s), a <b>message</b> (&lt;textarea&gt;) and a <b>Sign up</b> &lt;button&gt;.',
+  want:['<form','<label','<input','<select','<option','<textarea','<button'], text:['Your name','Email','Sign up'],
+  target:`<style>body{font-family:Arial}label{display:block;margin:10px 0 3px;font-weight:bold}input,select,textarea{padding:7px;width:260px;font-family:Arial}button{margin-top:12px;background:#7c3aed;color:#fff;border:none;padding:10px 22px;border-radius:8px;font-weight:bold;cursor:pointer}</style><form><label>Your name</label><input type="text"><label>Email</label><input type="email"><label>Pick a day</label><select><option>Tuesday</option><option>Thursday</option></select><label>Message</label><textarea></textarea><button>Sign up</button></form>`},
+
+ {proj:'p4',final:true,title:'🧩 Assemble the club page',
+  spec:'Combine the heading + text, the two lists, the timetable table and the sign-up form into ONE club page. Light styling only — the HTML is the star.',
+  want:['<h1','<ol','<ul','<table','<th','<form','<input','<button'], text:['Parramatta Code Club','Tuesday','Sign up'],
+  parts:'Part 1 (heading + text) · Part 2 (lists) · Part 3 (table) · Part 4 (form)',
+  target:`<style>body{font-family:Arial;max-width:560px;margin:0 auto;padding:20px;color:#3c3c3c}h1{color:#5b21b6}h2{color:#6b21a8;margin-top:22px}blockquote{color:#6b21a8;border-left:4px solid #c4b5fd;margin:14px 0;padding-left:14px;font-style:italic}table{border-collapse:collapse;margin:6px 0}th,td{border:1px solid #c4b5fd;padding:8px 14px;text-align:left}th{background:#ede9fe;color:#6b21a8}label{display:block;margin:10px 0 3px;font-weight:bold}input,select,textarea{padding:7px;width:100%;font-family:Arial}button{margin-top:12px;background:#7c3aed;color:#fff;border:none;padding:11px 24px;border-radius:8px;font-weight:bold;cursor:pointer}</style><h1>Parramatta Code Club</h1><p>Join our <strong>free</strong> after-school club — <em>everyone</em> is welcome.</p><blockquote>"Best part of my week!"</blockquote><h2>How to join</h2><ol><li>Come to Room 7</li><li>Bring your laptop</li><li>Sign up below</li></ol><h2>What we do</h2><ul><li>Games</li><li>Websites</li><li>Robots</li></ul><h2>Weekly timetable</h2><table><tr><th>Day</th><th>Activity</th><th>Time</th></tr><tr><td>Tuesday</td><td>Game design</td><td>3pm</td></tr><tr><td>Thursday</td><td>Web design</td><td>3pm</td></tr></table><h2>Sign up</h2><form><label>Your name</label><input type="text"><label>Email</label><input type="email"><label>Pick a day</label><select><option>Tuesday</option><option>Thursday</option></select><label>Message</label><textarea></textarea><button>Sign up</button></form>`,
+  starter:`<style>
+  body { font-family:Arial; max-width:560px; margin:0 auto; padding:20px; }
+  /* light styling — the HTML structure is the important part */
+</style>
+
+<!-- Part 1: <h1> + intro <p> (with <strong>/<em>) + <blockquote> -->
+<!-- Part 2: <ol> how to join, <ul> what we do -->
+<!-- Part 3: <table> timetable (<th> headings, <tr>/<td> rows) -->
+<!-- Part 4: <form> with <label>+<input>, <select>, <textarea>, <button> -->
 `}
 ];
+
+/* ===== a friendly HINT for every task (shown before each one) ===== */
+const HINTS={
+ 0:'Open a <code>&lt;style&gt;</code>, then write <code>&lt;h1&gt;Mia Chen&lt;/h1&gt;</code> and a <code>&lt;p&gt;</code> for the role. Centre the body with <code>text-align:center</code> and colour the h1 navy.',
+ 1:'Use <code>&lt;img src="avatar.png" alt="..."&gt;</code> and make it round with <code>border-radius:50%</code>. Then a <code>&lt;p&gt;</code> for the bio.',
+ 2:'Style an <code>&lt;a&gt;</code> link like a button: give it <code>background</code>, <code>padding</code>, <code>border-radius</code> and <code>text-decoration:none</code>. Then a <code>&lt;footer&gt;</code> line.',
+ 3:'Put your 3 parts in ONE <code>&lt;style&gt;</code> and one body. Give the body <code>text-align:center</code>, a soft <code>background</code> and some <code>padding</code>.',
+ 4:'Wrap the name and the links in <code>&lt;nav&gt;</code>. Use <code>display:flex</code> and <code>justify-content:space-between</code> to push the name left and links right.',
+ 5:'A <code>&lt;div class="hero"&gt;</code> with a green <code>background</code>, <code>text-align:center</code> and big <code>padding</code>. Put an <code>&lt;h1&gt;</code> and a <code>&lt;p&gt;</code> inside.',
+ 6:'A flex row of two <code>&lt;div&gt;</code> boxes. Give each a <code>border</code> and <code>padding</code>; one holds the <code>coffee.png</code> image.',
+ 7:'A <code>&lt;footer&gt;</code> with the green <code>background</code>, <code>text-align:center</code>, the name and the address (use <code>&lt;br&gt;</code> for the new line).',
+ 8:'Combine nav + hero + columns + footer. Set <code>body{margin:0}</code> so the bars reach the edges.',
+ 9:'Same flex nav as the café. Add <code>nav a:hover{color:#ffba08}</code> so the links turn gold when you point at them.',
+ 10:'Layer a dark overlay over the photo: <code>background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url("beach.png")</code> with <code>background-size:cover</code>. White centred heading + a gold button.',
+ 11:'A <code>&lt;div class="grid"&gt;</code> with <code>display:grid</code> and <code>grid-template-columns:1fr 1fr 1fr</code>. Give each card <code>border-radius</code> and a <code>box-shadow</code>.',
+ 12:'A dark <code>&lt;footer&gt;</code>. The icons are <code>&lt;i class="fa-solid fa-camera"&gt;&lt;/i&gt;</code> (also <code>fa-plane</code>, <code>fa-heart</code>).',
+ 13:'Bring the 4 parts together and keep <code>body{margin:0}</code>. This is the big one — go part by part and Run often.',
+ 14:'Mostly HTML here. Write <code>&lt;h1&gt;</code>, then a <code>&lt;p&gt;</code> with <code>&lt;strong&gt;</code> (bold) and <code>&lt;em&gt;</code> (italic), then a <code>&lt;blockquote&gt;</code> for the quote.',
+ 15:'Two lists: <code>&lt;ol&gt;</code> (numbered) for the steps and <code>&lt;ul&gt;</code> (bullets) for what you do. Every item is an <code>&lt;li&gt;</code>.',
+ 16:'A <code>&lt;table&gt;</code>. The first <code>&lt;tr&gt;</code> uses <code>&lt;th&gt;</code> for Day/Activity/Time; each other <code>&lt;tr&gt;</code> has <code>&lt;td&gt;</code> cells.',
+ 17:'A <code>&lt;form&gt;</code>. Each line: a <code>&lt;label&gt;</code> then an input — <code>&lt;input&gt;</code>, a <code>&lt;select&gt;</code> with <code>&lt;option&gt;</code>s, a <code>&lt;textarea&gt;</code>, and a <code>&lt;button&gt;</code>.',
+ 18:'Stack the four parts in order: heading + text, the lists, the table, then the form. Keep the CSS light — the HTML is the star.'
+};
 
 /* ===== engine (same proven core as L1) ===== */
 const PROJECT={p1:['PROJECT 1 · EASY','A simple profile page — build the parts, then assemble','p1'],
                p2:['PROJECT 2 · MEDIUM','A cafe homepage — nav, hero, columns, footer','p2'],
-               p3:['PROJECT 3 · HARD','A travel landing page — use everything','p3']};
+               p3:['PROJECT 3 · HARD','A travel landing page — use everything','p3'],
+               p4:['PROJECT 4 · HTML POWER','A club page — lists, a table and a form (lots of HTML!)','p4']};
 const LSKEY='wdr-l2-9immxa-v1';
 const $=id=>document.getElementById(id);
 const norm=s=>(s||'').toLowerCase().replace(/\s+/g,'');
@@ -271,7 +334,7 @@ function updateTile(t){ const was=t.done, ok=matched(t);
   if(ready && ok && !was) onProgress(t); }
 function updateCounts(){ const done=TILES.filter(t=>t.done).length;
   $('ringn').textContent=done+'/'+TILES.length; $('pfill').style.width=(done/TILES.length*100)+'%';
-  ['p1','p2','p3'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), c=$('cnt-'+k); if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length; }); }
+  ['p1','p2','p3','p4'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), c=$('cnt-'+k); if(c) c.textContent=g.filter(t=>t.done).length+' / '+g.length; }); }
 /* Scroll stability: pin the tile's header to its viewport position and re-assert through
    every async reflow (image loads from Pages, font swaps) so Run never makes the page jump.
    Anchoring to an element beats restoring an absolute scrollY because the browser's own
@@ -293,6 +356,7 @@ function tileHTML(t){
     <div class="th"><span class="num">${t.final?'🧩':(t.i+1)}</span>
       <div><div class="ttl">${t.title}</div><div class="spec">${t.spec}</div></div>
       <span class="badge2" id="badge${t.i}">not yet</span></div>
+    ${HINTS[t.i]?`<div class="hintbox">💡 <b>Hint:</b> ${HINTS[t.i]}</div>`:''}
     ${t.parts?`<div class="partslist">🧩 <b>Assemble</b> — bring together: ${t.parts}</div>`:''}
     <div class="preview">
       <div class="panel target"><div class="lab">🎯 Target — the page to match</div><iframe id="tg${t.i}" scrolling="no" title="target ${t.i+1}"></iframe></div>
@@ -306,7 +370,7 @@ function tileHTML(t){
 function build(){
   TILES.forEach((t,i)=>t.i=i);
   let html='';
-  ['p1','p2','p3'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), m=PROJECT[k];
+  ['p1','p2','p3','p4'].forEach(k=>{ const g=TILES.filter(t=>t.proj===k), m=PROJECT[k];
     html+=`<div class="projbar ${k}"><span class="badge">${m[0]}</span><span class="desc">${m[1]}</span><span class="count" id="cnt-${k}">0 / ${g.length}</span></div>`;
     html+=`<div class="tiergroup">`+g.map(tileHTML).join('')+`</div>`; });
   $('board').innerHTML=html;
@@ -353,7 +417,7 @@ pre{background:#0d1b2a;color:#eafff0;padding:12px;border-radius:10px;overflow:au
 summary{cursor:pointer;color:#1899d6;margin-top:8px} .refl{background:#fffceb;border:2px solid #ffd900;border-radius:14px;padding:14px 16px;margin:14px 0}</style></head>
 <body><h1>Web Design Review L2 — ${esc(g.name)||'(no name)'}</h1>
 <div class="meta">${esc(g.cls)} · ${esc(g.date)}</div>
-<div class="tiers"><span>PROJECT 1 ${tally('p1')}</span><span>PROJECT 2 ${tally('p2')}</span><span>PROJECT 3 ${tally('p3')}</span> &nbsp; → made ${TILES.filter(t=>t.done).length}/${TILES.length}</div>
+<div class="tiers"><span>PROJECT 1 ${tally('p1')}</span><span>PROJECT 2 ${tally('p2')}</span><span>PROJECT 3 ${tally('p3')}</span><span>PROJECT 4 ${tally('p4')}</span> &nbsp; → made ${TILES.filter(t=>t.done).length}/${TILES.length}</div>
 <div class="refl"><b>My reflection</b><br>Proudest page: ${esc(g.r1)}<br>Skill I used a lot: ${esc(g.r2)}<br>Want to improve: ${esc(g.r3)}</div>
 ${body}</body></html>`;
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/html'}));
