@@ -370,6 +370,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 .ok,.toast,.ctype,.strip .track,.lbl .cn{border-radius:0 !important}
 .ok{border:2px solid #2a2a2a}
 
+/* Code Check tip: points students straight at a typo, in plain English */
+.l4tip{margin:9px 0 0;background:#fff7ed;border:2px solid #fb923c;border-left:7px solid #ea580c;border-radius:8px;padding:10px 13px;font-size:13.5px;font-weight:700;color:#9a3412;line-height:1.55}
+.l4tip b{color:#7c2d12}
+.l4tip code{background:#ffe4c7;color:#9a3412;padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:12.5px;font-weight:700}
+.l4tip .ln{display:inline-block;background:#ea580c;color:#fff;border-radius:6px;padding:1px 9px;margin-right:7px;font-family:Consolas,monospace;font-weight:800;white-space:nowrap;text-transform:uppercase;font-size:11.5px}
+
 /* ---- 'your goal today' poster + 3-step roadmap (L7 inventory) ---- */
 .showcase{margin:16px 0 8px;border:3px solid #0a1408;background:#12161d;box-shadow:5px 5px 0 rgba(0,0,0,.18)}
 .sc-head{background:#4e9c28;color:#fff;padding:11px 16px;text-align:center;font-family:'Press Start 2P',monospace;font-size:12px;line-height:1.7;text-shadow:2px 2px 0 rgba(0,0,0,.35)}
@@ -564,6 +570,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out1" title="result for tile 1"></iframe></div>
+        <div class="l4tip" id="tip1" hidden></div>
         <div class="ok" id="ok1" hidden><span class="tick"></span><span><b>Tile 1 done</b> &mdash; your loop placed a whole row of blocks.</span></div>
         <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 20</code> &mdash; 20 blocks from ONE line!</div>
       </div>
@@ -607,6 +614,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out2" title="result for tile 2"></iframe></div>
+        <div class="l4tip" id="tip2" hidden></div>
         <div class="ok" id="ok2" hidden><span class="tick"></span><span><b>Tile 2 done</b> &mdash; you used the counter i inside the loop.</span></div>
         <div class="try"><b>Now change it:</b> change <code>i &lt;= 5</code> to <code>i &lt;= 9</code> for a full hot-bar of numbers.</div>
       </div>
@@ -651,6 +659,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out3" title="result for tile 3"></iframe></div>
+        <div class="l4tip" id="tip3" hidden></div>
         <div class="ok" id="ok3" hidden><span class="tick"></span><span><b>Tile 3 done</b> &mdash; your loop counted down with i = i - 1.</span></div>
         <div class="try"><b>Now change it:</b> start at <code>10</code> for a longer fuse.</div>
       </div>
@@ -695,6 +704,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out4" title="result for tile 4"></iframe></div>
+        <div class="l4tip" id="tip4" hidden></div>
         <div class="ok" id="ok4" hidden><span class="tick"></span><span><b>Tile 4 done</b> &mdash; your loop generated a tower on the page.</span></div>
         <div class="try"><b>Now change it:</b> change <code>6</code> to <code>12</code> for a giant tower.</div>
       </div>
@@ -741,6 +751,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out5" title="result for tile 5"></iframe></div>
+        <div class="l4tip" id="tip5" hidden></div>
         <div class="ok" id="ok5" hidden><span class="tick"></span><span><b>Tile 5 done</b> &mdash; your loop built a whole leaderboard from a list.</span></div>
         <div class="try"><b>Now change it:</b> add a 5th player to BOTH lists &mdash; the loop ranks them with no extra code!</div>
       </div>
@@ -785,6 +796,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
+        <div class="l4tip" id="tip6" hidden></div>
         <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; your loop painted a rainbow from a colour list.</span></div>
         <div class="try"><b>Now change it:</b> add <code>"pink"</code> and <code>"cyan"</code> to the list for a longer rainbow.</div>
       </div>
@@ -833,6 +845,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
+        <div class="l4tip" id="tip7" hidden></div>
         <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your loop + if/else drew a health bar.</span></div>
         <div class="try"><b>Now change it:</b> change <code>health = 7</code> to <code>health = 3</code> &mdash; watch the bar shrink.</div>
       </div>
@@ -881,6 +894,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
+        <div class="l4tip" id="tip8" hidden></div>
         <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your while loop dug until it struck diamond.</span></div>
         <div class="try"><b>Now change it:</b> change <code>0.2</code> to <code>0.5</code> &mdash; diamond comes sooner.</div>
       </div>
@@ -917,6 +931,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
         <div class="reveal ans" id="ans9" hidden>It shows <b>Block 1 Block 2 Block 3</b>. The loop runs with i = 1, then 2, then 3 (it stops when i becomes 4 because 4 is not &lt;= 3). Each time it adds "Block " + i.</div>
+        <div class="l4tip" id="tip9" hidden></div>
         <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you traced the loop round by round.</span></div>
       </div>
     </div>
@@ -959,6 +974,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
+        <div class="l4tip" id="tip10" hidden></div>
         <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you fixed the off-by-one - i &amp;lt;= 5 builds the full bridge.</span></div>
       </div>
     </div>
@@ -991,6 +1007,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out11" title="result for tile 11"></iframe></div>
+        <div class="l4tip" id="tip11" hidden></div>
         <div class="ok" id="ok11" hidden><span class="tick"></span><span><b>Tile 11 done</b> &mdash; you wrote a working loop from scratch.</span></div>
       </div>
     </div>
@@ -1032,6 +1049,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out12" title="result for tile 12"></iframe></div>
+        <div class="l4tip" id="tip12" hidden></div>
         <div class="ok" id="ok12" hidden><span class="tick"></span><span><b>Tile 12 done</b> &mdash; your condition built a wall of exactly 8 blocks.</span></div>
       </div>
     </div>
@@ -1076,6 +1094,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> Your inventory</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out13" title="your inventory"></iframe></div>
+        <div class="l4tip" id="tip13" hidden></div>
         <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you generated a whole inventory page with one loop over a list.</span></div>
         <div class="try"><b>Now make it yours:</b> add your own items to the <code>items</code> list (a Bow, a Map, an Emerald...) and Run - the loop builds a slot for every one, no extra code.</div>
       </div>
@@ -1165,6 +1184,44 @@ function wrap(i, code){
 }
 
 var PRED_NUDGED = {};
+
+/* Code Check: scan typed code for the classic beginner typos and point at the line.
+   Returns {line, msg} (line 0 = whole-code issue) or null. Plain-English, HTML-safe msgs. */
+function lintCode(src){
+  src = src || "";
+  var lines = src.split("\n");
+  var TAGS = "span|div|p|h1|h2|h3|button|script|style|ul|ol|li|table|tr|td|th|a|img|strong|em|br|hr|input|label|select|option|textarea|form|nav|footer|blockquote|head|body|html|title|pre|code";
+  var openTag  = new RegExp("<\\s+\\/?\\s*(" + TAGS + ")\\b", "i");   /* "< span", "< /span", "< div" */
+  var closeTag = new RegExp("<\\/\\s+(" + TAGS + ")\\b", "i");        /* "</ span" */
+  var opSplit  = /[<>=!]\s+=/;                                         /* "< =", "> =", "= =", "! =" */
+  var smart    = /[‘’“”]/;
+  for (var k=0; k<lines.length; k++){
+    var ln = lines[k], n = k+1;
+    if (smart.test(ln))
+      return {line:n, msg:'Those are <b>curly quotes</b>. Use straight quotes <code>"</code> and <code>&#39;</code> instead.'};
+    if (openTag.test(ln) || closeTag.test(ln))
+      return {line:n, msg:'There is a <b>space right after the &lt;</b>. A tag has no space &mdash; write <code>&lt;span&gt;</code>, not <code>&lt; span&gt;</code>.'};
+    if (opSplit.test(ln))
+      return {line:n, msg:'A <b>space split an operator</b>. Write <code>&lt;=</code> (or <code>==</code>, <code>&gt;=</code>) with no space, not <code>&lt; =</code>.'};
+    if (((ln.split('"').length - 1) % 2) === 1)
+      return {line:n, msg:'A <b>"</b> looks unclosed on this line &mdash; every <code>"</code> needs a matching <code>"</code>.'};
+    if (((ln.split("'").length - 1) % 2) === 1 && /(class=|id=|<)/.test(ln))
+      return {line:n, msg:'A <b>&#39;</b> looks unclosed on this line &mdash; every <code>&#39;</code> needs a matching <code>&#39;</code>.'};
+  }
+  function bal(o,c){ return src.split(o).length - src.split(c).length; }
+  if (bal("(",")") !== 0) return {line:0, msg:'Your <b>round brackets</b> ( ) don&rsquo;t match &mdash; count your <code>(</code> and <code>)</code>.'};
+  if (bal("{","}") !== 0) return {line:0, msg:'Your <b>curly brackets</b> { } don&rsquo;t match &mdash; every <code>{</code> needs a <code>}</code>.'};
+  if (bal("[","]") !== 0) return {line:0, msg:'Your <b>square brackets</b> [ ] don&rsquo;t match &mdash; every <code>[</code> needs a <code>]</code>.'};
+  return null;
+}
+function showTip(i){
+  var el = $("tip"+i); if(!el) return;
+  var prob = lintCode($("ed"+i) ? $("ed"+i).value : "");
+  if(prob){ el.hidden=false; el.setAttribute("data-lint","1");
+    el.innerHTML = '<span class="ln">'+(prob.line? 'line '+prob.line : 'check')+'</span> &#128269; '+prob.msg; }
+  else { el.hidden=true; el.removeAttribute("data-lint"); el.innerHTML=""; }
+}
+
 function runEx(i){
   var pin=$("pred"+i), dn=$("done"+i);
   if(pin && !(pin.value||"").trim() && !PRED_NUDGED[i] && !(dn&&dn.checked)){
@@ -1173,6 +1230,7 @@ function runEx(i){
   }
   delete BASE[i];
   $("ok"+i).hidden=true;
+  showTip(i);
   $("out"+i).srcdoc = wrap(i, $("ed"+i).value);
   var gc=$("gc"+i); if(gc) gc.hidden=false;
 }
@@ -1200,13 +1258,15 @@ function resetEx(i){
   delete BASE[i];
   $("out"+i).srcdoc="";
   $("ok"+i).hidden=true;
+  var tr=$("tip"+i); if(tr){ tr.hidden=true; tr.innerHTML=""; tr.removeAttribute("data-lint"); }
   persist();
 }
 
 window.addEventListener("message", function(e){
   var d=e.data; if(!d || d.l4!==1) return;
   var i=d.id;
-  if(d.err) return;
+  if(d.err){ var tel=$("tip"+i); if(tel && tel.getAttribute("data-lint")!=="1"){ tel.hidden=false;
+      tel.innerHTML='<span class="ln">check</span> &#128269; Something stopped your code from running. Look for a tiny typo &mdash; a <b>space in an operator</b> (<code>&lt; =</code>), a <b>missing bracket</b> <code>}</code>, or an <b>unclosed quote</b>.'; } return; }
   var text=d.text||"";
   if(BASE[i]===undefined){ BASE[i]=text; return; }
   var want=WANT[String(i)];
