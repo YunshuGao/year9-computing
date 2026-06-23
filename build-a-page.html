@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build one web page — HTML + CSS + JavaScript</title>
+<style>
+  :root{
+    --ink:#1f2433; --indigo:#3F3399; --amber:#E08A00; --amber2:#F59E0B;
+    --violet:#7C3AED; --green:#059669; --sienna:#B45309; --grey:#7A8194;
+    --line:#E7E8F0; --page:#F6F6FB; --card:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:Calibri,"Segoe UI",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(1200px 600px at 50% -10%, #FCFCFF, var(--page));
+    display:flex; flex-direction:column; min-height:100%;
+  }
+  header{padding:16px 32px 4px; text-align:center}
+  h1{margin:0; color:var(--indigo); font-size:27px; font-weight:700}
+  .sub{margin:3px 0 0; color:var(--grey); font-size:15.5px}
+  /* legend */
+  .legend{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; padding:8px 32px 2px}
+  .leg{display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line);
+       border-radius:999px; padding:6px 14px; font-size:14px; box-shadow:0 3px 10px rgba(45,35,95,.05)}
+  .leg .sw{width:12px; height:12px; border-radius:4px}
+  .leg b{font-weight:700}
+  .leg.h .sw{background:var(--indigo)} .leg.h b{color:var(--indigo)}
+  .leg.c .sw{background:var(--amber2)} .leg.c b{color:var(--amber)}
+  .leg.j .sw{background:var(--violet)} .leg.j b{color:var(--violet)}
+  /* main */
+  main{flex:1; display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:8px 32px; min-height:0}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:18px;
+        box-shadow:0 10px 30px rgba(45,35,95,.07); display:flex; flex-direction:column; min-height:0; overflow:hidden}
+  .card-h{font-size:13.5px; font-weight:700; color:var(--grey); padding:11px 16px 8px; letter-spacing:.3px}
+  .card-h .file{color:var(--indigo); font-family:Consolas,monospace}
+  /* code */
+  pre.code{margin:0; padding:6px 18px 16px; font-family:Consolas,monospace; font-size:15px;
+           line-height:1.5; overflow:auto; flex:1; color:var(--ink)}
+  .kw{color:var(--indigo)} .css{color:var(--sienna)} .js{color:var(--violet)}
+  .str{color:var(--green)} .pl{color:var(--ink)} .cmt{color:#AEB4C2}
+  .layer{transition:opacity .4s}
+  .ph{color:#C0C5D2; font-style:italic}
+  .block{display:none}
+  .block.show{display:inline}
+  .just-added{background:#FFF7E3; border-radius:6px; box-shadow:inset 3px 0 0 var(--amber2); animation:pop .5s ease}
+  .just-added.j{background:#F3EDFE; box-shadow:inset 3px 0 0 var(--violet)}
+  @keyframes pop{from{background:#FFE9A8}to{}}
+  /* preview = a browser window */
+  .browser{flex:1; display:flex; flex-direction:column; margin:0 16px 16px; border:1px solid var(--line);
+           border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(45,35,95,.08); min-height:0}
+  .bbar{display:flex; align-items:center; gap:8px; padding:9px 12px; background:#EEF0F6; border-bottom:1px solid var(--line)}
+  .bdot{width:11px; height:11px; border-radius:50%}
+  .bdot.r{background:#FF6159} .bdot.y{background:#FFBD2E} .bdot.g{background:#28C840}
+  .burl{flex:1; margin-left:8px; background:#fff; border-radius:7px; padding:4px 12px; font-size:12.5px;
+        color:var(--grey); font-family:Consolas,monospace; border:1px solid var(--line)}
+  iframe#preview{flex:1; width:100%; border:0; background:#fff; min-height:0}
+  .clue{position:relative; height:0}
+  .clue span{position:absolute; right:14px; bottom:8px; background:var(--violet); color:#fff;
+             font-size:13px; font-weight:700; padding:5px 11px; border-radius:999px; opacity:0;
+             transition:opacity .3s; box-shadow:0 4px 12px rgba(124,58,237,.4); pointer-events:none}
+  body.s3 .clue span{opacity:1; animation:bob 1.2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  /* caption + stepper */
+  .caption{margin:4px 32px 0; padding:11px 18px; border-radius:12px; background:#fff; border:1px solid var(--line);
+           border-left:5px solid var(--amber2); font-size:16.5px; min-height:42px; display:flex; align-items:center;
+           box-shadow:0 4px 14px rgba(45,35,95,.05)}
+  .caption b{color:var(--indigo)}
+  .steps{display:flex; gap:12px; padding:14px 32px 22px; align-items:stretch}
+  .step{flex:1; cursor:pointer; border-radius:14px; padding:12px 14px; background:#fff; border:1.8px solid var(--line);
+        font-family:inherit; transition:transform .12s, box-shadow .15s, border-color .2s; text-align:left}
+  .step:hover{transform:translateY(-2px); box-shadow:0 6px 16px rgba(45,35,95,.1)}
+  .step .n{font-size:13px; font-weight:700; color:var(--grey)}
+  .step .t{font-size:17px; font-weight:700; margin-top:2px}
+  .step.s1 .t{color:var(--indigo)} .step.s2 .t{color:var(--amber)} .step.s3 .t{color:var(--violet)}
+  .step.on.s1{border-color:var(--indigo); background:#F1EFFB}
+  .step.on.s2{border-color:var(--amber2); background:#FFF6E5}
+  .step.on.s3{border-color:var(--violet); background:#F4EEFE}
+  .step .done{display:none; color:var(--green); font-weight:700}
+  .step.cleared .done{display:inline}
+  @media (max-width:920px){ main{grid-template-columns:1fr} }
+</style>
+</head>
+<body class="s1">
+<header>
+  <h1>Build one web page</h1>
+  <p class="sub">Three languages combine into <b>one file</b>. Add them one layer at a time — and watch the page on the right come alive.</p>
+</header>
+
+<div class="legend">
+  <div class="leg h"><span class="sw"></span><span><b>HTML</b> — structure (the content, in &lt;body&gt;)</span></div>
+  <div class="leg c"><span class="sw"></span><span><b>CSS</b> — style (in &lt;style&gt;, inside &lt;head&gt;)</span></div>
+  <div class="leg j"><span class="sw"></span><span><b>JavaScript</b> — behaviour (in &lt;script&gt;)</span></div>
+</div>
+
+<main>
+  <!-- the one file -->
+  <section class="card">
+    <div class="card-h">THE ONE FILE &nbsp;·&nbsp; <span class="file">craftworld.html</span></div>
+<pre class="code"><span class="cmt">&lt;!DOCTYPE html&gt;</span>
+<span class="kw">&lt;html&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+<span class="ph layer" id="cssPh">  &lt;!-- the CSS style will go here --&gt;</span><span class="block layer" id="cssBlock">  <span class="kw">&lt;style&gt;</span>
+    <span class="css">body   { background-color: skyblue; }</span>
+    <span class="css">h1     { color: green; }</span>
+    <span class="css">button { background-color: sienna; }</span>
+  <span class="kw">&lt;/style&gt;</span></span>
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body&gt;</span>
+  <span class="kw">&lt;h1 id=</span><span class="str">"screen"</span><span class="kw">&gt;</span>CRAFT WORLD<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;button onclick=</span><span class="str">"mine()"</span><span class="kw">&gt;</span>Mine<span class="kw">&lt;/button&gt;</span>
+<span class="ph layer" id="jsPh">  &lt;!-- the JavaScript will go here --&gt;</span><span class="block layer" id="jsBlock">  <span class="js">&lt;script&gt;</span>
+    <span class="js">function</span> <span class="pl">mine() {</span>
+      <span class="pl">document.getElementById(</span><span class="str">"screen"</span><span class="pl">)</span>
+        <span class="pl">.innerHTML = </span><span class="str">"You mined a block!"</span><span class="pl">;</span>
+    <span class="pl">}</span>
+  <span class="js">&lt;/script&gt;</span></span>
+<span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></pre>
+  </section>
+
+  <!-- the live result -->
+  <section class="card">
+    <div class="card-h">WHAT THE BROWSER SHOWS &nbsp;·&nbsp; live</div>
+    <div class="browser">
+      <div class="bbar"><span class="bdot r"></span><span class="bdot y"></span><span class="bdot g"></span>
+        <span class="burl">craftworld.html</span></div>
+      <iframe id="preview" title="Live preview" sandbox="allow-scripts"></iframe>
+    </div>
+    <div class="clue"><span>👆 click “Mine”!</span></div>
+  </section>
+</main>
+
+<div class="caption" id="caption"></div>
+
+<nav class="steps">
+  <button class="step s1 on" data-step="1"><div class="n">STEP 1 <span class="done">✓ done</span></div><div class="t">HTML — structure</div></button>
+  <button class="step s2" data-step="2"><div class="n">STEP 2 <span class="done">✓ done</span></div><div class="t">+ CSS — style</div></button>
+  <button class="step s3" data-step="3"><div class="n">STEP 3 <span class="done">✓ done</span></div><div class="t">+ JavaScript — behaviour</div></button>
+</nav>
+
+<script>
+  var BODY = '<h1 id="screen">CRAFT WORLD</h1>\n  <button onclick="mine()">Mine</button>';
+  var CSS  = '<style>\n    body   { background-color: skyblue; font-family: system-ui, sans-serif; text-align:center; padding:26px; }\n    h1     { color: green; }\n    button { background-color: sienna; color:#fff; border:0; padding:10px 20px; border-radius:8px; font-size:17px; cursor:pointer; }\n  </style>';
+  var JS   = '<scr'+'ipt>function mine(){document.getElementById("screen").innerHTML="You mined a block!";}</scr'+'ipt>';
+
+  function srcFor(step){
+    var head = step>=2 ? '\n  '+CSS+'\n' : '';
+    var body = '\n  '+BODY + (step>=3 ? '\n  '+JS : '') + '\n';
+    return '<!DOCTYPE html><html><head>'+head+'</head><body>'+body+'</body></html>';
+  }
+
+  var CAP = {
+    1:'<b>Step 1 — HTML only.</b> The page has a heading and a button… but it is plain, and the button does nothing yet.',
+    2:'<b>Step 2 — add CSS.</b> Drop a &lt;style&gt; block into the &lt;head&gt;. Same page, now <i>painted</i>: skyblue background, green heading, styled button.',
+    3:'<b>Step 3 — add JavaScript.</b> A &lt;script&gt; gives the button a job. Now click <b>Mine</b> in the preview → the page changes!'
+  };
+
+  var preview = document.getElementById('preview');
+  var steps = document.querySelectorAll('.step');
+  var caption = document.getElementById('caption');
+  var cssPh=document.getElementById('cssPh'), cssBlock=document.getElementById('cssBlock');
+  var jsPh=document.getElementById('jsPh'), jsBlock=document.getElementById('jsBlock');
+
+  function setStep(n){
+    n = +n;
+    document.body.className = 's'+n;
+    // code blocks: show/hide + highlight the one just added
+    cssBlock.classList.toggle('show', n>=2);
+    cssPh.style.display = n>=2 ? 'none' : 'inline';
+    jsBlock.classList.toggle('show', n>=3);
+    jsPh.style.display = n>=3 ? 'none' : 'inline';
+    cssBlock.classList.toggle('just-added', n===2);
+    jsBlock.classList.toggle('just-added', n===3);
+    jsBlock.classList.add('j');
+    // live preview
+    preview.srcdoc = srcFor(n);
+    // caption + stepper state
+    caption.innerHTML = CAP[n];
+    steps.forEach(function(s){
+      var sn = +s.getAttribute('data-step');
+      s.classList.toggle('on', sn===n);
+      s.classList.toggle('cleared', sn<n);
+    });
+  }
+  steps.forEach(function(s){ s.addEventListener('click', function(){ setStep(s.getAttribute('data-step')); }); });
+  setStep(1);
+</script>
+</body>
+</html>
