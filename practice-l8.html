@@ -1843,6 +1843,13 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 <script>(function(){
   var mobs=document.querySelectorAll('.talkmob'); if(!mobs.length) return;
+  var AC=window.AudioContext||window.webkitAudioContext, ac=null;
+  function muted(){ try{ return localStorage.getItem('l8-mute')==='1'; }catch(e){ return false; } }
+  function ensure(){ if(!ac&&AC) ac=new AC(); if(ac&&ac.state==='suspended') ac.resume(); return ac; }
+  function chirp(){ if(muted()||!ensure())return; [[587,0,0.07,0.12],[784,0.06,0.10,0.10]].forEach(function(s){
+    var o=ac.createOscillator(),g=ac.createGain(); o.type='square'; o.frequency.value=s[0]; o.connect(g); g.connect(ac.destination);
+    var t=ac.currentTime+s[1]; g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(s[3],t+0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+s[2]); o.start(t); o.stop(t+s[2]+0.03); }); }
   mobs.forEach(function(m){
     var says=(m.getAttribute('data-says')||'').split('|').filter(Boolean);
     var bub=m.querySelector('.mob-bub'); if(!says.length||!bub) return;
@@ -1851,7 +1858,7 @@ document.addEventListener("DOMContentLoaded", function(){
       if(says.length>1){ while(i===last) i=Math.floor(Math.random()*says.length); } last=i;
       bub.innerHTML=says[i]; m.classList.add('say'); clearTimeout(m._t);
       m._t=setTimeout(function(){ m.classList.remove('say'); }, 2800); }
-    m.addEventListener('click', say);
+    m.addEventListener('click', function(){ say(); chirp(); });
     m.addEventListener('mouseenter', say);
   });
 })();</script>
