@@ -528,18 +528,25 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <div class="ana-head"><h2>Anatomy of a web page</h2>
       <span class="ana-sub">Three languages on one page: <b>HTML</b> builds it, <b>CSS</b> paints it, <b>JavaScript</b> makes it move. Here they are side by side:</span></div>
     <div class="ana-grid">
-      <pre class="ana-code"><span class="ak">&lt;style&gt;</span>
-  <span class="ap">body { background-color: skyblue; }</span>
-<span class="ak">&lt;/style&gt;</span>
+      <pre class="ana-code"><span class="ak">&lt;!DOCTYPE html&gt;</span>
+<span class="ak">&lt;html&gt;</span>
+<span class="ak">&lt;head&gt;</span>
+  <span class="ak">&lt;style&gt;</span>
+    <span class="ap">body { background-color: skyblue; }</span>
+  <span class="ak">&lt;/style&gt;</span>
+<span class="ak">&lt;/head&gt;</span>
 
-<span class="ab">&lt;h1 id="screen"&gt;</span>CRAFT WORLD<span class="ab">&lt;/h1&gt;</span>
-<span class="ab">&lt;button onclick="mine()"&gt;</span>Mine<span class="ab">&lt;/button&gt;</span>
+<span class="ak">&lt;body&gt;</span>
+  <span class="ab">&lt;h1 id="screen"&gt;</span>CRAFT WORLD<span class="ab">&lt;/h1&gt;</span>
+  <span class="ab">&lt;button onclick="mine()"&gt;</span>Mine<span class="ab">&lt;/button&gt;</span>
 
-<span class="ak">&lt;script&gt;</span>
-  <span class="an">function mine() {</span>
-    <span class="abd">screen.innerHTML = "Mined!";</span>
-  <span class="an">}</span>
-<span class="ak">&lt;/script&gt;</span></pre>
+  <span class="ak">&lt;script&gt;</span>
+    <span class="an">function mine() {</span>
+      <span class="abd">document.getElementById("screen").innerHTML = "Mined!";</span>
+    <span class="an">}</span>
+  <span class="ak">&lt;/script&gt;</span>
+<span class="ak">&lt;/body&gt;</span>
+<span class="ak">&lt;/html&gt;</span></pre>
       <ul class="ana-key">
         <li><span class="chip ab">HTML</span> the <b>structure</b> &mdash; headings, buttons, lists</li>
         <li><span class="chip ap">CSS</span> the <b>style</b> &mdash; colour, background, padding, inside <code>&lt;style&gt;</code></li>
