@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build the Compliment Generator — HTML + CSS + JavaScript</title>
+<title>Build the Compliment Machine — everything together</title>
 <style>
   :root{
     --ink:#1f2433; --indigo:#3F3399; --amber:#E08A00; --amber2:#F59E0B;
-    --violet:#7C3AED; --green:#059669; --sienna:#B45309; --grey:#7A8194;
+    --violet:#7C3AED; --green:#059669; --blue:#1E3A8A; --sienna:#B45309; --grey:#7A8194;
     --line:#E7E8F0; --page:#F6F6FB; --card:#fff;
   }
   *{box-sizing:border-box}
@@ -17,36 +17,40 @@
     background:radial-gradient(1200px 600px at 50% -10%, #FCFCFF, var(--page));
     display:flex; flex-direction:column; min-height:100%;
   }
-  header{padding:16px 32px 4px; text-align:center}
-  h1{margin:0; color:var(--indigo); font-size:27px; font-weight:700}
-  .sub{margin:3px 0 0; color:var(--grey); font-size:15.5px}
-  .legend{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; padding:8px 32px 2px}
-  .leg{display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line);
-       border-radius:999px; padding:6px 14px; font-size:14px; box-shadow:0 3px 10px rgba(45,35,95,.05)}
-  .leg .sw{width:12px; height:12px; border-radius:4px}
+  header{padding:14px 32px 4px; text-align:center}
+  h1{margin:0; color:var(--indigo); font-size:26px; font-weight:700}
+  .sub{margin:3px 0 0; color:var(--grey); font-size:15px}
+  .legend{display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:8px 32px 2px}
+  .leg{display:flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--line);
+       border-radius:999px; padding:5px 12px; font-size:13px; box-shadow:0 3px 10px rgba(45,35,95,.05)}
+  .leg .sw{width:11px; height:11px; border-radius:4px}
   .leg b{font-weight:700}
   .leg.h .sw{background:var(--indigo)} .leg.h b{color:var(--indigo)}
   .leg.c .sw{background:var(--amber2)} .leg.c b{color:var(--amber)}
   .leg.j .sw{background:var(--violet)} .leg.j b{color:var(--violet)}
-  main{flex:1; display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:8px 32px; min-height:0}
+  .leg.l .sw{background:var(--green)} .leg.l b{color:var(--green)}
+  .leg.i .sw{background:var(--blue)} .leg.i b{color:var(--blue)}
+  main{flex:1; display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:8px 32px; min-height:0}
   .card{background:var(--card); border:1px solid var(--line); border-radius:18px;
         box-shadow:0 10px 30px rgba(45,35,95,.07); display:flex; flex-direction:column; min-height:0; overflow:hidden}
-  .card-h{font-size:13.5px; font-weight:700; color:var(--grey); padding:11px 16px 8px; letter-spacing:.3px}
+  .card-h{font-size:13px; font-weight:700; color:var(--grey); padding:10px 16px 6px; letter-spacing:.3px}
   .card-h .file{color:var(--indigo); font-family:Consolas,monospace}
-  pre.code{margin:0; padding:6px 18px 16px; font-family:Consolas,monospace; font-size:15px;
-           line-height:1.5; overflow:auto; flex:1; color:var(--ink)}
+  pre.code{margin:0; padding:4px 18px 14px; font-family:Consolas,monospace; font-size:13.5px;
+           line-height:1.45; overflow:auto; flex:1; color:var(--ink)}
   .kw{color:var(--indigo)} .css{color:var(--sienna)} .js{color:var(--violet)}
-  .str{color:var(--green)} .pl{color:var(--ink)} .cmt{color:#AEB4C2}
+  .str{color:var(--green)} .pl{color:var(--ink)} .cmt{color:#9AA1B2}
   .layer{transition:opacity .4s}
   .ph{color:#C0C5D2; font-style:italic}
   .block{display:none}
   .block.show{display:inline}
   .just-added{background:#FFF7E3; border-radius:6px; box-shadow:inset 3px 0 0 var(--amber2); animation:pop .5s ease}
   .just-added.j{background:#F3EDFE; box-shadow:inset 3px 0 0 var(--violet)}
+  .just-added.l{background:#E9F8F1; box-shadow:inset 3px 0 0 var(--green)}
+  .just-added.i{background:#EAF0FB; box-shadow:inset 3px 0 0 var(--blue)}
   @keyframes pop{from{background:#FFE9A8}to{}}
-  .browser{flex:1; display:flex; flex-direction:column; margin:0 16px 16px; border:1px solid var(--line);
+  .browser{flex:1; display:flex; flex-direction:column; margin:0 16px 14px; border:1px solid var(--line);
            border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(45,35,95,.08); min-height:0}
-  .bbar{display:flex; align-items:center; gap:8px; padding:9px 12px; background:#EEF0F6; border-bottom:1px solid var(--line)}
+  .bbar{display:flex; align-items:center; gap:8px; padding:8px 12px; background:#EEF0F6; border-bottom:1px solid var(--line)}
   .bdot{width:11px; height:11px; border-radius:50%}
   .bdot.r{background:#FF6159} .bdot.y{background:#FFBD2E} .bdot.g{background:#28C840}
   .burl{flex:1; margin-left:8px; background:#fff; border-radius:7px; padding:4px 12px; font-size:12.5px;
@@ -56,22 +60,25 @@
   .clue span{position:absolute; right:14px; bottom:8px; background:var(--violet); color:#fff;
              font-size:13px; font-weight:700; padding:5px 11px; border-radius:999px; opacity:0;
              transition:opacity .3s; box-shadow:0 4px 12px rgba(124,58,237,.4); pointer-events:none}
-  body.s3 .clue span{opacity:1; animation:bob 1.2s ease-in-out infinite}
+  body.s3 .clue span, body.s4 .clue span, body.s5 .clue span{opacity:1; animation:bob 1.2s ease-in-out infinite}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-  .caption{margin:4px 32px 0; padding:11px 18px; border-radius:12px; background:#fff; border:1px solid var(--line);
-           border-left:5px solid var(--amber2); font-size:16.5px; min-height:42px; display:flex; align-items:center;
+  .caption{margin:4px 32px 0; padding:10px 18px; border-radius:12px; background:#fff; border:1px solid var(--line);
+           border-left:5px solid var(--amber2); font-size:16px; min-height:40px; display:flex; align-items:center;
            box-shadow:0 4px 14px rgba(45,35,95,.05)}
   .caption b{color:var(--indigo)}
-  .steps{display:flex; gap:12px; padding:14px 32px 22px; align-items:stretch}
-  .step{flex:1; cursor:pointer; border-radius:14px; padding:12px 14px; background:#fff; border:1.8px solid var(--line);
+  .steps{display:flex; gap:9px; padding:12px 32px 20px; align-items:stretch}
+  .step{flex:1; cursor:pointer; border-radius:13px; padding:10px 12px; background:#fff; border:1.8px solid var(--line);
         font-family:inherit; transition:transform .12s, box-shadow .15s, border-color .2s; text-align:left}
   .step:hover{transform:translateY(-2px); box-shadow:0 6px 16px rgba(45,35,95,.1)}
-  .step .n{font-size:13px; font-weight:700; color:var(--grey)}
-  .step .t{font-size:17px; font-weight:700; margin-top:2px}
+  .step .n{font-size:12px; font-weight:700; color:var(--grey)}
+  .step .t{font-size:15.5px; font-weight:700; margin-top:2px}
   .step.s1 .t{color:var(--indigo)} .step.s2 .t{color:var(--amber)} .step.s3 .t{color:var(--violet)}
+  .step.s4 .t{color:var(--green)} .step.s5 .t{color:var(--blue)}
   .step.on.s1{border-color:var(--indigo); background:#F1EFFB}
   .step.on.s2{border-color:var(--amber2); background:#FFF6E5}
   .step.on.s3{border-color:var(--violet); background:#F4EEFE}
+  .step.on.s4{border-color:var(--green); background:#E9F8F1}
+  .step.on.s5{border-color:var(--blue); background:#EAF0FB}
   .step .done{display:none; color:var(--green); font-weight:700}
   .step.cleared .done{display:inline}
   @media (max-width:920px){ main{grid-template-columns:1fr} }
@@ -79,39 +86,59 @@
 </head>
 <body class="s1">
 <header>
-  <h1>Build the Compliment Generator</h1>
-  <p class="sub">Three languages combine into <b>one file</b>. Add them one layer at a time — then click for a <b>random</b> compliment.</p>
+  <h1>Build the Compliment Machine</h1>
+  <p class="sub">Every skill in one page — add a layer at a time, then watch each button come alive.</p>
 </header>
 
 <div class="legend">
-  <div class="leg h"><span class="sw"></span><span><b>HTML</b> — structure (heading + button)</span></div>
-  <div class="leg c"><span class="sw"></span><span><b>CSS</b> — style (in &lt;style&gt;, inside &lt;head&gt;)</span></div>
-  <div class="leg j"><span class="sw"></span><span><b>JavaScript</b> — behaviour (in &lt;script&gt;)</span></div>
+  <div class="leg h"><span class="sw"></span><span><b>HTML</b></span></div>
+  <div class="leg c"><span class="sw"></span><span><b>CSS</b></span></div>
+  <div class="leg j"><span class="sw"></span><span><b>JS</b> + random</span></div>
+  <div class="leg l"><span class="sw"></span><span><b>Loop</b></span></div>
+  <div class="leg i"><span class="sw"></span><span><b>If / else</b></span></div>
 </div>
 
 <main>
   <section class="card">
     <div class="card-h">THE ONE FILE &nbsp;·&nbsp; <span class="file">compliment.html</span></div>
 <pre class="code"><span class="cmt">&lt;!DOCTYPE html&gt;</span>
-<span class="kw">&lt;html&gt;</span>
-<span class="kw">&lt;head&gt;</span>
-<span class="ph layer" id="cssPh">  &lt;!-- the CSS style will go here --&gt;</span><span class="block layer" id="cssBlock">  <span class="kw">&lt;style&gt;</span>
+<span class="kw">&lt;html&gt;</span> <span class="kw">&lt;head&gt;</span>
+<span class="ph layer" id="cssPh">  &lt;!-- the CSS will go here --&gt;</span><span class="block layer" id="cssBlock">  <span class="kw">&lt;style&gt;</span>
     <span class="css">body { text-align: center; font-family: Arial; }</span>
-    <span class="css">h1   { color: #3f3399; }</span>
+    <span class="css">h1 { color: #3f3399; }   button { background: #3f3399; color: #fff; }</span>
   <span class="kw">&lt;/style&gt;</span></span>
 <span class="kw">&lt;/head&gt;</span>
 <span class="kw">&lt;body&gt;</span>
-  <span class="kw">&lt;h1 id=</span><span class="str">"msg"</span><span class="kw">&gt;</span>Click for a compliment!<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;h1 id=</span><span class="str">"msg"</span><span class="kw">&gt;</span>Click a button!<span class="kw">&lt;/h1&gt;</span>
   <span class="kw">&lt;button onclick=</span><span class="str">"compliment()"</span><span class="kw">&gt;</span>Compliment me<span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;button onclick=</span><span class="str">"showAll()"</span><span class="kw">&gt;</span>Show all<span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;button onclick=</span><span class="str">"lucky()"</span><span class="kw">&gt;</span>Feeling lucky?<span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;p id=</span><span class="str">"list"</span><span class="kw">&gt;&lt;/p&gt;</span>
 <span class="ph layer" id="jsPh">  &lt;!-- the JavaScript will go here --&gt;</span><span class="block layer" id="jsBlock">  <span class="js">&lt;script&gt;</span>
+    <span class="pl">let lines = [</span><span class="str">"You're a legend!"</span><span class="pl">, </span><span class="str">"Brilliant!"</span><span class="pl">, </span><span class="str">"Future developer!"</span><span class="pl">];</span>
     <span class="js">function</span> <span class="pl">compliment() {</span>
-      <span class="pl">let lines = [</span><span class="str">"You're a legend!"</span><span class="pl">, </span><span class="str">"Brilliant!"</span><span class="pl">, </span><span class="str">"Future developer!"</span><span class="pl">];</span>
       <span class="pl">let pick = lines[</span><span class="js">Math.floor</span><span class="pl">(</span><span class="js">Math.random</span><span class="pl">() * lines.length)];</span>
       <span class="pl">document.getElementById(</span><span class="str">"msg"</span><span class="pl">).innerHTML = pick;</span>
     <span class="pl">}</span>
+<span class="ph layer" id="loopPh">    &lt;!-- a LOOP will go here --&gt;</span><span class="block layer" id="loopBlock">    <span class="cmt">// LOOP — show EVERY compliment</span>
+    <span class="js">function</span> <span class="pl">showAll() {</span>
+      <span class="pl">let all = </span><span class="str">""</span><span class="pl">;</span>
+      <span class="js">for</span> <span class="pl">(let i = 0; i &lt; lines.length; i = i + 1) {</span>
+        <span class="pl">all = all + lines[i] + </span><span class="str">"&lt;br&gt;"</span><span class="pl">;</span>
+      <span class="pl">}</span>
+      <span class="pl">document.getElementById(</span><span class="str">"list"</span><span class="pl">).innerHTML = all;</span>
+    <span class="pl">}</span></span>
+<span class="ph layer" id="ifPh">    &lt;!-- an IF / ELSE will go here --&gt;</span><span class="block layer" id="ifBlock">    <span class="cmt">// IF / ELSE — make a decision</span>
+    <span class="js">function</span> <span class="pl">lucky() {</span>
+      <span class="pl">let n = </span><span class="js">Math.floor</span><span class="pl">(</span><span class="js">Math.random</span><span class="pl">() * 10) + 1;</span>
+      <span class="js">if</span> <span class="pl">(n &gt;= 5) {</span>
+        <span class="pl">document.getElementById(</span><span class="str">"msg"</span><span class="pl">).innerHTML = n + </span><span class="str">" — you are a STAR!"</span><span class="pl">;</span>
+      <span class="pl">} </span><span class="js">else</span> <span class="pl">{</span>
+        <span class="pl">document.getElementById(</span><span class="str">"msg"</span><span class="pl">).innerHTML = n + </span><span class="str">" — keep going!"</span><span class="pl">;</span>
+      <span class="pl">}</span>
+    <span class="pl">}</span></span>
   <span class="js">&lt;/script&gt;</span></span>
-<span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></pre>
+<span class="kw">&lt;/body&gt; &lt;/html&gt;</span></pre>
   </section>
 
   <section class="card">
@@ -121,58 +148,67 @@
         <span class="burl">compliment.html</span></div>
       <iframe id="preview" title="Live preview" sandbox="allow-scripts"></iframe>
     </div>
-    <div class="clue"><span>&#128071; click &ldquo;Compliment me&rdquo;!</span></div>
+    <div class="clue"><span id="clue">&#128071; try a button!</span></div>
   </section>
 </main>
 
 <div class="caption" id="caption"></div>
 
 <nav class="steps">
-  <button class="step s1 on" data-step="1"><div class="n">STEP 1 <span class="done">&#10003; done</span></div><div class="t">HTML — structure</div></button>
-  <button class="step s2" data-step="2"><div class="n">STEP 2 <span class="done">&#10003; done</span></div><div class="t">+ CSS — style</div></button>
-  <button class="step s3" data-step="3"><div class="n">STEP 3 <span class="done">&#10003; done</span></div><div class="t">+ JavaScript — behaviour</div></button>
+  <button class="step s1 on" data-step="1"><div class="n">STEP 1 <span class="done">&#10003;</span></div><div class="t">HTML</div></button>
+  <button class="step s2" data-step="2"><div class="n">STEP 2 <span class="done">&#10003;</span></div><div class="t">+ CSS</div></button>
+  <button class="step s3" data-step="3"><div class="n">STEP 3 <span class="done">&#10003;</span></div><div class="t">+ JS (random)</div></button>
+  <button class="step s4" data-step="4"><div class="n">STEP 4 <span class="done">&#10003;</span></div><div class="t">+ Loop</div></button>
+  <button class="step s5" data-step="5"><div class="n">STEP 5 <span class="done">&#10003;</span></div><div class="t">+ If / else</div></button>
 </nav>
 
 <script>
-  var BODY = '<h1 id="msg">Click for a compliment!</h1>\n  <button onclick="compliment()">Compliment me</button>';
-  var CSS  = '<style>\n    body { text-align: center; font-family: Arial; padding: 26px; }\n    h1 { color: #3f3399; }\n    button { background:#3f3399; color:#fff; border:0; padding:10px 22px; border-radius:8px; font-size:17px; cursor:pointer; }\n  </style>';
-  var JS   = '<scr'+'ipt>function compliment(){var lines=["You\'re a legend!","Brilliant!","Future developer!"];var pick=lines[Math.floor(Math.random()*lines.length)];document.getElementById("msg").innerHTML=pick;}</scr'+'ipt>';
+  var BODY = '<h1 id="msg">Click a button!</h1>\n  <button onclick="compliment()">Compliment me</button>\n  <button onclick="showAll()">Show all</button>\n  <button onclick="lucky()">Feeling lucky?</button>\n  <p id="list"></p>';
+  var CSS  = '<style>\n    body { text-align:center; font-family:Arial; padding:22px; }\n    h1 { color:#3f3399; min-height:1.2em; }\n    button { background:#3f3399; color:#fff; border:0; padding:9px 16px; margin:4px; border-radius:8px; font-size:15px; cursor:pointer; }\n    #list { color:#059669; font-weight:bold; font-size:18px; margin-top:14px; line-height:1.7; }\n  </style>';
+  var JS_BASE = 'let lines = ["You\'re a legend!","Brilliant!","Future developer!"];\n    function compliment(){ let pick = lines[Math.floor(Math.random()*lines.length)]; document.getElementById("msg").innerHTML = pick; }';
+  var JS_LOOP = '\n    function showAll(){ let all=""; for(let i=0;i<lines.length;i=i+1){ all = all + lines[i] + "<br>"; } document.getElementById("list").innerHTML = all; }';
+  var JS_IF   = '\n    function lucky(){ let n = Math.floor(Math.random()*10)+1; if(n>=5){ document.getElementById("msg").innerHTML = n + " - you are a STAR!"; } else { document.getElementById("msg").innerHTML = n + " - keep going!"; } }';
 
   function srcFor(step){
     var head = step>=2 ? '\n  '+CSS+'\n' : '';
-    var body = '\n  '+BODY + (step>=3 ? '\n  '+JS : '') + '\n';
-    return '<!DOCTYPE html><html><head>'+head+'</head><body>'+body+'</body></html>';
+    var js = step>=3 ? '\n  <scr'+'ipt>\n    '+JS_BASE+(step>=4?JS_LOOP:'')+(step>=5?JS_IF:'')+'\n  </scr'+'ipt>' : '';
+    return '<!DOCTYPE html><html><head>'+head+'</head><body>\n  '+BODY+js+'\n</body></html>';
   }
 
   var CAP = {
-    1:'<b>Step 1 — HTML only.</b> The page has a heading and a button… but it is plain, and the button does nothing yet.',
-    2:'<b>Step 2 — add CSS.</b> Drop a &lt;style&gt; block into the &lt;head&gt;. Same page, now <i>painted</i>: centred, Arial, indigo heading.',
-    3:'<b>Step 3 — add JavaScript.</b> A list of compliments → <b>Math.random</b> picks one → <b>innerHTML</b> shows it. Click <b>Compliment me</b> in the preview — and click again for a different one!'
+    1:'<b>Step 1 — HTML.</b> A heading, three buttons, and an empty list. Plain — and the buttons have no brains yet.',
+    2:'<b>Step 2 — + CSS.</b> Paint it: centred, Arial, indigo heading, styled buttons.',
+    3:'<b>Step 3 — + JavaScript.</b> A list + <b>Math.random</b> gives <b>Compliment me</b> a brain. Click it!',
+    4:'<b>Step 4 — + a LOOP.</b> <b>Show all</b> uses a <b>for-loop</b> to print EVERY compliment in the list. Click it!',
+    5:'<b>Step 5 — + an IF / ELSE.</b> <b>Feeling lucky?</b> picks a number 1–10: if it is 5 or more → STAR, otherwise → keep going. A decision! Click it!'
   };
+  var CLUE = {3:'&#128071; click “Compliment me”', 4:'&#128071; click “Show all”', 5:'&#128071; click “Feeling lucky?”'};
 
-  var preview = document.getElementById('preview');
-  var steps = document.querySelectorAll('.step');
-  var caption = document.getElementById('caption');
-  var cssPh=document.getElementById('cssPh'), cssBlock=document.getElementById('cssBlock');
-  var jsPh=document.getElementById('jsPh'), jsBlock=document.getElementById('jsBlock');
+  var preview=document.getElementById('preview'), steps=document.querySelectorAll('.step'),
+      caption=document.getElementById('caption'), clue=document.getElementById('clue'),
+      cssPh=document.getElementById('cssPh'), cssBlock=document.getElementById('cssBlock'),
+      jsPh=document.getElementById('jsPh'), jsBlock=document.getElementById('jsBlock'),
+      loopPh=document.getElementById('loopPh'), loopBlock=document.getElementById('loopBlock'),
+      ifPh=document.getElementById('ifPh'), ifBlock=document.getElementById('ifBlock');
 
   function setStep(n){
-    n = +n;
-    document.body.className = 's'+n;
-    cssBlock.classList.toggle('show', n>=2);
-    cssPh.style.display = n>=2 ? 'none' : 'inline';
-    jsBlock.classList.toggle('show', n>=3);
-    jsPh.style.display = n>=3 ? 'none' : 'inline';
+    n=+n; document.body.className='s'+n;
+    cssBlock.classList.toggle('show', n>=2); cssPh.style.display = n>=2?'none':'inline';
+    jsBlock.classList.toggle('show', n>=3); jsPh.style.display = n>=3?'none':'inline';
+    loopBlock.classList.toggle('show', n>=4); loopPh.style.display = n>=4?'none':'inline';
+    ifBlock.classList.toggle('show', n>=5); ifPh.style.display = n>=5?'none':'inline';
     cssBlock.classList.toggle('just-added', n===2);
-    jsBlock.classList.toggle('just-added', n===3);
-    jsBlock.classList.add('j');
+    jsBlock.classList.toggle('just-added', n===3); jsBlock.classList.add('j');
+    loopBlock.classList.toggle('just-added', n===4); loopBlock.classList.add('l');
+    ifBlock.classList.toggle('just-added', n===5); ifBlock.classList.add('i');
     preview.srcdoc = srcFor(n);
     caption.innerHTML = CAP[n];
-    steps.forEach(function(s){
-      var sn = +s.getAttribute('data-step');
-      s.classList.toggle('on', sn===n);
-      s.classList.toggle('cleared', sn<n);
-    });
+    if(CLUE[n]) clue.innerHTML = CLUE[n];
+    steps.forEach(function(s){ var sn=+s.getAttribute('data-step');
+      s.classList.toggle('on', sn===n); s.classList.toggle('cleared', sn<n); });
+    var pre=document.querySelector('pre.code'), added={2:cssBlock,3:jsBlock,4:loopBlock,5:ifBlock}[n];
+    if(added){ setTimeout(function(){ var r=added.getBoundingClientRect(), pr=pre.getBoundingClientRect();
+      pre.scrollTop += (r.top - pr.top) - pre.clientHeight*0.30; }, 60); }
   }
   steps.forEach(function(s){ s.addEventListener('click', function(){ setStep(s.getAttribute('data-step')); }); });
   setStep(1);
