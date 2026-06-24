@@ -17,10 +17,10 @@
     background:radial-gradient(1200px 600px at 50% -10%, #FCFCFF, var(--page));
     display:flex; flex-direction:column; min-height:100%;
   }
-  header{padding:14px 32px 4px; text-align:center}
-  h1{margin:0; color:var(--indigo); font-size:26px; font-weight:700}
-  .sub{margin:3px 0 0; color:var(--grey); font-size:15px}
-  .legend{display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:8px 32px 2px}
+  header{padding:12px 32px 2px; text-align:center}
+  h1{margin:0; color:var(--indigo); font-size:24px; font-weight:700}
+  .sub{margin:2px 0 0; color:var(--grey); font-size:14.5px}
+  .legend{display:flex; justify-content:center; gap:8px; flex-wrap:wrap; padding:6px 32px 2px}
   .leg{display:flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--line);
        border-radius:999px; padding:5px 12px; font-size:13px; box-shadow:0 3px 10px rgba(45,35,95,.05)}
   .leg .sw{width:11px; height:11px; border-radius:4px}
@@ -30,13 +30,13 @@
   .leg.j .sw{background:var(--violet)} .leg.j b{color:var(--violet)}
   .leg.l .sw{background:var(--green)} .leg.l b{color:var(--green)}
   .leg.i .sw{background:var(--blue)} .leg.i b{color:var(--blue)}
-  main{flex:1; display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:8px 32px; min-height:0}
+  main{flex:1; display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:6px 32px; min-height:0}
   .card{background:var(--card); border:1px solid var(--line); border-radius:18px;
         box-shadow:0 10px 30px rgba(45,35,95,.07); display:flex; flex-direction:column; min-height:0; overflow:hidden}
-  .card-h{font-size:13px; font-weight:700; color:var(--grey); padding:10px 16px 6px; letter-spacing:.3px}
+  .card-h{font-size:13px; font-weight:700; color:var(--grey); padding:9px 16px 5px; letter-spacing:.3px}
   .card-h .file{color:var(--indigo); font-family:Consolas,monospace}
-  pre.code{margin:0; padding:4px 18px 14px; font-family:Consolas,monospace; font-size:13.5px;
-           line-height:1.45; overflow:auto; flex:1; color:var(--ink)}
+  pre.code{margin:0; padding:2px 18px 12px; font-family:Consolas,monospace; font-size:13px;
+           line-height:1.4; overflow:auto; flex:1; color:var(--ink)}
   .kw{color:var(--indigo)} .css{color:var(--sienna)} .js{color:var(--violet)}
   .str{color:var(--green)} .pl{color:var(--ink)} .cmt{color:#9AA1B2}
   .layer{transition:opacity .4s}
@@ -48,30 +48,30 @@
   .just-added.l{background:#E9F8F1; box-shadow:inset 3px 0 0 var(--green)}
   .just-added.i{background:#EAF0FB; box-shadow:inset 3px 0 0 var(--blue)}
   @keyframes pop{from{background:#FFE9A8}to{}}
-  .browser{flex:1; display:flex; flex-direction:column; margin:0 16px 14px; border:1px solid var(--line);
+  .browser{flex:1; display:flex; flex-direction:column; margin:0 16px 12px; border:1px solid var(--line);
            border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(45,35,95,.08); min-height:0}
-  .bbar{display:flex; align-items:center; gap:8px; padding:8px 12px; background:#EEF0F6; border-bottom:1px solid var(--line)}
+  .bbar{display:flex; align-items:center; gap:8px; padding:7px 12px; background:#EEF0F6; border-bottom:1px solid var(--line)}
   .bdot{width:11px; height:11px; border-radius:50%}
   .bdot.r{background:#FF6159} .bdot.y{background:#FFBD2E} .bdot.g{background:#28C840}
   .burl{flex:1; margin-left:8px; background:#fff; border-radius:7px; padding:4px 12px; font-size:12.5px;
         color:var(--grey); font-family:Consolas,monospace; border:1px solid var(--line)}
   iframe#preview{flex:1; width:100%; border:0; background:#fff; min-height:0}
   .clue{position:relative; height:0}
-  .clue span{position:absolute; right:14px; bottom:8px; background:var(--violet); color:#fff;
+  .clue span{position:absolute; right:14px; bottom:6px; background:var(--violet); color:#fff;
              font-size:13px; font-weight:700; padding:5px 11px; border-radius:999px; opacity:0;
              transition:opacity .3s; box-shadow:0 4px 12px rgba(124,58,237,.4); pointer-events:none}
   body.s3 .clue span, body.s4 .clue span, body.s5 .clue span{opacity:1; animation:bob 1.2s ease-in-out infinite}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-  .caption{margin:4px 32px 0; padding:10px 18px; border-radius:12px; background:#fff; border:1px solid var(--line);
-           border-left:5px solid var(--amber2); font-size:16px; min-height:40px; display:flex; align-items:center;
+  .caption{margin:3px 32px 0; padding:9px 18px; border-radius:12px; background:#fff; border:1px solid var(--line);
+           border-left:5px solid var(--amber2); font-size:15.5px; min-height:38px; display:flex; align-items:center;
            box-shadow:0 4px 14px rgba(45,35,95,.05)}
   .caption b{color:var(--indigo)}
-  .steps{display:flex; gap:9px; padding:12px 32px 20px; align-items:stretch}
-  .step{flex:1; cursor:pointer; border-radius:13px; padding:10px 12px; background:#fff; border:1.8px solid var(--line);
+  .steps{display:flex; gap:9px; padding:10px 32px 16px; align-items:stretch}
+  .step{flex:1; cursor:pointer; border-radius:13px; padding:9px 12px; background:#fff; border:1.8px solid var(--line);
         font-family:inherit; transition:transform .12s, box-shadow .15s, border-color .2s; text-align:left}
   .step:hover{transform:translateY(-2px); box-shadow:0 6px 16px rgba(45,35,95,.1)}
   .step .n{font-size:12px; font-weight:700; color:var(--grey)}
-  .step .t{font-size:15.5px; font-weight:700; margin-top:2px}
+  .step .t{font-size:15px; font-weight:700; margin-top:2px}
   .step.s1 .t{color:var(--indigo)} .step.s2 .t{color:var(--amber)} .step.s3 .t{color:var(--violet)}
   .step.s4 .t{color:var(--green)} .step.s5 .t{color:var(--blue)}
   .step.on.s1{border-color:var(--indigo); background:#F1EFFB}
@@ -87,13 +87,13 @@
 <body class="s1">
 <header>
   <h1>Build the Compliment Machine</h1>
-  <p class="sub">Every skill in one page — add a layer at a time, then watch each button come alive.</p>
+  <p class="sub">Real HTML building blocks — a form, buttons, a list and a table — then bring them to life.</p>
 </header>
 
 <div class="legend">
   <div class="leg h"><span class="sw"></span><span><b>HTML</b></span></div>
   <div class="leg c"><span class="sw"></span><span><b>CSS</b></span></div>
-  <div class="leg j"><span class="sw"></span><span><b>prompt</b></span></div>
+  <div class="leg j"><span class="sw"></span><span><b>JS</b></span></div>
   <div class="leg l"><span class="sw"></span><span><b>Loop</b></span></div>
   <div class="leg i"><span class="sw"></span><span><b>If / else</b></span></div>
 </div>
@@ -101,43 +101,47 @@
 <main>
   <section class="card">
     <div class="card-h">THE ONE FILE &nbsp;·&nbsp; <span class="file">compliment.html</span></div>
-<pre class="code"><span class="cmt">&lt;!DOCTYPE html&gt;</span>
-<span class="kw">&lt;html&gt;</span> <span class="kw">&lt;head&gt;</span>
-<span class="ph layer" id="cssPh">  &lt;!-- the CSS will go here --&gt;</span><span class="block layer" id="cssBlock">  <span class="kw">&lt;style&gt;</span>
-    <span class="css">body { text-align: center; font-family: Arial; }</span>
-    <span class="css">h1 { color: #3f3399; }   button { background: #3f3399; color: #fff; }</span>
-  <span class="kw">&lt;/style&gt;</span></span>
-<span class="kw">&lt;/head&gt;</span>
+<pre class="code"><span class="kw">&lt;html&gt;</span> <span class="kw">&lt;head&gt;</span> <span class="ph layer" id="cssPh">&lt;!-- CSS here --&gt;</span><span class="block layer" id="cssBlock"><span class="kw">&lt;style&gt;</span> <span class="css">body{text-align:center;font-family:Arial} h1{color:#3f3399} button{background:#3f3399;color:#fff} table,td,th{border:1px solid #888;border-collapse:collapse;padding:4px 12px}</span> <span class="kw">&lt;/style&gt;</span></span> <span class="kw">&lt;/head&gt;</span>
 <span class="kw">&lt;body&gt;</span>
-  <span class="kw">&lt;h1 id=</span><span class="str">"msg"</span><span class="kw">&gt;</span>Click a button!<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;h1 id=</span><span class="str">"msg"</span><span class="kw">&gt;</span>Welcome!<span class="kw">&lt;/h1&gt;</span>
+
+  <span class="cmt">&lt;!-- a FORM: type your name --&gt;</span>
+  <span class="kw">&lt;form&gt;</span> Your name: <span class="kw">&lt;input id=</span><span class="str">"name"</span><span class="kw">&gt; &lt;/form&gt;</span>
+
   <span class="kw">&lt;button onclick=</span><span class="str">"greet()"</span><span class="kw">&gt;</span>Compliment me<span class="kw">&lt;/button&gt;</span>
   <span class="kw">&lt;button onclick=</span><span class="str">"showAll()"</span><span class="kw">&gt;</span>Show all<span class="kw">&lt;/button&gt;</span>
-  <span class="kw">&lt;button onclick=</span><span class="str">"pick()"</span><span class="kw">&gt;</span>Pick a compliment<span class="kw">&lt;/button&gt;</span>
-  <span class="kw">&lt;p id=</span><span class="str">"list"</span><span class="kw">&gt;&lt;/p&gt;</span>
+  <span class="kw">&lt;button onclick=</span><span class="str">"pick()"</span><span class="kw">&gt;</span>Pick one<span class="kw">&lt;/button&gt;</span>
+
+  <span class="cmt">&lt;!-- a LIST: the loop fills this --&gt;</span>
+  <span class="kw">&lt;ul id=</span><span class="str">"list"</span><span class="kw">&gt;&lt;/ul&gt;</span>
+
+  <span class="cmt">&lt;!-- a TABLE: the menu --&gt;</span>
+  <span class="kw">&lt;table&gt;</span>
+    <span class="kw">&lt;tr&gt;&lt;th&gt;</span>No.<span class="kw">&lt;/th&gt;&lt;th&gt;</span>Compliment<span class="kw">&lt;/th&gt;&lt;/tr&gt;</span>
+    <span class="kw">&lt;tr&gt;&lt;td&gt;</span>1<span class="kw">&lt;/td&gt;&lt;td&gt;</span>You're a legend!<span class="kw">&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="kw">&lt;tr&gt;&lt;td&gt;</span>2<span class="kw">&lt;/td&gt;&lt;td&gt;</span>Brilliant!<span class="kw">&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="kw">&lt;tr&gt;&lt;td&gt;</span>3<span class="kw">&lt;/td&gt;&lt;td&gt;</span>Future developer!<span class="kw">&lt;/td&gt;&lt;/tr&gt;</span>
+  <span class="kw">&lt;/table&gt;</span>
 <span class="ph layer" id="jsPh">  &lt;!-- the JavaScript will go here --&gt;</span><span class="block layer" id="jsBlock">  <span class="js">&lt;script&gt;</span>
     <span class="pl">let lines = [</span><span class="str">"You're a legend!"</span><span class="pl">, </span><span class="str">"Brilliant!"</span><span class="pl">, </span><span class="str">"Future developer!"</span><span class="pl">];</span>
     <span class="js">function</span> <span class="pl">greet() {</span>
-      <span class="pl">let name = </span><span class="js">prompt</span><span class="pl">(</span><span class="str">"What is your name?"</span><span class="pl">);</span>
+      <span class="pl">let name = document.getElementById(</span><span class="str">"name"</span><span class="pl">).value;</span>
       <span class="pl">document.getElementById(</span><span class="str">"msg"</span><span class="pl">).innerHTML = </span><span class="str">"Hi "</span><span class="pl"> + name + </span><span class="str">", "</span><span class="pl"> + lines[0];</span>
     <span class="pl">}</span>
-<span class="ph layer" id="loopPh">    &lt;!-- a LOOP will go here --&gt;</span><span class="block layer" id="loopBlock">    <span class="cmt">// LOOP — show EVERY compliment</span>
+<span class="ph layer" id="loopPh">    &lt;!-- a LOOP will go here --&gt;</span><span class="block layer" id="loopBlock">    <span class="cmt">// LOOP — fill the LIST with every compliment</span>
     <span class="js">function</span> <span class="pl">showAll() {</span>
       <span class="pl">let all = </span><span class="str">""</span><span class="pl">;</span>
       <span class="js">for</span> <span class="pl">(let i = 0; i &lt; lines.length; i = i + 1) {</span>
-        <span class="pl">all = all + lines[i] + </span><span class="str">"&lt;br&gt;"</span><span class="pl">;</span>
+        <span class="pl">all = all + </span><span class="str">"&lt;li&gt;"</span><span class="pl"> + lines[i] + </span><span class="str">"&lt;/li&gt;"</span><span class="pl">;</span>
       <span class="pl">}</span>
       <span class="pl">document.getElementById(</span><span class="str">"list"</span><span class="pl">).innerHTML = all;</span>
     <span class="pl">}</span></span>
-<span class="ph layer" id="ifPh">    &lt;!-- an IF / ELSE will go here --&gt;</span><span class="block layer" id="ifBlock">    <span class="cmt">// IF / ELSE — YOU choose the compliment</span>
+<span class="ph layer" id="ifPh">    &lt;!-- an IF / ELSE will go here --&gt;</span><span class="block layer" id="ifBlock">    <span class="cmt">// IF / ELSE — YOU pick from the table</span>
     <span class="js">function</span> <span class="pl">pick() {</span>
       <span class="pl">let choice = </span><span class="js">prompt</span><span class="pl">(</span><span class="str">"Pick 1, 2 or 3"</span><span class="pl">);</span>
-      <span class="js">if</span> <span class="pl">(choice === </span><span class="str">"1"</span><span class="pl">) {</span>
-        <span class="pl">document.getElementById(</span><span class="str">"msg"</span><span class="pl">).innerHTML = lines[0];</span>
-      <span class="pl">} </span><span class="js">else if</span> <span class="pl">(choice === </span><span class="str">"2"</span><span class="pl">) {</span>
-        <span class="pl">document.getElementById(</span><span class="str">"msg"</span><span class="pl">).innerHTML = lines[1];</span>
-      <span class="pl">} </span><span class="js">else</span> <span class="pl">{</span>
-        <span class="pl">document.getElementById(</span><span class="str">"msg"</span><span class="pl">).innerHTML = lines[2];</span>
-      <span class="pl">}</span>
+      <span class="js">if</span> <span class="pl">(choice === </span><span class="str">"1"</span><span class="pl">) { ...innerHTML = lines[0]; }</span>
+      <span class="js">else if</span> <span class="pl">(choice === </span><span class="str">"2"</span><span class="pl">) { ...innerHTML = lines[1]; }</span>
+      <span class="js">else</span> <span class="pl">{ ...innerHTML = lines[2]; }</span>
     <span class="pl">}</span></span>
   <span class="js">&lt;/script&gt;</span></span>
 <span class="kw">&lt;/body&gt; &lt;/html&gt;</span></pre>
@@ -159,16 +163,16 @@
 <nav class="steps">
   <button class="step s1 on" data-step="1"><div class="n">STEP 1 <span class="done">&#10003;</span></div><div class="t">HTML</div></button>
   <button class="step s2" data-step="2"><div class="n">STEP 2 <span class="done">&#10003;</span></div><div class="t">+ CSS</div></button>
-  <button class="step s3" data-step="3"><div class="n">STEP 3 <span class="done">&#10003;</span></div><div class="t">+ JS (prompt)</div></button>
+  <button class="step s3" data-step="3"><div class="n">STEP 3 <span class="done">&#10003;</span></div><div class="t">+ JS (form)</div></button>
   <button class="step s4" data-step="4"><div class="n">STEP 4 <span class="done">&#10003;</span></div><div class="t">+ Loop</div></button>
   <button class="step s5" data-step="5"><div class="n">STEP 5 <span class="done">&#10003;</span></div><div class="t">+ If / else</div></button>
 </nav>
 
 <script>
-  var BODY = '<h1 id="msg">Click a button!</h1>\n  <button onclick="greet()">Compliment me</button>\n  <button onclick="showAll()">Show all</button>\n  <button onclick="pick()">Pick a compliment</button>\n  <p id="list"></p>';
-  var CSS  = '<style>\n    body { text-align:center; font-family:Arial; padding:22px; }\n    h1 { color:#3f3399; min-height:1.2em; }\n    button { background:#3f3399; color:#fff; border:0; padding:9px 16px; margin:4px; border-radius:8px; font-size:15px; cursor:pointer; }\n    #list { color:#059669; font-weight:bold; font-size:18px; margin-top:14px; line-height:1.7; }\n  </style>';
-  var JS_BASE = 'let lines = ["You\'re a legend!","Brilliant!","Future developer!"];\n    function greet(){ let name = prompt("What is your name?"); document.getElementById("msg").innerHTML = "Hi " + name + ", " + lines[0]; }';
-  var JS_LOOP = '\n    function showAll(){ let all=""; for(let i=0;i<lines.length;i=i+1){ all = all + lines[i] + "<br>"; } document.getElementById("list").innerHTML = all; }';
+  var BODY = '<h1 id="msg">Welcome!</h1>\n  <form> Your name: <input id="name" placeholder="type here"> </form>\n  <button onclick="greet()">Compliment me</button>\n  <button onclick="showAll()">Show all</button>\n  <button onclick="pick()">Pick one</button>\n  <ul id="list"></ul>\n  <table>\n    <tr><th>No.</th><th>Compliment</th></tr>\n    <tr><td>1</td><td>You\'re a legend!</td></tr>\n    <tr><td>2</td><td>Brilliant!</td></tr>\n    <tr><td>3</td><td>Future developer!</td></tr>\n  </table>';
+  var CSS  = '<style>\n    body { text-align:center; font-family:Arial; padding:14px; margin:0; }\n    h1 { color:#3f3399; min-height:1em; font-size:23px; margin:4px 0; }\n    input { padding:5px 9px; font-size:14px; border:1px solid #aaa; border-radius:6px; }\n    button { background:#3f3399; color:#fff; border:0; padding:7px 13px; margin:3px; border-radius:7px; font-size:14px; cursor:pointer; }\n    ul { display:inline-block; text-align:left; color:#059669; font-weight:bold; margin:6px 0; }\n    table { margin:6px auto; border-collapse:collapse; font-size:14px; }\n    th, td { border:1px solid #c7cdd9; padding:4px 14px; }\n    th { background:#3f3399; color:#fff; }\n  </style>';
+  var JS_BASE = 'let lines = ["You\'re a legend!","Brilliant!","Future developer!"];\n    function greet(){ let name = document.getElementById("name").value; document.getElementById("msg").innerHTML = "Hi " + name + ", " + lines[0]; }';
+  var JS_LOOP = '\n    function showAll(){ let all=""; for(let i=0;i<lines.length;i=i+1){ all = all + "<li>" + lines[i] + "</li>"; } document.getElementById("list").innerHTML = all; }';
   var JS_IF   = '\n    function pick(){ let choice = prompt("Pick 1, 2 or 3"); if(choice==="1"){ document.getElementById("msg").innerHTML = lines[0]; } else if(choice==="2"){ document.getElementById("msg").innerHTML = lines[1]; } else { document.getElementById("msg").innerHTML = lines[2]; } }';
 
   function srcFor(step){
@@ -178,13 +182,13 @@
   }
 
   var CAP = {
-    1:'<b>Step 1 — HTML.</b> A heading, three buttons, and an empty list. Plain — and the buttons have no brains yet.',
-    2:'<b>Step 2 — + CSS.</b> Paint it: centred, Arial, indigo heading, styled buttons.',
-    3:'<b>Step 3 — + JavaScript.</b> The <b>prompt</b> asks your NAME, then <b>innerHTML</b> shows a personal compliment. Click <b>Compliment me</b> and type a name!',
-    4:'<b>Step 4 — + a LOOP.</b> <b>Show all</b> uses a <b>for-loop</b> to print EVERY compliment in the list. Click it!',
-    5:'<b>Step 5 — + an IF / ELSE.</b> <b>Pick a compliment</b> asks you to choose 1, 2 or 3 — the <b>if / else</b> shows the one YOU picked. You decide! Click it!'
+    1:'<b>Step 1 — HTML.</b> The building blocks: a heading, a <b>form</b> (a name box), buttons, an empty <b>list</b>, and a <b>table</b>. Plain — and the buttons have no brains yet.',
+    2:'<b>Step 2 — + CSS.</b> Paint it: indigo heading, styled buttons, lines on the table.',
+    3:'<b>Step 3 — + JavaScript.</b> <b>Compliment me</b> reads your name from the <b>form box</b>, then shows a personal compliment. Type a name, click it!',
+    4:'<b>Step 4 — + a LOOP.</b> <b>Show all</b> uses a <b>for-loop</b> to fill the <b>list</b> with every compliment. Click it!',
+    5:'<b>Step 5 — + an IF / ELSE.</b> <b>Pick one</b> asks 1, 2 or 3 — the <b>if / else</b> shows the compliment from that row of the <b>table</b>. You decide!'
   };
-  var CLUE = {3:'&#128071; click “Compliment me”', 4:'&#128071; click “Show all”', 5:'&#128071; click “Pick a compliment”'};
+  var CLUE = {3:'&#128071; type a name, click “Compliment me”', 4:'&#128071; click “Show all”', 5:'&#128071; click “Pick one”'};
 
   var preview=document.getElementById('preview'), steps=document.querySelectorAll('.step'),
       caption=document.getElementById('caption'), clue=document.getElementById('clue'),
