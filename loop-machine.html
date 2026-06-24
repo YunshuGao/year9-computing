@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Loop Machine — how a for loop really runs</title>
+<style>
+  :root{
+    --ink:#16202e; --mut:#5b6b7d; --line:#e4e9f0; --soft:#f5f8fc;
+    --indigo:#3f3399; --green:#0f9d58; --amber:#f59e0b; --violet:#7c3aed;
+    --red:#e0413b; --sky:#e8f4ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#eef2f7;color:var(--ink);
+       font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:1080px;margin:0 auto;padding:18px 22px 60px}
+  header h1{font-size:30px;margin:6px 0 2px;color:var(--indigo);font-weight:800;letter-spacing:-.3px}
+  header h1 code{background:#efeaff;color:var(--violet);padding:1px 10px;border-radius:8px;font-size:26px}
+  header p{margin:0 0 14px;color:var(--mut);font-size:16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:12px 0;
+        box-shadow:0 1px 3px rgba(20,30,50,.05)}
+  /* presets */
+  .presets{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+  .presets button{font:inherit;font-weight:700;font-size:15px;cursor:pointer;border-radius:12px;
+       border:2px solid var(--line);background:#fff;color:var(--ink);padding:10px 16px}
+  .presets button:hover{border-color:var(--indigo)}
+  .presets button.on{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+  /* code line */
+  .codecard{font-family:Consolas,"Courier New",monospace;font-size:24px;text-align:center;
+       background:#16202b;color:#e9eef6;border-radius:14px;padding:18px 14px}
+  .codecard .kw{color:#c4b5fd}
+  .part{border-radius:8px;padding:2px 8px;font-weight:800;display:inline-block}
+  .p-start{background:rgba(52,211,153,.18);color:#34d399;outline:2px solid #34d399}
+  .p-check{background:rgba(251,191,36,.18);color:#fbbf24;outline:2px solid #fbbf24}
+  .p-step{background:rgba(196,181,253,.18);color:#c4b5fd;outline:2px solid #c4b5fd}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:12px;font-size:13.5px}
+  .legend span b{font-size:15px}
+  .dotg{color:var(--green)} .dota{color:var(--amber)} .dotv{color:var(--violet)}
+  /* cycle */
+  .cycle{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:4px 0 0}
+  .beat{border:2px solid var(--line);border-radius:12px;padding:8px 14px;font-weight:800;font-size:15px;color:var(--mut);background:#fff;transition:.15s}
+  .beat.on{transform:scale(1.08)}
+  .beat.b-check.on{border-color:var(--amber);background:#fff8e8;color:#9a6b00}
+  .beat.b-do.on{border-color:var(--green);background:#e9f9f0;color:#0a6b3b}
+  .beat.b-step.on{border-color:var(--violet);background:#f3efff;color:#5b2bb3}
+  .arrow{color:#b9c2cf;font-size:20px;font-weight:800}
+  .loopback{font-size:13px;color:var(--mut);text-align:center;margin-top:6px}
+  /* stage */
+  .stage{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:740px){.stage{grid-template-columns:1fr}}
+  .counter{font-size:18px;color:var(--mut);text-align:center}
+  .counter b{display:block;font-size:74px;line-height:1;color:var(--indigo);font-family:Consolas,monospace}
+  .checkbox{text-align:center;font-size:21px;margin-top:6px}
+  .checkbox .q{font-family:Consolas,monospace;font-weight:800}
+  .yn{display:inline-block;min-width:62px;padding:4px 14px;border-radius:999px;font-weight:800;color:#fff;margin-left:6px}
+  .yn.yes{background:var(--green)} .yn.no{background:var(--red)} .yn.idle{background:#c3ccd8}
+  .outwrap{margin-top:4px}
+  .outlbl{font-size:14px;color:var(--mut);font-weight:700;margin-bottom:6px}
+  .tiles{display:flex;gap:6px;flex-wrap:wrap;min-height:44px;align-content:flex-start}
+  .tile{font-family:Consolas,monospace;font-weight:800;font-size:18px;background:#e8f4ff;color:#0b63b6;
+        border:1px solid #b9ddff;border-radius:9px;padding:5px 11px;animation:pop .2s}
+  .tile.dots{background:#f0f2f6;color:var(--mut);border-color:var(--line)}
+  @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+  .narr{margin-top:12px;background:var(--soft);border:1px solid var(--line);border-left:5px solid var(--indigo);
+        border-radius:0 10px 10px 0;padding:11px 14px;font-size:16px;min-height:48px}
+  .narr b{color:var(--indigo)}
+  /* controls */
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+  .controls button{font:inherit;font-weight:800;font-size:17px;cursor:pointer;border-radius:12px;border:0;padding:12px 22px;color:#fff}
+  #next{background:var(--green)} #run{background:var(--indigo)} #reset{background:#fff;color:var(--ink);border:2px solid var(--line)}
+  .controls button:disabled{opacity:.4;cursor:default}
+  /* summary */
+  .summary{background:#f3fbf6;border:1px solid #bfe7cf;border-radius:14px;padding:14px 18px;margin-top:12px;font-size:16px}
+  .summary h3{margin:0 0 6px;color:#0a6b3b;font-size:18px}
+  .spot{background:#fffaf0;border:1px solid #f3d99a;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:15px}
+  .spot b{color:#9a6b00}
+  /* compare */
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:15px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+  th{background:var(--soft);color:var(--mut)}
+  td code{font-family:Consolas,monospace;background:#f1f3f8;padding:1px 6px;border-radius:6px}
+  .rule{margin:12px 0 0;font-size:17px;font-weight:800;text-align:center;color:var(--indigo);
+        background:#efeaff;border-radius:12px;padding:12px}
+  .rule .le{color:var(--green)} .rule .lt{color:var(--red)}
+  h2{font-size:20px;color:var(--indigo);margin:2px 0 4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>The <code>for</code> Loop Machine</h1>
+    <p>Watch the counter. Watch the check go YES or NO. See <b>exactly</b> where the loop stops.</p>
+  </header>
+
+  <div class="card">
+    <div class="presets" id="presets">
+      <button data-k="up5" class="on">Count up to 5</button>
+      <button data-k="down3">3 &rarr; 1 &nbsp;(count down)</button>
+      <button data-k="le999">up to 999 &nbsp;(i &lt;= 999)</button>
+      <button data-k="lt999">below 999 &nbsp;(i &lt; 999)</button>
+    </div>
+    <div class="codecard" style="margin-top:12px">
+      <span class="kw">for</span> (
+      <span class="part p-start" id="cStart">let i = 1</span> ;
+      <span class="part p-check" id="cCheck">i &lt;= 5</span> ;
+      <span class="part p-step" id="cStep">i = i + 1</span> )
+      { <span style="color:#7dd3fc">print i</span> }
+    </div>
+    <div class="legend">
+      <span class="dotg">&#9679; <b>start</b> — where i begins</span>
+      <span class="dota">&#9679; <b>check</b> — keep going while this is TRUE</span>
+      <span class="dotv">&#9679; <b>step</b> — how i changes each time</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="cycle">
+      <span class="beat b-start">SET i</span><span class="arrow">&rarr;</span>
+      <span class="beat b-check" id="bCheck">CHECK</span><span class="arrow">&rarr;</span>
+      <span class="beat b-do" id="bDo">DO (print i)</span><span class="arrow">&rarr;</span>
+      <span class="beat b-step" id="bStep">STEP (change i)</span>
+    </div>
+    <div class="loopback">&#8635; after STEP it loops back to CHECK &mdash; again and again &mdash; until the check is <b>NO</b>.</div>
+  </div>
+
+  <div class="card">
+    <div class="stage">
+      <div>
+        <div class="counter">the counter is now<b id="ival">1</b></div>
+        <div class="checkbox">Is <span class="q" id="checkq">1 &lt;= 5</span>? <span class="yn idle" id="yn">…</span></div>
+      </div>
+      <div class="outwrap">
+        <div class="outlbl">What the page prints:</div>
+        <div class="tiles" id="tiles"></div>
+      </div>
+    </div>
+    <div class="narr" id="narr">Press <b>&#9654; Next step</b> to start. The loop sets <b>i</b>, then keeps checking.</div>
+    <div class="controls">
+      <button id="next">&#9654; Next step</button>
+      <button id="run">&#9193; Run to the end</button>
+      <button id="reset">&#8635; Reset</button>
+    </div>
+    <div class="summary" id="summary" hidden></div>
+  </div>
+
+  <div class="card">
+    <h2>The 3 loops side by side</h2>
+    <table>
+      <tr><th>The loop</th><th>It prints</th><th>How many</th><th>Why it stops</th></tr>
+      <tr><td><code>i=3; i&gt;=1; i=i-1</code></td><td>3, 2, 1</td><td><b>3</b></td><td>i became 0, and <code>0 &gt;= 1</code> is false</td></tr>
+      <tr><td><code>i=1; i&lt;=999; i=i+1</code></td><td>1, 2, 3, … , <b>999</b></td><td><b>999</b></td><td>i became 1000, and <code>1000 &lt;= 999</code> is false — so <b>999 IS printed</b></td></tr>
+      <tr><td><code>i=1; i&lt;999; i=i+1</code></td><td>1, 2, 3, … , <b>998</b></td><td><b>998</b></td><td>i became 999, and <code>999 &lt; 999</code> is false — so <b>999 is NEVER printed</b></td></tr>
+    </table>
+    <p class="rule"><span class="le">&lt;= (less-or-equal) INCLUDES the last number.</span> &nbsp; <span class="lt">&lt; (less-than) STOPS just BEFORE it.</span></p>
+  </div>
+</div>
+
+<script>
+var PRESETS = {
+  up5:   {start:1, end:5,   op:'+', cmp:'<=', codeStart:'let i = 1', codeCheck:'i &lt;= 5',   codeStep:'i = i + 1'},
+  down3: {start:3, end:1,   op:'-', cmp:'>=', codeStart:'let i = 3', codeCheck:'i &gt;= 1',   codeStep:'i = i - 1'},
+  le999: {start:1, end:999, op:'+', cmp:'<=', codeStart:'let i = 1', codeCheck:'i &lt;= 999', codeStep:'i = i + 1'},
+  lt999: {start:1, end:999, op:'+', cmp:'<',  codeStart:'let i = 1', codeCheck:'i &lt; 999',  codeStep:'i = i + 1'}
+};
+var $ = function(id){return document.getElementById(id);};
+var S, KEY='up5', timer=null;
+
+function holds(i,cmp,end){
+  if(cmp==='<=')return i<=end; if(cmp==='<')return i<end;
+  if(cmp==='>=')return i>=end; if(cmp==='>')return i>end;
+}
+function sym(cmp){return cmp==='<='?'≤':cmp==='<'?'<':cmp==='>='?'≥':'>';}
+
+function load(k){
+  KEY=k; var p=PRESETS[k];
+  S={start:p.start,end:p.end,op:p.op,cmp:p.cmp,i:p.start,printed:[],done:false,started:false};
+  $('cStart').innerHTML=p.codeStart; $('cCheck').innerHTML=p.codeCheck; $('cStep').innerHTML=p.codeStep;
+  var bs=document.querySelectorAll('#presets button');
+  for(var j=0;j<bs.length;j++){bs[j].className=(bs[j].getAttribute('data-k')===k)?'on':'';}
+  $('summary').hidden=true; lightBeats(null);
+  $('next').disabled=false; $('run').disabled=false;
+  render(); $('yn').className='yn idle'; $('yn').textContent='…';
+  $('narr').innerHTML='Press <b>&#9654; Next step</b> to start. i begins at <b>'+S.start+'</b>.';
+}
+
+function tiles(){
+  var arr=S.printed, html='';
+  if(arr.length<=20){ for(var a=0;a<arr.length;a++) html+='<span class="tile">'+arr[a]+'</span>'; }
+  else{
+    for(var b=0;b<12;b++) html+='<span class="tile">'+arr[b]+'</span>';
+    html+='<span class="tile dots">… '+(arr.length-16)+' more …</span>';
+    for(var c=arr.length-4;c<arr.length;c++) html+='<span class="tile">'+arr[c]+'</span>';
+  }
+  $('tiles').innerHTML=html;
+}
+function render(){
+  $('ival').textContent=S.i;
+  $('checkq').innerHTML=S.i+' '+sym(S.cmp)+' '+S.end;
+  tiles();
+}
+function lightBeats(which){
+  ['bCheck','bDo','bStep'].forEach(function(id){$(id).classList.remove('on');});
+  if(which==='check')$('bCheck').classList.add('on');
+  if(which==='go'){$('bCheck').classList.add('on');$('bDo').classList.add('on');$('bStep').classList.add('on');}
+}
+
+function step(){
+  if(S.done) return false;
+  S.started=true;
+  var i=S.i, ok=holds(i,S.cmp,S.end);
+  $('checkq').innerHTML=i+' '+sym(S.cmp)+' '+S.end;
+  if(ok){
+    S.printed.push(i);
+    var ni = S.op==='+' ? i+1 : i-1;
+    S.i=ni;
+    $('yn').className='yn yes'; $('yn').textContent='YES';
+    lightBeats('go');
+    $('narr').innerHTML='Check: is <b>'+i+' '+sym(S.cmp)+' '+S.end+'</b>? <b style="color:#0f9d58">YES</b> &rarr; print <b>'+i+'</b> &rarr; step: i becomes <b>'+ni+'</b>.';
+    render(); return true;
+  } else {
+    S.done=true;
+    $('yn').className='yn no'; $('yn').textContent='NO';
+    lightBeats('check');
+    $('narr').innerHTML='Check: is <b>'+i+' '+sym(S.cmp)+' '+S.end+'</b>? <b style="color:#e0413b">NO</b> &rarr; <b>STOP.</b> The loop is finished.';
+    render(); summary(); return false;
+  }
+}
+function summary(){
+  var n=S.printed.length, first=S.printed[0], last=S.printed[n-1];
+  var lst = n<=6 ? S.printed.join(', ')
+                 : (S.printed.slice(0,3).join(', ')+', … , '+S.printed.slice(-2).join(', '));
+  var html='<h3>&#10003; Finished — it printed '+n+' number'+(n===1?'':'s')+'.</h3>';
+  html+='<div>Printed: <b>'+lst+'</b></div>';
+  html+='<div style="margin-top:4px">It stopped because i became <b>'+S.i+'</b>, and <code>'+S.i+' '+sym(S.cmp)+' '+S.end+'</code> is <b>false</b>.</div>';
+  if(S.cmp==='<='&&S.end===999){
+    html+='<div class="spot">&#128161; <b>The last number:</b> at i = 999, the check was <b>999 &le; 999 &rarr; YES</b>, so <b>999 WAS printed</b>. Then i became 1000 and it stopped.</div>';
+  } else if(S.cmp==='<'&&S.end===999){
+    html+='<div class="spot">&#128161; <b>The last number:</b> at i = 998 it printed 998, then i became 999. The check <b>999 &lt; 999 &rarr; NO</b>, so <b>999 was NEVER printed</b>. It stops one early.</div>';
+  }
+  $('summary').innerHTML=html; $('summary').hidden=false;
+}
+
+$('next').onclick=function(){ if(timer)return; step(); };
+$('reset').onclick=function(){ if(timer){clearInterval(timer);timer=null;} load(KEY); };
+$('run').onclick=function(){
+  if(timer) return;
+  var big = Math.abs(S.end-S.start) > 24;
+  if(big){
+    while(step()){}                 // compute instantly for the long loops
+    return;
+  }
+  $('next').disabled=true; $('run').disabled=true;
+  timer=setInterval(function(){
+    var more=step();
+    if(!more){ clearInterval(timer); timer=null; $('next').disabled=true; $('run').disabled=true; }
+  }, 750);
+};
+$('presets').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b)return;
+  if(timer){clearInterval(timer);timer=null;}
+  load(b.getAttribute('data-k'));
+});
+load('up5');
+</script>
+</body>
+</html>
