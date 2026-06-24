@@ -2025,4 +2025,50 @@ document.addEventListener("DOMContentLoaded", function(){
   }
   setTimeout(refresh,1500);
 })();</script>
+<style>.ssfx-prog{font-family:'Press Start 2P',monospace;font-size:11px;color:#ffd54f;letter-spacing:1px;margin:-4px 0 16px;text-shadow:1px 1px 0 rgba(0,0,0,.4)}</style><script>(function(){
+  var SESSIONS=[
+    {key:"must",  name:"WARM-UP DONE!",   sub:"You typed every building block \u2014 HTML, CSS, buttons, colour, prompt and a loop. Level up!", ids:[1,2,3,4,5,20]},
+    {key:"should",name:"LEVEL-UP DONE!",  sub:"You filled in the skeletons \u2014 random, if / else and the loop. Strong building!", ids:[6,7,8]},
+    {key:"could", name:"YOUR TURN DONE!", sub:"You wrote the code from scratch and built the whole CRAFT WORLD page. Master Builder!", ids:[9,10,11,12,13,19]}
+  ];
+  var seen={}; try{ seen=JSON.parse(localStorage.getItem("l8-sessions")||"{}"); }catch(e){}
+  function store(){ try{ localStorage.setItem("l8-sessions", JSON.stringify(seen)); }catch(e){} }
+  var AC=window.AudioContext||window.webkitAudioContext, ac=null;
+  function muted(){ try{ return localStorage.getItem("l8-mute")==="1"; }catch(e){ return false; } }
+  function ensure(){ if(!ac&&AC) ac=new AC(); if(ac&&ac.state==="suspended") ac.resume(); return ac; }
+  function note(f,start,dur,vol){ if(!ensure())return; var o=ac.createOscillator(),g=ac.createGain();
+    o.type="triangle"; o.frequency.value=f; o.connect(g); g.connect(ac.destination);
+    var t=ac.currentTime+start; g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(vol||0.15,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur); o.start(t); o.stop(t+dur+0.03); }
+  function fanfare(){ if(muted())return;
+    [523,659,784,1047].forEach(function(f,k){ note(f,k*0.13,0.22,0.16); });
+    note(1047,0.55,0.6,0.13); note(1319,0.55,0.6,0.12); note(1568,0.55,0.7,0.11); }
+  function flash(){ var f=document.createElement("div"); f.className="exfx-flash"; document.body.appendChild(f); setTimeout(function(){ f.remove(); },740); }
+  function confetti(){ var cols=["#ffd54f","#a855f7","#ffffff","#6abe30","#1cb0f6","#ff8a3d"];
+    for(var i=0;i<54;i++){ (function(k){ var c=document.createElement("div"); c.className="exfx-conf";
+      c.style.left=(Math.random()*100)+"vw"; c.style.background=cols[k%cols.length];
+      c.style.animationDelay=(Math.random()*0.6)+"s"; document.body.appendChild(c);
+      setTimeout(function(){ c.remove(); },3400); })(i); }
+  }
+  function isDone(ids){ return ids.every(function(i){ var c=document.getElementById("done"+i); return c&&c.checked; }); }
+  function nSeen(){ var n=0; SESSIONS.forEach(function(s){ if(seen[s.key]) n++; }); return n; }
+  function celebrate(s){
+    if(seen[s.key]) return; seen[s.key]=1; store();
+    confetti(); fanfare(); flash();
+    var ov=document.createElement("div"); ov.className="exam-ready";
+    ov.innerHTML='<div class="er-card"><div class="er-emoji">\ud83c\udf89</div>'
+      +'<div class="er-big">'+s.name+'</div>'
+      +'<div class="er-sub">'+s.sub+'</div>'
+      +'<div class="ssfx-prog">SECTION '+nSeen()+' OF '+SESSIONS.length+' COMPLETE</div>'
+      +'<button class="er-x">Keep building \u2192</button></div>';
+    document.body.appendChild(ov);
+    ov.querySelector(".er-x").onclick=function(){ ov.remove(); };
+    ov.addEventListener("click",function(e){ if(e.target===ov) ov.remove(); });
+  }
+  function check(){ SESSIONS.forEach(function(s){ if(!seen[s.key] && isDone(s.ids)) celebrate(s); }); }
+  // on load: silently mark already-finished sections so we do not re-celebrate on reload
+  function seed(){ var ch=false; SESSIONS.forEach(function(s){ if(!seen[s.key] && isDone(s.ids)){ seen[s.key]=1; ch=true; } }); if(ch) store(); }
+  if(typeof showOk==="function"){ var prev=showOk; showOk=function(i){ prev(i); try{ check(); }catch(e){} }; window.showOk=showOk; }
+  setTimeout(seed, 1500);
+})();</script>
 </body></html>
