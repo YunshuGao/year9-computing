@@ -353,6 +353,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 
 .cols>*{min-width:0}
 .code-ref,.editor{min-width:0;max-width:100%}
+.code-ref{-webkit-user-select:text;-moz-user-select:text;user-select:text;cursor:text}
 
 /* === bigger layout (same as L7): wider page + larger type & output boxes === */
 .wrap{max-width:1480px}
@@ -482,29 +483,6 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   <span class="talkmob tm-sheep" data-says="Baa! Click Run.|Soft wool, sharp code.|One more tile!|Don&rsquo;t paste it!"><span class="mob-bub"></span><img src="img/mob-sheep.png" alt="Sheep"></span>
   </header>
 
-  <section class="showcase">
-    <div class="sc-head"><span class="sc-star">&#9733;</span> YOUR GOAL TODAY: BUILD THIS WHOLE PAGE <span class="sc-star">&#9733;</span></div>
-    <div class="sc-body">
-      <div class="sc-left">
-        <div class="sc-win">
-          <div class="sc-bar"><i style="background:#e0564a"></i><i style="background:#f4c12b"></i><i style="background:#5fb74e"></i><span class="sc-url">craftworld.html</span></div>
-          <a href="craftworld.html" target="_blank" rel="noopener"><img class="sc-img" src="img/craftworld.png" alt="The whole CRAFT WORLD web page you will build" loading="lazy"></a>
-        </div>
-      </div>
-      <div class="sc-note">
-        <p class="sc-lead">You already know every piece. Here&rsquo;s the plan:</p>
-        <div class="sc-road">
-          <span class="rd rd1"><b>1</b> Warm-up<small>MUST do</small></span>
-          <span class="rd-go">&rarr;</span>
-          <span class="rd rd2"><b>2</b> Level-up<small>Should / Could</small></span>
-          <span class="rd-go">&rarr;</span>
-          <span class="rd rd3"><b>&#127918;</b> Build it!<small>your game page</small></span>
-        </div>
-        <a class="sc-cta" href="#start">&darr; Start &mdash; write your name</a>
-        <p class="sc-mini">You&rsquo;ll build the real thing at the <b>end</b>. <a class="sc-see" href="craftworld.html" target="_blank" rel="noopener">&#9654; peek at it</a></p>
-      </div>
-    </div>
-  </section>
   <div class="strip" id="start">
     <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
     <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
@@ -566,7 +544,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <p class="lead"><b>HTML</b> builds the structure. A heading, a paragraph and a <code>&lt;ul&gt;</code> list of blocks - the same tags as your website project. Type it, then Run.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">copy &amp; paste it &rarr;</span></div>
         <pre class="code-ref" id="ref1">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -588,12 +566,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 &lt;/html&gt;</pre>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="lbl"><span class="cn">2</span> Paste it &amp; Run</div>
         <div class="predict-row">
           <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
           <input class="predict-in" id="pred1" placeholder="Type your guess...">
         </div>
-        <textarea class="editor" id="ed1" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <textarea class="editor" id="ed1" spellcheck="false" placeholder="Paste the code here, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(1)">Run</button>
           <button class="btn ghost" onclick="resetEx(1)">Clear</button>
@@ -617,7 +595,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <p class="lead"><b>CSS</b> styles the page. One <code>&lt;style&gt;</code> block gives a sky <code>background-color</code>, a grass-green <code>&lt;h2&gt;</code> banner with a thick <code>border</code>, and a dirt-brown <code>button</code> - the blocky Minecraft look, all from CSS you already know.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">copy &amp; paste it &rarr;</span></div>
         <pre class="code-ref" id="ref2">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -636,12 +614,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 &lt;/html&gt;</pre>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="lbl"><span class="cn">2</span> Paste it &amp; Run</div>
         <div class="predict-row">
           <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
           <input class="predict-in" id="pred2" placeholder="Type your guess...">
         </div>
-        <textarea class="editor" id="ed2" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <textarea class="editor" id="ed2" spellcheck="false" placeholder="Paste the code here, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(2)">Run</button>
           <button class="btn ghost" onclick="resetEx(2)">Clear</button>
@@ -665,7 +643,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <p class="lead"><b>JavaScript</b> - the part you have spent weeks on. A <code>&lt;button&gt;</code> calls a <code>function</code>, and the function uses <code>innerHTML</code> to change the heading. Type it, Run, then click Mine a block.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">copy &amp; paste it &rarr;</span></div>
         <pre class="code-ref" id="ref3">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -686,12 +664,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 &lt;/html&gt;</pre>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="lbl"><span class="cn">2</span> Paste it &amp; Run</div>
         <div class="predict-row">
           <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
           <input class="predict-in" id="pred3" placeholder="Type your guess...">
         </div>
-        <textarea class="editor" id="ed3" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <textarea class="editor" id="ed3" spellcheck="false" placeholder="Paste the code here, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(3)">Run</button>
           <button class="btn ghost" onclick="resetEx(3)">Clear</button>
@@ -715,7 +693,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <p class="lead">Code can change the <b>style</b> too. <code>.style.color</code> turns the heading grass-green the moment the button is clicked - JavaScript reaching into the page. Run it, then click Grass mode.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">copy &amp; paste it &rarr;</span></div>
         <pre class="code-ref" id="ref4">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -736,12 +714,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 &lt;/html&gt;</pre>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="lbl"><span class="cn">2</span> Paste it &amp; Run</div>
         <div class="predict-row">
           <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
           <input class="predict-in" id="pred4" placeholder="Type your guess...">
         </div>
-        <textarea class="editor" id="ed4" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <textarea class="editor" id="ed4" spellcheck="false" placeholder="Paste the code here, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(4)">Run</button>
           <button class="btn ghost" onclick="resetEx(4)">Clear</button>
@@ -765,7 +743,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <p class="lead">Make it personal. <code>prompt</code> asks for a Minecraft name, a <code>let</code> variable remembers it, and <code>+</code> joins it into a welcome message. Run, click Log in, and type a name.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">copy &amp; paste it &rarr;</span></div>
         <pre class="code-ref" id="ref5">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -787,12 +765,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 &lt;/html&gt;</pre>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="lbl"><span class="cn">2</span> Paste it &amp; Run</div>
         <div class="predict-row">
           <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
           <input class="predict-in" id="pred5" placeholder="Type your guess...">
         </div>
-        <textarea class="editor" id="ed5" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <textarea class="editor" id="ed5" spellcheck="false" placeholder="Paste the code here, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(5)">Run</button>
           <button class="btn ghost" onclick="resetEx(5)">Clear</button>
@@ -986,10 +964,10 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The target</div>
-        <div class="goalbox">The page shows <b>Block 1 Block 2 Block 3</b> &mdash; written by a loop you build yourself.
+        <div class="goalbox">The page shows <b>Block 1 Block 2 Block 3</b> &mdash; written by a loop you build yourself, from a near-empty script.
           <div class="eg">Target: Block 1 Block 2 Block 3</div>
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(9)">Show a hint</button></div>
-          <div class="reveal hint" id="hint9" hidden><code>for (let i = 1; i &lt;= 3; i = i + 1) {</code><br>&nbsp;&nbsp;<code>s = s + "Block " + i + " ";</code><br><code>}</code></div>
+          <div class="reveal hint" id="hint9" hidden>Start a text store: <code>let s = "";</code><br>Loop: <code>for (let i = 1; i &lt;= 3; i = i + 1) { s = s + "Block " + i + " "; }</code><br>Show it: <code>document.getElementById("out").innerHTML = s;</code></div>
         </div>
       </div>
       <div class="col">
@@ -1006,14 +984,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   &lt;h1&gt;Block counter&lt;/h1&gt;
   &lt;p id="out"&gt;&lt;/p&gt;
   &lt;script&gt;
-    let s = "";
 
-    // ① write a loop that runs 3 times (i = 1, 2, 3)
-    // ② each time, add  "Block " + i + " "  to s
+    // Your code goes here.
+    // Make the page show:  Block 1 Block 2 Block 3
+    // (use a loop, and put your text into the &lt;p id="out"&gt; with innerHTML)
 
 
-
-    document.getElementById("out").innerHTML = s;
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</textarea>
@@ -1039,10 +1015,10 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <div class="cols">
       <div class="col">
         <div class="lbl"><span class="cn">1</span> The target</div>
-        <div class="goalbox">Click <b>Mine</b> and the heading changes from <b>Stone</b> to <b>Mined!</b>
+        <div class="goalbox">Click <b>Mine</b> and the heading changes from <b>Stone</b> to <b>Mined!</b> &mdash; you write the whole function.
           <div class="eg">Target: click Mine → the heading says Mined!</div>
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
-          <div class="reveal hint" id="hint10" hidden><code>document.getElementById("block").innerHTML = "Mined!";</code></div>
+          <div class="reveal hint" id="hint10" hidden><code>function mine() {</code><br>&nbsp;&nbsp;<code>document.getElementById("block").innerHTML = "Mined!";</code><br><code>}</code></div>
         </div>
       </div>
       <div class="col">
@@ -1059,11 +1035,11 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   &lt;h1 id="block"&gt;Stone&lt;/h1&gt;
   &lt;button onclick="mine()"&gt;Mine&lt;/button&gt;
   &lt;script&gt;
-    function mine() {
-      // ① change the heading (id="block") to say  Mined!
+
+    // Write the function mine() so that clicking the button
+    // changes the heading (id="block") to say  Mined!
 
 
-    }
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</textarea>
@@ -1171,10 +1147,10 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   <div class="divide cap"><span class="lab">Capstone &mdash; put all three together</span><span class="ln"></span></div>
   <section class="ex could capstone" id="ex13">
     <div class="h"><span class="n">13</span><h3>Build the whole arcade</h3><button class="exam-btn" id="exambtn13" onclick="examMode(13)">&#127937; Exam mode</button><span class="exam-timer" id="examtimer13" hidden></span></div>
-    <p class="lead">This is the capstone &mdash; the whole CRAFT WORLD page on ONE screen, the same page you saw at the very top. A <code>&lt;style&gt;</code> block paints it, the HTML lays out the heading and buttons, and the <code>&lt;script&gt;</code> makes Mine and Open chest work. Type it, press Run, then play your page.</p>
+    <p class="lead">This is the capstone &mdash; the whole CRAFT WORLD page on ONE screen, the same page you saw at the very top. A <code>&lt;style&gt;</code> block paints it, the HTML lays out the heading and buttons, and the <code>&lt;script&gt;</code> makes Mine and Open chest work. Copy it, press Run,then play your page.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
+        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">copy &amp; paste it &rarr;</span></div>
         <pre class="code-ref" id="ref13">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -1205,12 +1181,12 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 &lt;/html&gt;</pre>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
+        <div class="lbl"><span class="cn">2</span> Paste it &amp; Run</div>
         <div class="predict-row">
           <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
           <input class="predict-in" id="pred13" placeholder="Type your guess...">
         </div>
-        <textarea class="editor" id="ed13" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+        <textarea class="editor" id="ed13" spellcheck="false" placeholder="Paste the code here, then press Run"></textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(13)">Run</button>
           <button class="btn ghost" onclick="resetEx(13)">Clear</button>
@@ -1519,7 +1495,7 @@ var MODES = {"6": "build", "7": "build", "8": "build", "9": "build", "10": "buil
 var PREDICT = {"15": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    h1 { color: red; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n<\/body>\n<\/html>", "17": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <p id=\"out\"><\/p>\n  <script>\n    let coins = 8;\n    if (coins >= 10) {\n      document.getElementById(\"out\").innerHTML = \"Rich!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Keep mining\";\n    }\n  <\/script>\n<\/body>\n<\/html>"};
 var DEBUGC = {"18": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <p id=\"out\"><\/p>\n  <script>\n    let s = \"\";\n    for (let i = 1; i < 3; i = i + 1) {\n      s = s + \"Block \" + i + \" \";\n    }\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>"};
 var TWEAKC = {"12": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h2 id=\"out\">Diamond check<\/h2>\n  <button onclick=\"check()\">Check my stack<\/button>\n  <script>\n    function check() {\n      let diamonds = 5;\n      if (CONDITION) {\n        document.getElementById(\"out\").innerHTML = \"Full stack!\";\n      } else {\n        document.getElementById(\"out\").innerHTML = \"Keep mining\";\n      }\n    }\n  <\/script>\n<\/body>\n<\/html>"};
-var BUILDC = {"6": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"out\">Open a chest!<\/h1>\n  <button onclick=\"loot()\">Open chest<\/button>\n  <script>\n    function loot() {\n      let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n\n      // \u2460 pick a random position in the list, store it in:  let i\n\n\n      // \u2461 show that block in the heading (id=\"out\") with innerHTML\n\n\n    }\n  <\/script>\n<\/body>\n<\/html>", "7": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"out\">Dig for the diamond!<\/h1>\n  <button onclick=\"dig()\">Dig<\/button>\n  <script>\n    function dig() {\n      let guess = prompt(\"Which block? Type 1, 2 or 3:\");\n      if (guess == \"2\") {\n        // \u2460 show \"Diamond!\" in the heading (id=\"out\")\n\n\n      } else {\n        // \u2461 show \"Just dirt.\" in the heading\n\n\n      }\n    }\n  <\/script>\n<\/body>\n<\/html>", "8": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>My Inventory<\/h1>\n  <p id=\"out\"><\/p>\n  <script>\n    let blocks = [\"Grass\", \"Stone\", \"Diamond\"];\n    let s = \"\";\n\n    for (let i = 0; i < blocks.length; i = i + 1) {\n      // \u2460 add this block to the line:   s = s + ( the block at position i ) + \" \";\n\n\n    }\n\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>", "9": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>Block counter<\/h1>\n  <p id=\"out\"><\/p>\n  <script>\n    let s = \"\";\n\n    // \u2460 write a loop that runs 3 times (i = 1, 2, 3)\n    // \u2461 each time, add  \"Block \" + i + \" \"  to s\n\n\n\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>", "10": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"block\">Stone<\/h1>\n  <button onclick=\"mine()\">Mine<\/button>\n  <script>\n    function mine() {\n      // \u2460 change the heading (id=\"block\") to say  Mined!\n\n\n    }\n  <\/script>\n<\/body>\n<\/html>", "19": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    /* \u2461 style it: give body a background-color, and h1 a color */\n\n\n  <\/style>\n<\/head>\n<body>\n\n  <!-- \u2460 add a heading:  <h1 id=\"screen\">CRAFT WORLD<\/h1> -->\n\n\n  <!-- \u2460 add a button:   <button onclick=\"mine()\">Mine<\/button> -->\n\n\n  <script>\n    // \u2462 write mine() so clicking the button changes the heading to \"You mined a block!\"\n\n\n  <\/script>\n<\/body>\n<\/html>"};
+var BUILDC = {"6": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"out\">Open a chest!<\/h1>\n  <button onclick=\"loot()\">Open chest<\/button>\n  <script>\n    function loot() {\n      let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n\n      // \u2460 pick a random position in the list, store it in:  let i\n\n\n      // \u2461 show that block in the heading (id=\"out\") with innerHTML\n\n\n    }\n  <\/script>\n<\/body>\n<\/html>", "7": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"out\">Dig for the diamond!<\/h1>\n  <button onclick=\"dig()\">Dig<\/button>\n  <script>\n    function dig() {\n      let guess = prompt(\"Which block? Type 1, 2 or 3:\");\n      if (guess == \"2\") {\n        // \u2460 show \"Diamond!\" in the heading (id=\"out\")\n\n\n      } else {\n        // \u2461 show \"Just dirt.\" in the heading\n\n\n      }\n    }\n  <\/script>\n<\/body>\n<\/html>", "8": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>My Inventory<\/h1>\n  <p id=\"out\"><\/p>\n  <script>\n    let blocks = [\"Grass\", \"Stone\", \"Diamond\"];\n    let s = \"\";\n\n    for (let i = 0; i < blocks.length; i = i + 1) {\n      // \u2460 add this block to the line:   s = s + ( the block at position i ) + \" \";\n\n\n    }\n\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>", "9": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>Block counter<\/h1>\n  <p id=\"out\"><\/p>\n  <script>\n\n    // Your code goes here.\n    // Make the page show:  Block 1 Block 2 Block 3\n    // (use a loop, and put your text into the <p id=\"out\"> with innerHTML)\n\n\n  <\/script>\n<\/body>\n<\/html>", "10": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"block\">Stone<\/h1>\n  <button onclick=\"mine()\">Mine<\/button>\n  <script>\n\n    // Write the function mine() so that clicking the button\n    // changes the heading (id=\"block\") to say  Mined!\n\n\n  <\/script>\n<\/body>\n<\/html>", "19": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    /* \u2461 style it: give body a background-color, and h1 a color */\n\n\n  <\/style>\n<\/head>\n<body>\n\n  <!-- \u2460 add a heading:  <h1 id=\"screen\">CRAFT WORLD<\/h1> -->\n\n\n  <!-- \u2460 add a button:   <button onclick=\"mine()\">Mine<\/button> -->\n\n\n  <script>\n    // \u2462 write mine() so clicking the button changes the heading to \"You mined a block!\"\n\n\n  <\/script>\n<\/body>\n<\/html>"};
 var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 19, 13, 14, 15, 16, 17, 18];
 var THEME_LIST = ["arcade"];
 var IDS = Object.keys(STARTERS).map(Number);
@@ -1776,10 +1752,11 @@ function toast(m){ var t=$("toast"); t.textContent=m; t.classList.add("show"); c
 
 document.addEventListener("DOMContentLoaded", function(){
   ALL_IDS.forEach(function(i){ $("ed"+i).addEventListener("input", persist); });
-  // type-it-yourself: block paste + drop into every editor (the reference is uncopyable
-  // for a reason - they should type the HTML/CSS/JS, not paste it).
+  // Should/Could (build/write tiles) = write it yourself, paste off. Must + capstone
+  // (type mode, MODES is undefined for them) = copy &amp; paste allowed.
   ALL_IDS.forEach(function(i){ var ed=$("ed"+i); if(!ed) return;
-    ed.addEventListener("paste", function(e){ e.preventDefault(); toast("Type it yourself - pasting is off here."); });
+    if(!MODES[String(i)]) return;  // type-mode tiles: copy-paste allowed
+    ed.addEventListener("paste", function(e){ e.preventDefault(); toast("Write it yourself - pasting is off here."); });
     ed.addEventListener("drop", function(e){ e.preventDefault(); });
   });
   ["sname","sclass","sdate","rbuilt","rstuck","meline"].forEach(function(id){ var el=$(id); if(el) el.addEventListener("input",persist); });
@@ -1840,7 +1817,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <script>
 (function(){
   // BUG FIX 3: block paste/drop in the editors (type it yourself)
-  document.querySelectorAll('.editor').forEach(function(t){
+  document.querySelectorAll('.ex.chal .editor').forEach(function(t){
     t.addEventListener('paste', function(e){ e.preventDefault(); if(window.toast) toast('Type it yourself — pasting is off'); });
     t.addEventListener('drop', function(e){ e.preventDefault(); });
   });
