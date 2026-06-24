@@ -70,6 +70,8 @@ body{margin:0;background:#eef2f7;color:var(--ink);
     <option value="chant">A function with INPUT</option>
     <option value="two">A function with TWO inputs</option>
     <option value="kangaroo">The kangaroo attack</option>
+    <option value="comp">Compliment generator (random)</option>
+    <option value="machine">Compliment Machine (+ loop + if/else)</option>
     <option value="blank">Blank (type your own)</option>
   </select>
   <span class="spacer"></span>
@@ -107,7 +109,9 @@ var PRESETS = {
  kick: '<p id="demo">Press the button...</p>\n<button onclick="kickOff()">Kick off</button>\n\n<script>\n  function kickOff() {\n    document.getElementById("demo").innerHTML = "And we\'re under way!";\n  }\n<\/script>',
  chant: '<p id="demo">Pick a player...</p>\n<button onclick="chant(\'Messi\')">Messi</button>\n<button onclick="chant(\'Ronaldo\')">Ronaldo</button>\n\n<script>\n  function chant(name) {\n    document.getElementById("demo").innerHTML = name + "! " + name + "!";\n  }\n<\/script>',
  two: '<p id="demo">Press the button...</p>\n<button onclick="commentate(\'Messi\', \'scores\')">Commentate</button>\n\n<script>\n  function commentate(player, action) {\n    document.getElementById("demo").innerHTML = player + " " + action + "!";\n  }\n<\/script>',
- kangaroo: '<p id="demo">Press the button...</p>\n<button onclick="kangarooAttack()">Run kangarooAttack()</button>\n\n<script>\n  function kangarooAttack() {\n    document.getElementById("demo").innerHTML = "Ronaldo runs... a kangaroo appears... KICK! He falls over. The crowd laughs!";\n  }\n<\/script>'
+ kangaroo: '<p id="demo">Press the button...</p>\n<button onclick="kangarooAttack()">Run kangarooAttack()</button>\n\n<script>\n  function kangarooAttack() {\n    document.getElementById("demo").innerHTML = "Ronaldo runs... a kangaroo appears... KICK! He falls over. The crowd laughs!";\n  }\n<\/script>',
+ comp: '<style>\n  body { text-align: center; font-family: Arial; }\n  h1 { color: #3f3399; }\n  button { background: #3f3399; color: #fff; border: 0; padding: 9px 16px; margin: 4px; border-radius: 8px; cursor: pointer; }\n</style>\n\n<h1 id="msg">Click for a compliment!</h1>\n<button onclick="compliment()">Compliment me</button>\n\n<script>\n  let lines = ["You\'re a legend!", "Brilliant!", "Future developer!"];\n\n  function compliment() {\n    let pick = lines[Math.floor(Math.random() * lines.length)];\n    document.getElementById("msg").innerHTML = pick;\n  }\n<\/script>',
+ machine: '<style>\n  body { text-align: center; font-family: Arial; }\n  h1 { color: #3f3399; }\n  button { background: #3f3399; color: #fff; border: 0; padding: 9px 16px; margin: 4px; border-radius: 8px; cursor: pointer; }\n  #list { color: #059669; font-weight: bold; font-size: 18px; }\n</style>\n\n<h1 id="msg">Click a button!</h1>\n<button onclick="compliment()">Compliment me</button>\n<button onclick="showAll()">Show all</button>\n<button onclick="lucky()">Feeling lucky?</button>\n<p id="list"></p>\n\n<script>\n  let lines = ["You\'re a legend!", "Brilliant!", "Future developer!"];\n\n  function compliment() {\n    let pick = lines[Math.floor(Math.random() * lines.length)];\n    document.getElementById("msg").innerHTML = pick;\n  }\n\n  function showAll() {\n    let all = "";\n    for (let i = 0; i < lines.length; i = i + 1) {\n      all = all + lines[i] + "<br>";\n    }\n    document.getElementById("list").innerHTML = all;\n  }\n\n  function lucky() {\n    let n = Math.floor(Math.random() * 10) + 1;\n    if (n >= 5) {\n      document.getElementById("msg").innerHTML = n + " - you are a STAR!";\n    } else {\n      document.getElementById("msg").innerHTML = n + " - keep going!";\n    }\n  }\n<\/script>'
 };
 
 /* ---- auto-detect: does it look like markup? ---- */
