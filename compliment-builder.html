@@ -81,19 +81,32 @@
   .step.on.s5{border-color:var(--blue); background:#EAF0FB}
   .step .done{display:none; color:var(--green); font-weight:700}
   .step.cleared .done{display:inline}
-  .hidebtn{position:absolute; top:14px; right:20px; z-index:5; font-family:inherit; font-weight:700; font-size:14px;
-           cursor:pointer; border:1.8px solid var(--indigo); background:#fff; color:var(--indigo); border-radius:10px;
-           padding:8px 16px; box-shadow:0 3px 10px rgba(45,35,95,.1)}
+  .toolbar{position:absolute; top:14px; right:20px; z-index:5; display:flex; gap:10px}
+  .hidebtn{font-family:inherit; font-weight:700; font-size:14px; cursor:pointer; border:1.8px solid var(--indigo);
+           background:#fff; color:var(--indigo); border-radius:10px; padding:8px 16px; box-shadow:0 3px 10px rgba(45,35,95,.1)}
   .hidebtn:hover{background:var(--indigo); color:#fff}
+  .hidebtn.edit{border-color:var(--violet); color:var(--violet)}
+  .hidebtn.edit:hover{background:var(--violet); color:#fff}
   .hide-code main{grid-template-columns:1fr}
   .hide-code .codecard{display:none}
   .caption.guess{border-left-color:var(--violet); background:#F7F4FF; font-size:17px}
   .caption.guess b{color:var(--violet)}
+  .editor{display:none; flex:1; width:100%; margin:0; border:0; outline:0; resize:none; min-height:0;
+          font-family:Consolas,monospace; font-size:13.5px; line-height:1.5; padding:10px 18px 14px;
+          background:#16202b; color:#e7eaf0; tab-size:2; -moz-tab-size:2}
+  body.edit-code pre.code{display:none}
+  body.edit-code .editor{display:block}
+  body.edit-code .clue span{display:none}
+  .caption.edit{border-left-color:var(--violet); background:#F7F4FF}
+  .caption.edit b{color:var(--violet)}
   @media (max-width:920px){ main{grid-template-columns:1fr} }
 </style>
 </head>
 <body class="s1">
-<button id="hideBtn" class="hidebtn">&#128584; Hide the code</button>
+<div class="toolbar">
+  <button id="editBtn" class="hidebtn edit">&#9999;&#65039; Edit the code</button>
+  <button id="hideBtn" class="hidebtn">&#128584; Hide the code</button>
+</div>
 <header>
   <h1>Build the Compliment Machine</h1>
   <p class="sub">Real HTML building blocks — a form, buttons, a list and a table — then bring them to life.</p>
@@ -154,6 +167,7 @@
     <span class="pl">}</span></span>
   <span class="js">&lt;/script&gt;</span></span>
 <span class="kw">&lt;/body&gt; &lt;/html&gt;</span></pre>
+    <textarea id="editor" class="editor" spellcheck="false" aria-label="Editable code"></textarea>
   </section>
 
   <section class="card">
@@ -205,6 +219,7 @@
     4:'&#129300; <b>Show all:</b> how would you list EVERY compliment without writing each line by hand? Then reveal.',
     5:'&#129300; <b>Pick one:</b> how does it choose the right compliment? What makes the decision? Then reveal.'
   };
+  var EDITCAP = '&#9999;&#65039; <b>Edit mode:</b> change any line on the left — the page updates as you type. Try a different compliment, colour or button label. Click a STEP to load that version, or &#8617;&#65039; Back to steps.';
   var cur = 1;
 
   var preview=document.getElementById('preview'), steps=document.querySelectorAll('.step'),
@@ -213,18 +228,37 @@
       jsPh=document.getElementById('jsPh'), jsBlock=document.getElementById('jsBlock'),
       loopPh=document.getElementById('loopPh'), loopBlock=document.getElementById('loopBlock'),
       ifPh=document.getElementById('ifPh'), ifBlock=document.getElementById('ifBlock');
+  var editor=document.getElementById('editor'), editBtn=document.getElementById('editBtn'), editing=false;
 
   function renderCaption(n){
     var hidden = document.body.classList.contains('hide-code');
     caption.innerHTML = hidden ? GUESS[n] : CAP[n];
     caption.classList.toggle('guess', hidden);
+    caption.classList.remove('edit');
   }
   var hideBtn = document.getElementById('hideBtn');
+  function leaveEdit(){ editing=false; document.body.classList.remove('edit-code'); editBtn.innerHTML='&#9999;&#65039; Edit the code'; }
   hideBtn.onclick = function(){
+    if(editing){ leaveEdit(); preview.srcdoc=srcFor(cur); }
     var hidden = document.body.classList.toggle('hide-code');
     hideBtn.innerHTML = hidden ? '&#128161; Reveal the code' : '&#128584; Hide the code';
     renderCaption(cur);
   };
+  editBtn.onclick = function(){
+    if(editing){ leaveEdit(); setStep(cur); return; }          // toggle off → back to the build view
+    editing=true;
+    document.body.classList.remove('hide-code'); hideBtn.innerHTML='&#128584; Hide the code';
+    document.body.classList.add('edit-code'); editBtn.innerHTML='&#8617;&#65039; Back to steps';
+    editor.value=srcFor(cur); preview.srcdoc=editor.value;
+    caption.classList.remove('guess'); caption.classList.add('edit'); caption.innerHTML=EDITCAP;
+    editor.focus();
+  };
+  editor.addEventListener('input', function(){ if(editing) preview.srcdoc=editor.value; });
+  editor.addEventListener('keydown', function(e){
+    if(e.key==='Tab'){ e.preventDefault(); var s=this.selectionStart, en=this.selectionEnd;
+      this.value=this.value.slice(0,s)+'  '+this.value.slice(en); this.selectionStart=this.selectionEnd=s+2;
+      if(editing) preview.srcdoc=this.value; }
+  });
 
   function setStep(n){
     n=+n; document.body.classList.remove('s1','s2','s3','s4','s5'); document.body.classList.add('s'+n);
@@ -245,7 +279,14 @@
     if(added){ setTimeout(function(){ var r=added.getBoundingClientRect(), pr=pre.getBoundingClientRect();
       pre.scrollTop += (r.top - pr.top) - pre.clientHeight*0.30; }, 60); }
   }
-  steps.forEach(function(s){ s.addEventListener('click', function(){ setStep(s.getAttribute('data-step')); }); });
+  steps.forEach(function(s){ s.addEventListener('click', function(){
+    var n=+s.getAttribute('data-step');
+    if(editing){
+      cur=n; editor.value=srcFor(n); preview.srcdoc=editor.value;
+      steps.forEach(function(x){ var xn=+x.getAttribute('data-step'); x.classList.toggle('on',xn===n); x.classList.toggle('cleared',xn<n); });
+      editor.focus();
+    } else { setStep(n); }
+  }); });
   setStep(1);
 </script>
 </body>
