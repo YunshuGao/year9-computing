@@ -97,7 +97,7 @@
       <button data-k="up5" class="on">Count up to 5</button>
       <button data-k="down3">3 &rarr; 1 &nbsp;(count down)</button>
       <button data-k="le999">up to 999 &nbsp;(i &lt;= 999)</button>
-      <button data-k="lt999">below 999 &nbsp;(i &lt; 999)</button>
+      <button data-k="lt1000">below 1000 &nbsp;(i &lt; 1000)</button>
     </div>
     <div class="codecard" style="margin-top:12px">
       <span class="kw">for</span> (
@@ -149,9 +149,9 @@
       <tr><th>The loop</th><th>It prints</th><th>How many</th><th>Why it stops</th></tr>
       <tr><td><code>i=3; i&gt;=1; i=i-1</code></td><td>3, 2, 1</td><td><b>3</b></td><td>i became 0, and <code>0 &gt;= 1</code> is false</td></tr>
       <tr><td><code>i=1; i&lt;=999; i=i+1</code></td><td>1, 2, 3, … , <b>999</b></td><td><b>999</b></td><td>i became 1000, and <code>1000 &lt;= 999</code> is false — so <b>999 IS printed</b></td></tr>
-      <tr><td><code>i=1; i&lt;999; i=i+1</code></td><td>1, 2, 3, … , <b>998</b></td><td><b>998</b></td><td>i became 999, and <code>999 &lt; 999</code> is false — so <b>999 is NEVER printed</b></td></tr>
+      <tr><td><code>i=1; i&lt;1000; i=i+1</code></td><td>1, 2, 3, … , <b>999</b></td><td><b>999</b></td><td>i became 1000, and <code>1000 &lt; 1000</code> is false — so it stops at <b>999</b>, the <b>SAME</b> as <code>i&lt;=999</code></td></tr>
     </table>
-    <p class="rule"><span class="le">&lt;= (less-or-equal) INCLUDES the last number.</span> &nbsp; <span class="lt">&lt; (less-than) STOPS just BEFORE it.</span></p>
+    <p class="rule"><span class="le">&lt;= INCLUDES the last number.</span> &nbsp; <span class="lt">&lt; STOPS just before it.</span><br><span style="font-weight:700;color:#16202e;font-size:16px">So <b style="font-family:Consolas,monospace">i&lt;=999</b> and <b style="font-family:Consolas,monospace">i&lt;1000</b> are the <span style="color:#0f9d58">SAME loop</span> — both stop at 999.</span></p>
   </div>
 </div>
 
@@ -160,7 +160,7 @@ var PRESETS = {
   up5:   {start:1, end:5,   op:'+', cmp:'<=', codeStart:'let i = 1', codeCheck:'i &lt;= 5',   codeStep:'i = i + 1'},
   down3: {start:3, end:1,   op:'-', cmp:'>=', codeStart:'let i = 3', codeCheck:'i &gt;= 1',   codeStep:'i = i - 1'},
   le999: {start:1, end:999, op:'+', cmp:'<=', codeStart:'let i = 1', codeCheck:'i &lt;= 999', codeStep:'i = i + 1'},
-  lt999: {start:1, end:999, op:'+', cmp:'<',  codeStart:'let i = 1', codeCheck:'i &lt; 999',  codeStep:'i = i + 1'}
+  lt1000:{start:1, end:1000,op:'+', cmp:'<',  codeStart:'let i = 1', codeCheck:'i &lt; 1000', codeStep:'i = i + 1'}
 };
 var $ = function(id){return document.getElementById(id);};
 var S, KEY='up5', timer=null;
@@ -234,8 +234,8 @@ function summary(){
   html+='<div style="margin-top:4px">It stopped because i became <b>'+S.i+'</b>, and <code>'+S.i+' '+sym(S.cmp)+' '+S.end+'</code> is <b>false</b>.</div>';
   if(S.cmp==='<='&&S.end===999){
     html+='<div class="spot">&#128161; <b>The last number:</b> at i = 999, the check was <b>999 &le; 999 &rarr; YES</b>, so <b>999 WAS printed</b>. Then i became 1000 and it stopped.</div>';
-  } else if(S.cmp==='<'&&S.end===999){
-    html+='<div class="spot">&#128161; <b>The last number:</b> at i = 998 it printed 998, then i became 999. The check <b>999 &lt; 999 &rarr; NO</b>, so <b>999 was NEVER printed</b>. It stops one early.</div>';
+  } else if(S.cmp==='<'&&S.end===1000){
+    html+='<div class="spot">&#128161; <b>The last number:</b> at i = 999 it printed 999, then i became 1000. The check <b>1000 &lt; 1000 &rarr; NO</b>, so it <b>stops at 999</b> &mdash; exactly the SAME as <code>i &lt;= 999</code>. Two ways to write one loop!</div>';
   }
   $('summary').innerHTML=html; $('summary').hidden=false;
 }
