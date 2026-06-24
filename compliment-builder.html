@@ -81,10 +81,19 @@
   .step.on.s5{border-color:var(--blue); background:#EAF0FB}
   .step .done{display:none; color:var(--green); font-weight:700}
   .step.cleared .done{display:inline}
+  .hidebtn{position:absolute; top:14px; right:20px; z-index:5; font-family:inherit; font-weight:700; font-size:14px;
+           cursor:pointer; border:1.8px solid var(--indigo); background:#fff; color:var(--indigo); border-radius:10px;
+           padding:8px 16px; box-shadow:0 3px 10px rgba(45,35,95,.1)}
+  .hidebtn:hover{background:var(--indigo); color:#fff}
+  .hide-code main{grid-template-columns:1fr}
+  .hide-code .codecard{display:none}
+  .caption.guess{border-left-color:var(--violet); background:#F7F4FF; font-size:17px}
+  .caption.guess b{color:var(--violet)}
   @media (max-width:920px){ main{grid-template-columns:1fr} }
 </style>
 </head>
 <body class="s1">
+<button id="hideBtn" class="hidebtn">&#128584; Hide the code</button>
 <header>
   <h1>Build the Compliment Machine</h1>
   <p class="sub">Real HTML building blocks — a form, buttons, a list and a table — then bring them to life.</p>
@@ -99,7 +108,7 @@
 </div>
 
 <main>
-  <section class="card">
+  <section class="card codecard">
     <div class="card-h">THE ONE FILE &nbsp;·&nbsp; <span class="file">compliment.html</span></div>
 <pre class="code"><span class="kw">&lt;html&gt;</span> <span class="kw">&lt;head&gt;</span> <span class="ph layer" id="cssPh">&lt;!-- CSS here --&gt;</span><span class="block layer" id="cssBlock"><span class="kw">&lt;style&gt;</span> <span class="css">body{text-align:center;font-family:Arial} h1{color:#3f3399} button{background:#3f3399;color:#fff} table,td,th{border:1px solid #888;border-collapse:collapse;padding:4px 12px}</span> <span class="kw">&lt;/style&gt;</span></span> <span class="kw">&lt;/head&gt;</span>
 <span class="kw">&lt;body&gt;</span>
@@ -189,6 +198,14 @@
     5:'<b>Step 5 — + an IF / ELSE.</b> <b>Pick one</b> asks 1, 2 or 3 — the <b>if / else</b> shows the compliment from that row of the <b>table</b>. You decide!'
   };
   var CLUE = {3:'&#128071; type a name, click “Compliment me”', 4:'&#128071; click “Show all”', 5:'&#128071; click “Pick one”'};
+  var GUESS = {
+    1:'&#129300; <b>Your turn:</b> what HTML would build this page — a heading, a form box, buttons, a list, a table? Then reveal the code to check.',
+    2:'&#129300; <b>What changed?</b> How would you colour the heading and centre everything? Then reveal.',
+    3:'&#129300; <b>How does it know your name?</b> Type a name &amp; click Compliment me — what code makes that happen? Then reveal.',
+    4:'&#129300; <b>Show all:</b> how would you list EVERY compliment without writing each line by hand? Then reveal.',
+    5:'&#129300; <b>Pick one:</b> how does it choose the right compliment? What makes the decision? Then reveal.'
+  };
+  var cur = 1;
 
   var preview=document.getElementById('preview'), steps=document.querySelectorAll('.step'),
       caption=document.getElementById('caption'), clue=document.getElementById('clue'),
@@ -197,8 +214,20 @@
       loopPh=document.getElementById('loopPh'), loopBlock=document.getElementById('loopBlock'),
       ifPh=document.getElementById('ifPh'), ifBlock=document.getElementById('ifBlock');
 
+  function renderCaption(n){
+    var hidden = document.body.classList.contains('hide-code');
+    caption.innerHTML = hidden ? GUESS[n] : CAP[n];
+    caption.classList.toggle('guess', hidden);
+  }
+  var hideBtn = document.getElementById('hideBtn');
+  hideBtn.onclick = function(){
+    var hidden = document.body.classList.toggle('hide-code');
+    hideBtn.innerHTML = hidden ? '&#128161; Reveal the code' : '&#128584; Hide the code';
+    renderCaption(cur);
+  };
+
   function setStep(n){
-    n=+n; document.body.className='s'+n;
+    n=+n; document.body.classList.remove('s1','s2','s3','s4','s5'); document.body.classList.add('s'+n);
     cssBlock.classList.toggle('show', n>=2); cssPh.style.display = n>=2?'none':'inline';
     jsBlock.classList.toggle('show', n>=3); jsPh.style.display = n>=3?'none':'inline';
     loopBlock.classList.toggle('show', n>=4); loopPh.style.display = n>=4?'none':'inline';
@@ -208,7 +237,7 @@
     loopBlock.classList.toggle('just-added', n===4); loopBlock.classList.add('l');
     ifBlock.classList.toggle('just-added', n===5); ifBlock.classList.add('i');
     preview.srcdoc = srcFor(n);
-    caption.innerHTML = CAP[n];
+    cur=n; renderCaption(n);
     if(CLUE[n]) clue.innerHTML = CLUE[n];
     steps.forEach(function(s){ var sn=+s.getAttribute('data-step');
       s.classList.toggle('on', sn===n); s.classList.toggle('cleared', sn<n); });
