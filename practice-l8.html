@@ -509,7 +509,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     <label>Name <input id="sname" placeholder="Your name" autocomplete="off"></label>
     <label>Class <select id="sclass"><option>9 COTYC</option><option>9 COTYB</option></select></label>
     <label>Date <input id="sdate" type="date"></label>
-    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 18 done</span></span>
+    <span class="prog"><span class="track"><i id="pfill"></i></span><span class="pt" id="ptext">0 of 19 done</span></span>
     <button class="btn save" onclick="save()">Save my work</button>
   </div>
 
@@ -557,7 +557,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
     </div>
   </section>
 
-  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">build it, paint it, code it</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Page</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Paint it</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Colour</span></a><a class="pill must" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Log in</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more JavaScript</span></div><div class="pills"><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Lucky mine</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Find the diamond</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Inventory</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">combine & stretch</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Predict</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">⑩ Fix it</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">⑪ Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑫ Complete it</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Arcade</span></a></div></div></nav>
+  <nav class="tier-bar"><div class="tier-zone must"><div class="zone-head"><h3>MUST DO</h3><span class="zone-tag">build it, paint it, code it</span></div><div class="pills"><a class="pill must" href="#ex1"><span class="num">1</span><span class="ttl">① Page</span></a><a class="pill must" href="#ex2"><span class="num">2</span><span class="ttl">② Paint it</span></a><a class="pill must" href="#ex3"><span class="num">3</span><span class="ttl">③ Button</span></a><a class="pill must" href="#ex4"><span class="num">4</span><span class="ttl">④ Colour</span></a><a class="pill must" href="#ex5"><span class="num">5</span><span class="ttl">⑤ Log in</span></a></div></div><div class="tier-zone should"><div class="zone-head"><h3>SHOULD DO</h3><span class="zone-tag">more JavaScript</span></div><div class="pills"><a class="pill should" href="#ex6"><span class="num">6</span><span class="ttl">⑥ Lucky mine</span></a><a class="pill should" href="#ex7"><span class="num">7</span><span class="ttl">⑦ Find the diamond</span></a><a class="pill should" href="#ex8"><span class="num">8</span><span class="ttl">⑧ Inventory</span></a></div></div><div class="tier-zone could"><div class="zone-head"><h3>COULD DO</h3><span class="zone-tag">combine & stretch</span></div><div class="pills"><a class="pill could" href="#ex9"><span class="num">9</span><span class="ttl">⑨ Block counter</span></a><a class="pill could" href="#ex10"><span class="num">10</span><span class="ttl">⑩ Make it mine</span></a><a class="pill could" href="#ex11"><span class="num">11</span><span class="ttl">⑪ Build it</span></a><a class="pill could" href="#ex12"><span class="num">12</span><span class="ttl">⑫ Complete it</span></a><a class="pill could" href="#ex19"><span class="num">19</span><span class="ttl">Build it all</span></a><a class="pill could cap" href="#ex13"><span class="num">13</span><span class="ttl">Arcade</span></a></div></div></nav>
 
   <section class="band html"><div class="bnum">1 / The basics</div><h2>Build it, paint it, code it</h2><p>Everything starts here. Build the page (HTML), paint it (CSS), then make buttons actually work (JavaScript) - the core of all three, and the JS you have practised for weeks. Finish THIS and you have built a real web page.</p></section>
   <div class="divide must"><span class="lab">Must do</span><span class="ln"></span></div>
@@ -812,104 +812,107 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   </section>
   <section class="band js"><div class="bnum">2 / Go further</div><h2>More JavaScript</h2><p>Now the powerful moves: open a chest at random, find the diamond with if/else, and build the whole inventory with a loop.</p></section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex6">
-    <div class="h"><span class="n">6</span><h3>Open a random chest (JS)</h3></div>
-    <p class="lead">The magic trick: a <b>list</b> plus <code>Math.random</code> gives a different block every click. <code>Math.floor(Math.random() * blocks.length)</code> picks a random spot in the list.</p>
+  <section class="ex should chal build" id="ex6">
+    <div class="h"><span class="n">6</span><h3>Open a random chest (JS) <span class="ctype build">BUILD</span></h3></div>
+    <p class="lead"><b>Should do.</b> A <b>list</b> + <code>Math.random</code> gives a different block each click. The whole page is ready &mdash; you write the two lines that pick and show a random block.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref6">&lt;!DOCTYPE html&gt;
+        <div class="lbl"><span class="cn">1</span> The target</div>
+        <div class="goalbox">Click <b>Open chest</b> and a <b>random</b> block (Diamond, Gold or Redstone) shows in the heading &mdash; usually a different one each click.
+          <div class="eg">Target: click Open chest → a random block name appears</div>
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(6)">Show a hint</button></div>
+          <div class="reveal hint" id="hint6" hidden>Random spot: <code>let i = Math.floor(Math.random() * blocks.length);</code><br>Show it: <code>document.getElementById("out").innerHTML = blocks[i];</code></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fill in the skeleton, then Run</div>
+        <textarea class="editor" id="ed6" spellcheck="false">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;style&gt;
     body { font-family: monospace; text-align: center; background-color: skyblue; }
-    h1, h2 { color: green; }
+    h1 { color: green; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;h2 id="out"&gt;Open the chest!&lt;/h2&gt;
-  &lt;button onclick="loot()"&gt;Lucky mine&lt;/button&gt;
+  &lt;h1 id="out"&gt;Open a chest!&lt;/h1&gt;
+  &lt;button onclick="loot()"&gt;Open chest&lt;/button&gt;
   &lt;script&gt;
     function loot() {
       let blocks = ["Diamond", "Gold", "Redstone"];
-      let i = Math.floor(Math.random() * blocks.length);
-      document.getElementById("out").innerHTML = "You found: " + blocks[i];
+
+      // ① pick a random position in the list, store it in:  let i
+
+
+      // ② show that block in the heading (id="out") with innerHTML
+
+
     }
   &lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred6" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed6" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+&lt;/html&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(6)">Run</button>
-          <button class="btn ghost" onclick="resetEx(6)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(6)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done6" onchange="toggleDone(6)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc6" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out6" title="result for tile 6"></iframe></div>
         <div class="l4tip" id="tip6" hidden></div>
-        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; your random picker chose a block.</span></div>
-        <div class="try"><b>Now change it:</b> add a fourth block to the list, then keep mining.</div>
+        <div class="ok" id="ok6" hidden><span class="tick"></span><span><b>Tile 6 done</b> &mdash; you built a random chest with a list and Math.random.</span></div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex7">
-    <div class="h"><span class="n">7</span><h3>Guess the block (if/else)</h3></div>
-    <p class="lead">A real mini-game. <code>prompt</code> asks which block hides the diamond, then <code>if / else if / else</code> decides: found it, dig right, or dig left.</p>
+  <section class="ex should chal build" id="ex7">
+    <div class="h"><span class="n">7</span><h3>Guess the block (if / else) <span class="ctype build">BUILD</span></h3></div>
+    <p class="lead"><b>Should do.</b> A guessing game. The <code>prompt</code> and the <code>if / else</code> shell are ready &mdash; you write what each choice shows.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref7">&lt;!DOCTYPE html&gt;
+        <div class="lbl"><span class="cn">1</span> The target</div>
+        <div class="goalbox">Click <b>Dig</b> and type a number. If it is <b>2</b>, the page shows <b>Diamond!</b>; any other number shows <b>Just dirt.</b>
+          <div class="eg">Target: type 2 → Diamond!     type 1 → Just dirt.</div>
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(7)">Show a hint</button></div>
+          <div class="reveal hint" id="hint7" hidden>Inside the <code>if</code>: <code>document.getElementById("out").innerHTML = "Diamond!";</code><br>Inside the <code>else</code>: <code>document.getElementById("out").innerHTML = "Just dirt.";</code></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fill in the skeleton, then Run</div>
+        <textarea class="editor" id="ed7" spellcheck="false">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;style&gt;
     body { font-family: monospace; text-align: center; background-color: skyblue; }
-    h1, h2 { color: green; }
+    h1 { color: green; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;h2 id="out"&gt;Which block hides the diamond? (1-5)&lt;/h2&gt;
+  &lt;h1 id="out"&gt;Dig for the diamond!&lt;/h1&gt;
   &lt;button onclick="dig()"&gt;Dig&lt;/button&gt;
   &lt;script&gt;
     function dig() {
-      let guess = Number(prompt("Pick a block, 1 to 5"));
-      let diamond = 3;
-      if (guess === diamond) {
-        document.getElementById("out").innerHTML = "Diamond found!";
-      } else if (guess &lt; diamond) {
-        document.getElementById("out").innerHTML = "Dig further right";
+      let guess = prompt("Which block? Type 1, 2 or 3:");
+      if (guess == "2") {
+        // ① show "Diamond!" in the heading (id="out")
+
+
       } else {
-        document.getElementById("out").innerHTML = "Dig further left";
+        // ② show "Just dirt." in the heading
+
+
       }
     }
   &lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred7" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed7" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+&lt;/html&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(7)">Run</button>
-          <button class="btn ghost" onclick="resetEx(7)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(7)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done7" onchange="toggleDone(7)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc7" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -917,55 +920,54 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
           <iframe class="out" id="out7" title="result for tile 7"></iframe></div>
         <div class="l4tip" id="tip7" hidden></div>
         <div class="ok" id="ok7" hidden><span class="tick"></span><span><b>Tile 7 done</b> &mdash; your if/else judged the guess.</span></div>
-        <div class="try"><b>Now change it:</b> change <code>diamond</code> to a new number, then dig again.</div>
       </div>
     </div>
   </section>
   <div class="divide should"><span class="lab">Should do</span><span class="ln"></span></div>
-  <section class="ex should" id="ex8">
-    <div class="h"><span class="n">8</span><h3>Build the inventory with a loop (JS)</h3></div>
-    <p class="lead">A <code>for</code> loop does the boring work. It walks the blocks list and builds a <code>&lt;p&gt;</code> for each one with <code>innerHTML</code> - one piece of code, the whole inventory on screen.</p>
+  <section class="ex should chal build" id="ex8">
+    <div class="h"><span class="n">8</span><h3>Build the inventory with a loop (JS) <span class="ctype build">BUILD</span></h3></div>
+    <p class="lead"><b>Should do.</b> One loop builds the whole inventory. The list, the loop header and the output line are ready &mdash; you write the one line inside the loop.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code <span class="hint">can&rsquo;t copy &ndash; type it yourself</span></div>
-        <pre class="code-ref" id="ref8">&lt;!DOCTYPE html&gt;
+        <div class="lbl"><span class="cn">1</span> The target</div>
+        <div class="goalbox">The page shows every block on one line: <b>Grass Stone Diamond</b> &mdash; built by ONE loop.
+          <div class="eg">Target: Grass Stone Diamond</div>
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(8)">Show a hint</button></div>
+          <div class="reveal hint" id="hint8" hidden>The block at position i is <code>blocks[i]</code>, so write: <code>s = s + blocks[i] + " ";</code></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fill in the skeleton, then Run</div>
+        <textarea class="editor" id="ed8" spellcheck="false">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;style&gt;
     body { font-family: monospace; text-align: center; background-color: skyblue; }
-    h1, h2 { color: green; }
+    h1 { color: green; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;h2&gt;My inventory&lt;/h2&gt;
-  &lt;div id="out"&gt;&lt;/div&gt;
-  &lt;button onclick="show()"&gt;Open inventory&lt;/button&gt;
+  &lt;h1&gt;My Inventory&lt;/h1&gt;
+  &lt;p id="out"&gt;&lt;/p&gt;
   &lt;script&gt;
-    function show() {
-      let blocks = ["Grass", "Stone", "Diamond"];
-      let html = "";
-      for (let i = 0; i &lt; blocks.length; i = i + 1) {
-        html = html + "&lt;p&gt;" + blocks[i] + "&lt;/p&gt;";
-      }
-      document.getElementById("out").innerHTML = html;
+    let blocks = ["Grass", "Stone", "Diamond"];
+    let s = "";
+
+    for (let i = 0; i &lt; blocks.length; i = i + 1) {
+      // ① add this block to the line:   s = s + ( the block at position i ) + " ";
+
+
     }
+
+    document.getElementById("out").innerHTML = s;
   &lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Type it here</div>
-        <div class="predict-row">
-          <span class="predict-lbl">&#128302; Predict first <em>&mdash; what will the page show after you Run?</em></span>
-          <input class="predict-in" id="pred8" placeholder="Type your guess...">
-        </div>
-        <textarea class="editor" id="ed8" spellcheck="false" placeholder="Type the code from the left, then press Run"></textarea>
+&lt;/html&gt;</textarea>
         <div class="act">
           <button class="btn run" onclick="runEx(8)">Run</button>
-          <button class="btn ghost" onclick="resetEx(8)">Clear</button>
+          <button class="btn ghost" onclick="resetEx(8)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done8" onchange="toggleDone(8)"> Done</label>
         </div>
-        <div class="guesscheck" id="gc8" hidden>&#128064; Now look right &mdash; did the page match your guess?</div>
       </div>
       <div class="col">
         <div class="lbl"><span class="cn">3</span> What happens</div>
@@ -973,44 +975,51 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
           <iframe class="out" id="out8" title="result for tile 8"></iframe></div>
         <div class="l4tip" id="tip8" hidden></div>
         <div class="ok" id="ok8" hidden><span class="tick"></span><span><b>Tile 8 done</b> &mdash; your loop built the whole inventory.</span></div>
-        <div class="try"><b>Now change it:</b> add more blocks to the list - the loop shows them all, with no extra code.</div>
       </div>
     </div>
   </section>
-  <section class="band your"><div class="bnum">3 / Your turn</div><h2>Combine &amp; stretch</h2><p>No reference code to copy now. Predict it, fix the bug, build your own, complete the rule - this is all you.</p></section>
+  <section class="band your"><div class="bnum">3 / Your turn</div><h2>Combine &amp; stretch</h2><p>No reference code to copy now. Build each one from a ready-made skeleton, write your own from scratch - this is all you.</p></section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal predict" id="ex9">
-    <div class="h"><span class="n">9</span><h3>Predict the output <span class="ctype predict">PREDICT</span></h3></div>
-    <p class="lead">Read the loop carefully - it runs three times. Write what the page will show, then check.</p>
+  <section class="ex could chal build" id="ex9">
+    <div class="h"><span class="n">9</span><h3>Build a counting loop <span class="ctype build">BUILD</span></h3></div>
+    <p class="lead"><b>Could do.</b> No reference to copy. The page shell is ready &mdash; you write a whole loop from scratch.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> Read this code</div>
-        <pre class="code-ref" id="ref9">&lt;!DOCTYPE html&gt;
+        <div class="lbl"><span class="cn">1</span> The target</div>
+        <div class="goalbox">The page shows <b>Block 1 Block 2 Block 3</b> &mdash; written by a loop you build yourself.
+          <div class="eg">Target: Block 1 Block 2 Block 3</div>
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(9)">Show a hint</button></div>
+          <div class="reveal hint" id="hint9" hidden><code>for (let i = 1; i &lt;= 3; i = i + 1) {</code><br>&nbsp;&nbsp;<code>s = s + "Block " + i + " ";</code><br><code>}</code></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fill in the skeleton, then Run</div>
+        <textarea class="editor" id="ed9" spellcheck="false">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;style&gt;
     body { font-family: monospace; text-align: center; background-color: skyblue; }
-    h1, h2 { color: green; }
+    h1 { color: green; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
+  &lt;h1&gt;Block counter&lt;/h1&gt;
   &lt;p id="out"&gt;&lt;/p&gt;
   &lt;script&gt;
     let s = "";
-    for (let i = 1; i &lt;= 3; i = i + 1) {
-      s = s + "Block " + i + " ";
-    }
+
+    // ① write a loop that runs 3 times (i = 1, 2, 3)
+    // ② each time, add  "Block " + i + " "  to s
+
+
+
     document.getElementById("out").innerHTML = s;
   &lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
-      </div>
-      <div class="col">
-        <div class="lbl"><span class="cn">2</span> Your prediction</div>
-        <textarea class="editor short" id="ed9" spellcheck="false" placeholder="What will it show? Write your guess..."></textarea>
+&lt;/html&gt;</textarea>
         <div class="act">
-          <button class="btn run" onclick="runPredict(9)">Run &amp; check</button>
-          <button class="btn ghost" onclick="resetEx(9)">Clear</button>
+          <button class="btn run" onclick="runEx(9)">Run</button>
+          <button class="btn ghost" onclick="resetEx(9)">Reset</button>
           <label class="donebox"><input type="checkbox" id="done9" onchange="toggleDone(9)"> Done</label>
         </div>
       </div>
@@ -1018,32 +1027,32 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="lbl"><span class="cn">3</span> What happens</div>
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out9" title="result for tile 9"></iframe></div>
-        <div class="reveal ans" id="ans9" hidden>It shows <b>Block 1 Block 2 Block 3</b>. The loop runs with i = 1, then 2, then 3, joining "Block " + i + " " each time into one line.</div>
         <div class="l4tip" id="tip9" hidden></div>
-        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you traced the loop and predicted the output.</span></div>
+        <div class="ok" id="ok9" hidden><span class="tick"></span><span><b>Tile 9 done</b> &mdash; you wrote a loop from scratch.</span></div>
       </div>
     </div>
   </section>
   <div class="divide could"><span class="lab">Could do</span><span class="ln"></span></div>
-  <section class="ex could chal debug" id="ex10">
-    <div class="h"><span class="n">10</span><h3>Fix the bug <span class="ctype debug">DEBUG</span></h3></div>
-    <p class="lead">Click <b>Mine</b> - nothing happens and a red error appears. The id in the JavaScript does not match the id on the heading. Read the error, find the slip, fix it.</p>
+  <section class="ex could chal build" id="ex10">
+    <div class="h"><span class="n">10</span><h3>Build a button that works <span class="ctype build">BUILD</span></h3></div>
+    <p class="lead"><b>Could do.</b> The page has a heading and a button, but the button does nothing yet. Write the function so clicking it changes the page.</p>
     <div class="cols">
       <div class="col">
-        <div class="lbl"><span class="cn">1</span> The goal</div>
-        <div class="goalbox">Nothing changes because <code>getElementById("blok")</code> is misspelled - the heading&rsquo;s id is <code>block</code>. Fix the spelling so clicking shows "Mined!".
+        <div class="lbl"><span class="cn">1</span> The target</div>
+        <div class="goalbox">Click <b>Mine</b> and the heading changes from <b>Stone</b> to <b>Mined!</b>
+          <div class="eg">Target: click Mine → the heading says Mined!</div>
           <div class="chal-btns"><button class="btn ghost" onclick="showHint(10)">Show a hint</button></div>
-          <div class="reveal hint" id="hint10" hidden>The heading is <code>id="block"</code> but the JS looks for <code>"blok"</code>. Make them match: <code>getElementById("block")</code>.</div>
+          <div class="reveal hint" id="hint10" hidden><code>document.getElementById("block").innerHTML = "Mined!";</code></div>
         </div>
       </div>
       <div class="col">
-        <div class="lbl"><span class="cn">2</span> Fix it here</div>
+        <div class="lbl"><span class="cn">2</span> Fill in the skeleton, then Run</div>
         <textarea class="editor" id="ed10" spellcheck="false">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;style&gt;
     body { font-family: monospace; text-align: center; background-color: skyblue; }
-    h1, h2 { color: green; }
+    h1 { color: green; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -1051,7 +1060,9 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
   &lt;button onclick="mine()"&gt;Mine&lt;/button&gt;
   &lt;script&gt;
     function mine() {
-      document.getElementById("blok").innerHTML = "Mined!";
+      // ① change the heading (id="block") to say  Mined!
+
+
     }
   &lt;/script&gt;
 &lt;/body&gt;
@@ -1067,7 +1078,7 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
           <iframe class="out" id="out10" title="result for tile 10"></iframe></div>
         <div class="l4tip" id="tip10" hidden></div>
-        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you matched the id and fixed the bug.</span></div>
+        <div class="ok" id="ok10" hidden><span class="tick"></span><span><b>Tile 10 done</b> &mdash; you made the button change the page.</span></div>
       </div>
     </div>
   </section>
@@ -1214,6 +1225,59 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
         <div class="l4tip" id="tip13" hidden></div>
         <div class="ok" id="ok13" hidden><span class="tick"></span><span><b>Tile 13 done</b> &mdash; you combined HTML, CSS and JavaScript into one Minecraft page.</span></div>
         <div class="try"><b>Now make it yours:</b> add a third button that runs your diamond game from tile 7, or change the colours in the <code>&lt;style&gt;</code> block to build your own world.</div>
+      </div>
+    </div>
+  </section>
+  <section class="ex could chal build" id="ex19">
+    <div class="h"><span class="n">19</span><h3>Capstone: build the whole CRAFT WORLD page <span class="ctype build">BUILD</span></h3></div>
+    <p class="lead"><b>The capstone.</b> Build a complete page that uses all three languages &mdash; mostly from scratch. The empty structure is ready; you write the heading, the style, the button and the function. Hints are there if you get stuck.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lbl"><span class="cn">1</span> The target</div>
+        <div class="goalbox">A complete CRAFT WORLD page: a <b>styled</b> heading, and a <b>Mine</b> button that changes the heading to <b>You mined a block!</b> when clicked. All three languages, one page.
+          <div class="eg">Target: click Mine → the page shows You mined a block!</div>
+          <div class="chal-btns"><button class="btn ghost" onclick="showHint(19)">Show a hint</button></div>
+          <div class="reveal hint" id="hint19" hidden>Heading: <code>&lt;h1 id="screen"&gt;CRAFT WORLD&lt;/h1&gt;</code><br>Button: <code>&lt;button onclick="mine()"&gt;Mine&lt;/button&gt;</code><br>Style: <code>body { background-color: skyblue; } h1 { color: green; }</code><br>Function: <code>function mine() { document.getElementById("screen").innerHTML = "You mined a block!"; }</code></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">2</span> Fill in the skeleton, then Run</div>
+        <textarea class="editor" id="ed19" spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+    /* ② style it: give body a background-color, and h1 a color */
+
+
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- ① add a heading:  &lt;h1 id="screen"&gt;CRAFT WORLD&lt;/h1&gt; --&gt;
+
+
+  &lt;!-- ① add a button:   &lt;button onclick="mine()"&gt;Mine&lt;/button&gt; --&gt;
+
+
+  &lt;script&gt;
+    // ③ write mine() so clicking the button changes the heading to "You mined a block!"
+
+
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="act">
+          <button class="btn run" onclick="runEx(19)">Run</button>
+          <button class="btn ghost" onclick="resetEx(19)">Reset</button>
+          <label class="donebox"><input type="checkbox" id="done19" onchange="toggleDone(19)"> Done</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="lbl"><span class="cn">3</span> What happens</div>
+        <div class="win"><div class="bar"><i></i><i></i><i></i> your page</div>
+          <iframe class="out" id="out19" title="result for tile 19"></iframe></div>
+        <div class="l4tip" id="tip19" hidden></div>
+        <div class="ok" id="ok19" hidden><span class="tick"></span><span><b>Tile 19 done</b> &mdash; you built the whole CRAFT WORLD page from scratch.</span></div>
       </div>
     </div>
   </section>
@@ -1448,14 +1512,15 @@ body{background:linear-gradient(180deg,#cfe9d4,#eef5ef) fixed #e3f1e6 !important
 <div id="buddy" title="Click Digger for a tip"><div id="buddyBubble"></div><svg viewBox="0 0 72 92" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-label="Digger the block miner"><rect x="54" y="18" width="6" height="36" fill="#7a5230"/><rect x="46" y="12" width="20" height="9" fill="#bfc8d0"/><rect x="46" y="12" width="7" height="9" fill="#8fa0ad"/><rect x="14" y="8" width="40" height="40" fill="#8a6240"/><rect x="14" y="8" width="40" height="10" fill="#6abe30"/><rect x="14" y="16" width="40" height="3" fill="#4e9c28"/><rect x="20" y="27" width="5" height="5" fill="#74502f"/><rect x="42" y="38" width="5" height="5" fill="#74502f"/><rect x="31" y="33" width="4" height="4" fill="#9c7144"/><rect x="22" y="26" width="7" height="8" fill="#ffffff"/><rect x="24" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="39" y="26" width="7" height="8" fill="#ffffff"/><rect x="41" y="28" width="4" height="5" fill="#2a2a2a"/><rect x="28" y="41" width="12" height="3" fill="#3a2a1a"/><rect x="18" y="48" width="32" height="22" fill="#2a8c8c"/><rect x="18" y="48" width="32" height="4" fill="#37a3a3"/><rect x="30" y="52" width="8" height="14" fill="#1f6f6f"/><rect x="10" y="50" width="8" height="18" fill="#8a6240"/><rect x="50" y="50" width="8" height="16" fill="#8a6240"/><rect x="20" y="70" width="11" height="16" fill="#39516a"/><rect x="37" y="70" width="11" height="16" fill="#39516a"/><rect x="20" y="83" width="11" height="4" fill="#2a2a2a"/><rect x="37" y="83" width="11" height="4" fill="#2a2a2a"/></svg></div>
 <div class="toast" id="toast"></div>
 <script>
-var STARTERS = {"1": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n  <p>Welcome to my Minecraft fan page. Grab a pickaxe and explore!<\/p>\n  <h2>My favourite blocks<\/h2>\n  <ul>\n    <li>Grass<\/li>\n    <li>Diamond<\/li>\n    <li>TNT<\/li>\n  <\/ul>\n<\/body>\n<\/html>"}, "2": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { background-color: skyblue; font-family: monospace; text-align: center; }\n    h1 { color: green; }\n    h2 { background-color: yellowgreen; color: white; border: 4px solid darkgreen; padding: 12px; }\n    button { background-color: sienna; color: white; border: 4px solid black; padding: 12px 20px; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n  <h2>Welcome to my world!<\/h2>\n  <button>Mine a block<\/button>\n<\/body>\n<\/html>"}, "3": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"screen\">CRAFT WORLD<\/h1>\n  <button onclick=\"mine()\">Mine a block<\/button>\n  <script>\n    function mine() {\n      document.getElementById(\"screen\").innerHTML = \"You mined a block!\";\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "4": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"screen\">CRAFT WORLD<\/h1>\n  <button onclick=\"grass()\">Grass mode<\/button>\n  <script>\n    function grass() {\n      document.getElementById(\"screen\").style.color = \"green\";\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "5": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h2 id=\"out\">Press to log in<\/h2>\n  <button onclick=\"login()\">Log in<\/button>\n  <script>\n    function login() {\n      let name = prompt(\"Your Minecraft name?\");\n      document.getElementById(\"out\").innerHTML = \"Welcome to CRAFT WORLD, \" + name;\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "6": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h2 id=\"out\">Open the chest!<\/h2>\n  <button onclick=\"loot()\">Lucky mine<\/button>\n  <script>\n    function loot() {\n      let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n      let i = Math.floor(Math.random() * blocks.length);\n      document.getElementById(\"out\").innerHTML = \"You found: \" + blocks[i];\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "7": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h2 id=\"out\">Which block hides the diamond? (1-5)<\/h2>\n  <button onclick=\"dig()\">Dig<\/button>\n  <script>\n    function dig() {\n      let guess = Number(prompt(\"Pick a block, 1 to 5\"));\n      let diamond = 3;\n      if (guess === diamond) {\n        document.getElementById(\"out\").innerHTML = \"Diamond found!\";\n      } else if (guess < diamond) {\n        document.getElementById(\"out\").innerHTML = \"Dig further right\";\n      } else {\n        document.getElementById(\"out\").innerHTML = \"Dig further left\";\n      }\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "8": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h2>My inventory<\/h2>\n  <div id=\"out\"><\/div>\n  <button onclick=\"show()\">Open inventory<\/button>\n  <script>\n    function show() {\n      let blocks = [\"Grass\", \"Stone\", \"Diamond\"];\n      let html = \"\";\n      for (let i = 0; i < blocks.length; i = i + 1) {\n        html = html + \"<p>\" + blocks[i] + \"<\/p>\";\n      }\n      document.getElementById(\"out\").innerHTML = html;\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "13": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { background-color: skyblue; font-family: monospace; color: black; text-align: center; }\n    h1 { color: green; }\n    h2 { background-color: yellowgreen; color: white; border: 4px solid darkgreen; padding: 10px; }\n    button { background-color: sienna; color: white; border: 4px solid black; padding: 12px 20px; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n  <h2>Welcome, Player!<\/h2>\n  <button onclick=\"mine()\">Mine a block<\/button>\n  <button onclick=\"loot()\">Open chest<\/button>\n  <div id=\"out\"><\/div>\n  <script>\n    function mine() {\n      document.getElementById(\"out\").innerHTML = \"You mined a block!\";\n    }\n    function loot() {\n      let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n      let i = Math.floor(Math.random() * blocks.length);\n      document.getElementById(\"out\").innerHTML = \"You found: \" + blocks[i];\n    }\n  <\/script>\n<\/body>\n<\/html>"}};
-var WANT = {"1": "TNT", "2": "CRAFT WORLD", "3": "mined", "5": "Welcome", "8": "Stone", "10": "Mined!", "12": "Full stack!", "14": "CRAFT WORLD", "16": "Mining", "18": "Block 3"};
-var OKTX = {"1": "you laid out the page with HTML.", "2": "you styled the page with CSS.", "3": "your button changed the page.", "4": "your code changed the colour.", "5": "you asked the player and used their answer.", "6": "your random picker chose a block.", "7": "your if/else judged the guess.", "8": "your loop built the whole inventory.", "9": "you traced the loop and predicted the output.", "10": "you matched the id and fixed the bug.", "11": "you built your own button from scratch.", "12": "your condition checked the stack.", "13": "you combined HTML, CSS and JavaScript into one Minecraft page.", "14": "you wrote the HTML from scratch.", "15": "you read the CSS and predicted the look.", "16": "you made a button run a function.", "17": "you traced the if/else.", "18": "you fixed the loop condition."};
-var MODES = {"9": "predict", "10": "debug", "11": "create", "12": "tweak", "14": "create", "15": "predict", "16": "create", "17": "predict", "18": "debug"};
-var PREDICT = {"9": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <p id=\"out\"><\/p>\n  <script>\n    let s = \"\";\n    for (let i = 1; i <= 3; i = i + 1) {\n      s = s + \"Block \" + i + \" \";\n    }\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>", "15": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    h1 { color: red; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n<\/body>\n<\/html>", "17": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <p id=\"out\"><\/p>\n  <script>\n    let coins = 8;\n    if (coins >= 10) {\n      document.getElementById(\"out\").innerHTML = \"Rich!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Keep mining\";\n    }\n  <\/script>\n<\/body>\n<\/html>"};
-var DEBUGC = {"10": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"block\">Stone<\/h1>\n  <button onclick=\"mine()\">Mine<\/button>\n  <script>\n    function mine() {\n      document.getElementById(\"blok\").innerHTML = \"Mined!\";\n    }\n  <\/script>\n<\/body>\n<\/html>", "18": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <p id=\"out\"><\/p>\n  <script>\n    let s = \"\";\n    for (let i = 1; i < 3; i = i + 1) {\n      s = s + \"Block \" + i + \" \";\n    }\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>"};
+var STARTERS = {"1": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n  <p>Welcome to my Minecraft fan page. Grab a pickaxe and explore!<\/p>\n  <h2>My favourite blocks<\/h2>\n  <ul>\n    <li>Grass<\/li>\n    <li>Diamond<\/li>\n    <li>TNT<\/li>\n  <\/ul>\n<\/body>\n<\/html>"}, "2": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { background-color: skyblue; font-family: monospace; text-align: center; }\n    h1 { color: green; }\n    h2 { background-color: yellowgreen; color: white; border: 4px solid darkgreen; padding: 12px; }\n    button { background-color: sienna; color: white; border: 4px solid black; padding: 12px 20px; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n  <h2>Welcome to my world!<\/h2>\n  <button>Mine a block<\/button>\n<\/body>\n<\/html>"}, "3": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"screen\">CRAFT WORLD<\/h1>\n  <button onclick=\"mine()\">Mine a block<\/button>\n  <script>\n    function mine() {\n      document.getElementById(\"screen\").innerHTML = \"You mined a block!\";\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "4": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"screen\">CRAFT WORLD<\/h1>\n  <button onclick=\"grass()\">Grass mode<\/button>\n  <script>\n    function grass() {\n      document.getElementById(\"screen\").style.color = \"green\";\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "5": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h2 id=\"out\">Press to log in<\/h2>\n  <button onclick=\"login()\">Log in<\/button>\n  <script>\n    function login() {\n      let name = prompt(\"Your Minecraft name?\");\n      document.getElementById(\"out\").innerHTML = \"Welcome to CRAFT WORLD, \" + name;\n    }\n  <\/script>\n<\/body>\n<\/html>"}, "13": {"arcade": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { background-color: skyblue; font-family: monospace; color: black; text-align: center; }\n    h1 { color: green; }\n    h2 { background-color: yellowgreen; color: white; border: 4px solid darkgreen; padding: 10px; }\n    button { background-color: sienna; color: white; border: 4px solid black; padding: 12px 20px; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n  <h2>Welcome, Player!<\/h2>\n  <button onclick=\"mine()\">Mine a block<\/button>\n  <button onclick=\"loot()\">Open chest<\/button>\n  <div id=\"out\"><\/div>\n  <script>\n    function mine() {\n      document.getElementById(\"out\").innerHTML = \"You mined a block!\";\n    }\n    function loot() {\n      let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n      let i = Math.floor(Math.random() * blocks.length);\n      document.getElementById(\"out\").innerHTML = \"You found: \" + blocks[i];\n    }\n  <\/script>\n<\/body>\n<\/html>"}};
+var WANT = {"1": "TNT", "2": "CRAFT WORLD", "3": "mined", "5": "Welcome", "8": "Diamond", "9": "Block 3", "10": "Mined", "12": "Full stack!", "19": "mined a block", "14": "CRAFT WORLD", "16": "Mining", "18": "Block 3"};
+var OKTX = {"1": "you laid out the page with HTML.", "2": "you styled the page with CSS.", "3": "your button changed the page.", "4": "your code changed the colour.", "5": "you asked the player and used their answer.", "6": "you built a random chest with a list and Math.random.", "7": "your if/else judged the guess.", "8": "your loop built the whole inventory.", "9": "you wrote a loop from scratch.", "10": "you made the button change the page.", "11": "you built your own button from scratch.", "12": "your condition checked the stack.", "19": "you built the whole CRAFT WORLD page from scratch.", "13": "you combined HTML, CSS and JavaScript into one Minecraft page.", "14": "you wrote the HTML from scratch.", "15": "you read the CSS and predicted the look.", "16": "you made a button run a function.", "17": "you traced the if/else.", "18": "you fixed the loop condition."};
+var MODES = {"6": "build", "7": "build", "8": "build", "9": "build", "10": "build", "11": "create", "12": "tweak", "19": "build", "14": "create", "15": "predict", "16": "create", "17": "predict", "18": "debug"};
+var PREDICT = {"15": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    h1 { color: red; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <h1>CRAFT WORLD<\/h1>\n<\/body>\n<\/html>", "17": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <p id=\"out\"><\/p>\n  <script>\n    let coins = 8;\n    if (coins >= 10) {\n      document.getElementById(\"out\").innerHTML = \"Rich!\";\n    } else {\n      document.getElementById(\"out\").innerHTML = \"Keep mining\";\n    }\n  <\/script>\n<\/body>\n<\/html>"};
+var DEBUGC = {"18": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; }\n  <\/style>\n<\/head>\n<body>\n  <p id=\"out\"><\/p>\n  <script>\n    let s = \"\";\n    for (let i = 1; i < 3; i = i + 1) {\n      s = s + \"Block \" + i + \" \";\n    }\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>"};
 var TWEAKC = {"12": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1, h2 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h2 id=\"out\">Diamond check<\/h2>\n  <button onclick=\"check()\">Check my stack<\/button>\n  <script>\n    function check() {\n      let diamonds = 5;\n      if (CONDITION) {\n        document.getElementById(\"out\").innerHTML = \"Full stack!\";\n      } else {\n        document.getElementById(\"out\").innerHTML = \"Keep mining\";\n      }\n    }\n  <\/script>\n<\/body>\n<\/html>"};
-var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+var BUILDC = {"6": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"out\">Open a chest!<\/h1>\n  <button onclick=\"loot()\">Open chest<\/button>\n  <script>\n    function loot() {\n      let blocks = [\"Diamond\", \"Gold\", \"Redstone\"];\n\n      // \u2460 pick a random position in the list, store it in:  let i\n\n\n      // \u2461 show that block in the heading (id=\"out\") with innerHTML\n\n\n    }\n  <\/script>\n<\/body>\n<\/html>", "7": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"out\">Dig for the diamond!<\/h1>\n  <button onclick=\"dig()\">Dig<\/button>\n  <script>\n    function dig() {\n      let guess = prompt(\"Which block? Type 1, 2 or 3:\");\n      if (guess == \"2\") {\n        // \u2460 show \"Diamond!\" in the heading (id=\"out\")\n\n\n      } else {\n        // \u2461 show \"Just dirt.\" in the heading\n\n\n      }\n    }\n  <\/script>\n<\/body>\n<\/html>", "8": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>My Inventory<\/h1>\n  <p id=\"out\"><\/p>\n  <script>\n    let blocks = [\"Grass\", \"Stone\", \"Diamond\"];\n    let s = \"\";\n\n    for (let i = 0; i < blocks.length; i = i + 1) {\n      // \u2460 add this block to the line:   s = s + ( the block at position i ) + \" \";\n\n\n    }\n\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>", "9": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1>Block counter<\/h1>\n  <p id=\"out\"><\/p>\n  <script>\n    let s = \"\";\n\n    // \u2460 write a loop that runs 3 times (i = 1, 2, 3)\n    // \u2461 each time, add  \"Block \" + i + \" \"  to s\n\n\n\n    document.getElementById(\"out\").innerHTML = s;\n  <\/script>\n<\/body>\n<\/html>", "10": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: monospace; text-align: center; background-color: skyblue; }\n    h1 { color: green; }\n  <\/style>\n<\/head>\n<body>\n  <h1 id=\"block\">Stone<\/h1>\n  <button onclick=\"mine()\">Mine<\/button>\n  <script>\n    function mine() {\n      // \u2460 change the heading (id=\"block\") to say  Mined!\n\n\n    }\n  <\/script>\n<\/body>\n<\/html>", "19": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    /* \u2461 style it: give body a background-color, and h1 a color */\n\n\n  <\/style>\n<\/head>\n<body>\n\n  <!-- \u2460 add a heading:  <h1 id=\"screen\">CRAFT WORLD<\/h1> -->\n\n\n  <!-- \u2460 add a button:   <button onclick=\"mine()\">Mine<\/button> -->\n\n\n  <script>\n    // \u2462 write mine() so clicking the button changes the heading to \"You mined a block!\"\n\n\n  <\/script>\n<\/body>\n<\/html>"};
+var ALL_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 19, 13, 14, 15, 16, 17, 18];
 var THEME_LIST = ["arcade"];
 var IDS = Object.keys(STARTERS).map(Number);
 var THEME = "arcade";
@@ -1591,7 +1656,7 @@ function waveFlag(){
 
 function resetEx(i){
   var m=MODES[String(i)]||"type";
-  $("ed"+i).value = (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : "");
+  $("ed"+i).value = (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : m=="build" ? BUILDC[String(i)] : "");
   if(m=="predict"){ var a=$("ans"+i); if(a) a.hidden=true; }
   delete BASE[i];
   $("out"+i).srcdoc="";
@@ -1658,7 +1723,7 @@ function apply(s){
   ALL_IDS.forEach(function(i){
     if(STARTERS[String(i)]) $("ref"+i).textContent = STARTERS[String(i)][THEME];
     var c=s.code&&s.code[i], m=MODES[String(i)]||"type";
-    $("ed"+i).value = (c!=null ? c : (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : ""));
+    $("ed"+i).value = (c!=null ? c : (m=="debug" ? DEBUGC[String(i)] : m=="tweak" ? TWEAKC[String(i)] : m=="build" ? BUILDC[String(i)] : ""));
     var on=(s.done||[]).indexOf(i)>=0; $("done"+i).checked=on;
     var pill=document.querySelector('.pill[href="#ex'+i+'"]'); if(pill) pill.classList.toggle("is-done",on);
   });
