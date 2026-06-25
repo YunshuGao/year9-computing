@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Design — Code Playground · 9IMMXA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="html2canvas.min.js"></script>
+<style>
+  :root{
+    --teal:#13a08e; --teal-d:#0d7d6e; --blue:#1cb0f6; --blue-d:#1899d6;
+    --gold:#ff9600; --ink:#3c3c3c; --muted:#8a8a8a; --bg:#f7f7f5; --line:#e5e5e5;
+    --font:'Nunito','Segoe UI',system-ui,Arial,sans-serif; --mono:'Consolas',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);font-weight:700;color:var(--ink);background:var(--bg);line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px 80px}
+
+  header{background:var(--teal);color:#fff;border-bottom:5px solid var(--teal-d)}
+  header .wrap{padding:16px}
+  .brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{flex:none}
+  h1{margin:0;font-size:24px;font-weight:900;letter-spacing:-.3px}
+  .sub{font-size:13.5px;font-weight:700;opacity:.92;margin-top:2px}
+  .steps{margin-top:13px;display:flex;gap:10px;flex-wrap:wrap}
+  .step{background:rgba(0,0,0,.16);border-radius:14px;padding:8px 15px;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .step b{background:#fff;color:var(--teal-d);width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:900}
+
+  .who{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 4px}
+  .who label{font-size:13px;font-weight:800;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+  .who input{border:2px solid var(--line);border-radius:12px;padding:9px 13px;font-size:15px;font-family:inherit;font-weight:800;color:var(--ink);background:#fff;min-width:150px}
+  .who input:focus{border-color:var(--teal);outline:none}
+  .who .grow{flex:1;min-width:230px} .who .grow input{width:100%}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;align-items:start}
+  @media(max-width:820px){.cols{grid-template-columns:1fr}}
+  .pane{min-width:0}
+  .lab{font-size:12px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:#fff;padding:8px 14px;border-radius:14px 14px 0 0}
+  .lab.code{background:var(--teal)} .lab.show{background:var(--blue)}
+  textarea{width:100%;border:2px solid var(--teal);border-top:none;border-radius:0 0 14px 14px;resize:vertical;min-height:360px;
+           padding:13px 15px;font-family:var(--mono);font-size:15px;font-weight:400;line-height:1.6;color:var(--ink);background:#fff;outline:none;display:block}
+  textarea:focus{border-color:var(--teal-d)}
+  .showbox{border:2px solid var(--blue);border-top:none;border-radius:0 0 14px 14px;background:#fff;overflow:hidden}
+  #preview{width:100%;min-height:360px;border:none;display:block;background:#fff}
+
+  .bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:14px}
+  .btn{border:none;border-radius:16px;padding:14px 26px;font-size:16px;font-weight:900;letter-spacing:.4px;cursor:pointer;font-family:var(--font);color:#fff}
+  .run{background:var(--blue);border-bottom:4px solid var(--blue-d)}
+  .shoot{background:var(--gold);border-bottom:4px solid #d97e00}
+  .clear{background:#fff;color:var(--muted);border:2px solid var(--line);border-bottom-width:4px;font-size:14px;padding:12px 18px}
+  .btn:active{border-bottom-width:1px;transform:translateY(3px)}
+  .tip{font-size:13.5px;color:var(--muted);font-weight:700}
+  .tip b{color:var(--ink)}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;font-weight:700;margin-top:26px}
+  #toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:#3c3c3c;color:#fff;
+         padding:13px 24px;border-radius:14px;font-size:15px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:60}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo" width="50" height="50" viewBox="0 0 120 120" aria-hidden="true">
+        <rect x="10" y="20" width="100" height="80" rx="12" fill="#ffffff"/>
+        <rect x="10" y="20" width="100" height="22" rx="11" fill="#0d7d6e"/>
+        <circle cx="22" cy="31" r="4" fill="#fff"/><circle cx="34" cy="31" r="4" fill="#fff"/><circle cx="46" cy="31" r="4" fill="#fff"/>
+        <text x="26" y="78" font-family="Consolas,monospace" font-size="34" fill="#13a08e" font-weight="900">&lt;/&gt;</text>
+      </svg>
+      <div>
+        <h1>Web Design — Code Playground</h1>
+        <div class="sub">Paste or type your code → press ▶ Run → see your page. Save a screenshot for Google Classroom.</div>
+      </div>
+    </div>
+    <div class="steps">
+      <span class="step"><b>1</b> Paste / type your code</span>
+      <span class="step"><b>2</b> Press ▶ Run</span>
+      <span class="step"><b>3</b> Press 📸 Save screenshot</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="who">
+    <label>Your name<input id="sName" placeholder="your name"></label>
+    <label class="grow">What did you make? (this goes on your screenshot)
+      <input id="sLabel" placeholder="e.g. Exercise 3 — the profile card"></label>
+    <label>Date<input id="sDate" style="min-width:130px"></label>
+  </div>
+
+  <div class="cols">
+    <div class="pane">
+      <div class="lab code">⌨ Your code — paste or type it here</div>
+      <textarea id="code" spellcheck="false"></textarea>
+    </div>
+    <div class="pane">
+      <div class="lab show">▶ Your page — what it looks like</div>
+      <div class="showbox"><iframe id="preview" title="your page"></iframe></div>
+    </div>
+  </div>
+
+  <div class="bar">
+    <button class="btn run" onclick="runCode()">▶ Run</button>
+    <button class="btn shoot" onclick="shoot()">📸 Save screenshot</button>
+    <button class="btn clear" onclick="clearAll()">Start again</button>
+    <span class="tip">Tip: do <b>one exercise at a time</b> — paste it, Run it, save the screenshot, then paste the next.</span>
+  </div>
+
+  <footer>Web Design Code Playground · 9IMMXA · your work auto-saves on this computer</footer>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const LSKEY='wd-playground-9immxa-v1';
+const STARTER='<h1>My Web Page</h1>\n<p>Paste or type your code here, then press ▶ Run.</p>\n\n<style>\n  h1 { color: #13a08e; text-align: center; }\n</style>';
+
+/* same render scaffold as the class web-design tools, so images (avatar.png, coffee.png,
+   beach.png) and the Font Awesome icons resolve exactly as they do in the Studio */
+function wrapDoc(code){
+  return '<!doctype html><meta charset="utf-8">'
+    +'<base href="https://yunshugao.github.io/year9-computing/">'
+    +'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">'
+    +'<style>html,body{margin:0}body{font-family:Nunito,Segoe UI,Arial,sans-serif;padding:14px;color:#3c3c3c;display:flow-root}</style>'
+    +(code||'');
+}
+function runCode(){ $('preview').srcdoc=wrapDoc($('code').value); persist(); }
+
+function todayAU(){ const d=new Date(); const p=n=>String(n).padStart(2,'0');
+  return p(d.getDate())+' / '+p(d.getMonth()+1)+' / '+d.getFullYear(); }
+
+let toT; function toast(msg,ms){ const e=$('toast'); e.textContent=msg; e.classList.add('show');
+  clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),ms||1900); }
+
+/* ---- screenshot: render the page, draw a name/label/date banner on top, download PNG ---- */
+function shoot(){
+  runCode();
+  toast('📸 Making your screenshot…',4000);
+  const pv=$('preview');
+  const go=()=>{
+    let body;
+    try{ body=pv.contentDocument.body; }catch(e){ toast('Could not read the page — press Run, then try again'); return; }
+    html2canvas(body,{backgroundColor:'#ffffff',scale:2,logging:false,useCORS:true}).then(pageCanvas=>{
+      const SCALE=2, headH=70*SCALE, pad=18*SCALE;
+      const W=Math.max(pageCanvas.width, 520*SCALE);
+      const out=document.createElement('canvas');
+      out.width=W; out.height=pageCanvas.height+headH;
+      const c=out.getContext('2d');
+      c.fillStyle='#ffffff'; c.fillRect(0,0,out.width,out.height);
+      c.fillStyle='#13a08e'; c.fillRect(0,0,out.width,headH);
+      const name=($('sName').value||'Student').trim();
+      const label=($('sLabel').value||'My web page').trim();
+      const date=($('sDate').value||todayAU()).trim();
+      c.fillStyle='#ffffff';
+      c.font='900 '+(26*SCALE)+'px Nunito, Segoe UI, Arial, sans-serif';
+      c.textBaseline='middle';
+      c.fillText(name+' — '+label, pad, headH*0.40, out.width-pad*2);
+      c.font='800 '+(16*SCALE)+'px Nunito, Segoe UI, Arial, sans-serif';
+      c.fillStyle='rgba(255,255,255,.92)';
+      c.fillText('Web Design · 9IMMXA · '+date, pad, headH*0.76, out.width-pad*2);
+      c.drawImage(pageCanvas,0,headH);
+      out.toBlob(blob=>{
+        if(!blob){ toast('Screenshot failed — press Run, then try again'); return; }
+        const safe=s=>(s||'').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'');
+        const a=document.createElement('a');
+        a.href=URL.createObjectURL(blob);
+        a.download=safe(name)+'_'+(safe(label)||'web-page')+'.png';
+        document.body.appendChild(a); a.click();
+        setTimeout(()=>{a.remove();URL.revokeObjectURL(a.href);},1500);
+        toast('✅ Saved! Now upload the .png to Google Classroom',2600);
+      },'image/png');
+    }).catch(err=>{ toast('Screenshot failed — press Run, then try again'); });
+  };
+  let done=false; const fire=()=>{ if(done)return; done=true; setTimeout(go,180); };
+  pv.addEventListener('load',fire,{once:true});
+  setTimeout(fire,500);
+}
+
+function clearAll(){ if(!confirm('Clear your code and start again?'))return;
+  $('code').value=STARTER; runCode(); persist(); }
+
+/* ---- autosave ---- */
+function persist(){ try{ localStorage.setItem(LSKEY,JSON.stringify({
+  code:$('code').value, name:$('sName').value, label:$('sLabel').value, date:$('sDate').value })); }catch(e){} }
+function restore(){
+  let s=null; try{ s=JSON.parse(localStorage.getItem(LSKEY)); }catch(e){}
+  if(s){ $('code').value=s.code||STARTER; $('sName').value=s.name||'';
+    $('sLabel').value=s.label||''; $('sDate').value=s.date||todayAU(); }
+  else { $('code').value=STARTER; $('sDate').value=todayAU(); }
+}
+['code','sName','sLabel','sDate'].forEach(id=>document.addEventListener('input',e=>{ if(e.target.id===id)persist(); }));
+
+restore(); runCode();
+</script>
+</body>
+</html>
