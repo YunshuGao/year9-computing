@@ -64,6 +64,19 @@
   .btn:active{border-bottom-width:1px;transform:translateY(3px)}
   .btn[disabled]{opacity:.45;cursor:default}
   .hint{font-size:13.5px;color:var(--muted);font-weight:700}
+
+  .predict{background:#fff6e6;border:2px solid #ffd98a;border-radius:14px;padding:11px 15px;margin-top:14px;font-size:16px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .gstep{display:inline-flex;align-items:center;gap:6px}
+  .gstep button{width:32px;height:32px;border-radius:9px;border:none;background:var(--amber);color:#fff;font-size:19px;font-weight:900;cursor:pointer;line-height:1}
+  .gstep button:active{transform:translateY(2px)}
+  .gstep .gv{min-width:28px;text-align:center;font-size:21px;font-weight:900;color:var(--amber)}
+  .gfb{font-weight:800;font-size:15px} .gfb.ok{color:var(--green)} .gfb.no{color:var(--red)}
+  .mtitle{font-size:16px;font-weight:900;color:var(--teal-d);margin-bottom:6px}
+  .mrow{display:flex;align-items:center;gap:11px;padding:8px 2px;font-size:16px;font-weight:700;border-top:1px solid var(--line)}
+  .mrow:first-of-type{border-top:none}
+  .mbox{font-size:23px;line-height:1;color:#b9c2c0;flex:none} .mrow.done{color:var(--green)} .mrow.done .mbox{color:var(--green)}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(18px);background:#0d7d6e;color:#fff;padding:12px 24px;border-radius:14px;font-size:16px;font-weight:900;opacity:0;pointer-events:none;transition:.2s;z-index:60}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   footer{text-align:center;color:var(--muted);font-size:12.5px;font-weight:700;margin-top:24px}
 </style>
 </head>
@@ -93,6 +106,9 @@
       <div id="frog">🐸</div>
     </div>
     <div class="narr" id="narr">Press <b class="c">▶ Run</b> to send the frog hopping, or <b class="e">⏭ One hop</b> to go slowly.</div>
+    <div class="predict">🤔 <span>Predict first:</span> the frog will land
+      <span class="gstep"><button onclick="guess(-1)">−</button><span class="gv" id="vGuess">?</span><button onclick="guess(1)">+</button></span>
+      times. <span class="gfb" id="gfb"></span></div>
     <div class="out"><span class="lab">Output:</span><span id="chips"></span><span class="count" id="count"></span></div>
     <div class="bar">
       <button class="btn run" id="bRun" onclick="run()">▶ Run</button>
@@ -101,8 +117,18 @@
       <span class="hint">Try: make the <b>step</b> 2 — see the frog jump over pads!</span>
     </div>
   </div>
+
+  <div class="panel">
+    <div class="mtitle">🎯 Missions — change Start / Stop / Step, then Run to tick these off</div>
+    <div class="mrow" id="m0"><span class="mbox">☐</span><span>Make the frog land on <b>1&nbsp; 2&nbsp; 3&nbsp; 4&nbsp; 5</b></span></div>
+    <div class="mrow" id="m1"><span class="mbox">☐</span><span>Land on <b>only even pads</b>&nbsp; (2, 4, 6 …)</span></div>
+    <div class="mrow" id="m2"><span class="mbox">☐</span><span>Land <b>exactly 3 times</b></span></div>
+    <div class="mrow" id="m3"><span class="mbox">☐</span><span>Land on <b>1, 4, 7, 10</b>&nbsp; (what step do you need?)</span></div>
+  </div>
+
   <footer>Loop Hopper · Year 9 Computing · the frog visits start, start+step, start+2×step … and stops when i &gt; the stop number</footer>
 </div>
+<div id="toast"></div>
 
 <script>
 const $=id=>document.getElementById(id);
@@ -138,6 +164,7 @@ function clearPads(){ for(let n=1;n<=NPADS;n++){ const p=$('pad'+n); p.classList
 function reset(keepNarr){
   running=false; idx=0; buildSeq(); clearPads();
   $('chips').innerHTML=''; $('count').innerHTML='';
+  const g=$('gfb'); if(g){ g.textContent=''; g.className='gfb'; }
   const f=$('frog'); f.style.transition='none'; frogTo(state.start); void f.offsetWidth; f.style.transition='';
   $('bRun').disabled=false; $('bHop').disabled=false;
   if(!keepNarr) $('narr').innerHTML='Press <b class="c">▶ Run</b> to send the frog hopping, or <b class="e">⏭ One hop</b> to go slowly.';
@@ -157,6 +184,26 @@ function done(){
   const ni=lastVisited+state.step;
   $('narr').innerHTML=`Is <b class="x">${ni} &lt;= ${state.stop}</b>? NO → <b class="x">STOP</b>. The frog landed <b>${seq.length}</b> time${seq.length===1?'':'s'} → output <b class="d">${seq.join('  ')||'(nothing)'}</b>.`;
   $('bRun').disabled=false; $('bHop').disabled=true;
+  checkResult();
+}
+
+/* ---- scaffold 1: predict-then-check ---- */
+let guessVal=null;
+function guess(d){ if(running)return; guessVal = (guessVal===null) ? 1 : clamp(guessVal+d,1,NPADS);
+  $('vGuess').textContent=guessVal; const g=$('gfb'); g.textContent=''; g.className='gfb'; }
+/* ---- scaffold 2: graduated missions ---- */
+const mdone=[false,false,false,false];
+let toT; function toast(m){ const e=$('toast'); e.textContent=m; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),2200); }
+function checkResult(){
+  if(guessVal!==null){ const n=seq.length, g=$('gfb');
+    if(guessVal===n){ g.textContent='✓ You guessed '+guessVal+' — spot on!'; g.className='gfb ok'; }
+    else { g.textContent='You guessed '+guessVal+', it landed '+n+' — predict again!'; g.className='gfb no'; } }
+  const goals=[ seq.join(',')==='1,2,3,4,5',
+                seq.length>=3 && seq.every(x=>x%2===0) && [2,4,6].every(v=>seq.includes(v)),
+                seq.length===3,
+                seq.join(',')==='1,4,7,10' ];
+  goals.forEach((ok,i)=>{ if(ok && !mdone[i]){ mdone[i]=true; const row=$('m'+i);
+    row.classList.add('done'); row.querySelector('.mbox').textContent='✓'; toast('🎯 Mission done!'); } });
 }
 
 async function run(){
