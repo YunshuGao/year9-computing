@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loop Hopper — step through a for loop · Year 9 Computing</title>
+<title>Loop Hopper — step through a for loop (up or down) · Year 9 Computing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -30,13 +30,15 @@
   .stepper button:active{transform:translateY(2px)}
   .stepper .v{min-width:42px;text-align:center;font-size:22px;font-weight:900;color:var(--ink)}
   .cl.start{color:var(--blue-d)} .cl.stop{color:var(--green)} .cl.step{color:var(--amber)}
+  .dirtoggle{display:flex;border:2px solid var(--teal);border-radius:11px;overflow:hidden}
+  .dirtoggle button{border:none;background:#fff;color:var(--teal-d);font-size:15px;font-weight:900;padding:9px 14px;cursor:pointer;font-family:inherit}
+  .dirtoggle button.don{background:var(--teal);color:#fff}
 
   .code{margin-top:14px;background:#16202b;border-radius:14px;padding:13px 16px;font-family:var(--mono);font-size:18px;font-weight:700;color:#e9eef6;overflow-x:auto;white-space:nowrap}
   .code .kw{color:#c4b5fd} .code .st{color:#1cb0f6;font-weight:900} .code .sp{color:#2bd4a6;font-weight:900} .code .se{color:#ffb454;font-weight:900} .code .dl{color:#93a0b3}
   .seg{padding:2px 4px;border-radius:6px;transition:background .15s,box-shadow .15s}
   .seg.hl{background:rgba(255,255,255,.16);box-shadow:0 0 0 2px rgba(255,255,255,.35)}
 
-  /* step state bar */
   .statebar{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
   .ipill{background:var(--teal);color:#fff;font-weight:900;font-size:19px;border-radius:12px;padding:7px 16px}
   .ipill b{font-size:24px}
@@ -91,17 +93,19 @@
 <body>
 <header><div class="wrap">
   <h1>🐸 Loop Hopper</h1>
-  <div class="sub">Step through a for loop ONE part at a time: CHECK → DO (print) → STEP. Watch the frog and the value of i.</div>
+  <div class="sub">Step through a for loop ONE part at a time: CHECK → DO (print) → STEP. Count UP ▲ or DOWN ▼. Watch the frog and the value of i.</div>
 </div></header>
 
 <div class="wrap">
   <div class="panel">
     <div class="ctrls">
+      <div class="ctl"><span class="cl">Direction</span>
+        <div class="dirtoggle"><button id="dirUp" class="don" onclick="setDir(false)">▲ Up</button><button id="dirDown" onclick="setDir(true)">▼ Down</button></div></div>
       <div class="ctl"><span class="cl start">Start  (i =)</span>
         <div class="stepper"><button onclick="bump('start',-1)">−</button><span class="v" id="vStart">1</span><button onclick="bump('start',1)">+</button></div></div>
-      <div class="ctl"><span class="cl stop">Stop when i &gt;</span>
+      <div class="ctl"><span class="cl stop" id="lblStop">Up to (i ≤)</span>
         <div class="stepper"><button onclick="bump('stop',-1)">−</button><span class="v" id="vStop">5</span><button onclick="bump('stop',1)">+</button></div></div>
-      <div class="ctl"><span class="cl step">Step  (+)</span>
+      <div class="ctl"><span class="cl step" id="lblStep">Step (+)</span>
         <div class="stepper"><button onclick="bump('step',-1)">−</button><span class="v" id="vStep">1</span><button onclick="bump('step',1)">+</button></div></div>
     </div>
     <div class="code" id="code"></div>
@@ -136,23 +140,24 @@
   </div>
 
   <div class="panel">
-    <div class="mtitle">🎯 Missions — change Start / Stop / Step, then run to tick these off</div>
+    <div class="mtitle">🎯 Missions — change the numbers (and the direction!), then run to tick these off</div>
     <div class="mrow" id="m0"><span class="mbox">☐</span><span>Make the frog land on <b>1&nbsp; 2&nbsp; 3&nbsp; 4&nbsp; 5</b></span></div>
     <div class="mrow" id="m1"><span class="mbox">☐</span><span>Land on <b>only even pads</b>&nbsp; (2, 4, 6 …)</span></div>
     <div class="mrow" id="m2"><span class="mbox">☐</span><span>Land <b>exactly 3 times</b></span></div>
     <div class="mrow" id="m3"><span class="mbox">☐</span><span>Land on <b>1, 4, 7, 10</b>&nbsp; (what step do you need?)</span></div>
+    <div class="mrow" id="m4"><span class="mbox">☐</span><span>Count <b>DOWN</b>: make the output <b>5&nbsp; 4&nbsp; 3&nbsp; 2&nbsp; 1</b>&nbsp; (try ▼ Down!)</span></div>
   </div>
 
-  <footer>Loop Hopper · Year 9 Computing · CHECK is i ≤ stop? → DO print(i) → STEP i = i + step → check again</footer>
+  <footer>Loop Hopper · Year 9 Computing · UP: i = i + step, check i ≤ stop · DOWN: i = i − step, check i ≥ stop</footer>
 </div>
 <div id="toast"></div>
 
 <script>
 const $=id=>document.getElementById(id);
 const NPADS=12;
-let state={start:1,stop:5,step:1};
+let state={start:1,stop:5,step:1,down:false};
 let seq=[], running=false;
-let ms={i:1, phase:'set', pass:false};      // micro-step state
+let ms={i:1, phase:'set', pass:false};
 
 (function(){ let h=''; for(let n=1;n<=NPADS;n++) h+=`<div class="pad" id="pad${n}">${n}</div>`; $('pads').innerHTML=h; })();
 
@@ -162,18 +167,33 @@ function bump(k,d){
   if(k==='start') state.start=clamp(state.start+d,1,NPADS);
   if(k==='stop')  state.stop =clamp(state.stop +d,1,NPADS);
   if(k==='step')  state.step =clamp(state.step +d,1,5);
-  if(state.start>state.stop){ if(k==='start') state.stop=state.start; else state.start=state.stop; }
+  if(!state.down && state.start>state.stop){ if(k==='start') state.stop=state.start; else state.start=state.stop; }
+  if(state.down && state.start<state.stop){ if(k==='start') state.stop=state.start; else state.start=state.stop; }
   drawControls(); reset();
+}
+function setDir(down){
+  if(running||state.down===down) return;
+  state.down=down;
+  if(down){ state.start=5; state.stop=1; } else { state.start=1; state.stop=5; }
+  state.step=1; drawControls(); reset();
 }
 function drawControls(){
   $('vStart').textContent=state.start; $('vStop').textContent=state.stop; $('vStep').textContent=state.step;
+  $('lblStop').textContent = state.down ? 'Down to (i ≥)' : 'Up to (i ≤)';
+  $('lblStep').textContent = state.down ? 'Step (−)' : 'Step (+)';
+  $('dirUp').classList.toggle('don', !state.down);
+  $('dirDown').classList.toggle('don', state.down);
+  const cmp = state.down ? 'i &gt;= ' : 'i &lt;= ';
+  const op  = state.down ? 'i = i - ' : 'i = i + ';
   $('code').innerHTML='<span class="kw">for</span> <span class="dl">(</span><span class="kw">let</span> '
     +`<span class="seg" id="seg_set">i = <span class="st">${state.start}</span></span><span class="dl">;</span> `
-    +`<span class="seg" id="seg_check">i &lt;= <span class="sp">${state.stop}</span></span><span class="dl">;</span> `
-    +`<span class="seg" id="seg_step">i = i + <span class="se">${state.step}</span></span><span class="dl">) {</span> `
+    +`<span class="seg" id="seg_check">${cmp}<span class="sp">${state.stop}</span></span><span class="dl">;</span> `
+    +`<span class="seg" id="seg_step">${op}<span class="se">${state.step}</span></span><span class="dl">) {</span> `
     +`<span class="seg" id="seg_do"><span class="dl">print(</span>i<span class="dl">)</span></span><span class="dl">; }</span>`;
 }
-function buildSeq(){ seq=[]; for(let i=state.start; i<=state.stop; i=i+state.step) seq.push(i); }
+function buildSeq(){ seq=[];
+  if(state.down){ for(let i=state.start; i>=state.stop; i-=state.step) seq.push(i); }
+  else { for(let i=state.start; i<=state.stop; i+=state.step) seq.push(i); } }
 function frogTo(n){ const pad=$('pad'+clamp(n,1,NPADS)); const f=$('frog');
   f.style.left=(pad.offsetLeft + pad.offsetWidth/2 - f.offsetWidth/2)+'px'; }
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -183,7 +203,6 @@ function lightPad(n){ const p=$('pad'+n); if(p) p.classList.add('lit'); }
 function addChip(n){ const c=document.createElement('span'); c.className='chip'; c.textContent=n; $('chips').appendChild(c);
   $('count').innerHTML='hops so far: <b>'+$('chips').children.length+'</b>'; }
 
-/* ---- highlight the active code part + phase chip ---- */
 function hi(part){
   ['set','check','step','do'].forEach(p=>$('seg_'+p)&&$('seg_'+p).classList.remove('hl'));
   ['Check','Do','Step'].forEach(p=>$('ph'+p).classList.remove('on'));
@@ -196,18 +215,22 @@ function narr(h){ $('narr').innerHTML=h; }
 function setI(){ $('iVal').textContent=ms.i; }
 function setYN(t,ok){ const y=$('yn'); y.textContent=t||''; y.className='yn'+(t?(ok?' ok':' no'):''); }
 
-/* ---- the step-by-step engine ---- */
+/* ---- step-by-step engine (direction-aware) ---- */
 function showSet(){ hi('set'); ms.i=state.start; frogTo(ms.i); setI(); setYN('');
   narr('<b class="s">SET</b> — happens ONCE: i starts at <b>'+ms.i+'</b>.  Press <b>Next step</b> to CHECK.'); }
-function showCheck(){ hi('check'); ms.pass=ms.i<=state.stop; setI(); setYN(ms.pass?'YES ✓':'NO ✗',ms.pass);
-  narr('<b class="c">CHECK</b>: is <b>'+ms.i+' &lt;= '+state.stop+'</b>?  →  '
+function showCheck(){ hi('check'); ms.pass = state.down ? (ms.i>=state.stop) : (ms.i<=state.stop);
+  const cmp = state.down ? '&gt;=' : '&lt;='; setI(); setYN(ms.pass?'YES ✓':'NO ✗',ms.pass);
+  narr('<b class="c">CHECK</b>: is <b>'+ms.i+' '+cmp+' '+state.stop+'</b>?  →  '
     +(ms.pass?'<b class="c">YES</b> — so we DO the job next.':'<b class="x">NO</b> — so we STOP.')); }
 function showDo(){ hi('do'); frogTo(ms.i); lightPad(ms.i); addChip(ms.i); setI();
   narr('<b class="d">DO</b>: print(<b>'+ms.i+'</b>) — the frog lands on '+ms.i+' and prints it.'); }
-function showStep(){ hi('step'); const old=ms.i; ms.i=old+state.step; frogTo(ms.i); setI(); setYN('');
-  narr('<b class="e">STEP</b>: i = '+old+' + '+state.step+' = <b>'+ms.i+'</b> — the frog hops. Now CHECK again.'); }
+function showStep(){ hi('step'); const old=ms.i;
+  ms.i = state.down ? old-state.step : old+state.step;
+  frogTo(ms.i); setI(); setYN(''); const sign = state.down ? '−' : '+';
+  narr('<b class="e">STEP</b>: i = '+old+' '+sign+' '+state.step+' = <b>'+ms.i+'</b> — the frog hops. Now CHECK again.'); }
 function showStop(){ hi('none'); setI(); setYN('NO ✗',false); ms.phase='stop';
-  narr('<b class="x">STOP</b>: '+ms.i+' &gt; '+state.stop+', so the loop ends.  Output: <b class="d">'+(chipsText()||'(nothing)')+'</b>.');
+  const cmp = state.down ? '&lt;' : '&gt;';
+  narr('<b class="x">STOP</b>: '+ms.i+' '+cmp+' '+state.stop+', so the loop ends.  Output: <b class="d">'+(chipsText()||'(nothing)')+'</b>.');
   $('bNext').disabled=true; checkResult(); }
 function nextStep(){
   if(running||ms.phase==='stop') return;
@@ -226,32 +249,32 @@ function reset(){
   showSet();
 }
 
-/* ---- run all (fast animation) ---- */
 async function run(){
   if(running) return; reset(); running=true; $('bNext').disabled=true; $('bRun').disabled=true;
-  await sleep(250);
+  await sleep(250); const sign = state.down ? '−' : '+';
   for(let k=0;k<seq.length;k++){ if(!running) return; const i=seq[k];
     hi('do'); frogTo(i); lightPad(i); addChip(i); ms.i=i; setI(); setYN('YES ✓',true);
-    narr('Land on <b class="d">'+i+'</b> (print '+i+') → hop <b class="e">+'+state.step+'</b>.');
+    narr('Land on <b class="d">'+i+'</b> (print '+i+') → hop <b class="e">'+sign+state.step+'</b>.');
     await sleep(680); }
-  if(running){ const last=seq.length?seq[seq.length-1]:state.start; ms.i=last+state.step; showStop(); $('bRun').disabled=false; running=false; }
+  if(running){ const last=seq.length?seq[seq.length-1]:state.start;
+    ms.i = state.down ? last-state.step : last+state.step; showStop(); $('bRun').disabled=false; running=false; }
 }
 
-/* ---- scaffold 1: predict ---- */
 let guessVal=null;
 function guess(d){ if(running)return; guessVal=(guessVal===null)?1:clamp(guessVal+d,1,NPADS);
   $('vGuess').textContent=guessVal; const g=$('gfb'); g.textContent=''; g.className='gfb'; }
-/* ---- scaffold 2: missions ---- */
-const mdone=[false,false,false,false];
+const mdone=[false,false,false,false,false];
 let toT; function toast(m){ const e=$('toast'); e.textContent=m; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),2200); }
 function checkResult(){
   if(guessVal!==null){ const n=seq.length,g=$('gfb');
     if(guessVal===n){ g.textContent='✓ You guessed '+guessVal+' — spot on!'; g.className='gfb ok'; }
     else { g.textContent='You guessed '+guessVal+', it landed '+n+' — predict again!'; g.className='gfb no'; } }
-  const goals=[ seq.join(',')==='1,2,3,4,5',
+  const sorted=[...seq].sort((a,b)=>a-b).join(',');
+  const goals=[ sorted==='1,2,3,4,5',
                 seq.length>=3 && seq.every(x=>x%2===0) && [2,4,6].every(v=>seq.includes(v)),
                 seq.length===3,
-                seq.join(',')==='1,4,7,10' ];
+                sorted==='1,4,7,10',
+                seq.join(',')==='5,4,3,2,1' ];
   goals.forEach((ok,i)=>{ if(ok&&!mdone[i]){ mdone[i]=true; const r=$('m'+i);
     r.classList.add('done'); r.querySelector('.mbox').textContent='✓'; toast('🎯 Mission done!'); } });
 }
