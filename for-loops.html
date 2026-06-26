@@ -1,149 +1,333 @@
-<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>For Loops &mdash; Year 9 Computing</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"><style>
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slime Loop &mdash; a for-loop game &middot; Year 9 Computing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
 *{box-sizing:border-box}
 html{background:#6a98c0;image-rendering:pixelated}
 body{margin:0;font-family:'VT323','Consolas',monospace;color:#26211c;
-     background:linear-gradient(#7ec3ef 0,#a9dbf3 38%,#bfe3c4 38%,#bfe3c4 100%)}
-.page{max-width:1040px;margin:0 auto;padding-bottom:54px}
+     background:linear-gradient(#7ec3ef 0,#a9dbf3 40%,#bfe3c4 40%,#bfe3c4 100%)}
+.page{max-width:1060px;margin:0 auto;padding-bottom:48px}
 .px{font-family:'Press Start 2P','VT323',monospace}
 
-.panel{background:#c6c6c6;border:5px solid;border-color:#fefefe #565656 #565656 #fefefe;
-       box-shadow:6px 6px 0 rgba(0,0,0,.22);padding:18px 20px}
-.sec{margin:26px 22px 0}
-.h{font-size:32px;font-weight:700;color:#2c2620;letter-spacing:.5px;margin:0 0 12px}
+.panel{background:#c6c6c6;border:5px solid;border-color:#fefefe #565656 #565656 #fefefe;box-shadow:6px 6px 0 rgba(0,0,0,.22)}
+.sec{margin:22px 18px 0}
 
-/* ---- header world ---- */
-header{position:relative;overflow:hidden;padding:28px 26px 60px;border-bottom:7px solid #3a6b2a;
-       background:linear-gradient(#79c0f0,#9bd4f5)}
+header{position:relative;overflow:hidden;padding:26px 24px 56px;border-bottom:7px solid #3a6b2a;background:linear-gradient(#79c0f0,#9bd4f5)}
 .cloud{position:absolute;background:#fff;box-shadow:14px 0 0 #fff,28px 0 0 #fff,14px 14px 0 #fff}
-.sun{position:absolute;right:34px;top:22px;width:46px;height:46px;background:#ffd83d;border:4px solid #e9b600}
-header h1{position:relative;margin:0;font-size:32px;font-weight:400;color:#fff;letter-spacing:2px;
-          text-shadow:3px 3px 0 #3a6b2a,5px 5px 0 rgba(0,0,0,.18)}
-header .tag{position:relative;margin:14px 0 0;font-size:24px;color:#23408a;text-shadow:1px 1px 0 #fff8}
-.ground{position:absolute;left:0;right:0;bottom:0;height:44px;
-        background:linear-gradient(#6fb43f 0 38%,#7a5230 38% 100%);border-top:5px solid #4e7a35}
+.sun{position:absolute;right:30px;top:20px;width:44px;height:44px;background:#ffd83d;border:4px solid #e9b600}
+header h1{position:relative;margin:0;font-size:30px;font-weight:400;color:#fff;letter-spacing:2px;text-shadow:3px 3px 0 #3a6b2a,5px 5px 0 rgba(0,0,0,.18)}
+header .tag{position:relative;margin:14px 0 0;font-size:23px;color:#23408a;text-shadow:1px 1px 0 #fff8}
+.ground{position:absolute;left:0;right:0;bottom:0;height:42px;background:linear-gradient(#6fb43f 0 38%,#7a5230 38% 100%);border-top:5px solid #4e7a35}
 
-/* ---- slime mascot + speech ---- */
-.sl{vertical-align:bottom;display:inline-block;transform-origin:bottom center;animation:hop 1.6s ease-in-out infinite}
-@keyframes hop{0%,70%,100%{transform:translateY(0) scaleX(1) scaleY(1)}
-  8%{transform:translateY(0) scaleX(1.14) scaleY(.8)}
-  32%{transform:translateY(-12px) scaleX(.92) scaleY(1.1)}
-  55%{transform:translateY(0) scaleX(1.12) scaleY(.85)}}
-@media (prefers-reduced-motion:reduce){.sl{animation:none}}
-.say{display:inline-block;background:#f6efdc;border:4px solid;border-color:#fff #9a8c63 #9a8c63 #fff;
-     color:#3a3020;font-size:23px;padding:7px 13px}
-.mascot{position:relative;z-index:3;display:flex;align-items:flex-end;gap:14px;margin-top:16px}
+.controls{padding:14px 16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.lever{display:flex;border:4px solid;border-color:#373737 #fff #fff #373737;background:#8b8b8b}
+.lever button{font-family:'Press Start 2P',monospace;font-size:13px;color:#2c2620;background:#b9b9b9;border:none;padding:11px 14px;cursor:pointer;border-right:3px solid #777}
+.lever button:last-child{border-right:none}
+.lever button.on{background:#6aa84f;color:#fff;text-shadow:1px 1px 0 #00000055}
+.lever button.dn.on{background:#9b59b6}
+.iconbtn{font-family:'VT323',monospace;font-size:24px;background:#b9b9b9;border:4px solid;border-color:#fff #565656 #565656 #fff;cursor:pointer;width:46px;height:46px;line-height:1}
+.csign{flex:1;min-width:260px;background:#b07a3e;border:4px solid;border-color:#cfa067 #6e4a28 #6e4a28 #cfa067;padding:8px 14px;font-size:26px;color:#2e1c0c;text-align:center}
+.csign b{color:#7a1f12}.csign .o{color:#0d4b86}
 
-/* ---- 4 moves: hotbar slots ---- */
-.moves{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.slot4{background:#8b8b8b;border:5px solid;border-color:#373737 #fff #fff #373737;padding:12px 8px;text-align:center}
-.slot4 .ic{height:50px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
-.slot4 .nm{font-size:15px;color:#fff;text-shadow:2px 2px 0 #000}
-.slot4 .ds{font-size:20px;color:#23211c;line-height:1.05;margin-top:6px}
-.cube{width:38px;height:38px;border:3px solid #00000040}
-.cube.gold{background:#fcd34d;border-color:#a9781a}
-.bigsym{font-family:'VT323',monospace;font-size:46px;font-weight:700;color:#2e2a26;line-height:1}
-.bigsym.step{font-size:40px;color:#1f5a2a}
-.flag{position:relative;display:inline-block;width:42px;height:44px}
-.flag .pole{position:absolute;left:11px;top:0;width:5px;height:44px;background:#6e4a28}
-.flag .cloth{position:absolute;left:16px;top:4px;width:22px;height:16px;background:#c0392b;border:2px solid #7a1f12}
-.cycle{margin-top:14px;text-align:center;font-size:25px;color:#2c2620}
-.cycle b{padding:2px 9px;color:#fff;font-weight:400} .cycle .c{background:#3a8a3f}.cycle .d{background:#caa11f}.cycle .s{background:#b5651d}.cycle .x{background:#b23}
+.guide{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#dfeecb;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff;margin-top:14px}
+.allay{flex:none;animation:float 2.4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.bubble{flex:1;background:#fff;border:4px solid;border-color:#fff #b7c79a #b7c79a #fff;padding:9px 14px;font-size:23px;color:#2c3320;line-height:1.15;min-height:48px;display:flex;align-items:center}
+.bubble b{color:#1f6b2a}
 
-/* ---- example block ---- */
-.exhead{display:inline-block;font-size:18px;color:#fff;padding:9px 20px;border:5px solid;letter-spacing:1px;text-shadow:2px 2px 0 #0006}
-.exhead .tri{font-family:'VT323',monospace;font-size:24px}
-.up .exhead{background:#3f7fd1;border-color:#8fb8ea #244a86 #244a86 #8fb8ea}
-.down .exhead{background:#9b59b6;border-color:#c89bd8 #5e2d74 #5e2d74 #c89bd8}
-.exbody{background:#cfe2f5;border:5px solid;border-color:#fff #6b8aa3 #6b8aa3 #fff;padding:18px 18px 20px}
-.down .exbody{background:#e6d6f0}
+.world{position:relative;height:236px;overflow:hidden;background:linear-gradient(#86c9f2,#bfe3f5 70%,#cdebc8 70%);border:5px solid;border-color:#fff #6b8aa3 #6b8aa3 #fff;margin-top:14px}
+.world .sun{right:24px;top:16px}
+.blocks{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:6px;padding:0 10px}
+.blk{width:var(--bw,72px);height:var(--bw,72px);flex:none;display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;position:relative}
+.blk.grass{background:linear-gradient(#86d15a 0 22%,#6aa84f 22% 30%,#7a5230 30% 100%);border:4px solid #3c2a18}
+.blk.grass span{font-family:'Press Start 2P',monospace;font-size:18px;color:#fff;text-shadow:2px 2px 0 #00000066}
+.blk.edge{background:linear-gradient(#9a9a9a,#7d7d7d);border:4px solid #4f4f4f}
+.creep{width:64%;height:64%;position:absolute;top:14%;left:18%}
+.slime{position:absolute;bottom:74px;left:0;z-index:6;transition:left .42s cubic-bezier(.3,1.35,.5,1)}
+@keyframes jump{0%{transform:translateY(0)}45%{transform:translateY(-40px) scaleY(1.08) scaleX(.94)}100%{transform:translateY(0)}}
+.slime.hop{animation:jump .42s ease}
+@keyframes wow{0%,100%{transform:scale(1)}35%{transform:scale(1.28,.78)}70%{transform:scale(.92,1.12)}}
+.slime.wow{animation:wow .32s}
+@keyframes happy{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.slime.happy{animation:happy .3s}
+@keyframes spin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.25)}100%{transform:rotate(360deg) scale(1)}}
+.slime.spin{animation:spin .9s ease}
+.pcl{position:absolute;width:9px;height:9px;background:#fcd34d;border:1px solid #a9781a;z-index:7;animation:pcl .65s ease-out forwards}
+@keyframes pcl{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+.grabnum{position:absolute;font-family:'Press Start 2P',monospace;font-size:22px;color:#fcd34d;text-shadow:2px 2px 0 #7a1f12;z-index:8;animation:gn .8s ease-out forwards;pointer-events:none}
+@keyframes gn{0%{transform:translateY(0);opacity:0}20%{opacity:1}to{transform:translateY(-46px);opacity:0}}
+.xpfly{position:absolute;left:50%;top:30px;transform:translateX(-50%);font-family:'Press Start 2P',monospace;font-size:18px;color:#3fd07a;text-shadow:2px 2px 0 #14502c;z-index:9;animation:gn 1s ease-out forwards}
 
-.sign{display:inline-block;background:#b07a3e;border:5px solid;border-color:#cfa067 #6e4a28 #6e4a28 #cfa067;
-      padding:8px 18px;font-size:30px;color:#2e1c0c}
-.sign .n{color:#7a1f12} .sign .o{color:#0d4b86}
-.dir{font-size:24px;font-weight:700;color:#1f5a2a;margin:14px 0 4px;text-align:center}
+.hud{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:14px;padding:12px 16px}
+.ipill{background:#13a08e;color:#fff;border:4px solid;border-color:#5fd4c4 #0a6358 #0a6358 #5fd4c4;padding:6px 16px;font-size:24px}
+.ipill b{font-family:'Press Start 2P',monospace;font-size:22px;margin-left:6px}
+.phases{display:flex;gap:8px;flex-wrap:wrap}
+.ph{font-size:20px;color:#5b5b5b;background:#b3b3b3;border:3px solid #8f8f8f;padding:5px 11px}
+.ph i{font-style:normal;font-size:17px;opacity:.85}
+#phCheck.on{background:#2e7d32;color:#fff;border-color:#7ed186}
+#phDo.on{background:#7c3aed;color:#fff;border-color:#c4a8f2}
+#phStep.on{background:#e08a00;color:#fff;border-color:#ffc266}
+.ruleflag{margin-left:auto;background:#fff4c2;border:3px solid #e0a800;padding:6px 12px;font-size:21px;color:#8a5a00;font-weight:700}
 
-/* ---- filmstrip ---- */
-.strip{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:flex-end;margin-top:6px}
-.frame{display:flex;flex-direction:column;align-items:center;gap:7px;width:104px}
-.orb{width:50px;height:50px;background:#fcd34d;border:4px solid #a9781a;display:flex;align-items:center;
-     justify-content:center;font-size:22px;color:#5a3d05;box-shadow:0 4px 0 #00000022}
-.orb.x{background:#e7b7b1;border-color:#9b2d20;color:#7a1a10;font-family:'VT323',monospace;font-size:34px}
-.tile{position:relative;width:74px;height:92px;display:flex;align-items:flex-end;justify-content:center}
-.onblk{position:absolute;top:-4px;left:50%;transform:translateX(-50%);z-index:2}
-.blk{width:70px;height:70px;background:linear-gradient(#86d15a 0 24%,#6aa84f 24% 32%,#7a5230 32% 100%);
-     border:4px solid #3c2a18;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px}
-.blk span{font-size:20px;color:#fff;text-shadow:2px 2px 0 #00000066}
-.blk.stop{background:#b23;border-color:#5e120c}
-.fcap{font-size:22px;color:#2c2620;text-align:center;line-height:1.05}
-.fcap.ok{color:#2f7a32}.fcap.no{color:#b23;font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:16px;min-height:64px}
+.gbtn{font-family:'Press Start 2P',monospace;font-size:15px;color:#fff;border:5px solid;padding:15px 22px;cursor:pointer;text-shadow:2px 2px 0 #00000055;line-height:1.3}
+.gbtn:active{transform:translateY(3px)}
+.gbtn.keep{background:#3a8a3f;border-color:#7ed186 #1f5523 #1f5523 #7ed186}
+.gbtn.stop{background:#c0392b;border-color:#e98a7e #7a1f12 #7a1f12 #e98a7e}
+.gbtn.grab{background:#caa11f;border-color:#f3d873 #7a5e00 #7a5e00 #f3d873;color:#2e1c0c;text-shadow:none}
+.gbtn.hop{background:#b5651d;border-color:#e0a460 #6e3a08 #6e3a08 #e0a460}
+.gbtn.start{background:#3f7fd1;border-color:#8fb8ea #244a86 #244a86 #8fb8ea;font-size:18px;padding:17px 34px}
+.gbtn.big{font-size:17px;padding:17px 30px}
 
-/* ---- output hotbar ---- */
-.outrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;justify-content:center}
-.outlbl{font-size:24px;font-weight:700;color:#5a3d05}
+.scorebar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:16px;padding:12px 16px;justify-content:center}
+.hblabel{font-size:23px;font-weight:700;color:#5a3d05}
 .hotbar{display:inline-flex;background:#8b8b8b;border:5px solid;border-color:#373737 #fff #fff #373737;padding:4px}
-.bslot{width:58px;height:58px;border:4px solid;border-color:#373737 #fff #fff #373737;background:#9a9a9a;
-       display:flex;align-items:center;justify-content:center}
-.tok{width:42px;height:42px;background:#fcd34d;border:3px solid #a9781a;display:flex;align-items:center;
-     justify-content:center;font-size:18px;color:#5a3d05}
+.bslot{width:52px;height:52px;border:4px solid;border-color:#373737 #fff #fff #373737;background:#9a9a9a;display:flex;align-items:center;justify-content:center}
+.tok{width:38px;height:38px;background:#fcd34d;border:3px solid #a9781a;display:flex;align-items:center;justify-content:center;font-family:'Press Start 2P',monospace;font-size:16px;color:#5a3d05}
+.tok.pop{animation:tokpop .3s ease}
+@keyframes tokpop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.xpwrap{display:flex;align-items:center;gap:10px}
+.xpbox{width:160px;height:22px;background:#5a5a5a;border:3px solid;border-color:#373737 #fff #fff #373737}
+.xpfill{height:100%;background:linear-gradient(#9be15a,#5aab2e);width:0;transition:width .3s}
+.xptxt{font-size:22px;font-weight:700;color:#2f7a32}
 
-/* ---- difference signs ---- */
-.diff{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.dsign{padding:15px 18px;font-size:25px;border:5px solid;line-height:1.5;text-align:center}
-.dsign b{font-weight:700}
-.dsign.u{background:#cfe2f5;border-color:#fff #6b8aa3 #6b8aa3 #fff;color:#1c3a78}
-.dsign.d{background:#e6d6f0;border-color:#fff #8a6b9a #8a6b9a #fff;color:#5e2d74}
-.same{margin-top:12px;text-align:center;font-size:25px;font-weight:700;color:#1f5a2a}
+#game.shake{animation:shk .3s}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 
-/* ---- golden rule + foot ---- */
-.gold{margin:26px 22px 0;background:#fff4c2;border:5px solid;border-color:#fff #c9a93a #c9a93a #fff;
-      padding:16px 20px;display:flex;align-items:center;gap:16px}
-.gold .txt{font-size:26px;color:#5a4410;line-height:1.2}
-.gold b{font-weight:700;color:#9a6b00}
-.foot{margin:24px 22px 0;text-align:center}
-.btn{display:inline-block;background:#6aa84f;border:5px solid;border-color:#9bd47f #3a6b2a #3a6b2a #9bd47f;
-     color:#fff;font-size:28px;padding:12px 26px;text-decoration:none;text-shadow:2px 2px 0 #00000044}
+.winwrap{position:fixed;inset:0;background:rgba(20,30,20,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:18px}
+.winwrap.show{display:flex}
+.wincard{background:#dfeecb;border:7px solid;border-color:#fff #6e8a4e #6e8a4e #fff;padding:22px 26px;max-width:520px;text-align:center;box-shadow:8px 8px 0 rgba(0,0,0,.3)}
+.wincard h2{font-family:'Press Start 2P',monospace;font-size:21px;color:#2f7a32;margin:6px 0 4px;text-shadow:2px 2px 0 #fff}
+.wincard .wnums{display:flex;gap:8px;justify-content:center;margin:14px 0}
+.wincard .tok{width:46px;height:46px;font-size:18px}
+.wincard p{font-size:23px;color:#3a4a2a;line-height:1.25;margin:10px 4px}
+.wincard .wxp{font-family:'Press Start 2P',monospace;font-size:16px;color:#caa11f}
+.winbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:16px}
 
-@media (max-width:720px){
-  .sec{margin:18px 12px 0}.h{font-size:26px}
-  header{padding:22px 16px 50px} header h1{font-size:21px} header .tag{font-size:19px}
-  .moves{grid-template-columns:1fr 1fr;gap:10px}
-  .panel{padding:14px} .exbody{padding:13px}
-  .diff{grid-template-columns:1fr}
-  .frame{width:30%;min-width:92px}
-  .gold{margin:18px 12px 0;flex-wrap:wrap}.gold .txt{font-size:22px}
-  .foot{margin:18px 12px 0}.btn{font-size:23px}
+.h{font-size:30px;color:#2c2620;margin:0 0 10px}
+.recap{padding:16px 18px;font-size:23px;line-height:1.4;color:#2c2620}
+.recap b{color:#1f6b2a}
+.foot{margin:22px 18px 0;text-align:center}
+.btnlink{display:inline-block;background:#6aa84f;border:5px solid;border-color:#9bd47f #3a6b2a #3a6b2a #9bd47f;color:#fff;font-size:26px;padding:11px 24px;text-decoration:none;text-shadow:2px 2px 0 #00000044}
+
+@media (prefers-reduced-motion:reduce){.allay,.slime,.tok.pop{animation:none}}
+@media (max-width:760px){
+  .sec{margin:16px 10px 0}.h{font-size:24px}
+  header{padding:20px 14px 48px} header h1{font-size:20px} header .tag{font-size:18px}
+  .csign{font-size:21px;min-width:100%;order:5}
+  .world{--bw:42px;height:200px}.slime{bottom:60px}
+  .bubble{font-size:20px}.guide{padding:10px}
+  .gbtn{font-size:12px;padding:13px 14px}.gbtn.start{font-size:15px}
+  .ph{font-size:17px}.ruleflag{margin-left:0;font-size:18px}
+  .xpbox{width:120px}
 }
-</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="sl" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" fill="#57b23a"/><rect x="3" y="4" width="10" height="9" fill="#6cc94e"/><rect x="4" y="6" width="8" height="6" fill="#7ada5b"/><rect x="2" y="3" width="12" height="11" fill="none" stroke="#2f7a22" stroke-width="1"/><rect x="5" y="7" width="2" height="2" fill="#143a10"/><rect x="9" y="7" width="2" height="2" fill="#143a10"/><rect x="7" y="10" width="2" height="1" fill="#143a10"/></symbol></svg><div class="page">
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sl" viewBox="0 0 16 16">
+    <rect x="2" y="3" width="12" height="11" fill="#57b23a"/><rect x="3" y="4" width="10" height="9" fill="#6cc94e"/>
+    <rect x="4" y="6" width="8" height="6" fill="#7ada5b"/><rect x="2" y="3" width="12" height="11" fill="none" stroke="#2f7a22" stroke-width="1"/>
+    <rect x="5" y="7" width="2" height="2" fill="#143a10"/><rect x="9" y="7" width="2" height="2" fill="#143a10"/><rect x="7" y="10" width="2" height="1" fill="#143a10"/>
+  </symbol>
+  <symbol id="allay" viewBox="0 0 16 16">
+    <rect x="2" y="5" width="3" height="5" fill="#bfe3f5"/><rect x="11" y="5" width="3" height="5" fill="#bfe3f5"/>
+    <rect x="5" y="4" width="6" height="8" fill="#3f9ad8"/><rect x="6" y="5" width="4" height="6" fill="#6fc0ee"/>
+    <rect x="6" y="6" width="1" height="2" fill="#16344a"/><rect x="9" y="6" width="1" height="2" fill="#16344a"/>
+  </symbol>
+  <symbol id="creep" viewBox="0 0 8 8">
+    <rect width="8" height="8" fill="#73a64a"/><rect x="1" y="2" width="2" height="2" fill="#19240f"/><rect x="5" y="2" width="2" height="2" fill="#19240f"/>
+    <rect x="3" y="4" width="2" height="1" fill="#19240f"/><rect x="2" y="5" width="4" height="2" fill="#19240f"/><rect x="3" y="7" width="2" height="1" fill="#73a64a"/>
+  </symbol>
+</svg>
+
+<div class="page">
 <header>
-  <div class="cloud" style="left:560px;top:24px;width:34px;height:14px"></div>
-  <div class="cloud" style="left:720px;top:56px;width:30px;height:12px"></div>
+  <div class="cloud" style="left:520px;top:22px;width:34px;height:14px"></div>
+  <div class="cloud" style="left:680px;top:52px;width:30px;height:12px"></div>
   <div class="sun"></div>
-  <h1 class="px">FOR LOOPS</h1>
-  <div class="tag">counting with blocks &#9650; up &amp; &#9660; down</div>
-  <div class="mascot"><svg class="sl" width="72" height="72" viewBox="0 0 16 16"><use href="#sl"/></svg><span class="say">I hop block to block. Watch me!</span></div>
+  <h1 class="px">SLIME LOOP</h1>
+  <div class="tag">a for-loop game &middot; hop the slime, grab numbers, count &#9650; up &amp; &#9660; down</div>
   <div class="ground"></div>
 </header>
 
-<div class="sec"><div class="h">My 4 moves</div>
-<div class="panel"><div class="moves">
-  <div class="slot4"><div class="ic"><span class="flag"><span class="pole"></span><span class="cloth"></span></span></div><div class="nm px">START</div><div class="ds">where I begin</div></div>
-  <div class="slot4"><div class="ic"><span class="bigsym">?</span></div><div class="nm px">CHECK</div><div class="ds">any block left?</div></div>
-  <div class="slot4"><div class="ic"><span class="cube gold"></span></div><div class="nm px">DO</div><div class="ds">grab the number</div></div>
-  <div class="slot4"><div class="ic"><span class="bigsym step">+1</span></div><div class="nm px">STEP</div><div class="ds">hop &nbsp;+1 or &minus;1</div></div>
-</div>
-<div class="cycle">do <b class="c">CHECK</b> <b class="d">DO</b> <b class="s">STEP</b> again &amp; again &nbsp;&rarr;&nbsp; no block left? <b class="x">STOP</b></div>
+<div id="game">
+<div class="sec"><div class="panel controls">
+  <span style="font-size:21px;font-weight:700;color:#3a3a3a">Direction:</span>
+  <div class="lever">
+    <button id="lvUp" class="px" onclick="setDir('up')">&#9650; UP</button>
+    <button id="lvDown" class="px dn" onclick="setDir('down')">&#9660; DOWN</button>
+  </div>
+  <button class="iconbtn" id="mute" onclick="mute()" title="sound">&#128266;</button>
+  <button class="iconbtn" onclick="reset()" title="reset">&#8635;</button>
+  <div class="csign" id="sign"></div>
 </div></div>
 
-<div class="sec up"><span class="exhead"><span class="tri">&#9650;</span> COUNT UP</span><div class="exbody"><div style="text-align:center"><div class="sign">for ( i = <span class="n">1</span> ;  i &le; <span class="n">5</span> ;  i = i + <span class="n">1</span> )  <span class="o">&rarr; print(i)</span></div></div><div class="dir">&#9654; hop RIGHT, +1 each time</div><div class="strip"><div class="frame"><div class="orb px">1</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.0s"><use href="#sl"/></svg></span><div class="blk"><span class="px">1</span></div></div><div class="fcap ok">1 &le; 5 &#10003;</div></div><div class="frame"><div class="orb px">2</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.13s"><use href="#sl"/></svg></span><div class="blk"><span class="px">2</span></div></div><div class="fcap ok">2 &le; 5 &#10003;</div></div><div class="frame"><div class="orb px">3</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.26s"><use href="#sl"/></svg></span><div class="blk"><span class="px">3</span></div></div><div class="fcap ok">3 &le; 5 &#10003;</div></div><div class="frame"><div class="orb px">4</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.39s"><use href="#sl"/></svg></span><div class="blk"><span class="px">4</span></div></div><div class="fcap ok">4 &le; 5 &#10003;</div></div><div class="frame"><div class="orb px">5</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.52s"><use href="#sl"/></svg></span><div class="blk"><span class="px">5</span></div></div><div class="fcap ok">5 &le; 5 &#10003;</div></div><div class="frame"><div class="orb x">&#10007;</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.65s"><use href="#sl"/></svg></span><div class="blk stop"><span class="px">6</span></div></div><div class="fcap no">6 &le; 5 &#10007;<br>STOP</div></div></div><div class="outrow"><span class="outlbl">Numbers I grabbed:</span><div class="hotbar"><div class="bslot"><div class="tok px">1</div></div><div class="bslot"><div class="tok px">2</div></div><div class="bslot"><div class="tok px">3</div></div><div class="bslot"><div class="tok px">4</div></div><div class="bslot"><div class="tok px">5</div></div></div></div></div></div>
-<div class="sec down"><span class="exhead"><span class="tri">&#9660;</span> COUNT DOWN</span><div class="exbody"><div style="text-align:center"><div class="sign">for ( i = <span class="n">5</span> ;  i &ge; <span class="n">1</span> ;  i = i &minus; <span class="n">1</span> )  <span class="o">&rarr; print(i)</span></div></div><div class="dir">&#9664; hop LEFT, &minus;1 each time</div><div class="strip"><div class="frame"><div class="orb px">5</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.0s"><use href="#sl"/></svg></span><div class="blk"><span class="px">5</span></div></div><div class="fcap ok">5 &ge; 1 &#10003;</div></div><div class="frame"><div class="orb px">4</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.13s"><use href="#sl"/></svg></span><div class="blk"><span class="px">4</span></div></div><div class="fcap ok">4 &ge; 1 &#10003;</div></div><div class="frame"><div class="orb px">3</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.26s"><use href="#sl"/></svg></span><div class="blk"><span class="px">3</span></div></div><div class="fcap ok">3 &ge; 1 &#10003;</div></div><div class="frame"><div class="orb px">2</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.39s"><use href="#sl"/></svg></span><div class="blk"><span class="px">2</span></div></div><div class="fcap ok">2 &ge; 1 &#10003;</div></div><div class="frame"><div class="orb px">1</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.52s"><use href="#sl"/></svg></span><div class="blk"><span class="px">1</span></div></div><div class="fcap ok">1 &ge; 1 &#10003;</div></div><div class="frame"><div class="orb x">&#10007;</div><div class="tile"><span class="onblk"><svg class="sl" width="40" height="40" viewBox="0 0 16 16" style="animation-delay:0.65s"><use href="#sl"/></svg></span><div class="blk stop"><span class="px">0</span></div></div><div class="fcap no">0 &ge; 1 &#10007;<br>STOP</div></div></div><div class="outrow"><span class="outlbl">Numbers I grabbed:</span><div class="hotbar"><div class="bslot"><div class="tok px">5</div></div><div class="bslot"><div class="tok px">4</div></div><div class="bslot"><div class="tok px">3</div></div><div class="bslot"><div class="tok px">2</div></div><div class="bslot"><div class="tok px">1</div></div></div></div></div></div>
+<div class="sec"><div class="guide">
+  <svg class="allay" width="56" height="56" viewBox="0 0 16 16"><use href="#allay"/></svg>
+  <div class="bubble"><span id="allaysay">Pick a direction, then press START!</span></div>
+</div></div>
 
-<div class="sec"><div class="h">Up vs Down &mdash; only 3 things change</div>
-<div class="panel"><div class="diff">
-  <div class="dsign u">&#9650; <b>UP</b><br>start <b>1</b> &middot; check <b>&le;</b> &middot; <b>+1</b></div>
-  <div class="dsign d">&#9660; <b>DOWN</b><br>start <b>5</b> &middot; check <b>&ge;</b> &middot; <b>&minus;1</b></div>
-</div><div class="same">same hopping slime &mdash; just turned around!</div></div></div>
+<div class="sec"><div class="world" id="world">
+  <div class="sun"></div>
+  <div class="cloud" style="left:60px;top:24px;width:30px;height:12px"></div>
+  <div class="cloud" style="left:430px;top:40px;width:26px;height:10px"></div>
+  <div class="blocks" id="blocks">
+    <div class="blk edge" id="b0"><svg class="creep" viewBox="0 0 8 8"><use href="#creep"/></svg></div>
+    <div class="blk grass" id="b1"><span>1</span></div>
+    <div class="blk grass" id="b2"><span>2</span></div>
+    <div class="blk grass" id="b3"><span>3</span></div>
+    <div class="blk grass" id="b4"><span>4</span></div>
+    <div class="blk grass" id="b5"><span>5</span></div>
+    <div class="blk edge" id="b6"><svg class="creep" viewBox="0 0 8 8"><use href="#creep"/></svg></div>
+  </div>
+  <div class="slime" id="slime"><svg width="48" height="48" viewBox="0 0 16 16"><use href="#sl"/></svg></div>
+</div></div>
 
-<div class="gold"><svg class="sl" width="58" height="58" viewBox="0 0 16 16" style="animation-delay:0.4s"><use href="#sl"/></svg><div class="txt"><b>Golden rule:</b> grab the number BEFORE you hop. So the <b>first</b> number is where you <b>START</b>.</div></div>
+<div class="sec"><div class="panel hud">
+  <span class="ipill">i =<b id="iVal">1</b></span>
+  <div class="phases">
+    <span class="ph" id="phCheck">&#9312; CHECK</span>
+    <span class="ph" id="phDo">&#9313; GRAB <i>=print</i></span>
+    <span class="ph" id="phStep">&#9314; HOP <i>=step</i></span>
+  </div>
+  <span class="ruleflag">&#11088; GRAB before you HOP</span>
+</div></div>
 
-<div class="foot"><a class="btn" href="loop-hopper.html">&#9654; PLAY &mdash; hop with the frog</a></div>
-</div></body></html>
+<div class="sec actions" id="actions"></div>
+
+<div class="sec"><div class="panel scorebar">
+  <span class="hblabel">Numbers grabbed:</span>
+  <div class="hotbar" id="hotbar"></div>
+  <div class="xpwrap"><span style="font-size:21px;font-weight:700;color:#2f7a32">XP</span>
+    <div class="xpbox"><div class="xpfill" id="xpbar"></div></div>
+    <span class="xptxt"><span id="xpn">0</span></span></div>
+</div></div>
+</div>
+
+<div class="sec"><div class="recap">
+  <div class="h px" style="font-size:18px">Remember</div>
+  &#9312; <b>CHECK</b> the slime can still go &nbsp;&rarr;&nbsp; &#9313; <b>GRAB</b> the number (that&rsquo;s <b>print</b>) &nbsp;&rarr;&nbsp; &#9314; <b>HOP</b> to the next block (that&rsquo;s the <b>step</b>) &nbsp;&rarr;&nbsp; go again.<br>
+  <b>&#9650; UP:</b> start 1, check i &le; 5, hop +1. &nbsp;&nbsp; <b>&#9660; DOWN:</b> start 5, check i &ge; 1, hop &minus;1. &nbsp;&nbsp; Always <b>GRAB before you HOP</b> &mdash; so the first number is where you START.
+</div></div>
+
+<div class="foot"><a class="btnlink" href="loop-hopper.html">&#9654; Also try: Loop Hopper</a></div>
+</div>
+
+<div class="winwrap" id="win">
+  <div class="wincard">
+    <svg style="display:inline-block" width="56" height="56" viewBox="0 0 16 16"><use href="#sl"/></svg>
+    <h2 id="wintitle">YOU DID IT!</h2>
+    <div class="wnums" id="winnums"></div>
+    <p id="winmsg"></p>
+    <p class="wxp">+ <span id="winxp">0</span> XP</p>
+    <div class="winbtns">
+      <button class="gbtn keep" onclick="winAgain()">&#8635; Play again</button>
+      <button class="gbtn start" id="winswitch" onclick="winSwitch()">Try other way</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const W=window.W={dir:'up',i:1,phase:'idle',collected:[],xp:0,streak:0,won:false,muted:false,done:{up:false,down:false}};
+const bound=()=>W.dir==='up'?5:1;
+const startI=()=>W.dir==='up'?1:5;
+const cmpSym=()=>W.dir==='up'?'&le;':'&ge;';
+const opSym=()=>W.dir==='up'?'+':'&minus;';
+const passes=i=>W.dir==='up'?i<=5:i>=1;
+const nextI=i=>W.dir==='up'?i+1:i-1;
+
+let AC=null;
+function ac(){ if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}} if(AC&&AC.state==='suspended')AC.resume(); return AC; }
+function beep(f,d,t,v,w){ const c=ac(); if(!c||W.muted)return; const s=c.currentTime+(w||0);
+  const o=c.createOscillator(),g=c.createGain(); o.type=t||'square'; o.frequency.value=f; o.connect(g); g.connect(c.destination);
+  g.gain.setValueAtTime(.0001,s); g.gain.exponentialRampToValueAtTime(v||.16,s+.012); g.gain.exponentialRampToValueAtTime(.0001,s+d); o.start(s); o.stop(s+d+.03); }
+const sGrab=()=>{beep(680,.12,'square',.18);beep(1020,.13,'square',.13,.07);};
+const sHop=()=>beep(430,.1,'triangle',.16);
+const sRight=()=>{beep(720,.1,'square',.16);beep(1080,.14,'square',.13,.08);};
+const sWrong=()=>beep(150,.24,'sawtooth',.16);
+const sWin=()=>[523,659,784,1047,1319].forEach((f,i)=>beep(f,.2,'square',.15,i*.11));
+const sStart=()=>{beep(523,.1,'square',.14);beep(784,.12,'square',.14,.09);};
+
+function slimeTo(i,hop){ const el=$('#b'+i),sl=$('#slime'); if(!el)return;
+  const left=el.offsetLeft+el.offsetWidth/2-sl.offsetWidth/2;
+  if(hop){ sl.classList.remove('hop'); void sl.offsetWidth; sl.classList.add('hop'); }
+  sl.style.left=left+'px'; }
+function face(c){ const s=$('#slime'); s.classList.remove('happy','wow'); void s.offsetWidth; if(c)s.classList.add(c); }
+function allay(m){ $('#allaysay').innerHTML=m; }
+function actions(h){ $('#actions').innerHTML=h; }
+
+function render(){
+  $('#iVal').textContent=W.i;
+  $('#sign').innerHTML='for ( i = <b>'+startI()+'</b> ; i '+cmpSym()+' <b>'+bound()+'</b> ; i = i '+opSym()+' <b>1</b> ) <span class="o">&rarr; print(i)</span>';
+  $('#lvUp').classList.toggle('on',W.dir==='up'); $('#lvDown').classList.toggle('on',W.dir==='down');
+  $('#hotbar').innerHTML=Array.from({length:5},(_,k)=>{const n=W.collected[k];return '<div class="bslot">'+(n!=null?'<div class="tok pop">'+n+'</div>':'')+'</div>';}).join('');
+  $('#xpn').textContent=W.xp; $('#xpbar').style.width=Math.min(100,W.xp/60*100)+'%';
+  ['Check','Do','Step'].forEach(p=>$('#ph'+p).classList.toggle('on',W.phase===p.toLowerCase()));
+}
+
+function phaseCheck(){ W.phase='check'; render();
+  allay('Is <b>i = '+W.i+'</b> still '+cmpSym()+' <b>'+bound()+'</b>?  &nbsp;You decide &mdash; keep going or stop?');
+  actions('<button class="gbtn keep" id="bKeep" onclick="onKeep()">&#10003; KEEP GOING</button>'
+         +'<button class="gbtn stop" id="bStop" onclick="onStop()">&#10007; STOP</button>'); }
+function phaseDo(){ W.phase='do'; render();
+  allay('Yes &mdash; i is still ok! First job: <b>GRAB the number</b> (this is <b>print</b>).');
+  actions('<button class="gbtn grab" id="bGrab" onclick="onGrab()">&#9935; GRAB the '+W.i+'</button>'); }
+function phaseStep(){ W.phase='step'; render();
+  allay('Got the <b>'+W.collected[W.collected.length-1]+'</b>! Now <b>HOP</b> '+(W.dir==='up'?'right':'left')+' to the next block (the <b>step</b>).');
+  actions('<button class="gbtn hop" id="bHop" onclick="onHop()">&#129058; HOP '+opSym()+'1</button>'); }
+
+function start(){ sStart(); W.i=startI(); W.collected=[]; W.xp=0; W.streak=0; W.won=false;
+  $('#slime').classList.remove('spin'); slimeTo(W.i,false); face(''); phaseCheck(); }
+function onKeep(){ if(W.phase!=='check')return;
+  if(passes(W.i)){ W.xp+=10; W.streak++; sRight(); face('happy'); flash('+10'); phaseDo(); }
+  else { sWrong(); shake(); allay('Oops! <b>'+W.i+'</b> is NOT '+cmpSym()+' <b>'+bound()+'</b> &mdash; the slime is past the end. Tap <b>STOP</b>.');
+    actions('<button class="gbtn stop big" id="bStop" onclick="onStop()">&#10007; STOP (yes!)</button>'); } }
+function onStop(){ if(W.phase!=='check')return;
+  if(!passes(W.i)){ W.xp+=10; sRight(); doWin(); }
+  else { sWrong(); shake(); allay('Not yet! <b>'+W.i+'</b> is still '+cmpSym()+' <b>'+bound()+'</b> &mdash; tap <b>KEEP GOING</b>.'); } }
+function onGrab(){ if(W.phase!=='do')return; sGrab(); face('wow'); W.collected.push(W.i); render(); burst(W.i); popNum(W.i); phaseStep(); }
+function onHop(){ if(W.phase!=='step')return; sHop(); W.i=nextI(W.i); slimeTo(W.i,true); face(''); setTimeout(phaseCheck,270); }
+
+function doWin(){ W.won=true; W.done[W.dir]=true; W.phase='idle'; render(); sWin();
+  $('#slime').classList.add('spin');
+  $('#winnums').innerHTML=W.collected.map(n=>'<div class="tok">'+n+'</div>').join('');
+  $('#winxp').textContent=W.xp;
+  $('#wintitle').textContent=W.dir==='up'?'YOU COUNTED UP!':'YOU COUNTED DOWN!';
+  const both=W.done.up&&W.done.down;
+  $('#winmsg').innerHTML=both?'&#127942; LOOP MASTER &mdash; you beat UP and DOWN!'
+    :'You grabbed every number <b>before</b> you hopped &mdash; that&rsquo;s why the first number out was <b>'+startI()+'</b> (the START).';
+  $('#winswitch').innerHTML=W.dir==='up'?'&#9660; Try DOWN':'&#9650; Try UP';
+  actions(''); $('#win').classList.add('show'); }
+
+function setDir(d){ W.dir=d; W.phase='idle'; W.won=false; W.i=startI(); W.collected=[]; W.xp=0;
+  $('#win').classList.remove('show'); $('#slime').classList.remove('spin'); render(); slimeTo(W.i,false); face('');
+  allay('Counting <b>'+(d==='up'?'UP &#9650; (1 &rarr; 5)':'DOWN &#9660; (5 &rarr; 1)')+'</b>. Press <b>START</b>!');
+  actions('<button class="gbtn start" id="bStart" onclick="start()">&#9654; START</button>'); }
+function reset(){ setDir(W.dir); }
+function winAgain(){ $('#win').classList.remove('show'); $('#slime').classList.remove('spin'); start(); }
+function winSwitch(){ $('#win').classList.remove('show'); $('#slime').classList.remove('spin'); W.dir=(W.dir==='up'?'down':'up'); setDir(W.dir); setTimeout(start,60); }
+function mute(){ W.muted=!W.muted; $('#mute').innerHTML=W.muted?'&#128263;':'&#128266;'; }
+
+function flash(t){ const f=document.createElement('div'); f.className='xpfly'; f.textContent=t; $('#world').appendChild(f); setTimeout(()=>f.remove(),1000); }
+function shake(){ const g=$('#game'); g.classList.remove('shake'); void g.offsetWidth; g.classList.add('shake'); }
+function burst(i){ const wd=$('#world'),el=$('#b'+i); if(!el)return; const r=el.getBoundingClientRect(),w=wd.getBoundingClientRect();
+  const x=r.left-w.left+r.width/2,y=r.top-w.top+8;
+  for(let k=0;k<9;k++){ const p=document.createElement('div'); p.className='pcl'; const a=Math.random()*6.28,d=22+Math.random()*30;
+    p.style.left=x+'px'; p.style.top=y+'px'; p.style.setProperty('--dx',Math.cos(a)*d+'px'); p.style.setProperty('--dy',(-18-Math.sin(a)*d)+'px');
+    wd.appendChild(p); setTimeout(()=>p.remove(),680); } }
+function popNum(i){ const wd=$('#world'),el=$('#b'+i); if(!el)return; const r=el.getBoundingClientRect(),w=wd.getBoundingClientRect();
+  const t=document.createElement('div'); t.className='grabnum'; t.textContent=i;
+  t.style.left=(r.left-w.left+r.width/2-12)+'px'; t.style.top=(r.top-w.top-4)+'px'; wd.appendChild(t); setTimeout(()=>t.remove(),800); }
+
+window.addEventListener('load',()=>setDir('up'));
+window.addEventListener('resize',()=>slimeTo(W.i,false));
+</script>
+</body>
+</html>
