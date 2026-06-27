@@ -8,330 +8,262 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-html{background:#5f7d8c;image-rendering:pixelated}
-body{margin:0;font-family:'VT323','Consolas',monospace;color:#222;background:#cfe0d8}
-.page{max-width:1020px;margin:0 auto;padding-bottom:46px}
-.px{font-family:'Press Start 2P','VT323',monospace}
+body{margin:0;font-family:'VT323','Consolas',monospace;color:#243038;background:#e7ecf1;line-height:1.3}
+.page{max-width:940px;margin:0 auto;padding-bottom:40px}
 .mono{font-family:'Consolas','Courier New',monospace}
-.panel{background:#c6c6c6;border:5px solid;border-color:#fefefe #565656 #565656 #fefefe;box-shadow:5px 5px 0 rgba(0,0,0,.2)}
-.sec{margin:16px 16px 0}
+.px{font-family:'Press Start 2P','VT323',monospace}
 
-header{position:relative;overflow:hidden;padding:20px 22px;border-bottom:6px solid #2a4a5a;background:linear-gradient(#3f6f86,#557f95);color:#fff}
-header h1{margin:0;font-size:24px;letter-spacing:1px;text-shadow:3px 3px 0 #21323b}
-header .tag{margin:10px 0 0;font-size:21px;color:#cfeaf6}
+header{padding:20px 22px;background:linear-gradient(#33536b,#3f6986);color:#fff;border-bottom:4px solid #21333f}
+header h1{margin:0;font-size:23px;letter-spacing:1px}
+header .tag{margin:8px 0 0;font-size:20px;color:#cfe6f2}
 
-/* ---- the CODE (the hero) ---- */
-.codewrap{background:#16202b;border:5px solid;border-color:#3a4a58 #0a1118 #0a1118 #3a4a58;padding:18px 16px}
-.code{font-family:'Consolas','Courier New',monospace;font-size:30px;font-weight:700;color:#e6edf3;line-height:1.7;text-align:center;white-space:nowrap;overflow-x:auto}
-.code .kw{color:#f0a6c8}.code .fn{color:#7fd1ff}.code .pn{color:#cbd5e1}
-.tk{padding:2px 6px;border-radius:6px;transition:background .12s,box-shadow .12s,color .12s}
+/* calm zones */
+.zone{margin:16px 16px 0;background:#fafbfc;border:2px solid #d7dee5;border-radius:7px;padding:12px 18px 18px;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+.zh{font-family:'Press Start 2P',monospace;font-size:12px;color:#4b6e8c;margin:2px 0 14px;letter-spacing:.5px}
+
+/* THE CODE (hero) */
+.codewrap{background:#16202b;border-radius:8px;padding:16px 14px}
+.code{font-family:'Consolas','Courier New',monospace;font-size:28px;font-weight:700;color:#e6edf3;text-align:center;white-space:nowrap;overflow-x:auto}
+.code .kw{color:#f0a6c8}.code .fn{color:#7fd1ff}.code .pn{color:#9fb1c2}
+.tk{padding:2px 5px;border-radius:5px;transition:.12s}
 #tk-init.on{background:#1f6fd6;color:#fff;box-shadow:0 0 0 3px #9cc4f2}
 #tk-check.on{background:#37a23d;color:#fff;box-shadow:0 0 0 3px #9fe0a6}
 #tk-body.on{background:#8b53f0;color:#fff;box-shadow:0 0 0 3px #cdb4f7}
 #tk-update.on{background:#d39a2a;color:#fff;box-shadow:0 0 0 3px #f4d58a}
-/* the big "happening now" step card */
-.nowcard{padding:14px 20px;border:5px solid;transition:border-color .15s,background .15s}
-.nowcard.now-idle{border-color:#fff #aaa #aaa #fff;background:#ededed}
-.nowcard.now-init{border-color:#9cc4f2 #1f6fd6 #1f6fd6 #9cc4f2;background:#eaf2fd}
-.nowcard.now-check{border-color:#9fe0a6 #37a23d #37a23d #9fe0a6;background:#eafaec}
-.nowcard.now-body{border-color:#cdb4f7 #8b53f0 #8b53f0 #cdb4f7;background:#f3edfd}
-.nowcard.now-update{border-color:#f4d58a #d39a2a #d39a2a #f4d58a;background:#fdf6e7}
-.nowcard.now-stop{border-color:#f1b3aa #c0392b #c0392b #f1b3aa;background:#fdecea}
-.now-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:8px}
-.now-step{font-family:'Press Start 2P',monospace;font-size:12px;color:#fff;background:#666;padding:6px 9px}
+
+/* edit + start rows */
+.editrow,.startrow{display:flex;flex-wrap:wrap;gap:11px;align-items:center;margin-top:14px}
+.edlab,.guesslab{font-size:19px;font-weight:700;color:#55636e}
+.ed{display:flex;align-items:center;gap:6px;font-size:18px;font-weight:700;color:#3a4650}
+.stp{display:flex;border:2px solid #c2ccd5;border-radius:5px;overflow:hidden}
+.stp button{width:28px;height:30px;border:none;background:#eef2f6;font-size:19px;font-weight:900;cursor:pointer;color:#3a4650}
+.stp button:hover{background:#e2e8ee}
+.stp .v{min-width:26px;text-align:center;font-family:'Consolas',monospace;font-size:20px;font-weight:700;background:#fff;line-height:30px}
+.dirtoggle{display:flex;border:2px solid #c2ccd5;border-radius:5px;overflow:hidden}
+.dirtoggle button{font-family:'Press Start 2P',monospace;font-size:11px;padding:9px 11px;border:none;background:#eef2f6;color:#3a4650;cursor:pointer}
+.dirtoggle button.on{background:#37a23d;color:#fff}.dirtoggle button.dn.on{background:#8b53f0}
+.guessin{font-family:'Consolas',monospace;font-size:20px;font-weight:700;border:2px solid #c2ccd5;border-radius:5px;padding:7px 11px;width:170px;background:#fff;color:#243038}
+.guessin:focus{outline:none;border-color:#4b9fe0}
+.startbtn{font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;background:#2f8f43;border:none;border-radius:6px;padding:13px 20px;cursor:pointer;box-shadow:0 3px 0 #1e6e30}
+.startbtn:active{transform:translateY(2px);box-shadow:0 1px 0 #1e6e30}
+.skipbtn{font-size:18px;color:#7b8a96;background:none;border:none;cursor:pointer;text-decoration:underline}
+
+/* guide robot */
+.guide{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.botimg{flex:none;animation:float 2.6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.botimg.cheer{animation:botcheer .5s ease 2}
+@keyframes botcheer{0%,100%{transform:translateY(0)}40%{transform:translateY(-16px) rotate(-7deg)}}
+.bubble{flex:1;background:#fff;border:2px solid #d7dee5;border-radius:8px;border-bottom-left-radius:2px;padding:9px 14px;font-size:21px;color:#2c3a44;min-height:42px;display:flex;align-items:center}
+.bubble b{color:#2f8f43}
+
+/* the big NOW step card */
+.nowcard{border:3px solid;border-radius:8px;padding:14px 18px;transition:.15s}
+.nowcard.now-idle{border-color:#cfd6dd;background:#f1f4f7}
+.nowcard.now-init{border-color:#1f6fd6;background:#eaf2fd}
+.nowcard.now-check{border-color:#37a23d;background:#eafaec}
+.nowcard.now-body{border-color:#8b53f0;background:#f3edfd}
+.nowcard.now-update{border-color:#d39a2a;background:#fdf6e7}
+.nowcard.now-stop{border-color:#c0392b;background:#fdecea}
+.now-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:7px}
+.now-step{font-family:'Press Start 2P',monospace;font-size:11px;color:#fff;background:#7a8a96;padding:5px 8px;border-radius:3px}
 .now-init .now-step{background:#1f6fd6}.now-check .now-step{background:#37a23d}.now-body .now-step{background:#8b53f0}.now-update .now-step{background:#d39a2a}.now-stop .now-step{background:#c0392b}
-.now-title{font-family:'Press Start 2P',monospace;font-size:14px;color:#2c2620;line-height:1.3}
-.now-body .nl{font-family:'Consolas',monospace;font-size:30px;font-weight:700;padding:3px 0;color:#333;opacity:0}
+.now-title{font-family:'Press Start 2P',monospace;font-size:13px;color:#33404a}
+.now-body .nl{font-family:'Consolas',monospace;font-size:29px;font-weight:700;padding:2px 0;color:#333;opacity:0}
 .now-body.reveal .nl{animation:nlin .35s ease forwards}
-.now-body.reveal .nl:nth-child(2){animation-delay:.45s}
-.now-body.reveal .nl:nth-child(3){animation-delay:.9s}
-@keyframes nlin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.nl.code{color:#888;font-size:25px}
-.nl.sub{font-size:34px;color:#141414}.nl .v{padding:0 2px;font-weight:900}
+.now-body.reveal .nl:nth-child(2){animation-delay:.45s}.now-body.reveal .nl:nth-child(3){animation-delay:.9s}
+@keyframes nlin{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.nl.code{color:#9aa7b2;font-size:24px}
+.nl.sub{font-size:33px;color:#161616}.nl .v{font-weight:900;padding:0 2px}
 .now-init .nl .v{color:#1f6fd6}.now-check .nl .v{color:#2e7d32}.now-body .nl .v{color:#7c3aed}.now-update .nl .v{color:#b4730a}.now-stop .nl .v{color:#c0392b}
-.nl.res{font-size:27px;font-weight:900}
+.nl.res{font-size:26px;font-weight:900}
 .nl.res.ok{color:#2e7d32}.nl.res.no{color:#c0392b}.nl.res.print{color:#7c3aed}.nl.res.upd{color:#b4730a}.nl.res.init{color:#1f6fd6}
-.now-idle .nl{font-size:21px;color:#666;opacity:1;font-family:'VT323',monospace}
-@media(prefers-reduced-motion:reduce){.now-body .nl{opacity:1!important;animation:none!important}}
-@media(max-width:780px){.now-body .nl{font-size:22px}.nl.sub{font-size:26px}.nl.res{font-size:20px}.now-title{font-size:12px}}
+.now-idle .nl{font-size:20px;color:#6b7882;opacity:1;font-family:'VT323',monospace}
+@media(prefers-reduced-motion:reduce){.now-body .nl{opacity:1!important;animation:none!important}.botimg{animation:none}}
 
-/* ---- code controls (edit the numbers) ---- */
-.editbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:12px 16px}
-.ed{display:flex;align-items:center;gap:7px;font-size:20px;font-weight:700;color:#2c2620}
-.ed .lab{min-width:0}
-.stp{display:flex;align-items:center;border:3px solid;border-color:#373737 #fff #fff #373737;background:#8b8b8b}
-.stp button{width:30px;height:32px;border:none;background:#b9b9b9;font-size:20px;font-weight:900;cursor:pointer;color:#2c2620}
-.stp .v{min-width:30px;text-align:center;font-family:'Consolas',monospace;font-size:22px;font-weight:700;background:#e9e9e9;height:32px;line-height:32px}
-.dirtoggle{display:flex;border:3px solid;border-color:#373737 #fff #fff #373737}
-.dirtoggle button{font-family:'Press Start 2P',monospace;font-size:11px;padding:9px 11px;border:none;background:#b9b9b9;color:#2c2620;cursor:pointer}
-.dirtoggle button.on{background:#37a23d;color:#fff}
-.dirtoggle button.dn.on{background:#8b53f0}
-.iconbtn{font-family:'VT323',monospace;font-size:22px;background:#b9b9b9;border:3px solid;border-color:#fff #565656 #565656 #fff;cursor:pointer;width:42px;height:42px;line-height:1;margin-left:auto}
-
-/* ---- predict ---- */
-.predict{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:13px 16px;background:#fff3c4;border:5px solid;border-color:#fff #c9a93a #c9a93a #fff}
-.predict .q{font-size:23px;font-weight:700;color:#7a5a00}
-.predict input{font-family:'Consolas',monospace;font-size:22px;font-weight:700;border:3px solid;border-color:#caa84a #fff #fff #caa84a;padding:7px 11px;width:200px;background:#fffdf3;color:#3a2c00}
-.predict .pbtn{font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;background:#d39a2a;border:4px solid;border-color:#f4d58a #7a5e00 #7a5e00 #f4d58a;padding:12px 18px;cursor:pointer}
-.predict .skip{font-size:19px;color:#9a7b2a;background:none;border:none;cursor:pointer;text-decoration:underline}
-
-/* ---- run area: state + trace ---- */
-.run{display:grid;grid-template-columns:330px 1fr;gap:14px}
-@media(max-width:780px){.run{grid-template-columns:1fr}}
-.stage{padding:12px}
-.ibox{text-align:center;font-size:24px;font-weight:700;color:#1f6fd6;margin-bottom:8px}
-.ibox b{font-family:'Press Start 2P',monospace;font-size:28px;display:inline-block;margin-left:6px;color:#0f4f9e}
-.scene{position:relative;height:118px;background:linear-gradient(#bfe9ff,#dff3ff 70%,#cdebc8 70%);border:3px solid #8fd0ee;overflow:hidden}
-.blocks{position:absolute;left:0;right:0;bottom:6px;display:flex;justify-content:center;gap:4px}
-.blk{width:38px;height:46px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;font-family:'Consolas',monospace;font-size:16px;font-weight:700;color:#fff;text-shadow:1px 1px 0 #0006}
-.blk.grass{background:linear-gradient(#86d15a 0 26%,#6aa84f 26% 34%,#7a5230 34% 100%);border:2px solid #3c2a18}
-.blk.grass.lit{background:linear-gradient(#ffd24d 0 30%,#e0a400 30% 100%);border-color:#b07f00}
-.blk.edge{background:#8a8a8a;border:2px solid #4f4f4f}
-.slime{position:absolute;bottom:46px;left:0;width:30px;height:30px;transition:left .4s cubic-bezier(.3,1.4,.5,1);z-index:3}
-.slime.hop{animation:jmp .4s ease}
-@keyframes jmp{0%{transform:translateY(0)}45%{transform:translateY(-26px)}100%{transform:translateY(0)}}
-.gnum{position:absolute;font-family:'Press Start 2P',monospace;font-size:15px;color:#7c3aed;text-shadow:1px 1px 0 #fff;animation:gn .8s ease-out forwards;z-index:4}
-@keyframes gn{0%{transform:translateY(0);opacity:0}25%{opacity:1}to{transform:translateY(-34px);opacity:0}}
-
-.tracebox{padding:10px 12px;overflow-x:auto}
-table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:340px}
-.trace th{font-family:'VT323',monospace;font-size:18px;color:#fff;padding:8px 6px;text-align:center;line-height:1.05}
+/* trace + output */
+.tracewrap{margin-top:14px;overflow-x:auto}
+table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:420px;border-radius:7px;overflow:hidden}
+.trace th{font-family:'VT323',monospace;font-size:18px;color:#fff;padding:9px 6px;text-align:center;line-height:1.05}
 .trace th.i{background:#1f6fd6}.trace th.c{background:#37a23d}.trace th.p{background:#8b53f0}.trace th.u{background:#d39a2a}
-.trace td{font-family:'Consolas',monospace;font-size:21px;font-weight:700;text-align:center;padding:8px 6px;border-bottom:2px solid #d6d6d6;background:#efefef;min-width:54px}
-.trace td.iv{background:#e3eefc;color:#0f4f9e}
-.trace td.cv.yes{color:#2e7d32}.trace td.cv.no{color:#c0392b;font-weight:900}
-.trace td.pv{color:#7c3aed}
-.trace td.uv{color:#b4730a}
-.trace tr.cur td{outline:3px solid #ffcf45;outline-offset:-3px}
-.trace .blank{color:#bbb}
-
-.console{margin-top:12px;padding:10px 14px;background:#0e1620;border:4px solid;border-color:#2a3a48 #060a0f #060a0f #2a3a48;font-family:'Consolas',monospace;font-size:24px;font-weight:700;color:#54f08a;min-height:30px}
-.console .lab2{color:#6b8aa0;font-size:19px}
+.trace td{font-family:'Consolas',monospace;font-size:21px;font-weight:700;text-align:center;padding:9px 6px;border-bottom:1px solid #e3e8ed;background:#fff;min-width:56px}
+.trace tr:nth-child(even) td{background:#f6f8fa}
+.trace td.iv{color:#0f4f9e}.trace td.cv.yes{color:#2e7d32}.trace td.cv.no{color:#c0392b;font-weight:900}.trace td.pv{color:#7c3aed}.trace td.uv{color:#b4730a}
+.trace tr.cur td{box-shadow:inset 0 0 0 3px #ffcf45}
+.trace .blank{color:#c2c9d0}
+.console{margin-top:12px;padding:10px 14px;background:#10181f;border-radius:7px;font-family:'Consolas',monospace;font-size:23px;font-weight:700;color:#54f08a;min-height:28px}
+.console .lab2{color:#6b8aa0;font-size:18px}
 .oc{display:inline-block;margin:0 5px;animation:tokpop .25s ease}
 @keyframes tokpop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1)}}
 
-/* guide + controls */
-.guide{display:flex;align-items:center;gap:11px;padding:11px 14px;background:#dfeecb;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff;margin-top:14px}
-.allay{flex:none;animation:float 2.4s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.bubble{flex:1;background:#fff;border:4px solid;border-color:#fff #b7c79a #b7c79a #fff;padding:8px 13px;font-size:22px;color:#2c3320;min-height:44px;display:flex;align-items:center}
-.bubble b{color:#1f6b2a}
-.controls{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin-top:14px}
-.gbtn{font-family:'Press Start 2P',monospace;font-size:15px;color:#fff;border:5px solid;padding:15px 24px;cursor:pointer;text-shadow:2px 2px 0 #00000055}
-.gbtn:active{transform:translateY(3px)}.gbtn[disabled]{opacity:.45;cursor:default}
-.gbtn.next{background:#37a23d;border-color:#7ed186 #1f5523 #1f5523 #7ed186;font-size:17px;padding:16px 30px}
-.gbtn.auto{background:#1f6fd6;border-color:#9cc4f2 #133f7a #133f7a #9cc4f2}
-.gbtn.reset{background:#fff;color:#777;border-color:#fff #999 #999 #fff;text-shadow:none;font-size:14px;padding:13px 18px}
-.gbtn.go{background:#d39a2a;border-color:#f4d58a #7a5e00 #7a5e00 #f4d58a;font-size:17px;padding:16px 30px}
-.gbtn.narr{background:#4f7a8c;border-color:#9fc2d0 #2a4a58 #2a4a58 #9fc2d0;font-size:12px;padding:13px 15px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:15px}
+.gbtn{font-family:'Press Start 2P',monospace;font-size:13px;color:#fff;border:none;border-radius:6px;padding:13px 18px;cursor:pointer}
+.gbtn:active{transform:translateY(2px)}.gbtn[disabled]{opacity:.4;cursor:default}
+.gbtn.next{background:#2f8f43;box-shadow:0 3px 0 #1e6e30;font-size:15px;padding:14px 26px}.gbtn.next:active{box-shadow:0 1px 0 #1e6e30}
+.gbtn.auto{background:#2c6fb0;box-shadow:0 3px 0 #1d4f80}
+.gbtn.reset{background:#8593a0;box-shadow:0 3px 0 #66737e}
+.gbtn.narr{background:#4f7a8c;box-shadow:0 3px 0 #355663;font-size:12px}
+.gbtn.mute{background:#9aa7b2;box-shadow:0 3px 0 #76828c;font-size:12px}
 
-/* reflect + challenges */
-.reflect{padding:14px 16px;background:#e7f3ff;border:5px solid;border-color:#fff #7ea8cf #7ea8cf #fff}
-.reflect .rt{font-family:'Press Start 2P',monospace;font-size:14px;margin-bottom:8px}
-.reflect.ok .rt{color:#2e7d32}.reflect.no .rt{color:#c0392b}
-.reflect p{font-size:22px;margin:6px 0;line-height:1.3}
-.chal{padding:13px 16px;margin-top:14px;background:#f3effb;border:5px solid;border-color:#fff #9a86c4 #9a86c4 #fff}
-.chal .ct{font-family:'Press Start 2P',monospace;font-size:13px;color:#6b21a8;margin-bottom:8px}
-.crew{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.crewcard{display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:4px solid;border-color:#fff #b59ad8 #b59ad8 #fff;padding:9px 6px;cursor:pointer;font-family:'VT323',monospace}
-.crewcard:active{transform:translateY(2px)}
-.crewcard.done{background:#eafbe9;border-color:#fff #8fc98c #8fc98c #fff}
-.crewcard .cn{font-size:19px;font-weight:700;color:#5a3a9a}.crewcard.done .cn{color:#2e7d32}
-.crewcard .ct2{font-size:16px;color:#555}
-.crewcard .co{font-family:'Consolas',monospace;font-size:16px;font-weight:700;color:#7c3aed}
-#crewCount{font-family:'VT323',monospace;font-size:18px;color:#6b21a8;font-weight:400}
-.hostcheer{display:inline-block;vertical-align:middle;margin-right:8px;animation:cheer .5s ease 2}
-@keyframes cheer{0%,100%{transform:translateY(0)}40%{transform:translateY(-12px) rotate(-6deg)}}
-@media(max-width:600px){.crew{grid-template-columns:repeat(2,1fr)}}
+/* reflect */
+.reflect{margin-top:4px;border:2px solid;border-radius:8px;padding:13px 16px}
+.reflect.ok{border-color:#2f8f43;background:#eafaec}.reflect.no{border-color:#c0392b;background:#fdecea}.reflect.neu{border-color:#cfd6dd;background:#f1f4f7}
+.reflect .rt{font-family:'Press Start 2P',monospace;font-size:14px;margin-bottom:7px}
+.reflect.ok .rt{color:#2f8f43}.reflect.no .rt{color:#c0392b}
+.reflect p{font-size:21px;margin:5px 0;line-height:1.25}
 
-.recap{padding:14px 16px;font-size:21px;line-height:1.4;color:#2c2620;background:#dfeecb;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff}
-.recap b{color:#1f6b2a}
-.foot{margin:18px 16px 0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btnlink{display:inline-block;background:#6aa84f;border:5px solid;border-color:#9bd47f #3a6b2a #3a6b2a #9bd47f;color:#fff;font-size:22px;padding:10px 20px;text-decoration:none;text-shadow:2px 2px 0 #00000044}
-.btnlink.play{background:#8b53f0;border-color:#cdb4f7 #3a2a5e #3a2a5e #cdb4f7}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(16px);background:#2f7a32;color:#fff;font-family:'Press Start 2P',monospace;font-size:13px;padding:12px 20px;opacity:0;pointer-events:none;transition:.2s;z-index:60}
+/* examples menu (clean) */
+.exhead{font-size:20px;font-weight:700;color:#55636e;margin:6px 0 10px}
+.exhead b{color:#2f8f43}
+.exmenu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+@media(max-width:680px){.exmenu{grid-template-columns:1fr 1fr}}
+.exbtn{display:flex;flex-direction:column;gap:3px;text-align:left;background:#fff;border:2px solid #d7dee5;border-radius:7px;padding:10px 13px;cursor:pointer;font-family:'VT323',monospace}
+.exbtn:hover{border-color:#9fc0d8;background:#f4f9fc}
+.exbtn.done{background:#eef9ee;border-color:#a9d6ab}
+.exbtn .ex-t{font-size:20px;font-weight:700;color:#37506a}
+.exbtn.done .ex-t{color:#2f8f43}
+.exbtn .ex-o{font-family:'Consolas',monospace;font-size:18px;font-weight:700;color:#7c3aed}
+
+.recap{margin-top:16px;font-size:20px;line-height:1.4;color:#3a4650;background:#f1f4f7;border:2px solid #d7dee5;border-radius:7px;padding:12px 15px}
+.recap b{color:#2f8f43}
+.foot{margin:18px 16px 0;display:flex;gap:11px;justify-content:center;flex-wrap:wrap}
+.btnlink{font-family:'VT323',monospace;font-size:21px;color:#fff;background:#7a8a96;border-radius:7px;padding:9px 18px;text-decoration:none}
+.btnlink.play{background:#8b53f0}.btnlink.hop{background:#2f8f43}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(14px);background:#2f8f43;color:#fff;font-family:'Press Start 2P',monospace;font-size:12px;padding:11px 18px;border-radius:6px;opacity:0;pointer-events:none;transition:.2s;z-index:60}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-@media (prefers-reduced-motion:reduce){.allay,.slime,.oc{animation:none}}
-@media(max-width:780px){
-  header h1{font-size:19px}.code{font-size:22px}.nowlabel{font-size:20px}
-  .ibox b{font-size:24px}.predict input{width:140px}
-}
+@media(max-width:680px){header h1{font-size:18px}.code{font-size:21px}.now-body .nl{font-size:22px}.nl.sub{font-size:25px}.nl.res{font-size:20px}.zh{font-size:11px}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="sl" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" fill="#57b23a"/><rect x="3" y="4" width="10" height="9" fill="#6cc94e"/><rect x="4" y="6" width="8" height="6" fill="#7ada5b"/><rect x="5" y="7" width="2" height="2" fill="#143a10"/><rect x="9" y="7" width="2" height="2" fill="#143a10"/><rect x="7" y="10" width="2" height="1" fill="#143a10"/></symbol>
-  <symbol id="allay" viewBox="0 0 16 16"><rect x="2" y="5" width="3" height="5" fill="#bfe3f5"/><rect x="11" y="5" width="3" height="5" fill="#bfe3f5"/><rect x="5" y="4" width="6" height="8" fill="#3f9ad8"/><rect x="6" y="5" width="4" height="6" fill="#6fc0ee"/><rect x="6" y="6" width="1" height="2" fill="#16344a"/><rect x="9" y="6" width="1" height="2" fill="#16344a"/></symbol>
-  <symbol id="steve" viewBox="0 0 16 16"><rect x="3" y="2" width="10" height="3" fill="#3a2a1c"/><rect x="3" y="5" width="10" height="9" fill="#c79b73"/><rect x="5" y="6" width="2" height="1" fill="#3a2a1c"/><rect x="9" y="6" width="2" height="1" fill="#3a2a1c"/><rect x="5" y="7" width="2" height="2" fill="#fff"/><rect x="6" y="7" width="1" height="2" fill="#5a86c4"/><rect x="9" y="7" width="2" height="2" fill="#fff"/><rect x="9" y="7" width="1" height="2" fill="#5a86c4"/><rect x="7" y="9" width="2" height="2" fill="#a87f5c"/><rect x="6" y="12" width="4" height="1" fill="#6e5038"/></symbol>
-  <symbol id="alex" viewBox="0 0 16 16"><rect x="3" y="2" width="10" height="3" fill="#bf5d27"/><rect x="2" y="5" width="1" height="6" fill="#bf5d27"/><rect x="13" y="5" width="1" height="6" fill="#bf5d27"/><rect x="3" y="5" width="10" height="9" fill="#e6bd92"/><rect x="5" y="7" width="2" height="2" fill="#fff"/><rect x="6" y="7" width="1" height="2" fill="#3a8a4a"/><rect x="9" y="7" width="2" height="2" fill="#fff"/><rect x="9" y="7" width="1" height="2" fill="#3a8a4a"/><rect x="7" y="9" width="2" height="2" fill="#caa078"/><rect x="6" y="12" width="4" height="1" fill="#9a6f50"/></symbol>
-  <symbol id="zombie" viewBox="0 0 16 16"><rect x="3" y="2" width="10" height="2" fill="#3f6328"/><rect x="3" y="4" width="10" height="10" fill="#5a8a3c"/><rect x="5" y="7" width="2" height="2" fill="#142810"/><rect x="9" y="7" width="2" height="2" fill="#142810"/><rect x="6" y="11" width="4" height="1" fill="#142810"/></symbol>
-  <symbol id="villager" viewBox="0 0 16 16"><rect x="4" y="2" width="8" height="9" fill="#b89274"/><rect x="4" y="4" width="8" height="1" fill="#4a3424"/><rect x="5" y="5" width="1" height="2" fill="#2a2a2a"/><rect x="10" y="5" width="1" height="2" fill="#2a2a2a"/><rect x="7" y="5" width="2" height="6" fill="#9a7558"/><rect x="3" y="11" width="10" height="4" fill="#6a4a2c"/><rect x="6" y="11" width="4" height="3" fill="#caa06a"/></symbol>
-  <symbol id="creep" viewBox="0 0 16 16"><rect width="16" height="16" fill="#73a64a"/><rect x="2" y="4" width="4" height="4" fill="#19240f"/><rect x="10" y="4" width="4" height="4" fill="#19240f"/><rect x="6" y="8" width="4" height="2" fill="#19240f"/><rect x="4" y="10" width="8" height="4" fill="#19240f"/><rect x="6" y="14" width="4" height="2" fill="#73a64a"/></symbol>
-  <symbol id="fox" viewBox="0 0 16 16"><rect x="2" y="2" width="3" height="4" fill="#e0822f"/><rect x="11" y="2" width="3" height="4" fill="#e0822f"/><rect x="3" y="5" width="10" height="6" fill="#ec9a4a"/><rect x="4" y="10" width="8" height="4" fill="#f7f1e6"/><rect x="5" y="6" width="2" height="2" fill="#2a2a2a"/><rect x="9" y="6" width="2" height="2" fill="#2a2a2a"/><rect x="7" y="10" width="2" height="2" fill="#2a2a2a"/></symbol>
+  <symbol id="bot" viewBox="0 0 16 16">
+    <rect x="7" y="1" width="2" height="2" fill="#f7d774"/><rect x="7" y="3" width="2" height="1" fill="#9aa7b3"/>
+    <rect x="2" y="4" width="12" height="9" fill="#d7e0e8"/><rect x="2" y="4" width="12" height="2" fill="#bcc8d3"/><rect x="2" y="11" width="12" height="2" fill="#c5cfd8"/>
+    <rect x="1" y="7" width="1" height="3" fill="#aebccb"/><rect x="14" y="7" width="1" height="3" fill="#aebccb"/>
+    <rect x="3" y="6" width="10" height="5" fill="#222e39"/>
+    <rect x="4" y="7" width="3" height="3" fill="#3ee0f0"/><rect x="9" y="7" width="3" height="3" fill="#3ee0f0"/>
+    <rect x="4" y="7" width="1" height="1" fill="#c8f7fc"/><rect x="9" y="7" width="1" height="1" fill="#c8f7fc"/>
+  </symbol>
 </svg>
 
 <div class="page">
-<header>
-  <h1 class="px">&#129302; LOOP TRACER</h1>
-  <div class="tag">watch the code run, <b>one step at a time</b> &middot; guess first, then trace it</div>
-</header>
+<header><h1 class="px">&#129302; LOOP TRACER</h1>
+<div class="tag">watch a <b>for</b> loop run &mdash; one step at a time</div></header>
 
-<!-- THE CODE -->
-<div class="sec"><div class="panel codewrap">
-  <div class="code mono" id="code"></div>
-</div></div>
-
-<!-- EDIT THE CODE -->
-<div class="sec"><div class="panel editbar">
-  <div class="ed"><span class="lab">Start</span><div class="stp"><button onclick="bump('start',-1)">&minus;</button><span class="v" id="vStart">1</span><button onclick="bump('start',1)">+</button></div></div>
-  <div class="ed"><span class="lab">Stop</span><div class="stp"><button onclick="bump('stop',-1)">&minus;</button><span class="v" id="vStop">5</span><button onclick="bump('stop',1)">+</button></div></div>
-  <div class="ed"><span class="lab">Step</span><div class="stp"><button onclick="bump('step',-1)">&minus;</button><span class="v" id="vStep">1</span><button onclick="bump('step',1)">+</button></div></div>
-  <div class="ed"><span class="lab">Way</span><div class="dirtoggle"><button id="dUp" onclick="setDir('+')">&#9650; UP</button><button id="dDown" class="dn" onclick="setDir('-')">&#9660; DOWN</button></div></div>
-  <button class="iconbtn" id="mute" onclick="toggleMute()" title="sound">&#128266;</button>
-</div></div>
-
-<!-- PREDICT -->
-<div class="sec" id="predictSec"><div class="panel predict">
-  <span class="q">&#128302; Guess first: what will it print?</span>
-  <input id="predIn" placeholder="e.g. 1 2 3 4 5" autocomplete="off">
-  <button class="pbtn" onclick="startTrace()">&#9654; Start tracing</button>
-  <button class="skip" onclick="startTrace(true)">skip &amp; just watch</button>
-</div></div>
-
-<!-- NOW: the current step, shown big, one line at a time -->
-<div class="sec"><div class="panel nowcard now-idle" id="nowcard">
-  <div class="now-head"><span class="now-step" id="nowStep">Step 0</span><span class="now-title" id="nowTitle">Watch each step here &#11015;</span></div>
-  <div class="now-body" id="nowBody"><div class="nl">Set the numbers, guess the output, then press <b>Start tracing</b> &mdash; each step appears here, one at a time.</div></div>
-</div></div>
-
-<!-- RUN -->
-<div class="sec"><div class="panel stage">
-  <div class="run">
-    <div>
-      <div class="ibox">i =<b id="iVal">&ndash;</b></div>
-      <div class="scene" id="scene"><div class="blocks" id="blocks"></div><div class="slime" id="slime"><svg width="30" height="30" viewBox="0 0 16 16"><use href="#sl"/></svg></div></div>
-    </div>
-    <div class="tracebox"><table class="trace" id="trace"></table></div>
+<!-- ZONE 1: SET UP -->
+<div class="zone">
+  <div class="zh">&#9312; Set up the loop</div>
+  <div class="codewrap"><div class="code mono" id="code"></div></div>
+  <div class="editrow"><span class="edlab">Change it:</span>
+    <span class="ed">Start<span class="stp"><button onclick="bump('start',-1)">&minus;</button><span class="v" id="vStart">1</span><button onclick="bump('start',1)">+</button></span></span>
+    <span class="ed">Stop<span class="stp"><button onclick="bump('stop',-1)">&minus;</button><span class="v" id="vStop">5</span><button onclick="bump('stop',1)">+</button></span></span>
+    <span class="ed">Step<span class="stp"><button onclick="bump('step',-1)">&minus;</button><span class="v" id="vStep">1</span><button onclick="bump('step',1)">+</button></span></span>
+    <span class="dirtoggle"><button id="dUp" onclick="setDir('+')">&#9650; UP</button><button id="dDown" class="dn" onclick="setDir('-')">&#9660; DOWN</button></span>
   </div>
+  <div class="startrow"><span class="guesslab">&#128302; I think it prints:</span>
+    <input id="predIn" class="guessin" placeholder="e.g. 1 2 3 4 5" autocomplete="off">
+    <button class="startbtn" onclick="startTrace()">&#9654; Start tracing</button>
+    <button class="skipbtn" onclick="startTrace(true)">skip the guess</button>
+  </div>
+</div>
+
+<!-- ZONE 2: WATCH IT RUN -->
+<div class="zone">
+  <div class="zh">&#9313; Watch it run &mdash; press Next step</div>
+  <div class="guide"><svg class="botimg" width="54" height="54" viewBox="0 0 16 16"><use href="#bot"/></svg>
+    <div class="bubble"><span id="say">Set the numbers, type your guess, then press <b>Start tracing</b>.</span></div></div>
+  <div class="nowcard now-idle" id="nowcard">
+    <div class="now-head"><span class="now-step" id="nowStep">Step 0</span><span class="now-title" id="nowTitle">Each step appears here &#11015;</span></div>
+    <div class="now-body" id="nowBody"><div class="nl">Press <b>Start tracing</b> and I&rsquo;ll show every step here, one at a time.</div></div>
+  </div>
+  <div class="tracewrap"><table class="trace" id="trace"></table></div>
   <div class="console" id="console"><span class="lab2">Output &#9658;</span> <span id="out"></span></div>
-</div></div>
-
-<!-- GUIDE + CONTROLS -->
-<div class="sec"><div class="guide"><svg class="allay" width="46" height="46" viewBox="0 0 16 16"><use href="#allay"/></svg><div class="bubble"><span id="say">Press a + or &minus; to change the numbers, type a guess, then Start tracing.</span></div></div></div>
-<div class="sec controls">
-  <button class="gbtn next" id="bNext" onclick="nextStep()" disabled>&#9654; Next step</button>
-  <button class="gbtn auto" id="bAuto" onclick="auto()" disabled>&#9193; Auto-play</button>
-  <button class="gbtn reset" onclick="resetIdle()">&#8635; Reset</button>
-  <button class="gbtn narr" id="bNarr" onclick="toggleNarrate()">&#128483;&#65039; Read aloud: ON</button>
+  <div class="controls">
+    <button class="gbtn next" id="bNext" onclick="nextStep()" disabled>&#9654; Next step</button>
+    <button class="gbtn auto" id="bAuto" onclick="auto()" disabled>&#9193; Auto</button>
+    <button class="gbtn reset" onclick="resetIdle()">&#8635; Reset</button>
+    <button class="gbtn narr" id="bNarr" onclick="toggleNarrate()">&#128483;&#65039; Read aloud: ON</button>
+    <button class="gbtn mute" id="mute" onclick="toggleMute()">&#128266;</button>
+  </div>
 </div>
 
-<!-- REFLECT (hidden until done) -->
-<div class="sec" id="reflectSec" style="display:none"></div>
-
-<!-- CREW / EXAMPLES -->
-<div class="sec"><div class="panel chal">
-  <div class="ct">&#128218; Trace the crew &mdash; pick a character&rsquo;s loop &nbsp;<span id="crewCount"></span></div>
-  <div class="crew" id="crew"></div>
-</div></div>
-
-<div class="sec"><div class="recap">
-  <b>The 4 jobs:</b> &#9312; <span style="color:#1f6fd6"><b>START</b></span> i once &middot; &#9313; <span style="color:#2e7d32"><b>CHECK</b></span> the condition &middot; &#9314; <span style="color:#7c3aed"><b>print(i)</b></span> the body &middot; &#9315; <span style="color:#b4730a"><b>UPDATE</b></span> i. Do CHECK&rarr;print&rarr;UPDATE again and again. When CHECK is FALSE the loop stops &mdash; and it does <b>not</b> print that last value.
-</div></div>
-
-<div class="foot">
-  <a class="btnlink play" href="slime-loop.html">&#127918; Want to play? Slime Loop</a>
-  <a class="btnlink" href="loop-hopper.html">&#9654; Loop Hopper</a>
+<!-- ZONE 3: RESULT + TRY ANOTHER -->
+<div class="zone">
+  <div class="zh">&#9314; Your result &amp; try another</div>
+  <div id="reflectSec" style="display:none"></div>
+  <div class="exhead">&#128218; Ready-made loops &mdash; <b><span id="exCount">0/6</span> traced</b>. Pick one:</div>
+  <div class="exmenu" id="exMenu"></div>
+  <div class="recap"><b>The 4 jobs:</b> &#9312; <span style="color:#1f6fd6"><b>START</b></span> i once &middot; &#9313; <span style="color:#2e7d32"><b>CHECK</b></span> the condition &middot; &#9314; <span style="color:#7c3aed"><b>print(i)</b></span> &middot; &#9315; <span style="color:#b4730a"><b>UPDATE</b></span> i. When CHECK is FALSE the loop stops &mdash; that last value is <b>never printed</b>.</div>
 </div>
+
+<div class="foot"><a class="btnlink play" href="slime-loop.html">&#127918; Play Slime Loop</a><a class="btnlink hop" href="loop-hopper.html">&#9654; Loop Hopper</a></div>
 </div>
 <div id="toast"></div>
 
 <script>
 const $=s=>document.querySelector(s);
-const S=window.S={start:1,stop:5,step:1,op:'+',i:null,phase:'idle',rows:[],output:[],pred:null,done:false,muted:false,host:'steve',stepNo:0,narrate:true};
+const S=window.S={start:1,stop:5,step:1,op:'+',i:null,phase:'idle',rows:[],output:[],pred:null,done:false,muted:false,stepNo:0,narrate:true};
 const cmpSym=()=>S.op==='+'?'&le;':'&ge;';
 const cmpTxt=()=>S.op==='+'?'≤':'≥';
+const cmpWord=()=>S.op==='+'?'less than or equal to':'greater than or equal to';
 const passes=i=>S.op==='+'?i<=S.stop:i>=S.stop;
 const stepI=i=>S.op==='+'?i+S.step:i-S.step;
+const vv=n=>'<span class="v">'+n+'</span>';
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+const arrEq=(a,b)=>a.length===b.length&&a.every((x,i)=>x===b[i]);
 
-/* audio */
+/* audio (soft SFX) */
 let AC=null;
 function ac(){ if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}} if(AC&&AC.state==='suspended')AC.resume(); return AC; }
 function beep(f,d,t,v,w){ const c=ac(); if(!c||S.muted)return; const s=c.currentTime+(w||0);
   const o=c.createOscillator(),g=c.createGain(); o.type=t||'square'; o.frequency.value=f; o.connect(g); g.connect(c.destination);
-  g.gain.setValueAtTime(.0001,s); g.gain.exponentialRampToValueAtTime(v||.15,s+.012); g.gain.exponentialRampToValueAtTime(.0001,s+d); o.start(s); o.stop(s+d+.03); }
-const sCheck=()=>beep(560,.09,'square',.13);
-const sPrint=()=>{beep(680,.1,'square',.16);beep(1020,.12,'square',.12,.06);};
-const sStep=()=>beep(430,.09,'triangle',.14);
-const sStop=()=>beep(200,.22,'sawtooth',.15);
-const sWin=()=>[523,659,784,1047].forEach((f,i)=>beep(f,.16,'square',.14,i*.1));
-const sOk=()=>{beep(660,.1,'square',.14);beep(990,.13,'square',.12,.07);};
-const sNo=()=>beep(160,.2,'sawtooth',.14);
+  g.gain.setValueAtTime(.0001,s); g.gain.exponentialRampToValueAtTime(v||.13,s+.012); g.gain.exponentialRampToValueAtTime(.0001,s+d); o.start(s); o.stop(s+d+.03); }
+const sCheck=()=>beep(560,.08,'square',.11),sPrint=()=>{beep(680,.09,'square',.13);beep(1020,.11,'square',.1,.06);},
+  sStep=()=>beep(430,.08,'triangle',.12),sStop=()=>beep(200,.2,'sawtooth',.12),
+  sWin=()=>[523,659,784,1047].forEach((f,i)=>beep(f,.14,'square',.12,i*.1)),sOk=()=>{beep(660,.09,'square',.12);beep(990,.12,'square',.1,.07);},sNo=()=>beep(160,.18,'sawtooth',.12),sStart=()=>{beep(523,.08,'square',.11);beep(784,.1,'square',.11,.08);};
 function toggleMute(){ S.muted=!S.muted; $('#mute').innerHTML=S.muted?'&#128263;':'&#128266;'; }
 
-/* spoken narration (Web Speech API) — reads each step aloud, like a teacher */
+/* spoken narration */
 let VOICE=null;
 function pickVoice(){ try{ const vs=speechSynthesis.getVoices()||[]; VOICE=vs.find(v=>/en[-_]AU/i.test(v.lang))||vs.find(v=>/en[-_]GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||vs[0]||null; }catch(e){} }
 function speakNow(t){ if(!S.narrate||!('speechSynthesis' in window))return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); if(VOICE)u.voice=VOICE; u.rate=.95; speechSynthesis.speak(u); }catch(e){} }
-function toggleNarrate(){ S.narrate=!S.narrate; $('#bNarr').innerHTML='&#128483;&#65039; Read aloud: '+(S.narrate?'ON':'OFF'); if(!S.narrate){ try{speechSynthesis.cancel();}catch(e){} } }
+function toggleNarrate(){ S.narrate=!S.narrate; $('#bNarr').innerHTML='&#128483;&#65039; Read aloud: '+(S.narrate?'ON':'OFF'); if(!S.narrate){try{speechSynthesis.cancel();}catch(e){}} }
 try{ if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; } }catch(e){}
 
-/* ---- render the code ---- */
-function renderCode(){
-  $('#vStart').textContent=S.start; $('#vStop').textContent=S.stop; $('#vStep').textContent=S.step;
+/* render code + highlight */
+function renderCode(){ $('#vStart').textContent=S.start; $('#vStop').textContent=S.stop; $('#vStep').textContent=S.step;
   $('#dUp').classList.toggle('on',S.op==='+'); $('#dDown').classList.toggle('on',S.op==='-');
   const opc=S.op==='+'?'+':'−';
-  $('#code').innerHTML=
-    '<span class="kw">for</span> <span class="pn">(</span> <span class="kw">let</span> '
+  $('#code').innerHTML='<span class="kw">for</span> <span class="pn">(</span> <span class="kw">let</span> '
     +'<span class="tk" id="tk-init">i = '+S.start+'</span><span class="pn">;</span> '
     +'<span class="tk" id="tk-check">i '+cmpTxt()+' '+S.stop+'</span><span class="pn">;</span> '
     +'<span class="tk" id="tk-update">i = i '+opc+' '+S.step+'</span> <span class="pn">) {</span> '
-    +'<span class="tk" id="tk-body"><span class="fn">print</span>(i)</span> <span class="pn">; }</span>';
-}
+    +'<span class="tk" id="tk-body"><span class="fn">print</span>(i)</span> <span class="pn">; }</span>'; }
 function hi(part){ ['init','check','body','update'].forEach(p=>{ const e=$('#tk-'+p); if(e)e.classList.toggle('on',p===part); }); }
-function label(cls,html){ const n=$('#nowlabel'); n.className='nowlabel '+(cls?'b-'+cls:''); n.innerHTML=html; }
 function say(h){ $('#say').innerHTML=h; }
 
-/* ---- slime scene ---- */
-function buildScene(){ let h=''; for(let n=0;n<=7;n++){ const cls=(n===0||n===7)?'edge':'grass'; h+='<div class="blk '+cls+'" id="b'+n+'">'+((n>=1&&n<=6)?n:'')+'</div>'; } $('#blocks').innerHTML=h; }
-function clampB(i){ return Math.max(0,Math.min(7,i)); }
-function slimeTo(i,hop){ const el=$('#b'+clampB(i)); if(!el)return; const wr=$('#scene').getBoundingClientRect(),br=el.getBoundingClientRect();
-  const sl=$('#slime'); const left=br.left-wr.left-$('#scene').clientLeft+br.width/2-sl.offsetWidth/2;
-  if(hop){ sl.classList.remove('hop'); void sl.offsetWidth; sl.classList.add('hop'); } sl.style.left=left+'px'; }
-function litPad(i){ for(let n=1;n<=6;n++){ const e=$('#b'+n); if(e)e.classList.toggle('lit',S.output.indexOf(n)>=0&&n===i); } }
-function popNum(i){ const el=$('#b'+clampB(i)); if(!el)return; const wr=$('#scene').getBoundingClientRect(),br=el.getBoundingClientRect();
-  const t=document.createElement('div'); t.className='gnum'; t.textContent=i; t.style.left=(br.left-wr.left+br.width/2-7)+'px'; t.style.top='6px'; $('#scene').appendChild(t); setTimeout(()=>t.remove(),800); }
-
-/* ---- trace + output ---- */
-function renderTrace(){
-  const opc=S.op==='+'?'+':'−';
+/* trace + output */
+function renderTrace(){ const opc=S.op==='+'?'+':'−';
   let h='<tr><th class="i">i</th><th class="c">i '+cmpSym()+' '+S.stop+' ?</th><th class="p">print</th><th class="u">i = i '+opc+' '+S.step+'</th></tr>';
-  S.rows.forEach((r,idx)=>{ const cur=(idx===S.rows.length-1 && !S.done)?' cur':'';
-    h+='<tr class="'+(cur)+'">'
-      +'<td class="iv">'+r.i+'</td>'
+  S.rows.forEach((r,idx)=>{ const cur=(idx===S.rows.length-1&&!S.done)?' cur':'';
+    h+='<tr class="'+cur+'"><td class="iv">'+r.i+'</td>'
       +'<td class="cv '+(r.pass===null?'':(r.pass?'yes':'no'))+'">'+(r.pass===null?'<span class="blank">&middot;</span>':(r.pass?'YES':'NO'))+'</td>'
       +'<td class="pv">'+(r.printed==null?'<span class="blank">&middot;</span>':r.printed)+'</td>'
       +'<td class="uv">'+(r.next==null?'<span class="blank">&middot;</span>':(r.i+' '+opc+' '+S.step+' = <b>'+r.next+'</b>'))+'</td></tr>'; });
-  $('#trace').innerHTML=h;
-}
+  $('#trace').innerHTML=h; }
 function renderOut(){ $('#out').innerHTML=S.output.map(n=>'<span class="oc">'+n+'</span>').join(''); }
-function setI(){ $('#iVal').textContent=(S.i==null?'–':S.i); }
 
-/* ---- the big "NOW" step card + narration ---- */
+/* the big NOW step card */
 function now(cls,title,bodyHTML,speak){ S.stepNo=(S.stepNo||0)+1;
-  const c=$('#nowcard'); c.className='panel nowcard now-'+cls;
-  $('#nowStep').textContent='Step '+S.stepNo; $('#nowTitle').innerHTML=title;
-  const nb=$('#nowBody'); nb.className='now-body'; nb.innerHTML=bodyHTML;
-  nb.classList.remove('reveal'); void nb.offsetWidth; nb.classList.add('reveal');
+  const c=$('#nowcard'); c.className='nowcard now-'+cls; $('#nowStep').textContent='Step '+S.stepNo; $('#nowTitle').innerHTML=title;
+  const nb=$('#nowBody'); nb.className='now-body'; nb.innerHTML=bodyHTML; nb.classList.remove('reveal'); void nb.offsetWidth; nb.classList.add('reveal');
   if(speak) speakNow(speak); }
-function setIdleCard(){ const c=$('#nowcard'); c.className='panel nowcard now-idle'; $('#nowStep').textContent='Step 0';
-  $('#nowTitle').innerHTML='Watch each step here &#11015;'; const nb=$('#nowBody'); nb.className='now-body';
-  nb.innerHTML='<div class="nl">Set the numbers, guess the output, then press <b>Start tracing</b> &mdash; each step appears here, one at a time.</div>'; }
-const vv=n=>'<span class="v">'+n+'</span>';
-const cmpWord=()=>S.op==='+'?'less than or equal to':'greater than or equal to';
+function setIdleCard(){ const c=$('#nowcard'); c.className='nowcard now-idle'; $('#nowStep').textContent='Step 0';
+  $('#nowTitle').innerHTML='Each step appears here &#11015;'; const nb=$('#nowBody'); nb.className='now-body';
+  nb.innerHTML='<div class="nl">Press <b>Start tracing</b> and I&rsquo;ll show every step here, one at a time.</div>'; }
 
-/* ---- execution stepper (each step = the substitution, line by line) ---- */
-function doCheck(){ S.phase='check'; const r={i:S.i,pass:passes(S.i),printed:null,next:null}; S.rows.push(r); renderTrace(); setI();
+/* execution stepper (each step = the substitution, line by line) */
+function doCheck(){ S.phase='check'; const r={i:S.i,pass:passes(S.i),printed:null,next:null}; S.rows.push(r); renderTrace();
   if(r.pass){ hi('check'); sCheck();
     now('check','&#9313; CHECK &mdash; can the loop keep going?',
       '<div class="nl code">i '+cmpTxt()+' '+S.stop+'</div>'
@@ -345,18 +277,16 @@ function doCheck(){ S.phase='check'; const r={i:S.i,pass:passes(S.i),printed:nul
      +'<div class="nl sub">i is '+vv(S.i)+', &nbsp;so &rarr; &nbsp;'+vv(S.i)+' '+cmpTxt()+' '+vv(S.stop)+'</div>'
      +'<div class="nl res no">&#10007; NO &mdash; the loop stops. <b>'+S.i+' is never printed!</b></div>',
       'Check. i is '+S.i+'. Is '+S.i+' '+cmpWord()+' '+S.stop+'? No. The loop ends. '+S.i+' is never printed.');
-    say('FALSE! Finished. Look at the <b>print</b> column &mdash; that&rsquo;s the output.');
-    finishLoop(); } }
-function doBody(){ S.phase='body'; S.output.push(S.i); S.rows[S.rows.length-1].printed=S.i; hi('body'); sPrint();
-  slimeTo(S.i,false); litPad(S.i); popNum(S.i); renderTrace(); renderOut();
+    say('FALSE! Finished &mdash; look at the <b>print</b> column for the output.'); finishLoop(); } }
+function doBody(){ S.phase='body'; S.output.push(S.i); S.rows[S.rows.length-1].printed=S.i; hi('body'); sPrint(); renderTrace(); renderOut();
   now('body','&#9314; RUN THE BODY &mdash; print(i)',
     '<div class="nl code">print(i)</div>'
    +'<div class="nl sub">i is '+vv(S.i)+', &nbsp;so &rarr; &nbsp;print('+vv(S.i)+')</div>'
-   +'<div class="nl res print">&#128424;&#65039; it prints '+vv(S.i)+'</div>',
+   +'<div class="nl res print">it prints '+vv(S.i)+'</div>',
     'Run the body. Print i. i is '+S.i+', so it prints '+S.i+'.');
   say('It printed <b>'+S.i+'</b>. Next: <b>UPDATE</b>. Press Next step.'); }
-function doUpdate(){ S.phase='update'; const old=S.i; S.i=stepI(S.i); S.rows[S.rows.length-1].next=S.i; hi('update'); sStep();
-  slimeTo(S.i,true); renderTrace(); setI(); const opc=S.op==='+'?'+':'−';
+function doUpdate(){ S.phase='update'; const old=S.i; S.i=stepI(S.i); S.rows[S.rows.length-1].next=S.i; hi('update'); sStep(); renderTrace();
+  const opc=S.op==='+'?'+':'−';
   now('update','&#9315; UPDATE &mdash; change i',
     '<div class="nl code">i = i '+opc+' '+S.step+'</div>'
    +'<div class="nl sub">i is '+vv(old)+', &nbsp;so &rarr; &nbsp;i = '+vv(old)+' '+opc+' '+S.step+'</div>'
@@ -364,88 +294,59 @@ function doUpdate(){ S.phase='update'; const old=S.i; S.i=stepI(S.i); S.rows[S.r
     'Update. i equals '+old+' '+(S.op==='+'?'plus':'minus')+' '+S.step+', which is '+S.i+'. Now i is '+S.i+'.');
   say('Now i is <b>'+S.i+'</b>. Back to <b>CHECK</b>. Press Next step.'); }
 function finishLoop(){ S.done=true; renderTrace(); $('#bNext').disabled=true; $('#bAuto').disabled=true; reflect(); checkCrew(); }
-
 function nextStep(){ if(S.done)return;
-  if(S.phase==='init'){ doCheck(); }
-  else if(S.phase==='check'){ doBody(); }
-  else if(S.phase==='body'){ doUpdate(); }
-  else if(S.phase==='update'){ doCheck(); } }
+  if(S.phase==='init'){ doCheck(); } else if(S.phase==='check'){ doBody(); } else if(S.phase==='body'){ doUpdate(); } else if(S.phase==='update'){ doCheck(); } }
 
 let autoT=null;
-function auto(){ if(S.done)return; if(autoT){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto-play'; return; }
-  $('#bAuto').innerHTML='&#9209; Pause'; const iv=S.narrate?2600:1300; autoT=setInterval(()=>{ if(S.done){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto-play'; return; } nextStep(); },iv); }
+function auto(){ if(S.done)return; if(autoT){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto'; return; }
+  $('#bAuto').innerHTML='&#9209; Pause'; const iv=S.narrate?2600:1300; autoT=setInterval(()=>{ if(S.done){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto'; return; } nextStep(); },iv); }
 
-function startTrace(skip){
-  S.pred = skip? null : ($('#predIn').value.match(/-?\d+/g)||[]).map(Number);
-  S.i=S.start; S.rows=[]; S.output=[]; S.done=false; S.phase='init'; S.stepNo=0; hi('init');
-  renderTrace(); renderOut(); setI(); slimeTo(S.i,false); for(let n=1;n<=6;n++){const e=$('#b'+n);if(e)e.classList.remove('lit');}
+function startTrace(skip){ S.pred=skip?null:($('#predIn').value.match(/-?\d+/g)||[]).map(Number);
+  S.i=S.start; S.rows=[]; S.output=[]; S.done=false; S.phase='init'; S.stepNo=0; hi('init'); renderTrace(); renderOut();
   now('init','&#9312; START &mdash; happens once, before the loop',
-    '<div class="nl code">let i = '+S.start+'</div>'
-   +'<div class="nl res init">i starts at '+vv(S.start)+'</div>',
-    'Start. i starts at '+S.start+'.');
+    '<div class="nl code">let i = '+S.start+'</div><div class="nl res init">i starts at '+vv(S.start)+'</div>','Start. i starts at '+S.start+'.');
   say('i starts at <b>'+S.start+'</b>. Press <b>Next step</b> to CHECK.');
-  $('#bNext').disabled=false; $('#bAuto').disabled=false;
-  $('#reflectSec').style.display='none'; $('#predictSec').style.opacity='.55';
-  try{ $('#nowcard').scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){}
-  sStep();
-}
-function resetIdle(){ if(autoT){clearInterval(autoT);autoT=null;$('#bAuto').innerHTML='&#9193; Auto-play';}
-  S.i=null; S.phase='idle'; S.rows=[]; S.output=[]; S.done=false; hi('');
-  renderTrace(); renderOut(); setI(); slimeTo(S.start,false); for(let n=1;n<=6;n++){const e=$('#b'+n);if(e)e.classList.remove('lit');}
-  setIdleCard();
-  say('Change the numbers if you like, type a guess, then <b>Start tracing</b>.');
-  $('#bNext').disabled=true; $('#bAuto').disabled=true; $('#predictSec').style.opacity='1'; $('#reflectSec').style.display='none'; }
+  $('#bNext').disabled=false; $('#bAuto').disabled=false; $('#reflectSec').style.display='none';
+  try{ $('#nowcard').scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} sStart(); }
+function resetIdle(){ if(autoT){clearInterval(autoT);autoT=null;$('#bAuto').innerHTML='&#9193; Auto';}
+  S.i=null; S.phase='idle'; S.rows=[]; S.output=[]; S.done=false; hi(''); renderTrace(); renderOut(); setIdleCard();
+  say('Set the numbers, type your guess, then press <b>Start tracing</b>.');
+  $('#bNext').disabled=true; $('#bAuto').disabled=true; $('#reflectSec').style.display='none'; }
 
-/* edit the code */
-function bump(k,d){ if(k==='start')S.start=clamp(S.start+d,1,6); if(k==='stop')S.stop=clamp(S.stop+d,1,6); if(k==='step')S.step=clamp(S.step+d,1,3);
-  renderCode(); resetIdle(); }
-function setDir(op){ if(S.op===op)return; S.op=op; if(op==='+'){if(S.start>S.stop){S.start=1;S.stop=5;}} else {if(S.start<S.stop){S.start=5;S.stop=1;}}
-  renderCode(); resetIdle(); }
-const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+/* edit the loop */
+function bump(k,d){ if(k==='start')S.start=clamp(S.start+d,1,6); if(k==='stop')S.stop=clamp(S.stop+d,1,6); if(k==='step')S.step=clamp(S.step+d,1,3); renderCode(); resetIdle(); }
+function setDir(op){ if(S.op===op)return; S.op=op; if(op==='+'){if(S.start>S.stop){S.start=1;S.stop=5;}}else{if(S.start<S.stop){S.start=5;S.stop=1;}} renderCode(); resetIdle(); }
 
-/* reflect: predicted vs actual */
-function arrEq(a,b){ return a.length===b.length && a.every((x,i)=>x===b[i]); }
-function reflect(){ sWin(); const sec=$('#reflectSec'); sec.style.display='block';
-  const outTxt=S.output.join(' ')||'(nothing)';
-  if(S.pred===null){ sec.innerHTML='<div class="panel reflect"><div class="rt">&#9989; DONE!</div><p>The loop printed: <b>'+outTxt+'</b></p><p>The first number is the <b>start</b> ('+S.start+'). It stopped when the check went FALSE.</p></div>'; return; }
+/* reflect */
+function reflect(){ sWin(); const sec=$('#reflectSec'); sec.style.display='block'; const outTxt=S.output.join(' ')||'(nothing)';
+  if(S.pred===null){ sec.innerHTML='<div class="reflect neu"><div class="rt" style="color:#4b6e8c">&#9989; DONE</div><p>It printed: <b>'+outTxt+'</b></p><p>The first number is the start ('+S.start+'); it stopped when CHECK went FALSE.</p></div>'; return; }
   const ok=arrEq(S.pred,S.output);
-  sec.innerHTML='<div class="panel reflect '+(ok?'ok':'no')+'"><div class="rt">'+(ok?'<span class="hostcheer">'+spr(S.host,40)+'</span>&#11088; SPOT ON!':'&#129300; NOT QUITE')+'</div>'
-    +'<p>You guessed: <b>'+(S.pred.join(' ')||'(nothing)')+'</b></p>'
-    +'<p>It printed: <b>'+outTxt+'</b></p>'
-    +'<p>'+(ok?'You predicted the loop perfectly!':'Look at the <b>trace table</b> &mdash; follow i down the rows to see why.')+'</p></div>';
-  ok?sOk():sNo();
-}
+  if(ok){ try{ const b=$('.botimg'); b.classList.remove('cheer'); void b.offsetWidth; b.classList.add('cheer'); }catch(e){} }
+  sec.innerHTML='<div class="reflect '+(ok?'ok':'no')+'"><div class="rt">'+(ok?'&#11088; SPOT ON!':'&#129300; NOT QUITE')+'</div>'
+    +'<p>You guessed: <b>'+(S.pred.join(' ')||'(nothing)')+'</b></p><p>It printed: <b>'+outTxt+'</b></p>'
+    +'<p>'+(ok?'You predicted the loop perfectly!':'Read the <b>trace table</b> &mdash; follow i down the rows to see why.')+'</p></div>';
+  ok?sOk():sNo(); }
 
-/* examples / crew */
-const spr=(id,sz)=>'<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 16 16"><use href="#'+id+'"/></svg>';
+/* examples (clean menu + collect) */
 const EX=[
-  {m:'steve',name:'Steve',t:'Count to 5',start:1,stop:5,step:1,op:'+',out:'1 2 3 4 5'},
-  {m:'alex',name:'Alex',t:'Countdown',start:5,stop:1,step:1,op:'-',out:'5 4 3 2 1'},
-  {m:'zombie',name:'Zombie',t:'Even numbers',start:2,stop:6,step:2,op:'+',out:'2 4 6'},
-  {m:'villager',name:'Villager',t:'Odd numbers',start:1,stop:6,step:2,op:'+',out:'1 3 5'},
-  {m:'creep',name:'Creeper',t:'Down by 2',start:6,stop:1,step:2,op:'-',out:'6 4 2'},
-  {m:'fox',name:'Fox',t:'Just once',start:3,stop:3,step:1,op:'+',out:'3'}
+  {t:'Count to 5',start:1,stop:5,step:1,op:'+',out:'1 2 3 4 5'},
+  {t:'Countdown',start:5,stop:1,step:1,op:'-',out:'5 4 3 2 1'},
+  {t:'Even numbers',start:2,stop:6,step:2,op:'+',out:'2 4 6'},
+  {t:'Odd numbers',start:1,stop:6,step:2,op:'+',out:'1 3 5'},
+  {t:'Down by 2',start:6,stop:1,step:2,op:'-',out:'6 4 2'},
+  {t:'Just once',start:3,stop:3,step:1,op:'+',out:'3'}
 ];
-const EXDONE=(function(){ try{ return JSON.parse(localStorage.getItem('sl-tracer-ex-v1'))||[]; }catch(e){ return []; } })();
-function renderCrew(){ $('#crewCount').innerHTML='('+EXDONE.length+'/'+EX.length+' traced)';
-  $('#crew').innerHTML=EX.map((e,i)=>{ const d=EXDONE.indexOf(i)>=0;
-    return '<button class="crewcard'+(d?' done':'')+'" onclick="loadExample('+i+')">'+spr(e.m,38)
-      +'<span class="cn">'+e.name+(d?' &#9989;':'')+'</span><span class="ct2">'+e.t+'</span>'
-      +'<span class="co">&rarr; '+e.out+'</span></button>'; }).join(''); }
-function loadExample(i){ const e=EX[i]; S.start=e.start;S.stop=e.stop;S.step=e.step;S.op=e.op;S.host=e.m;
-  renderCode(); resetIdle(); $('#predIn').value='';
-  say('Tracing <b>'+e.name+'&rsquo;s</b> loop: <b>'+e.t+'</b>. Guess the output, then <b>Start tracing</b>!');
-  try{ $('#predictSec').scrollIntoView({behavior:'smooth',block:'center'}); $('#predIn').focus(); }catch(x){}
-  toast('&#128075; '+e.name+'&rsquo;s loop loaded'); }
-function checkCrew(){ EX.forEach((e,i)=>{ if(EXDONE.indexOf(i)<0 && arrEq(S.output,(e.out.match(/-?\d+/g)||[]).map(Number))){ EXDONE.push(i); try{localStorage.setItem('sl-tracer-ex-v1',JSON.stringify(EXDONE));}catch(x){} renderCrew(); toast('&#11088; Traced '+e.name+'&rsquo;s loop! ('+EXDONE.length+'/'+EX.length+')'); } }); }
-let toT; function toast(m){ const e=$('#toast'); e.innerHTML=m; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),2400); }
+const EXDONE=(function(){ try{ return JSON.parse(localStorage.getItem('sl-tracer-ex-v2'))||[]; }catch(e){ return []; } })();
+function renderCrew(){ $('#exCount').textContent=EXDONE.length+'/'+EX.length;
+  $('#exMenu').innerHTML=EX.map((e,i)=>{ const d=EXDONE.indexOf(i)>=0;
+    return '<button class="exbtn'+(d?' done':'')+'" onclick="loadExample('+i+')"><span class="ex-t">'+(d?'&#9989; ':'')+e.t+'</span><span class="ex-o">&rarr; '+e.out+'</span></button>'; }).join(''); }
+function loadExample(i){ const e=EX[i]; S.start=e.start;S.stop=e.stop;S.step=e.step;S.op=e.op; renderCode(); resetIdle(); $('#predIn').value='';
+  say('Loaded <b>'+e.t+'</b>. Guess the output, then <b>Start tracing</b>.');
+  try{ $('#code').scrollIntoView({behavior:'smooth',block:'start'}); $('#predIn').focus(); }catch(x){} toast(e.t+' loaded'); }
+function checkCrew(){ EX.forEach((e,i)=>{ if(EXDONE.indexOf(i)<0 && arrEq(S.output,(e.out.match(/-?\d+/g)||[]).map(Number))){ EXDONE.push(i); try{localStorage.setItem('sl-tracer-ex-v2',JSON.stringify(EXDONE));}catch(x){} renderCrew(); toast('&#11088; Traced &ldquo;'+e.t+'&rdquo; ('+EXDONE.length+'/'+EX.length+')'); } }); }
+let toT; function toast(m){ const e=$('#toast'); e.innerHTML=m; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),2300); }
 
-/* init */
-renderCode(); buildScene(); renderTrace(); renderCrew();
-function place(){ slimeTo(S.i==null?S.start:S.i,false); }
-requestAnimationFrame(place); window.addEventListener('load',place);
-if(document.fonts&&document.fonts.ready) document.fonts.ready.then(place);
-window.addEventListener('resize',place);
+renderCode(); renderTrace(); renderCrew();
 </script>
 </body>
 </html>
