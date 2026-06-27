@@ -61,12 +61,10 @@ header p{margin:5px 0 0;font-size:16px;color:var(--muted)}
 
 .ex-h{font-size:14px;color:var(--muted);margin:0 0 11px}.ex-h b{color:var(--ink);font-weight:600}
 .exmenu{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
-.exbtn{text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:var(--sans)}
+.exbtn{display:flex;flex-direction:column;gap:3px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:var(--sans)}
 .exbtn:hover{border-color:var(--accent-line);background:#f7faff}
-.exbtn.done{background:#f1f9f3;border-color:#bfe2c5}
 .exbtn .ex-t{font-size:15px;font-weight:600;color:#36424e}
-.exbtn.done .ex-t{color:var(--ok)}
-.exbtn .ex-o{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exbtn .ex-o{font-family:var(--mono);font-size:14px;color:var(--muted)}
 
 .recap{font-size:15px;color:var(--muted);line-height:1.6;margin-top:16px;padding:0 2px}
 .recap b{color:var(--ink);font-weight:600}
@@ -105,13 +103,9 @@ header p{margin:5px 0 0;font-size:16px;color:var(--muted)}
 </section>
 
 <section class="panel">
-  <p class="ex-h">Ready-made loops — <b><span id="exCount">0/7</span> traced</b>. Pick one:</p>
+  <p class="ex-h">Try a ready-made loop:</p>
   <div class="exmenu" id="exMenu"></div>
 </section>
-
-<div class="recap"><b>The minimal pieces:</b> set i once, then each turn does just three things — <b>check</b> the condition, <b>print</b> i, <b>update</b> i. Repeat until the check is false; that last value is never printed.</div>
-
-<div class="foot"><a href="slime-loop.html">Slime Loop game</a><a href="loop-hopper.html">Loop Hopper</a></div>
 </div>
 
 <script>
@@ -176,9 +170,9 @@ function speakStep(st){ if(st.k==='start') return 'i starts at '+st.i+'.';
 
 function nextStep(){ if(S.done) return; S.revealed++; const st=S.steps[S.revealed-1]; hi(TKMAP[st.k]);
   if(st.k==='stop') S.done=true; renderBreak(); speakNow(speakStep(st));
-  if(S.done){ $('#bNext').disabled=true; $('#bAll').disabled=true; checkCrew(); } }
+  if(S.done){ $('#bNext').disabled=true; $('#bAll').disabled=true; } }
 function showAll(){ if(S.done && S.revealed===S.steps.length) return; S.revealed=S.steps.length; S.done=true; hi('');
-  renderBreak(); $('#bNext').disabled=true; $('#bAll').disabled=true; checkCrew();
+  renderBreak(); $('#bNext').disabled=true; $('#bAll').disabled=true;
   try{ $('.bk-out').scrollIntoView({block:'nearest'}); }catch(e){} }
 function resetIdle(){ S.revealed=0; S.done=false; hi(''); renderBreak(); $('#bNext').disabled=false; $('#bAll').disabled=false; }
 
@@ -194,14 +188,9 @@ const EX=[
   {t:'Down by 2',start:10,stop:2,step:2,op:'-',out:'10 8 6 4 2'},
   {t:'Just once',start:3,stop:3,step:1,op:'+',out:'3'}
 ];
-const EXDONE=(function(){ try{ return JSON.parse(localStorage.getItem('sl-tracer-ex-v4'))||[]; }catch(e){ return []; } })();
-function renderCrew(){ $('#exCount').textContent=EXDONE.length+'/'+EX.length;
-  $('#exMenu').innerHTML=EX.map((e,i)=>{ const d=EXDONE.indexOf(i)>=0;
-    return '<button class="exbtn'+(d?' done':'')+'" onclick="loadExample('+i+')"><span class="ex-t">'+(d?'✓ ':'')+e.t+'</span><span class="ex-o">'+e.out+'</span></button>'; }).join(''); }
+function renderCrew(){ $('#exMenu').innerHTML=EX.map((e,i)=>'<button class="exbtn" onclick="loadExample('+i+')"><span class="ex-t">'+e.t+'</span><span class="ex-o">'+e.out+'</span></button>').join(''); }
 function loadExample(i){ const e=EX[i]; S.start=e.start;S.stop=e.stop;S.step=e.step;S.op=e.op; renderCode(); build(); resetIdle();
   try{ $('.code').scrollIntoView({behavior:'smooth',block:'start'}); }catch(x){} }
-function checkCrew(){ const out=S.steps.filter(x=>x.k==='print').map(x=>x.i);
-  EX.forEach((e,i)=>{ if(EXDONE.indexOf(i)<0 && arrEq(out,(e.out.match(/-?\d+/g)||[]).map(Number))){ EXDONE.push(i); try{localStorage.setItem('sl-tracer-ex-v4',JSON.stringify(EXDONE));}catch(x){} renderCrew(); } }); }
 
 renderCode(); build(); renderCrew();
 </script>
