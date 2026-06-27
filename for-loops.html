@@ -29,9 +29,31 @@ header .tag{margin:10px 0 0;font-size:21px;color:#cfeaf6}
 #tk-check.on{background:#37a23d;color:#fff;box-shadow:0 0 0 3px #9fe0a6}
 #tk-body.on{background:#8b53f0;color:#fff;box-shadow:0 0 0 3px #cdb4f7}
 #tk-update.on{background:#d39a2a;color:#fff;box-shadow:0 0 0 3px #f4d58a}
-.nowlabel{margin-top:12px;text-align:center;font-size:24px;font-weight:700;min-height:30px;color:#cdd6e1}
-.nowlabel.b-init{color:#7fb8ef}.nowlabel.b-check{color:#7ed186}.nowlabel.b-body{color:#c4a8f2}.nowlabel.b-update{color:#f0c878}.nowlabel.b-done{color:#ff9a8a}
-.nowlabel b{color:#fff}
+/* the big "happening now" step card */
+.nowcard{padding:14px 20px;border:5px solid;transition:border-color .15s,background .15s}
+.nowcard.now-idle{border-color:#fff #aaa #aaa #fff;background:#ededed}
+.nowcard.now-init{border-color:#9cc4f2 #1f6fd6 #1f6fd6 #9cc4f2;background:#eaf2fd}
+.nowcard.now-check{border-color:#9fe0a6 #37a23d #37a23d #9fe0a6;background:#eafaec}
+.nowcard.now-body{border-color:#cdb4f7 #8b53f0 #8b53f0 #cdb4f7;background:#f3edfd}
+.nowcard.now-update{border-color:#f4d58a #d39a2a #d39a2a #f4d58a;background:#fdf6e7}
+.nowcard.now-stop{border-color:#f1b3aa #c0392b #c0392b #f1b3aa;background:#fdecea}
+.now-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:8px}
+.now-step{font-family:'Press Start 2P',monospace;font-size:12px;color:#fff;background:#666;padding:6px 9px}
+.now-init .now-step{background:#1f6fd6}.now-check .now-step{background:#37a23d}.now-body .now-step{background:#8b53f0}.now-update .now-step{background:#d39a2a}.now-stop .now-step{background:#c0392b}
+.now-title{font-family:'Press Start 2P',monospace;font-size:14px;color:#2c2620;line-height:1.3}
+.now-body .nl{font-family:'Consolas',monospace;font-size:30px;font-weight:700;padding:3px 0;color:#333;opacity:0}
+.now-body.reveal .nl{animation:nlin .35s ease forwards}
+.now-body.reveal .nl:nth-child(2){animation-delay:.45s}
+.now-body.reveal .nl:nth-child(3){animation-delay:.9s}
+@keyframes nlin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.nl.code{color:#888;font-size:25px}
+.nl.sub{font-size:34px;color:#141414}.nl .v{padding:0 2px;font-weight:900}
+.now-init .nl .v{color:#1f6fd6}.now-check .nl .v{color:#2e7d32}.now-body .nl .v{color:#7c3aed}.now-update .nl .v{color:#b4730a}.now-stop .nl .v{color:#c0392b}
+.nl.res{font-size:27px;font-weight:900}
+.nl.res.ok{color:#2e7d32}.nl.res.no{color:#c0392b}.nl.res.print{color:#7c3aed}.nl.res.upd{color:#b4730a}.nl.res.init{color:#1f6fd6}
+.now-idle .nl{font-size:21px;color:#666;opacity:1;font-family:'VT323',monospace}
+@media(prefers-reduced-motion:reduce){.now-body .nl{opacity:1!important;animation:none!important}}
+@media(max-width:780px){.now-body .nl{font-size:22px}.nl.sub{font-size:26px}.nl.res{font-size:20px}.now-title{font-size:12px}}
 
 /* ---- code controls (edit the numbers) ---- */
 .editbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:12px 16px}
@@ -101,6 +123,7 @@ table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:340px
 .gbtn.auto{background:#1f6fd6;border-color:#9cc4f2 #133f7a #133f7a #9cc4f2}
 .gbtn.reset{background:#fff;color:#777;border-color:#fff #999 #999 #fff;text-shadow:none;font-size:14px;padding:13px 18px}
 .gbtn.go{background:#d39a2a;border-color:#f4d58a #7a5e00 #7a5e00 #f4d58a;font-size:17px;padding:16px 30px}
+.gbtn.narr{background:#4f7a8c;border-color:#9fc2d0 #2a4a58 #2a4a58 #9fc2d0;font-size:12px;padding:13px 15px}
 
 /* reflect + challenges */
 .reflect{padding:14px 16px;background:#e7f3ff;border:5px solid;border-color:#fff #7ea8cf #7ea8cf #fff}
@@ -157,7 +180,6 @@ table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:340px
 <!-- THE CODE -->
 <div class="sec"><div class="panel codewrap">
   <div class="code mono" id="code"></div>
-  <div class="nowlabel" id="nowlabel">Set the numbers, make a guess, then press <b>Start tracing</b>.</div>
 </div></div>
 
 <!-- EDIT THE CODE -->
@@ -175,6 +197,12 @@ table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:340px
   <input id="predIn" placeholder="e.g. 1 2 3 4 5" autocomplete="off">
   <button class="pbtn" onclick="startTrace()">&#9654; Start tracing</button>
   <button class="skip" onclick="startTrace(true)">skip &amp; just watch</button>
+</div></div>
+
+<!-- NOW: the current step, shown big, one line at a time -->
+<div class="sec"><div class="panel nowcard now-idle" id="nowcard">
+  <div class="now-head"><span class="now-step" id="nowStep">Step 0</span><span class="now-title" id="nowTitle">Watch each step here &#11015;</span></div>
+  <div class="now-body" id="nowBody"><div class="nl">Set the numbers, guess the output, then press <b>Start tracing</b> &mdash; each step appears here, one at a time.</div></div>
 </div></div>
 
 <!-- RUN -->
@@ -195,6 +223,7 @@ table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:340px
   <button class="gbtn next" id="bNext" onclick="nextStep()" disabled>&#9654; Next step</button>
   <button class="gbtn auto" id="bAuto" onclick="auto()" disabled>&#9193; Auto-play</button>
   <button class="gbtn reset" onclick="resetIdle()">&#8635; Reset</button>
+  <button class="gbtn narr" id="bNarr" onclick="toggleNarrate()">&#128483;&#65039; Read aloud: ON</button>
 </div>
 
 <!-- REFLECT (hidden until done) -->
@@ -219,7 +248,7 @@ table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:340px
 
 <script>
 const $=s=>document.querySelector(s);
-const S=window.S={start:1,stop:5,step:1,op:'+',i:null,phase:'idle',rows:[],output:[],pred:null,done:false,muted:false,host:'steve'};
+const S=window.S={start:1,stop:5,step:1,op:'+',i:null,phase:'idle',rows:[],output:[],pred:null,done:false,muted:false,host:'steve',stepNo:0,narrate:true};
 const cmpSym=()=>S.op==='+'?'&le;':'&ge;';
 const cmpTxt=()=>S.op==='+'?'≤':'≥';
 const passes=i=>S.op==='+'?i<=S.stop:i>=S.stop;
@@ -239,6 +268,13 @@ const sWin=()=>[523,659,784,1047].forEach((f,i)=>beep(f,.16,'square',.14,i*.1));
 const sOk=()=>{beep(660,.1,'square',.14);beep(990,.13,'square',.12,.07);};
 const sNo=()=>beep(160,.2,'sawtooth',.14);
 function toggleMute(){ S.muted=!S.muted; $('#mute').innerHTML=S.muted?'&#128263;':'&#128266;'; }
+
+/* spoken narration (Web Speech API) — reads each step aloud, like a teacher */
+let VOICE=null;
+function pickVoice(){ try{ const vs=speechSynthesis.getVoices()||[]; VOICE=vs.find(v=>/en[-_]AU/i.test(v.lang))||vs.find(v=>/en[-_]GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||vs[0]||null; }catch(e){} }
+function speakNow(t){ if(!S.narrate||!('speechSynthesis' in window))return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); if(VOICE)u.voice=VOICE; u.rate=.95; speechSynthesis.speak(u); }catch(e){} }
+function toggleNarrate(){ S.narrate=!S.narrate; $('#bNarr').innerHTML='&#128483;&#65039; Read aloud: '+(S.narrate?'ON':'OFF'); if(!S.narrate){ try{speechSynthesis.cancel();}catch(e){} } }
+try{ if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; } }catch(e){}
 
 /* ---- render the code ---- */
 function renderCode(){
@@ -281,48 +317,82 @@ function renderTrace(){
 function renderOut(){ $('#out').innerHTML=S.output.map(n=>'<span class="oc">'+n+'</span>').join(''); }
 function setI(){ $('#iVal').textContent=(S.i==null?'–':S.i); }
 
-/* ---- execution stepper ---- */
-function doCheck(){ S.phase='check'; const r={i:S.i,pass:passes(S.i),printed:null,next:null}; S.rows.push(r); hi('check'); sCheck();
-  renderTrace(); setI();
-  label('check','<b>CHECK</b>: is '+S.i+' '+cmpSym()+' '+S.stop+' ? &rarr; '+(r.pass?'<b>YES</b> &mdash; keep going':'<b>NO</b> &mdash; stop'));
-  say(r.pass?'Condition is <b>TRUE</b>. Press <b>Next step</b> to run the body.':'Condition is <b>FALSE</b>. Press <b>Next step</b> to end the loop.'); }
+/* ---- the big "NOW" step card + narration ---- */
+function now(cls,title,bodyHTML,speak){ S.stepNo=(S.stepNo||0)+1;
+  const c=$('#nowcard'); c.className='panel nowcard now-'+cls;
+  $('#nowStep').textContent='Step '+S.stepNo; $('#nowTitle').innerHTML=title;
+  const nb=$('#nowBody'); nb.className='now-body'; nb.innerHTML=bodyHTML;
+  nb.classList.remove('reveal'); void nb.offsetWidth; nb.classList.add('reveal');
+  if(speak) speakNow(speak); }
+function setIdleCard(){ const c=$('#nowcard'); c.className='panel nowcard now-idle'; $('#nowStep').textContent='Step 0';
+  $('#nowTitle').innerHTML='Watch each step here &#11015;'; const nb=$('#nowBody'); nb.className='now-body';
+  nb.innerHTML='<div class="nl">Set the numbers, guess the output, then press <b>Start tracing</b> &mdash; each step appears here, one at a time.</div>'; }
+const vv=n=>'<span class="v">'+n+'</span>';
+const cmpWord=()=>S.op==='+'?'less than or equal to':'greater than or equal to';
+
+/* ---- execution stepper (each step = the substitution, line by line) ---- */
+function doCheck(){ S.phase='check'; const r={i:S.i,pass:passes(S.i),printed:null,next:null}; S.rows.push(r); renderTrace(); setI();
+  if(r.pass){ hi('check'); sCheck();
+    now('check','&#9313; CHECK &mdash; can the loop keep going?',
+      '<div class="nl code">i '+cmpTxt()+' '+S.stop+'</div>'
+     +'<div class="nl sub">i is '+vv(S.i)+', &nbsp;so &rarr; &nbsp;'+vv(S.i)+' '+cmpTxt()+' '+vv(S.stop)+'</div>'
+     +'<div class="nl res ok">&#10003; YES &mdash; go inside and run the body</div>',
+      'Check. i is '+S.i+'. Is '+S.i+' '+cmpWord()+' '+S.stop+'? Yes. Go inside.');
+    say('TRUE! Press <b>Next step</b> to run the body.'); }
+  else { hi('none'); sStop();
+    now('stop','&#9209; STOP &mdash; the loop ends here',
+      '<div class="nl code">i '+cmpTxt()+' '+S.stop+'</div>'
+     +'<div class="nl sub">i is '+vv(S.i)+', &nbsp;so &rarr; &nbsp;'+vv(S.i)+' '+cmpTxt()+' '+vv(S.stop)+'</div>'
+     +'<div class="nl res no">&#10007; NO &mdash; the loop stops. <b>'+S.i+' is never printed!</b></div>',
+      'Check. i is '+S.i+'. Is '+S.i+' '+cmpWord()+' '+S.stop+'? No. The loop ends. '+S.i+' is never printed.');
+    say('FALSE! Finished. Look at the <b>print</b> column &mdash; that&rsquo;s the output.');
+    finishLoop(); } }
 function doBody(){ S.phase='body'; S.output.push(S.i); S.rows[S.rows.length-1].printed=S.i; hi('body'); sPrint();
   slimeTo(S.i,false); litPad(S.i); popNum(S.i); renderTrace(); renderOut();
-  label('body','<b>print('+S.i+')</b> &mdash; the body runs and prints <b>'+S.i+'</b>');
-  say('It printed <b>'+S.i+'</b>. Next is <b>UPDATE</b> &mdash; i will change.'); }
+  now('body','&#9314; RUN THE BODY &mdash; print(i)',
+    '<div class="nl code">print(i)</div>'
+   +'<div class="nl sub">i is '+vv(S.i)+', &nbsp;so &rarr; &nbsp;print('+vv(S.i)+')</div>'
+   +'<div class="nl res print">&#128424;&#65039; it prints '+vv(S.i)+'</div>',
+    'Run the body. Print i. i is '+S.i+', so it prints '+S.i+'.');
+  say('It printed <b>'+S.i+'</b>. Next: <b>UPDATE</b>. Press Next step.'); }
 function doUpdate(){ S.phase='update'; const old=S.i; S.i=stepI(S.i); S.rows[S.rows.length-1].next=S.i; hi('update'); sStep();
-  slimeTo(S.i,true); renderTrace(); setI();
-  const opc=S.op==='+'?'+':'−';
-  label('update','<b>UPDATE</b>: i = '+old+' '+opc+' '+S.step+' = <b>'+S.i+'</b> &mdash; i changes!');
-  say('Now i is <b>'+S.i+'</b>. Back to <b>CHECK</b> &mdash; press Next step.'); }
-function doDone(){ S.phase='done'; S.done=true; hi(''); sStop(); renderTrace();
-  label('done','<b>STOP</b>: '+S.i+' '+cmpSym()+' '+S.stop+' is <b>FALSE</b> &rarr; the loop ends. Notice &mdash; <b>'+S.i+' was never printed!</b>');
-  say('The loop is finished. Look at the <b>print</b> column &mdash; that is the output.');
-  $('#bNext').disabled=true; $('#bAuto').disabled=true; reflect(); checkCrew(); }
+  slimeTo(S.i,true); renderTrace(); setI(); const opc=S.op==='+'?'+':'−';
+  now('update','&#9315; UPDATE &mdash; change i',
+    '<div class="nl code">i = i '+opc+' '+S.step+'</div>'
+   +'<div class="nl sub">i is '+vv(old)+', &nbsp;so &rarr; &nbsp;i = '+vv(old)+' '+opc+' '+S.step+'</div>'
+   +'<div class="nl res upd">i = '+vv(S.i)+' &nbsp;(i changed from '+old+' to '+S.i+')</div>',
+    'Update. i equals '+old+' '+(S.op==='+'?'plus':'minus')+' '+S.step+', which is '+S.i+'. Now i is '+S.i+'.');
+  say('Now i is <b>'+S.i+'</b>. Back to <b>CHECK</b>. Press Next step.'); }
+function finishLoop(){ S.done=true; renderTrace(); $('#bNext').disabled=true; $('#bAuto').disabled=true; reflect(); checkCrew(); }
 
-function nextStep(){ if(S.phase==='init'){ doCheck(); }
-  else if(S.phase==='check'){ if(S.rows[S.rows.length-1].pass) doBody(); else doDone(); }
+function nextStep(){ if(S.done)return;
+  if(S.phase==='init'){ doCheck(); }
+  else if(S.phase==='check'){ doBody(); }
   else if(S.phase==='body'){ doUpdate(); }
   else if(S.phase==='update'){ doCheck(); } }
 
 let autoT=null;
 function auto(){ if(S.done)return; if(autoT){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto-play'; return; }
-  $('#bAuto').innerHTML='&#9209; Pause'; autoT=setInterval(()=>{ if(S.done){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto-play'; return; } nextStep(); },900); }
+  $('#bAuto').innerHTML='&#9209; Pause'; const iv=S.narrate?2600:1300; autoT=setInterval(()=>{ if(S.done){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto-play'; return; } nextStep(); },iv); }
 
 function startTrace(skip){
   S.pred = skip? null : ($('#predIn').value.match(/-?\d+/g)||[]).map(Number);
-  S.i=S.start; S.rows=[]; S.output=[]; S.done=false; S.phase='init'; hi('init');
+  S.i=S.start; S.rows=[]; S.output=[]; S.done=false; S.phase='init'; S.stepNo=0; hi('init');
   renderTrace(); renderOut(); setI(); slimeTo(S.i,false); for(let n=1;n<=6;n++){const e=$('#b'+n);if(e)e.classList.remove('lit');}
-  label('init','<b>START</b>: i = '+S.start+' &mdash; this happens <b>once</b>, before the loop.');
-  say('i starts at <b>'+S.start+'</b>. Press <b>Next step</b> to CHECK the condition.');
+  now('init','&#9312; START &mdash; happens once, before the loop',
+    '<div class="nl code">let i = '+S.start+'</div>'
+   +'<div class="nl res init">i starts at '+vv(S.start)+'</div>',
+    'Start. i starts at '+S.start+'.');
+  say('i starts at <b>'+S.start+'</b>. Press <b>Next step</b> to CHECK.');
   $('#bNext').disabled=false; $('#bAuto').disabled=false;
   $('#reflectSec').style.display='none'; $('#predictSec').style.opacity='.55';
+  try{ $('#nowcard').scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){}
   sStep();
 }
 function resetIdle(){ if(autoT){clearInterval(autoT);autoT=null;$('#bAuto').innerHTML='&#9193; Auto-play';}
   S.i=null; S.phase='idle'; S.rows=[]; S.output=[]; S.done=false; hi('');
   renderTrace(); renderOut(); setI(); slimeTo(S.start,false); for(let n=1;n<=6;n++){const e=$('#b'+n);if(e)e.classList.remove('lit');}
-  label('','Set the numbers, make a guess, then press <b>Start tracing</b>.');
+  setIdleCard();
   say('Change the numbers if you like, type a guess, then <b>Start tracing</b>.');
   $('#bNext').disabled=true; $('#bAuto').disabled=true; $('#predictSec').style.opacity='1'; $('#reflectSec').style.display='none'; }
 
