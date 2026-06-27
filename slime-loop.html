@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slime Loop &mdash; two for-loop worlds &middot; Year 9 Computing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{background:#6a98c0;image-rendering:pixelated}
+body{margin:0;font-family:'VT323','Consolas',monospace;color:#26211c;background:#bfe3c4}
+.page{max-width:1060px;margin:0 auto;padding-bottom:48px}
+.px{font-family:'Press Start 2P','VT323',monospace}
+.panel{background:#c6c6c6;border:5px solid;border-color:#fefefe #565656 #565656 #fefefe;box-shadow:6px 6px 0 rgba(0,0,0,.22)}
+.sec{margin:18px 18px 0}
+
+header{position:relative;overflow:hidden;padding:24px 24px 50px;border-bottom:7px solid #3a6b2a;background:linear-gradient(#79c0f0,#9bd4f5)}
+.cloud{position:absolute;background:#fff;box-shadow:14px 0 0 #fff,28px 0 0 #fff,14px 14px 0 #fff}
+.sun{position:absolute;right:30px;top:18px;width:42px;height:42px;background:#ffd83d;border:4px solid #e9b600}
+header h1{position:relative;margin:0;font-size:28px;font-weight:400;color:#fff;letter-spacing:2px;text-shadow:3px 3px 0 #3a6b2a,5px 5px 0 rgba(0,0,0,.18)}
+header .tag{position:relative;margin:12px 0 0;font-size:22px;color:#23408a;text-shadow:1px 1px 0 #fff8}
+.ground{position:absolute;left:0;right:0;bottom:0;height:38px;background:linear-gradient(#6fb43f 0 38%,#7a5230 38% 100%);border-top:5px solid #4e7a35}
+
+/* progress bar */
+.prog{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:11px 16px;margin-top:16px}
+.plvl{font-size:21px;font-weight:700;color:#2c2620}
+.stars{letter-spacing:2px;font-size:22px}
+.star{color:#cfae00}.star.off{color:#9a9a9a}
+.master{margin-left:auto;font-size:18px;color:#9a6b00;background:#fff4c2;border:3px solid #e0a800;padding:5px 12px;display:none}
+.master.show{display:inline-block;animation:pop .4s}
+@keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.iconbtn{font-family:'VT323',monospace;font-size:22px;background:#b9b9b9;border:4px solid;border-color:#fff #565656 #565656 #fff;cursor:pointer;width:44px;height:44px;line-height:1}
+
+/* level title */
+.lvtitle{font-size:22px;color:#fff;padding:9px 18px;border:5px solid;letter-spacing:1px;display:inline-block;margin-bottom:-3px;text-shadow:2px 2px 0 #0006}
+.lvtitle .px{font-size:15px}
+.lvtitle .lvsub{font-size:18px;opacity:.92;text-shadow:none}
+.up .lvtitle{background:#3f9a44;border-color:#7ed186 #1f5523 #1f5523 #7ed186}
+.down .lvtitle{background:#6b4ea0;border-color:#b69ad8 #3a2a5e #3a2a5e #b69ad8}
+
+.gctrl{padding:12px 16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.csign{flex:1;min-width:240px;background:#b07a3e;border:4px solid;border-color:#cfa067 #6e4a28 #6e4a28 #cfa067;padding:7px 14px;font-size:25px;color:#2e1c0c;text-align:center}
+.csign b{color:#7a1f12}.csign .o{color:#0d4b86}
+
+.guide{display:flex;align-items:center;gap:12px;padding:11px 16px;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff;margin-top:12px}
+.up .guide{background:#dfeecb}.down .guide{background:#cdd0e6;border-color:#fff #6b6a8a #6b6a8a #fff}
+.allay{flex:none;animation:float 2.4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.bubble{flex:1;background:#fff;border:4px solid;border-color:#fff #b7c79a #b7c79a #fff;padding:8px 14px;font-size:22px;color:#2c3320;line-height:1.15;min-height:46px;display:flex;align-items:center}
+.bubble b{color:#1f6b2a}.down .bubble b{color:#5a3a9a}
+
+.world{position:relative;height:230px;overflow:hidden;border:5px solid;margin-top:12px}
+.world.up{background:linear-gradient(#86c9f2,#bfe3f5 70%,#cdebc8 70%);border-color:#fff #6b8aa3 #6b8aa3 #fff}
+.world.down{background:linear-gradient(#2c2740,#211d33 62%,#14101d 62%);border-color:#6a6588 #15121d #15121d #6a6588}
+.world .sun{right:22px;top:14px}
+.torch{position:absolute;width:8px;height:26px;background:#5a3c22}
+.torch::after{content:"";position:absolute;left:-3px;top:-12px;width:14px;height:16px;background:radial-gradient(circle at 50% 60%,#ffd23d,#ff7a00 70%,transparent);animation:flick .5s infinite alternate}
+@keyframes flick{from{transform:scale(1);opacity:.9}to{transform:scale(1.18);opacity:1}}
+.blocks{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:6px;padding:0 10px}
+.blk{width:var(--bw,70px);height:var(--bw,70px);flex:none;display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;position:relative}
+.blk span{font-family:'Press Start 2P',monospace;font-size:18px;color:#fff;text-shadow:2px 2px 0 #00000066}
+.blk.grass{background:linear-gradient(#86d15a 0 22%,#6aa84f 22% 30%,#7a5230 30% 100%);border:4px solid #3c2a18}
+.blk.stone{background:linear-gradient(#8d8d97 0 30%,#6f6f7a 30% 100%);border:4px solid #3a3a44;box-shadow:inset 6px 8px 0 rgba(255,255,255,.06),inset -8px -10px 0 rgba(0,0,0,.18)}
+.blk.wall{background:linear-gradient(#9a9a9a,#7d7d7d);border:4px solid #4f4f4f}
+.blk.bedrock{background:#171320;border:4px solid #000}
+.blk.bedrock span,.blk.wall span{opacity:.5}
+
+.slime{position:absolute;bottom:72px;left:0;z-index:6;transition:left .42s cubic-bezier(.3,1.35,.5,1)}
+@keyframes jump{0%{transform:translateY(0)}45%{transform:translateY(-38px) scaleY(1.08) scaleX(.94)}100%{transform:translateY(0)}}
+.slime.hop{animation:jump .42s ease}
+@keyframes wow{0%,100%{transform:scale(1)}35%{transform:scale(1.28,.78)}70%{transform:scale(.92,1.12)}}
+.slime.wow{animation:wow .32s}
+@keyframes happy{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.slime.happy{animation:happy .3s}
+@keyframes spin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.25)}100%{transform:rotate(360deg) scale(1)}}
+.slime.spin{animation:spin .9s ease}
+
+/* mascots */
+.mob{position:absolute;z-index:4}
+.mob.fly{animation:fly 3s ease-in-out infinite}
+@keyframes fly{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.mob.bob{animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.mob.glow{filter:drop-shadow(0 0 7px #5fe3f0);animation:bob 2.6s ease-in-out infinite}
+.cheer .mob{animation:cheerj .5s ease 2}
+@keyframes cheerj{0%,100%{transform:translateY(0)}40%{transform:translateY(-20px) rotate(-8deg)}}
+
+.pcl{position:absolute;width:9px;height:9px;z-index:7;animation:pcl .65s ease-out forwards}
+@keyframes pcl{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+.grabnum{position:absolute;font-family:'Press Start 2P',monospace;font-size:22px;color:#fcd34d;text-shadow:2px 2px 0 #7a1f12;z-index:8;animation:gn .8s ease-out forwards;pointer-events:none}
+@keyframes gn{0%{transform:translateY(0);opacity:0}20%{opacity:1}to{transform:translateY(-46px);opacity:0}}
+.xpfly{position:absolute;left:50%;top:26px;transform:translateX(-50%);font-family:'Press Start 2P',monospace;font-size:17px;color:#3fd07a;text-shadow:2px 2px 0 #14502c;z-index:9;animation:gn 1s ease-out forwards}
+
+.hud{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px;padding:11px 16px}
+.ipill{background:#13a08e;color:#fff;border:4px solid;border-color:#5fd4c4 #0a6358 #0a6358 #5fd4c4;padding:6px 16px;font-size:23px}
+.ipill b{font-family:'Press Start 2P',monospace;font-size:21px;margin-left:6px}
+.phases{display:flex;gap:7px;flex-wrap:wrap}
+.ph{font-size:19px;color:#5b5b5b;background:#b3b3b3;border:3px solid #8f8f8f;padding:5px 10px}
+.ph i{font-style:normal;font-size:16px;opacity:.85}
+.ph.cOn{background:#2e7d32;color:#fff;border-color:#7ed186}
+.ph.dOn{background:#7c3aed;color:#fff;border-color:#c4a8f2}
+.ph.sOn{background:#e08a00;color:#fff;border-color:#ffc266}
+.ruleflag{margin-left:auto;background:#fff4c2;border:3px solid #e0a800;padding:6px 12px;font-size:20px;color:#8a5a00;font-weight:700}
+
+.actions{display:flex;flex-wrap:wrap;gap:13px;justify-content:center;align-items:center;margin-top:14px;min-height:62px}
+.gbtn{font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;border:5px solid;padding:14px 20px;cursor:pointer;text-shadow:2px 2px 0 #00000055;line-height:1.3}
+.gbtn:active{transform:translateY(3px)}
+.gbtn.keep{background:#3a8a3f;border-color:#7ed186 #1f5523 #1f5523 #7ed186}
+.gbtn.stop{background:#c0392b;border-color:#e98a7e #7a1f12 #7a1f12 #e98a7e}
+.gbtn.grab{background:#caa11f;border-color:#f3d873 #7a5e00 #7a5e00 #f3d873;color:#2e1c0c;text-shadow:none}
+.gbtn.hop{background:#b5651d;border-color:#e0a460 #6e3a08 #6e3a08 #e0a460}
+.gbtn.start{background:#3f7fd1;border-color:#8fb8ea #244a86 #244a86 #8fb8ea;font-size:17px;padding:16px 30px}
+.gbtn.big{font-size:16px;padding:16px 26px}
+
+.winline{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;background:#fff4c2;border:5px solid;border-color:#fff #c9a93a #c9a93a #fff;padding:12px 18px;width:100%}
+.winline .wt{font-family:'Press Start 2P',monospace;font-size:14px;color:#2f7a32}
+.winline .ws{font-size:30px;letter-spacing:3px;color:#cfae00}
+.winline .wn{display:flex;gap:5px}
+.winline .tok{width:34px;height:34px;font-size:15px}
+
+.scorebar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:14px;padding:11px 16px;justify-content:center}
+.hblabel{font-size:22px;font-weight:700;color:#5a3d05}
+.hotbar{display:inline-flex;background:#8b8b8b;border:5px solid;border-color:#373737 #fff #fff #373737;padding:4px}
+.bslot{width:50px;height:50px;border:4px solid;border-color:#373737 #fff #fff #373737;background:#9a9a9a;display:flex;align-items:center;justify-content:center}
+.tok{width:36px;height:36px;background:#fcd34d;border:3px solid #a9781a;display:flex;align-items:center;justify-content:center;font-family:'Press Start 2P',monospace;font-size:15px;color:#5a3d05}
+.tok.pop{animation:tokpop .3s ease}
+@keyframes tokpop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.xpwrap{display:flex;align-items:center;gap:9px}
+.xpbox{width:150px;height:20px;background:#5a5a5a;border:3px solid;border-color:#373737 #fff #fff #373737}
+.xpfill{height:100%;background:linear-gradient(#9be15a,#5aab2e);width:0;transition:width .3s}
+
+.gwrap.shake{animation:shk .3s}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+.h{font-size:28px;color:#2c2620;margin:0 0 8px}
+.recap{padding:15px 18px;font-size:22px;line-height:1.4;color:#2c2620;background:#dfeecb;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff}
+.recap b{color:#1f6b2a}
+.foot{margin:20px 18px 0;text-align:center}
+.btnlink{display:inline-block;background:#6aa84f;border:5px solid;border-color:#9bd47f #3a6b2a #3a6b2a #9bd47f;color:#fff;font-size:24px;padding:10px 22px;text-decoration:none;text-shadow:2px 2px 0 #00000044}
+
+@media (prefers-reduced-motion:reduce){.allay,.slime,.mob,.tok.pop,.torch::after{animation:none}}
+@media (max-width:760px){
+  .sec{margin:14px 10px 0}.h{font-size:22px}
+  header{padding:18px 14px 44px} header h1{font-size:18px} header .tag{font-size:17px}
+  .csign{font-size:20px;min-width:100%}
+  .world{--bw:42px;height:196px}.slime{bottom:58px}
+  .bubble{font-size:19px}.gbtn{font-size:11px;padding:12px 12px}.gbtn.start{font-size:14px}
+  .ph{font-size:16px}.ruleflag{margin-left:0;font-size:17px}.xpbox{width:110px}
+  .lvtitle{font-size:18px}.lvtitle .px{font-size:12px}.lvtitle .lvsub{display:block;font-size:16px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sl" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" fill="#57b23a"/><rect x="3" y="4" width="10" height="9" fill="#6cc94e"/><rect x="4" y="6" width="8" height="6" fill="#7ada5b"/><rect x="2" y="3" width="12" height="11" fill="none" stroke="#2f7a22" stroke-width="1"/><rect x="5" y="7" width="2" height="2" fill="#143a10"/><rect x="9" y="7" width="2" height="2" fill="#143a10"/><rect x="7" y="10" width="2" height="1" fill="#143a10"/></symbol>
+  <symbol id="allay" viewBox="0 0 16 16"><rect x="2" y="5" width="3" height="5" fill="#bfe3f5"/><rect x="11" y="5" width="3" height="5" fill="#bfe3f5"/><rect x="5" y="4" width="6" height="8" fill="#3f9ad8"/><rect x="6" y="5" width="4" height="6" fill="#6fc0ee"/><rect x="6" y="6" width="1" height="2" fill="#16344a"/><rect x="9" y="6" width="1" height="2" fill="#16344a"/></symbol>
+  <symbol id="creep" viewBox="0 0 8 8"><rect width="8" height="8" fill="#73a64a"/><rect x="1" y="2" width="2" height="2" fill="#19240f"/><rect x="5" y="2" width="2" height="2" fill="#19240f"/><rect x="3" y="4" width="2" height="1" fill="#19240f"/><rect x="2" y="5" width="4" height="2" fill="#19240f"/><rect x="3" y="7" width="2" height="1" fill="#73a64a"/></symbol>
+  <symbol id="pig" viewBox="0 0 16 16"><rect x="3" y="6" width="10" height="7" fill="#f2a8c4"/><rect x="4" y="4" width="3" height="3" fill="#eb93b4"/><rect x="9" y="4" width="3" height="3" fill="#eb93b4"/><rect x="6" y="8" width="4" height="3" fill="#e07ba0"/><rect x="7" y="9" width="1" height="1" fill="#7a3a52"/><rect x="9" y="9" width="1" height="1" fill="#7a3a52"/><rect x="5" y="6" width="1" height="1" fill="#3a2230"/><rect x="10" y="6" width="1" height="1" fill="#3a2230"/><rect x="4" y="13" width="2" height="2" fill="#e07ba0"/><rect x="10" y="13" width="2" height="2" fill="#e07ba0"/></symbol>
+  <symbol id="bee" viewBox="0 0 16 16"><rect x="2" y="4" width="3" height="3" fill="#eaf6fb"/><rect x="11" y="4" width="3" height="3" fill="#eaf6fb"/><rect x="4" y="6" width="8" height="6" fill="#f5c211"/><rect x="6" y="6" width="2" height="6" fill="#3a2a00"/><rect x="9" y="6" width="2" height="6" fill="#3a2a00"/><rect x="5" y="7" width="1" height="1" fill="#19140a"/><rect x="11" y="7" width="1" height="1" fill="#19140a"/></symbol>
+  <symbol id="chick" viewBox="0 0 16 16"><rect x="5" y="6" width="7" height="7" fill="#fcfcfc"/><rect x="5" y="3" width="4" height="4" fill="#fcfcfc"/><rect x="6" y="1" width="2" height="2" fill="#d23"/><rect x="3" y="5" width="2" height="2" fill="#f59e0b"/><rect x="5" y="4" width="1" height="1" fill="#222"/><rect x="6" y="13" width="1" height="2" fill="#f59e0b"/><rect x="10" y="13" width="1" height="2" fill="#f59e0b"/></symbol>
+  <symbol id="bat" viewBox="0 0 16 16"><rect x="6" y="6" width="4" height="5" fill="#3a3550"/><rect x="1" y="5" width="5" height="4" fill="#4a4566"/><rect x="10" y="5" width="5" height="4" fill="#4a4566"/><rect x="6" y="4" width="1" height="2" fill="#3a3550"/><rect x="9" y="4" width="1" height="2" fill="#3a3550"/><rect x="7" y="7" width="1" height="1" fill="#e0473a"/><rect x="8" y="7" width="1" height="1" fill="#e0473a"/></symbol>
+  <symbol id="squid" viewBox="0 0 16 16"><rect x="5" y="3" width="6" height="6" fill="#18b3c7"/><rect x="6" y="4" width="4" height="4" fill="#62e6f2"/><rect x="5" y="9" width="1" height="4" fill="#18b3c7"/><rect x="7" y="9" width="1" height="5" fill="#18b3c7"/><rect x="9" y="9" width="1" height="4" fill="#18b3c7"/><rect x="10" y="9" width="1" height="4" fill="#18b3c7"/><rect x="6" y="5" width="1" height="2" fill="#0a2a30"/><rect x="9" y="5" width="1" height="2" fill="#0a2a30"/></symbol>
+</svg>
+
+<div class="page">
+<header>
+  <div class="cloud" style="left:520px;top:20px;width:34px;height:14px"></div>
+  <div class="cloud" style="left:680px;top:48px;width:30px;height:12px"></div>
+  <div class="sun"></div>
+  <h1 class="px">SLIME LOOP</h1>
+  <div class="tag">two worlds &middot; &#9650; climb UP &nbsp;&amp;&nbsp; &#9660; dig DOWN &middot; grab a number BEFORE you hop!</div>
+  <div class="ground"></div>
+</header>
+
+<div class="sec"><div class="panel prog">
+  <span class="plvl">&#9650; Up <span class="stars" id="starsUp">&#9733;&#9733;&#9733;</span></span>
+  <span class="plvl">&#9660; Down <span class="stars" id="starsDown">&#9733;&#9733;&#9733;</span></span>
+  <button class="iconbtn" id="mute" onclick="toggleMute()" title="sound">&#128266;</button>
+  <span class="master" id="master">&#127942; LOOP MASTER!</span>
+</div></div>
+
+<div class="sec up" id="lvl-up"><div class="gwrap" id="game-up"></div></div>
+<div class="sec down" id="lvl-down"><div class="gwrap" id="game-down"></div></div>
+
+<div class="sec"><div class="recap">
+  <div class="h px" style="font-size:17px">Remember</div>
+  &#9312; <b>CHECK</b> the slime can still go &nbsp;&rarr;&nbsp; &#9313; <b>GRAB</b> the number (that&rsquo;s <b>print</b>) &nbsp;&rarr;&nbsp; &#9314; <b>HOP</b> to the next block (the <b>step</b>) &nbsp;&rarr;&nbsp; go again. Always <b>GRAB before you HOP</b> &mdash; so the first number out is where you START.
+</div></div>
+
+<div class="foot"><a class="btnlink" href="loop-hopper.html">&#9654; Also try: Loop Hopper</a></div>
+</div>
+
+<script>
+let AC=null, MUTED=false;
+function ac(){ if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}} if(AC&&AC.state==='suspended')AC.resume(); return AC; }
+function beep(f,d,t,v,w){ const c=ac(); if(!c||MUTED)return; const s=c.currentTime+(w||0);
+  const o=c.createOscillator(),g=c.createGain(); o.type=t||'square'; o.frequency.value=f; o.connect(g); g.connect(c.destination);
+  g.gain.setValueAtTime(.0001,s); g.gain.exponentialRampToValueAtTime(v||.16,s+.012); g.gain.exponentialRampToValueAtTime(.0001,s+d); o.start(s); o.stop(s+d+.03); }
+const sGrab=()=>{beep(680,.12,'square',.18);beep(1020,.13,'square',.13,.07);};
+const sHop=()=>beep(430,.1,'triangle',.16);
+const sRight=()=>{beep(720,.1,'square',.16);beep(1080,.14,'square',.13,.08);};
+const sWrong=()=>beep(150,.24,'sawtooth',.16);
+const sWin=()=>[523,659,784,1047,1319].forEach((f,i)=>beep(f,.2,'square',.15,i*.11));
+const sStart=()=>{beep(523,.1,'square',.14);beep(784,.12,'square',.14,.09);};
+function toggleMute(){ MUTED=!MUTED; document.getElementById('mute').innerHTML=MUTED?'&#128263;':'&#128266;'; }
+
+const spr=(id,sz,cls,st)=>'<svg class="mob '+(cls||'')+'" width="'+sz+'" height="'+sz+'" viewBox="0 0 16 16" style="'+(st||'')+'"><use href="#'+id+'"/></svg>';
+
+const THEMES={
+  up:{ cls:'up', badge:'LEVEL 1', name:'COUNT UP', sub:'(1 &rarr; 5)', cmp:'&le;', op:'+', start:1, stop:5,
+       deco:'<div class="sun"></div>'
+          +'<div class="cloud" style="left:60px;top:20px;width:30px;height:12px"></div>'
+          +'<div class="cloud" style="left:430px;top:34px;width:26px;height:10px"></div>'
+          +spr('bee',34,'fly','position:absolute;left:150px;top:40px')
+          +spr('chick',40,'bob','position:absolute;right:60px;bottom:90px')
+          +spr('pig',46,'bob','position:absolute;left:30px;bottom:14px'),
+       edge:'wall', num:'grass' },
+  down:{ cls:'down', badge:'LEVEL 2', name:'COUNT DOWN', sub:'(5 &rarr; 1)', cmp:'&ge;', op:'&minus;', start:5, stop:1,
+       deco:'<div class="torch" style="left:24px;top:30px"></div><div class="torch" style="right:24px;top:46px"></div>'
+          +spr('bat',38,'fly','position:absolute;right:120px;top:26px')
+          +spr('squid',40,'glow','position:absolute;left:70px;top:54px')
+          +spr('creep',44,'bob','position:absolute;right:40px;bottom:88px'),
+       edge:'bedrock', num:'stone' }
+};
+
+const PROG = (function(){ try{ return JSON.parse(localStorage.getItem('sl-prog-v2'))||{up:0,down:0}; }catch(e){ return {up:0,down:0}; } })();
+function renderProg(){
+  const fmt=n=>'<span class="star'+(1<=n?'':' off')+'">&#9733;</span><span class="star'+(2<=n?'':' off')+'">&#9733;</span><span class="star'+(3<=n?'':' off')+'">&#9733;</span>';
+  document.getElementById('starsUp').innerHTML=fmt(PROG.up);
+  document.getElementById('starsDown').innerHTML=fmt(PROG.down);
+  document.getElementById('master').classList.toggle('show', PROG.up>0 && PROG.down>0);
+}
+function onWin(dir,stars){ if(stars>(PROG[dir]||0)){ PROG[dir]=stars; try{localStorage.setItem('sl-prog-v2',JSON.stringify(PROG));}catch(e){} } renderProg(); }
+
+function makeGame(rootId, key){
+  const th=THEMES[key], root=document.getElementById(rootId);
+  const S={i:0,phase:'idle',collected:[],xp:0,wrong:0,won:false};
+  const passes=i=>key==='up'?i<=5:i>=1, nextI=i=>key==='up'?i+1:i-1;
+  let blk='';
+  for(let n=0;n<=6;n++){ const cls=(n===0||n===6)?th.edge:th.num; blk+='<div class="blk '+cls+'" id="'+rootId+'-b'+n+'">'+((n>=1&&n<=5)?'<span>'+n+'</span>':'')+'</div>'; }
+  root.innerHTML=
+    '<div class="lvtitle"><span class="px">'+th.badge+'</span> &middot; '+th.name+' <span class="lvsub">'+th.sub+'</span></div>'
+    +'<div class="panel gctrl"><div class="csign" id="'+rootId+'-sign"></div>'
+      +'<button class="iconbtn rs" title="reset">&#8635;</button></div>'
+    +'<div class="guide"><svg class="allay" width="52" height="52" viewBox="0 0 16 16"><use href="#allay"/></svg>'
+      +'<div class="bubble"><span class="say"></span></div></div>'
+    +'<div class="world '+th.cls+'">'+th.deco+'<div class="blocks">'+blk+'</div>'
+      +'<div class="slime"><svg width="46" height="46" viewBox="0 0 16 16"><use href="#sl"/></svg></div></div>'
+    +'<div class="panel hud"><span class="ipill">i =<b class="iv">0</b></span>'
+      +'<div class="phases"><span class="ph c">&#9312; CHECK</span><span class="ph d">&#9313; GRAB <i>=print</i></span><span class="ph s">&#9314; HOP <i>=step</i></span></div>'
+      +'<span class="ruleflag">&#11088; GRAB before HOP</span></div>'
+    +'<div class="actions"></div>'
+    +'<div class="panel scorebar"><span class="hblabel">Grabbed:</span><div class="hotbar"></div>'
+      +'<div class="xpwrap"><span style="font-size:20px;font-weight:700;color:#2f7a32">XP</span>'
+      +'<div class="xpbox"><div class="xpfill"></div></div><span style="font-size:21px;font-weight:700;color:#2f7a32" class="xpn">0</span></div></div>';
+  const q=s=>root.querySelector(s);
+  const els={sign:q('.csign'),say:q('.say'),slime:q('.slime'),acts:q('.actions'),iv:q('.iv'),
+    hot:q('.hotbar'),xpf:q('.xpfill'),xpn:q('.xpn'),world:q('.world'),
+    phC:q('.ph.c'),phD:q('.ph.d'),phS:q('.ph.s'),mascots:q('.world')};
+  q('.rs').onclick=()=>idle();
+
+  function slimeTo(i,hop){ const el=q('#'+rootId+'-b'+i); if(!el)return;
+    const wr=els.world.getBoundingClientRect(), br=el.getBoundingClientRect();
+    const left=(br.left-wr.left-els.world.clientLeft)+br.width/2-els.slime.offsetWidth/2;
+    if(hop){ els.slime.classList.remove('hop'); void els.slime.offsetWidth; els.slime.classList.add('hop'); }
+    els.slime.style.left=left+'px'; }
+  function face(c){ els.slime.classList.remove('happy','wow'); void els.slime.offsetWidth; if(c)els.slime.classList.add(c); }
+  function say(m){ els.say.innerHTML=m; }
+  function btns(list){ els.acts.innerHTML=''; list.forEach(b=>{ const e=document.createElement('button'); e.className='gbtn '+b.c; e.innerHTML=b.t; e.onclick=b.f; els.acts.appendChild(e); }); }
+  function render(){ els.iv.textContent=S.i;
+    els.sign.innerHTML='for ( i = <b>'+th.start+'</b> ; i '+th.cmp+' <b>'+th.stop+'</b> ; i = i '+th.op+' <b>1</b> ) <span class="o">&rarr; print(i)</span>';
+    let h=''; for(let k=0;k<5;k++){ const n=S.collected[k]; h+='<div class="bslot">'+(n!=null?'<div class="tok pop">'+n+'</div>':'')+'</div>'; } els.hot.innerHTML=h;
+    els.xpn.textContent=S.xp; els.xpf.style.width=Math.min(100,S.xp/60*100)+'%';
+    els.phC.classList.toggle('cOn',S.phase==='check'); els.phD.classList.toggle('dOn',S.phase==='do'); els.phS.classList.toggle('sOn',S.phase==='step'); }
+
+  function idle(){ S.i=th.start; S.phase='idle'; S.collected=[]; S.xp=0; S.wrong=0; S.won=false;
+    els.slime.classList.remove('spin'); render(); slimeTo(S.i,false); face('');
+    say('Press <b>START</b> to '+(key==='up'?'climb UP &#9650;':'dig DOWN &#9660;')+'!');
+    btns([{c:'start',t:'&#9654; START',f:start}]); }
+  function pCheck(){ S.phase='check'; render();
+    say('Is <b>i = '+S.i+'</b> still '+th.cmp+' <b>'+th.stop+'</b>?  You decide!');
+    btns([{c:'keep',t:'&#10003; KEEP GOING',f:onKeep},{c:'stop',t:'&#10007; STOP',f:onStop}]); }
+  function pDo(){ S.phase='do'; render();
+    say('Yes! First job: <b>GRAB the number</b> (this is <b>print</b>).');
+    btns([{c:'grab',t:'&#9935; GRAB the '+S.i,f:onGrab}]); }
+  function pStep(){ S.phase='step'; render();
+    say('Got the <b>'+S.collected[S.collected.length-1]+'</b>! Now <b>HOP</b> '+(key==='up'?'right':'left')+' (the <b>step</b>).');
+    btns([{c:'hop',t:'&#129058; HOP '+th.op+'1',f:onHop}]); }
+  function start(){ sStart(); S.i=th.start; S.collected=[]; S.xp=0; S.wrong=0; S.won=false; els.slime.classList.remove('spin'); slimeTo(S.i,false); face(''); pCheck(); }
+  function onKeep(){ if(S.phase!=='check')return;
+    if(passes(S.i)){ S.xp+=10; sRight(); face('happy'); flash('+10'); pDo(); }
+    else { S.wrong++; sWrong(); shake(); say('Oops! <b>'+S.i+'</b> is NOT '+th.cmp+' <b>'+th.stop+'</b> &mdash; past the end. Tap <b>STOP</b>.');
+      btns([{c:'stop big',t:'&#10007; STOP (yes!)',f:onStop}]); } }
+  function onStop(){ if(S.phase!=='check')return;
+    if(!passes(S.i)){ S.xp+=10; sRight(); win(); }
+    else { S.wrong++; sWrong(); shake(); say('Not yet! <b>'+S.i+'</b> is still '+th.cmp+' <b>'+th.stop+'</b> &mdash; tap <b>KEEP GOING</b>.'); } }
+  function onGrab(){ if(S.phase!=='do')return; sGrab(); face('wow'); S.collected.push(S.i); render(); burst(S.i); popNum(S.i); pStep(); }
+  function onHop(){ if(S.phase!=='step')return; sHop(); S.i=nextI(S.i); slimeTo(S.i,true); face(''); setTimeout(pCheck,270); }
+  function win(){ S.won=true; S.phase='idle'; render(); sWin(); els.slime.classList.add('spin');
+    els.world.classList.add('cheer'); setTimeout(()=>els.world.classList.remove('cheer'),1100);
+    const stars=S.wrong===0?3:(S.wrong<=2?2:1);
+    let st=''; for(let k=0;k<3;k++) st+=(k<stars?'&#9733;':'&#9734;');
+    const nums=S.collected.map(n=>'<div class="tok">'+n+'</div>').join('');
+    els.acts.innerHTML='<div class="winline"><span class="wt">LEVEL DONE!</span><span class="ws">'+st+'</span>'
+      +'<span class="wn">'+nums+'</span><button class="gbtn keep" id="'+rootId+'-again">&#8635; Play again</button></div>';
+    root.querySelector('#'+rootId+'-again').onclick=start;
+    onWin(key,stars); }
+
+  function flash(t){ const f=document.createElement('div'); f.className='xpfly'; f.textContent=t; els.world.appendChild(f); setTimeout(()=>f.remove(),1000); }
+  function shake(){ root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake'); setTimeout(()=>root.classList.remove('shake'),320); }
+  function burst(i){ const el=q('#'+rootId+'-b'+i); if(!el)return; const r=el.getBoundingClientRect(),w=els.world.getBoundingClientRect();
+    const x=r.left-w.left+r.width/2,y=r.top-w.top+8;
+    for(let k=0;k<9;k++){ const p=document.createElement('div'); p.className='pcl'; const a=Math.random()*6.28,d=22+Math.random()*30;
+      p.style.background=key==='up'?'#fcd34d':'#62e6f2'; p.style.border='1px solid '+(key==='up'?'#a9781a':'#188');
+      p.style.left=x+'px'; p.style.top=y+'px'; p.style.setProperty('--dx',Math.cos(a)*d+'px'); p.style.setProperty('--dy',(-18-Math.sin(a)*d)+'px');
+      els.world.appendChild(p); setTimeout(()=>p.remove(),680); } }
+  function popNum(i){ const el=q('#'+rootId+'-b'+i); if(!el)return; const r=el.getBoundingClientRect(),w=els.world.getBoundingClientRect();
+    const t=document.createElement('div'); t.className='grabnum'; t.textContent=i;
+    t.style.left=(r.left-w.left+r.width/2-12)+'px'; t.style.top=(r.top-w.top-4)+'px'; els.world.appendChild(t); setTimeout(()=>t.remove(),800); }
+
+  idle();
+  window.addEventListener('resize',()=>slimeTo(S.i,false));
+  return {S, start, idle, place:()=>slimeTo(S.i,false), root};
+}
+
+renderProg();
+window.G={ up:makeGame('game-up','up'), down:makeGame('game-down','down') };
+/* the slimes are placed by measuring block positions; do it again once layout + fonts settle */
+function reflow(){ try{ G.up.place(); G.down.place(); }catch(e){} }
+requestAnimationFrame(reflow);
+window.addEventListener('load',reflow);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(reflow);
+</script>
+</body>
+</html>

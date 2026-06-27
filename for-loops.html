@@ -3,334 +3,347 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Slime Loop &mdash; two for-loop worlds &middot; Year 9 Computing</title>
+<title>Loop Tracer &mdash; watch a for loop run &middot; Year 9 Computing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-html{background:#6a98c0;image-rendering:pixelated}
-body{margin:0;font-family:'VT323','Consolas',monospace;color:#26211c;background:#bfe3c4}
-.page{max-width:1060px;margin:0 auto;padding-bottom:48px}
+html{background:#5f7d8c;image-rendering:pixelated}
+body{margin:0;font-family:'VT323','Consolas',monospace;color:#222;background:#cfe0d8}
+.page{max-width:1020px;margin:0 auto;padding-bottom:46px}
 .px{font-family:'Press Start 2P','VT323',monospace}
-.panel{background:#c6c6c6;border:5px solid;border-color:#fefefe #565656 #565656 #fefefe;box-shadow:6px 6px 0 rgba(0,0,0,.22)}
-.sec{margin:18px 18px 0}
+.mono{font-family:'Consolas','Courier New',monospace}
+.panel{background:#c6c6c6;border:5px solid;border-color:#fefefe #565656 #565656 #fefefe;box-shadow:5px 5px 0 rgba(0,0,0,.2)}
+.sec{margin:16px 16px 0}
 
-header{position:relative;overflow:hidden;padding:24px 24px 50px;border-bottom:7px solid #3a6b2a;background:linear-gradient(#79c0f0,#9bd4f5)}
-.cloud{position:absolute;background:#fff;box-shadow:14px 0 0 #fff,28px 0 0 #fff,14px 14px 0 #fff}
-.sun{position:absolute;right:30px;top:18px;width:42px;height:42px;background:#ffd83d;border:4px solid #e9b600}
-header h1{position:relative;margin:0;font-size:28px;font-weight:400;color:#fff;letter-spacing:2px;text-shadow:3px 3px 0 #3a6b2a,5px 5px 0 rgba(0,0,0,.18)}
-header .tag{position:relative;margin:12px 0 0;font-size:22px;color:#23408a;text-shadow:1px 1px 0 #fff8}
-.ground{position:absolute;left:0;right:0;bottom:0;height:38px;background:linear-gradient(#6fb43f 0 38%,#7a5230 38% 100%);border-top:5px solid #4e7a35}
+header{position:relative;overflow:hidden;padding:20px 22px;border-bottom:6px solid #2a4a5a;background:linear-gradient(#3f6f86,#557f95);color:#fff}
+header h1{margin:0;font-size:24px;letter-spacing:1px;text-shadow:3px 3px 0 #21323b}
+header .tag{margin:10px 0 0;font-size:21px;color:#cfeaf6}
 
-/* progress bar */
-.prog{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:11px 16px;margin-top:16px}
-.plvl{font-size:21px;font-weight:700;color:#2c2620}
-.stars{letter-spacing:2px;font-size:22px}
-.star{color:#cfae00}.star.off{color:#9a9a9a}
-.master{margin-left:auto;font-size:18px;color:#9a6b00;background:#fff4c2;border:3px solid #e0a800;padding:5px 12px;display:none}
-.master.show{display:inline-block;animation:pop .4s}
-@keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
-.iconbtn{font-family:'VT323',monospace;font-size:22px;background:#b9b9b9;border:4px solid;border-color:#fff #565656 #565656 #fff;cursor:pointer;width:44px;height:44px;line-height:1}
+/* ---- the CODE (the hero) ---- */
+.codewrap{background:#16202b;border:5px solid;border-color:#3a4a58 #0a1118 #0a1118 #3a4a58;padding:18px 16px}
+.code{font-family:'Consolas','Courier New',monospace;font-size:30px;font-weight:700;color:#e6edf3;line-height:1.7;text-align:center;white-space:nowrap;overflow-x:auto}
+.code .kw{color:#f0a6c8}.code .fn{color:#7fd1ff}.code .pn{color:#cbd5e1}
+.tk{padding:2px 6px;border-radius:6px;transition:background .12s,box-shadow .12s,color .12s}
+#tk-init.on{background:#1f6fd6;color:#fff;box-shadow:0 0 0 3px #9cc4f2}
+#tk-check.on{background:#37a23d;color:#fff;box-shadow:0 0 0 3px #9fe0a6}
+#tk-body.on{background:#8b53f0;color:#fff;box-shadow:0 0 0 3px #cdb4f7}
+#tk-update.on{background:#d39a2a;color:#fff;box-shadow:0 0 0 3px #f4d58a}
+.nowlabel{margin-top:12px;text-align:center;font-size:24px;font-weight:700;min-height:30px;color:#cdd6e1}
+.nowlabel.b-init{color:#7fb8ef}.nowlabel.b-check{color:#7ed186}.nowlabel.b-body{color:#c4a8f2}.nowlabel.b-update{color:#f0c878}.nowlabel.b-done{color:#ff9a8a}
+.nowlabel b{color:#fff}
 
-/* level title */
-.lvtitle{font-size:22px;color:#fff;padding:9px 18px;border:5px solid;letter-spacing:1px;display:inline-block;margin-bottom:-3px;text-shadow:2px 2px 0 #0006}
-.lvtitle .px{font-size:15px}
-.lvtitle .lvsub{font-size:18px;opacity:.92;text-shadow:none}
-.up .lvtitle{background:#3f9a44;border-color:#7ed186 #1f5523 #1f5523 #7ed186}
-.down .lvtitle{background:#6b4ea0;border-color:#b69ad8 #3a2a5e #3a2a5e #b69ad8}
+/* ---- code controls (edit the numbers) ---- */
+.editbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:12px 16px}
+.ed{display:flex;align-items:center;gap:7px;font-size:20px;font-weight:700;color:#2c2620}
+.ed .lab{min-width:0}
+.stp{display:flex;align-items:center;border:3px solid;border-color:#373737 #fff #fff #373737;background:#8b8b8b}
+.stp button{width:30px;height:32px;border:none;background:#b9b9b9;font-size:20px;font-weight:900;cursor:pointer;color:#2c2620}
+.stp .v{min-width:30px;text-align:center;font-family:'Consolas',monospace;font-size:22px;font-weight:700;background:#e9e9e9;height:32px;line-height:32px}
+.dirtoggle{display:flex;border:3px solid;border-color:#373737 #fff #fff #373737}
+.dirtoggle button{font-family:'Press Start 2P',monospace;font-size:11px;padding:9px 11px;border:none;background:#b9b9b9;color:#2c2620;cursor:pointer}
+.dirtoggle button.on{background:#37a23d;color:#fff}
+.dirtoggle button.dn.on{background:#8b53f0}
+.iconbtn{font-family:'VT323',monospace;font-size:22px;background:#b9b9b9;border:3px solid;border-color:#fff #565656 #565656 #fff;cursor:pointer;width:42px;height:42px;line-height:1;margin-left:auto}
 
-.gctrl{padding:12px 16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.csign{flex:1;min-width:240px;background:#b07a3e;border:4px solid;border-color:#cfa067 #6e4a28 #6e4a28 #cfa067;padding:7px 14px;font-size:25px;color:#2e1c0c;text-align:center}
-.csign b{color:#7a1f12}.csign .o{color:#0d4b86}
+/* ---- predict ---- */
+.predict{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:13px 16px;background:#fff3c4;border:5px solid;border-color:#fff #c9a93a #c9a93a #fff}
+.predict .q{font-size:23px;font-weight:700;color:#7a5a00}
+.predict input{font-family:'Consolas',monospace;font-size:22px;font-weight:700;border:3px solid;border-color:#caa84a #fff #fff #caa84a;padding:7px 11px;width:200px;background:#fffdf3;color:#3a2c00}
+.predict .pbtn{font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;background:#d39a2a;border:4px solid;border-color:#f4d58a #7a5e00 #7a5e00 #f4d58a;padding:12px 18px;cursor:pointer}
+.predict .skip{font-size:19px;color:#9a7b2a;background:none;border:none;cursor:pointer;text-decoration:underline}
 
-.guide{display:flex;align-items:center;gap:12px;padding:11px 16px;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff;margin-top:12px}
-.up .guide{background:#dfeecb}.down .guide{background:#cdd0e6;border-color:#fff #6b6a8a #6b6a8a #fff}
+/* ---- run area: state + trace ---- */
+.run{display:grid;grid-template-columns:330px 1fr;gap:14px}
+@media(max-width:780px){.run{grid-template-columns:1fr}}
+.stage{padding:12px}
+.ibox{text-align:center;font-size:24px;font-weight:700;color:#1f6fd6;margin-bottom:8px}
+.ibox b{font-family:'Press Start 2P',monospace;font-size:28px;display:inline-block;margin-left:6px;color:#0f4f9e}
+.scene{position:relative;height:118px;background:linear-gradient(#bfe9ff,#dff3ff 70%,#cdebc8 70%);border:3px solid #8fd0ee;overflow:hidden}
+.blocks{position:absolute;left:0;right:0;bottom:6px;display:flex;justify-content:center;gap:4px}
+.blk{width:38px;height:46px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:3px;font-family:'Consolas',monospace;font-size:16px;font-weight:700;color:#fff;text-shadow:1px 1px 0 #0006}
+.blk.grass{background:linear-gradient(#86d15a 0 26%,#6aa84f 26% 34%,#7a5230 34% 100%);border:2px solid #3c2a18}
+.blk.grass.lit{background:linear-gradient(#ffd24d 0 30%,#e0a400 30% 100%);border-color:#b07f00}
+.blk.edge{background:#8a8a8a;border:2px solid #4f4f4f}
+.slime{position:absolute;bottom:46px;left:0;width:30px;height:30px;transition:left .4s cubic-bezier(.3,1.4,.5,1);z-index:3}
+.slime.hop{animation:jmp .4s ease}
+@keyframes jmp{0%{transform:translateY(0)}45%{transform:translateY(-26px)}100%{transform:translateY(0)}}
+.gnum{position:absolute;font-family:'Press Start 2P',monospace;font-size:15px;color:#7c3aed;text-shadow:1px 1px 0 #fff;animation:gn .8s ease-out forwards;z-index:4}
+@keyframes gn{0%{transform:translateY(0);opacity:0}25%{opacity:1}to{transform:translateY(-34px);opacity:0}}
+
+.tracebox{padding:10px 12px;overflow-x:auto}
+table.trace{border-collapse:separate;border-spacing:0;width:100%;min-width:340px}
+.trace th{font-family:'VT323',monospace;font-size:18px;color:#fff;padding:8px 6px;text-align:center;line-height:1.05}
+.trace th.i{background:#1f6fd6}.trace th.c{background:#37a23d}.trace th.p{background:#8b53f0}.trace th.u{background:#d39a2a}
+.trace td{font-family:'Consolas',monospace;font-size:21px;font-weight:700;text-align:center;padding:8px 6px;border-bottom:2px solid #d6d6d6;background:#efefef;min-width:54px}
+.trace td.iv{background:#e3eefc;color:#0f4f9e}
+.trace td.cv.yes{color:#2e7d32}.trace td.cv.no{color:#c0392b;font-weight:900}
+.trace td.pv{color:#7c3aed}
+.trace td.uv{color:#b4730a}
+.trace tr.cur td{outline:3px solid #ffcf45;outline-offset:-3px}
+.trace .blank{color:#bbb}
+
+.console{margin-top:12px;padding:10px 14px;background:#0e1620;border:4px solid;border-color:#2a3a48 #060a0f #060a0f #2a3a48;font-family:'Consolas',monospace;font-size:24px;font-weight:700;color:#54f08a;min-height:30px}
+.console .lab2{color:#6b8aa0;font-size:19px}
+.oc{display:inline-block;margin:0 5px;animation:tokpop .25s ease}
+@keyframes tokpop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1)}}
+
+/* guide + controls */
+.guide{display:flex;align-items:center;gap:11px;padding:11px 14px;background:#dfeecb;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff;margin-top:14px}
 .allay{flex:none;animation:float 2.4s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.bubble{flex:1;background:#fff;border:4px solid;border-color:#fff #b7c79a #b7c79a #fff;padding:8px 14px;font-size:22px;color:#2c3320;line-height:1.15;min-height:46px;display:flex;align-items:center}
-.bubble b{color:#1f6b2a}.down .bubble b{color:#5a3a9a}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.bubble{flex:1;background:#fff;border:4px solid;border-color:#fff #b7c79a #b7c79a #fff;padding:8px 13px;font-size:22px;color:#2c3320;min-height:44px;display:flex;align-items:center}
+.bubble b{color:#1f6b2a}
+.controls{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin-top:14px}
+.gbtn{font-family:'Press Start 2P',monospace;font-size:15px;color:#fff;border:5px solid;padding:15px 24px;cursor:pointer;text-shadow:2px 2px 0 #00000055}
+.gbtn:active{transform:translateY(3px)}.gbtn[disabled]{opacity:.45;cursor:default}
+.gbtn.next{background:#37a23d;border-color:#7ed186 #1f5523 #1f5523 #7ed186;font-size:17px;padding:16px 30px}
+.gbtn.auto{background:#1f6fd6;border-color:#9cc4f2 #133f7a #133f7a #9cc4f2}
+.gbtn.reset{background:#fff;color:#777;border-color:#fff #999 #999 #fff;text-shadow:none;font-size:14px;padding:13px 18px}
+.gbtn.go{background:#d39a2a;border-color:#f4d58a #7a5e00 #7a5e00 #f4d58a;font-size:17px;padding:16px 30px}
 
-.world{position:relative;height:230px;overflow:hidden;border:5px solid;margin-top:12px}
-.world.up{background:linear-gradient(#86c9f2,#bfe3f5 70%,#cdebc8 70%);border-color:#fff #6b8aa3 #6b8aa3 #fff}
-.world.down{background:linear-gradient(#2c2740,#211d33 62%,#14101d 62%);border-color:#6a6588 #15121d #15121d #6a6588}
-.world .sun{right:22px;top:14px}
-.torch{position:absolute;width:8px;height:26px;background:#5a3c22}
-.torch::after{content:"";position:absolute;left:-3px;top:-12px;width:14px;height:16px;background:radial-gradient(circle at 50% 60%,#ffd23d,#ff7a00 70%,transparent);animation:flick .5s infinite alternate}
-@keyframes flick{from{transform:scale(1);opacity:.9}to{transform:scale(1.18);opacity:1}}
-.blocks{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:6px;padding:0 10px}
-.blk{width:var(--bw,70px);height:var(--bw,70px);flex:none;display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;position:relative}
-.blk span{font-family:'Press Start 2P',monospace;font-size:18px;color:#fff;text-shadow:2px 2px 0 #00000066}
-.blk.grass{background:linear-gradient(#86d15a 0 22%,#6aa84f 22% 30%,#7a5230 30% 100%);border:4px solid #3c2a18}
-.blk.stone{background:linear-gradient(#8d8d97 0 30%,#6f6f7a 30% 100%);border:4px solid #3a3a44;box-shadow:inset 6px 8px 0 rgba(255,255,255,.06),inset -8px -10px 0 rgba(0,0,0,.18)}
-.blk.wall{background:linear-gradient(#9a9a9a,#7d7d7d);border:4px solid #4f4f4f}
-.blk.bedrock{background:#171320;border:4px solid #000}
-.blk.bedrock span,.blk.wall span{opacity:.5}
+/* reflect + challenges */
+.reflect{padding:14px 16px;background:#e7f3ff;border:5px solid;border-color:#fff #7ea8cf #7ea8cf #fff}
+.reflect .rt{font-family:'Press Start 2P',monospace;font-size:14px;margin-bottom:8px}
+.reflect.ok .rt{color:#2e7d32}.reflect.no .rt{color:#c0392b}
+.reflect p{font-size:22px;margin:6px 0;line-height:1.3}
+.chal{padding:13px 16px;margin-top:14px;background:#f3effb;border:5px solid;border-color:#fff #9a86c4 #9a86c4 #fff}
+.chal .ct{font-family:'Press Start 2P',monospace;font-size:13px;color:#6b21a8;margin-bottom:8px}
+.crow{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:700;padding:5px 2px}
+.crow .box{font-size:22px;color:#b9a6db}.crow.done{color:#2e7d32}.crow.done .box{color:#2e7d32}
+.crow code{font-family:'Consolas',monospace;background:#fff;padding:1px 7px;border:2px solid #d9c9f5;color:#5a3a9a}
 
-.slime{position:absolute;bottom:72px;left:0;z-index:6;transition:left .42s cubic-bezier(.3,1.35,.5,1)}
-@keyframes jump{0%{transform:translateY(0)}45%{transform:translateY(-38px) scaleY(1.08) scaleX(.94)}100%{transform:translateY(0)}}
-.slime.hop{animation:jump .42s ease}
-@keyframes wow{0%,100%{transform:scale(1)}35%{transform:scale(1.28,.78)}70%{transform:scale(.92,1.12)}}
-.slime.wow{animation:wow .32s}
-@keyframes happy{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.slime.happy{animation:happy .3s}
-@keyframes spin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.25)}100%{transform:rotate(360deg) scale(1)}}
-.slime.spin{animation:spin .9s ease}
-
-/* mascots */
-.mob{position:absolute;z-index:4}
-.mob.fly{animation:fly 3s ease-in-out infinite}
-@keyframes fly{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-.mob.bob{animation:bob 1.8s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.mob.glow{filter:drop-shadow(0 0 7px #5fe3f0);animation:bob 2.6s ease-in-out infinite}
-.cheer .mob{animation:cheerj .5s ease 2}
-@keyframes cheerj{0%,100%{transform:translateY(0)}40%{transform:translateY(-20px) rotate(-8deg)}}
-
-.pcl{position:absolute;width:9px;height:9px;z-index:7;animation:pcl .65s ease-out forwards}
-@keyframes pcl{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
-.grabnum{position:absolute;font-family:'Press Start 2P',monospace;font-size:22px;color:#fcd34d;text-shadow:2px 2px 0 #7a1f12;z-index:8;animation:gn .8s ease-out forwards;pointer-events:none}
-@keyframes gn{0%{transform:translateY(0);opacity:0}20%{opacity:1}to{transform:translateY(-46px);opacity:0}}
-.xpfly{position:absolute;left:50%;top:26px;transform:translateX(-50%);font-family:'Press Start 2P',monospace;font-size:17px;color:#3fd07a;text-shadow:2px 2px 0 #14502c;z-index:9;animation:gn 1s ease-out forwards}
-
-.hud{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:12px;padding:11px 16px}
-.ipill{background:#13a08e;color:#fff;border:4px solid;border-color:#5fd4c4 #0a6358 #0a6358 #5fd4c4;padding:6px 16px;font-size:23px}
-.ipill b{font-family:'Press Start 2P',monospace;font-size:21px;margin-left:6px}
-.phases{display:flex;gap:7px;flex-wrap:wrap}
-.ph{font-size:19px;color:#5b5b5b;background:#b3b3b3;border:3px solid #8f8f8f;padding:5px 10px}
-.ph i{font-style:normal;font-size:16px;opacity:.85}
-.ph.cOn{background:#2e7d32;color:#fff;border-color:#7ed186}
-.ph.dOn{background:#7c3aed;color:#fff;border-color:#c4a8f2}
-.ph.sOn{background:#e08a00;color:#fff;border-color:#ffc266}
-.ruleflag{margin-left:auto;background:#fff4c2;border:3px solid #e0a800;padding:6px 12px;font-size:20px;color:#8a5a00;font-weight:700}
-
-.actions{display:flex;flex-wrap:wrap;gap:13px;justify-content:center;align-items:center;margin-top:14px;min-height:62px}
-.gbtn{font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;border:5px solid;padding:14px 20px;cursor:pointer;text-shadow:2px 2px 0 #00000055;line-height:1.3}
-.gbtn:active{transform:translateY(3px)}
-.gbtn.keep{background:#3a8a3f;border-color:#7ed186 #1f5523 #1f5523 #7ed186}
-.gbtn.stop{background:#c0392b;border-color:#e98a7e #7a1f12 #7a1f12 #e98a7e}
-.gbtn.grab{background:#caa11f;border-color:#f3d873 #7a5e00 #7a5e00 #f3d873;color:#2e1c0c;text-shadow:none}
-.gbtn.hop{background:#b5651d;border-color:#e0a460 #6e3a08 #6e3a08 #e0a460}
-.gbtn.start{background:#3f7fd1;border-color:#8fb8ea #244a86 #244a86 #8fb8ea;font-size:17px;padding:16px 30px}
-.gbtn.big{font-size:16px;padding:16px 26px}
-
-.winline{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;background:#fff4c2;border:5px solid;border-color:#fff #c9a93a #c9a93a #fff;padding:12px 18px;width:100%}
-.winline .wt{font-family:'Press Start 2P',monospace;font-size:14px;color:#2f7a32}
-.winline .ws{font-size:30px;letter-spacing:3px;color:#cfae00}
-.winline .wn{display:flex;gap:5px}
-.winline .tok{width:34px;height:34px;font-size:15px}
-
-.scorebar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:14px;padding:11px 16px;justify-content:center}
-.hblabel{font-size:22px;font-weight:700;color:#5a3d05}
-.hotbar{display:inline-flex;background:#8b8b8b;border:5px solid;border-color:#373737 #fff #fff #373737;padding:4px}
-.bslot{width:50px;height:50px;border:4px solid;border-color:#373737 #fff #fff #373737;background:#9a9a9a;display:flex;align-items:center;justify-content:center}
-.tok{width:36px;height:36px;background:#fcd34d;border:3px solid #a9781a;display:flex;align-items:center;justify-content:center;font-family:'Press Start 2P',monospace;font-size:15px;color:#5a3d05}
-.tok.pop{animation:tokpop .3s ease}
-@keyframes tokpop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1)}}
-.xpwrap{display:flex;align-items:center;gap:9px}
-.xpbox{width:150px;height:20px;background:#5a5a5a;border:3px solid;border-color:#373737 #fff #fff #373737}
-.xpfill{height:100%;background:linear-gradient(#9be15a,#5aab2e);width:0;transition:width .3s}
-
-.gwrap.shake{animation:shk .3s}
-@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
-
-.h{font-size:28px;color:#2c2620;margin:0 0 8px}
-.recap{padding:15px 18px;font-size:22px;line-height:1.4;color:#2c2620;background:#dfeecb;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff}
+.recap{padding:14px 16px;font-size:21px;line-height:1.4;color:#2c2620;background:#dfeecb;border:5px solid;border-color:#fff #8aa06b #8aa06b #fff}
 .recap b{color:#1f6b2a}
-.foot{margin:20px 18px 0;text-align:center}
-.btnlink{display:inline-block;background:#6aa84f;border:5px solid;border-color:#9bd47f #3a6b2a #3a6b2a #9bd47f;color:#fff;font-size:24px;padding:10px 22px;text-decoration:none;text-shadow:2px 2px 0 #00000044}
+.foot{margin:18px 16px 0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btnlink{display:inline-block;background:#6aa84f;border:5px solid;border-color:#9bd47f #3a6b2a #3a6b2a #9bd47f;color:#fff;font-size:22px;padding:10px 20px;text-decoration:none;text-shadow:2px 2px 0 #00000044}
+.btnlink.play{background:#8b53f0;border-color:#cdb4f7 #3a2a5e #3a2a5e #cdb4f7}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(16px);background:#2f7a32;color:#fff;font-family:'Press Start 2P',monospace;font-size:13px;padding:12px 20px;opacity:0;pointer-events:none;transition:.2s;z-index:60}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-@media (prefers-reduced-motion:reduce){.allay,.slime,.mob,.tok.pop,.torch::after{animation:none}}
-@media (max-width:760px){
-  .sec{margin:14px 10px 0}.h{font-size:22px}
-  header{padding:18px 14px 44px} header h1{font-size:18px} header .tag{font-size:17px}
-  .csign{font-size:20px;min-width:100%}
-  .world{--bw:42px;height:196px}.slime{bottom:58px}
-  .bubble{font-size:19px}.gbtn{font-size:11px;padding:12px 12px}.gbtn.start{font-size:14px}
-  .ph{font-size:16px}.ruleflag{margin-left:0;font-size:17px}.xpbox{width:110px}
-  .lvtitle{font-size:18px}.lvtitle .px{font-size:12px}.lvtitle .lvsub{display:block;font-size:16px}
+@media (prefers-reduced-motion:reduce){.allay,.slime,.oc{animation:none}}
+@media(max-width:780px){
+  header h1{font-size:19px}.code{font-size:22px}.nowlabel{font-size:20px}
+  .ibox b{font-size:24px}.predict input{width:140px}
 }
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="sl" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" fill="#57b23a"/><rect x="3" y="4" width="10" height="9" fill="#6cc94e"/><rect x="4" y="6" width="8" height="6" fill="#7ada5b"/><rect x="2" y="3" width="12" height="11" fill="none" stroke="#2f7a22" stroke-width="1"/><rect x="5" y="7" width="2" height="2" fill="#143a10"/><rect x="9" y="7" width="2" height="2" fill="#143a10"/><rect x="7" y="10" width="2" height="1" fill="#143a10"/></symbol>
+  <symbol id="sl" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" fill="#57b23a"/><rect x="3" y="4" width="10" height="9" fill="#6cc94e"/><rect x="4" y="6" width="8" height="6" fill="#7ada5b"/><rect x="5" y="7" width="2" height="2" fill="#143a10"/><rect x="9" y="7" width="2" height="2" fill="#143a10"/><rect x="7" y="10" width="2" height="1" fill="#143a10"/></symbol>
   <symbol id="allay" viewBox="0 0 16 16"><rect x="2" y="5" width="3" height="5" fill="#bfe3f5"/><rect x="11" y="5" width="3" height="5" fill="#bfe3f5"/><rect x="5" y="4" width="6" height="8" fill="#3f9ad8"/><rect x="6" y="5" width="4" height="6" fill="#6fc0ee"/><rect x="6" y="6" width="1" height="2" fill="#16344a"/><rect x="9" y="6" width="1" height="2" fill="#16344a"/></symbol>
-  <symbol id="creep" viewBox="0 0 8 8"><rect width="8" height="8" fill="#73a64a"/><rect x="1" y="2" width="2" height="2" fill="#19240f"/><rect x="5" y="2" width="2" height="2" fill="#19240f"/><rect x="3" y="4" width="2" height="1" fill="#19240f"/><rect x="2" y="5" width="4" height="2" fill="#19240f"/><rect x="3" y="7" width="2" height="1" fill="#73a64a"/></symbol>
-  <symbol id="pig" viewBox="0 0 16 16"><rect x="3" y="6" width="10" height="7" fill="#f2a8c4"/><rect x="4" y="4" width="3" height="3" fill="#eb93b4"/><rect x="9" y="4" width="3" height="3" fill="#eb93b4"/><rect x="6" y="8" width="4" height="3" fill="#e07ba0"/><rect x="7" y="9" width="1" height="1" fill="#7a3a52"/><rect x="9" y="9" width="1" height="1" fill="#7a3a52"/><rect x="5" y="6" width="1" height="1" fill="#3a2230"/><rect x="10" y="6" width="1" height="1" fill="#3a2230"/><rect x="4" y="13" width="2" height="2" fill="#e07ba0"/><rect x="10" y="13" width="2" height="2" fill="#e07ba0"/></symbol>
-  <symbol id="bee" viewBox="0 0 16 16"><rect x="2" y="4" width="3" height="3" fill="#eaf6fb"/><rect x="11" y="4" width="3" height="3" fill="#eaf6fb"/><rect x="4" y="6" width="8" height="6" fill="#f5c211"/><rect x="6" y="6" width="2" height="6" fill="#3a2a00"/><rect x="9" y="6" width="2" height="6" fill="#3a2a00"/><rect x="5" y="7" width="1" height="1" fill="#19140a"/><rect x="11" y="7" width="1" height="1" fill="#19140a"/></symbol>
-  <symbol id="chick" viewBox="0 0 16 16"><rect x="5" y="6" width="7" height="7" fill="#fcfcfc"/><rect x="5" y="3" width="4" height="4" fill="#fcfcfc"/><rect x="6" y="1" width="2" height="2" fill="#d23"/><rect x="3" y="5" width="2" height="2" fill="#f59e0b"/><rect x="5" y="4" width="1" height="1" fill="#222"/><rect x="6" y="13" width="1" height="2" fill="#f59e0b"/><rect x="10" y="13" width="1" height="2" fill="#f59e0b"/></symbol>
-  <symbol id="bat" viewBox="0 0 16 16"><rect x="6" y="6" width="4" height="5" fill="#3a3550"/><rect x="1" y="5" width="5" height="4" fill="#4a4566"/><rect x="10" y="5" width="5" height="4" fill="#4a4566"/><rect x="6" y="4" width="1" height="2" fill="#3a3550"/><rect x="9" y="4" width="1" height="2" fill="#3a3550"/><rect x="7" y="7" width="1" height="1" fill="#e0473a"/><rect x="8" y="7" width="1" height="1" fill="#e0473a"/></symbol>
-  <symbol id="squid" viewBox="0 0 16 16"><rect x="5" y="3" width="6" height="6" fill="#18b3c7"/><rect x="6" y="4" width="4" height="4" fill="#62e6f2"/><rect x="5" y="9" width="1" height="4" fill="#18b3c7"/><rect x="7" y="9" width="1" height="5" fill="#18b3c7"/><rect x="9" y="9" width="1" height="4" fill="#18b3c7"/><rect x="10" y="9" width="1" height="4" fill="#18b3c7"/><rect x="6" y="5" width="1" height="2" fill="#0a2a30"/><rect x="9" y="5" width="1" height="2" fill="#0a2a30"/></symbol>
 </svg>
 
 <div class="page">
 <header>
-  <div class="cloud" style="left:520px;top:20px;width:34px;height:14px"></div>
-  <div class="cloud" style="left:680px;top:48px;width:30px;height:12px"></div>
-  <div class="sun"></div>
-  <h1 class="px">SLIME LOOP</h1>
-  <div class="tag">two worlds &middot; &#9650; climb UP &nbsp;&amp;&nbsp; &#9660; dig DOWN &middot; grab a number BEFORE you hop!</div>
-  <div class="ground"></div>
+  <h1 class="px">&#129302; LOOP TRACER</h1>
+  <div class="tag">watch the code run, <b>one step at a time</b> &middot; guess first, then trace it</div>
 </header>
 
-<div class="sec"><div class="panel prog">
-  <span class="plvl">&#9650; Up <span class="stars" id="starsUp">&#9733;&#9733;&#9733;</span></span>
-  <span class="plvl">&#9660; Down <span class="stars" id="starsDown">&#9733;&#9733;&#9733;</span></span>
+<!-- THE CODE -->
+<div class="sec"><div class="panel codewrap">
+  <div class="code mono" id="code"></div>
+  <div class="nowlabel" id="nowlabel">Set the numbers, make a guess, then press <b>Start tracing</b>.</div>
+</div></div>
+
+<!-- EDIT THE CODE -->
+<div class="sec"><div class="panel editbar">
+  <div class="ed"><span class="lab">Start</span><div class="stp"><button onclick="bump('start',-1)">&minus;</button><span class="v" id="vStart">1</span><button onclick="bump('start',1)">+</button></div></div>
+  <div class="ed"><span class="lab">Stop</span><div class="stp"><button onclick="bump('stop',-1)">&minus;</button><span class="v" id="vStop">5</span><button onclick="bump('stop',1)">+</button></div></div>
+  <div class="ed"><span class="lab">Step</span><div class="stp"><button onclick="bump('step',-1)">&minus;</button><span class="v" id="vStep">1</span><button onclick="bump('step',1)">+</button></div></div>
+  <div class="ed"><span class="lab">Way</span><div class="dirtoggle"><button id="dUp" onclick="setDir('+')">&#9650; UP</button><button id="dDown" class="dn" onclick="setDir('-')">&#9660; DOWN</button></div></div>
   <button class="iconbtn" id="mute" onclick="toggleMute()" title="sound">&#128266;</button>
-  <span class="master" id="master">&#127942; LOOP MASTER!</span>
 </div></div>
 
-<div class="sec up" id="lvl-up"><div class="gwrap" id="game-up"></div></div>
-<div class="sec down" id="lvl-down"><div class="gwrap" id="game-down"></div></div>
-
-<div class="sec"><div class="recap">
-  <div class="h px" style="font-size:17px">Remember</div>
-  &#9312; <b>CHECK</b> the slime can still go &nbsp;&rarr;&nbsp; &#9313; <b>GRAB</b> the number (that&rsquo;s <b>print</b>) &nbsp;&rarr;&nbsp; &#9314; <b>HOP</b> to the next block (the <b>step</b>) &nbsp;&rarr;&nbsp; go again. Always <b>GRAB before you HOP</b> &mdash; so the first number out is where you START.
+<!-- PREDICT -->
+<div class="sec" id="predictSec"><div class="panel predict">
+  <span class="q">&#128302; Guess first: what will it print?</span>
+  <input id="predIn" placeholder="e.g. 1 2 3 4 5" autocomplete="off">
+  <button class="pbtn" onclick="startTrace()">&#9654; Start tracing</button>
+  <button class="skip" onclick="startTrace(true)">skip &amp; just watch</button>
 </div></div>
 
-<div class="foot"><a class="btnlink" href="loop-hopper.html">&#9654; Also try: Loop Hopper</a></div>
+<!-- RUN -->
+<div class="sec"><div class="panel stage">
+  <div class="run">
+    <div>
+      <div class="ibox">i =<b id="iVal">&ndash;</b></div>
+      <div class="scene" id="scene"><div class="blocks" id="blocks"></div><div class="slime" id="slime"><svg width="30" height="30" viewBox="0 0 16 16"><use href="#sl"/></svg></div></div>
+    </div>
+    <div class="tracebox"><table class="trace" id="trace"></table></div>
+  </div>
+  <div class="console" id="console"><span class="lab2">Output &#9658;</span> <span id="out"></span></div>
+</div></div>
+
+<!-- GUIDE + CONTROLS -->
+<div class="sec"><div class="guide"><svg class="allay" width="46" height="46" viewBox="0 0 16 16"><use href="#allay"/></svg><div class="bubble"><span id="say">Press a + or &minus; to change the numbers, type a guess, then Start tracing.</span></div></div></div>
+<div class="sec controls">
+  <button class="gbtn next" id="bNext" onclick="nextStep()" disabled>&#9654; Next step</button>
+  <button class="gbtn auto" id="bAuto" onclick="auto()" disabled>&#9193; Auto-play</button>
+  <button class="gbtn reset" onclick="resetIdle()">&#8635; Reset</button>
 </div>
 
+<!-- REFLECT (hidden until done) -->
+<div class="sec" id="reflectSec" style="display:none"></div>
+
+<!-- CHALLENGES -->
+<div class="sec"><div class="panel chal">
+  <div class="ct">&#127919; Challenges &mdash; change the numbers to make it print:</div>
+  <div id="chalList"></div>
+</div></div>
+
+<div class="sec"><div class="recap">
+  <b>The 4 jobs:</b> &#9312; <span style="color:#1f6fd6"><b>START</b></span> i once &middot; &#9313; <span style="color:#2e7d32"><b>CHECK</b></span> the condition &middot; &#9314; <span style="color:#7c3aed"><b>print(i)</b></span> the body &middot; &#9315; <span style="color:#b4730a"><b>UPDATE</b></span> i. Do CHECK&rarr;print&rarr;UPDATE again and again. When CHECK is FALSE the loop stops &mdash; and it does <b>not</b> print that last value.
+</div></div>
+
+<div class="foot">
+  <a class="btnlink play" href="slime-loop.html">&#127918; Want to play? Slime Loop</a>
+  <a class="btnlink" href="loop-hopper.html">&#9654; Loop Hopper</a>
+</div>
+</div>
+<div id="toast"></div>
+
 <script>
-let AC=null, MUTED=false;
+const $=s=>document.querySelector(s);
+const S=window.S={start:1,stop:5,step:1,op:'+',i:null,phase:'idle',rows:[],output:[],pred:null,done:false,muted:false};
+const cmpSym=()=>S.op==='+'?'&le;':'&ge;';
+const cmpTxt=()=>S.op==='+'?'≤':'≥';
+const passes=i=>S.op==='+'?i<=S.stop:i>=S.stop;
+const stepI=i=>S.op==='+'?i+S.step:i-S.step;
+
+/* audio */
+let AC=null;
 function ac(){ if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}} if(AC&&AC.state==='suspended')AC.resume(); return AC; }
-function beep(f,d,t,v,w){ const c=ac(); if(!c||MUTED)return; const s=c.currentTime+(w||0);
+function beep(f,d,t,v,w){ const c=ac(); if(!c||S.muted)return; const s=c.currentTime+(w||0);
   const o=c.createOscillator(),g=c.createGain(); o.type=t||'square'; o.frequency.value=f; o.connect(g); g.connect(c.destination);
-  g.gain.setValueAtTime(.0001,s); g.gain.exponentialRampToValueAtTime(v||.16,s+.012); g.gain.exponentialRampToValueAtTime(.0001,s+d); o.start(s); o.stop(s+d+.03); }
-const sGrab=()=>{beep(680,.12,'square',.18);beep(1020,.13,'square',.13,.07);};
-const sHop=()=>beep(430,.1,'triangle',.16);
-const sRight=()=>{beep(720,.1,'square',.16);beep(1080,.14,'square',.13,.08);};
-const sWrong=()=>beep(150,.24,'sawtooth',.16);
-const sWin=()=>[523,659,784,1047,1319].forEach((f,i)=>beep(f,.2,'square',.15,i*.11));
-const sStart=()=>{beep(523,.1,'square',.14);beep(784,.12,'square',.14,.09);};
-function toggleMute(){ MUTED=!MUTED; document.getElementById('mute').innerHTML=MUTED?'&#128263;':'&#128266;'; }
+  g.gain.setValueAtTime(.0001,s); g.gain.exponentialRampToValueAtTime(v||.15,s+.012); g.gain.exponentialRampToValueAtTime(.0001,s+d); o.start(s); o.stop(s+d+.03); }
+const sCheck=()=>beep(560,.09,'square',.13);
+const sPrint=()=>{beep(680,.1,'square',.16);beep(1020,.12,'square',.12,.06);};
+const sStep=()=>beep(430,.09,'triangle',.14);
+const sStop=()=>beep(200,.22,'sawtooth',.15);
+const sWin=()=>[523,659,784,1047].forEach((f,i)=>beep(f,.16,'square',.14,i*.1));
+const sOk=()=>{beep(660,.1,'square',.14);beep(990,.13,'square',.12,.07);};
+const sNo=()=>beep(160,.2,'sawtooth',.14);
+function toggleMute(){ S.muted=!S.muted; $('#mute').innerHTML=S.muted?'&#128263;':'&#128266;'; }
 
-const spr=(id,sz,cls,st)=>'<svg class="mob '+(cls||'')+'" width="'+sz+'" height="'+sz+'" viewBox="0 0 16 16" style="'+(st||'')+'"><use href="#'+id+'"/></svg>';
-
-const THEMES={
-  up:{ cls:'up', badge:'LEVEL 1', name:'COUNT UP', sub:'(1 &rarr; 5)', cmp:'&le;', op:'+', start:1, stop:5,
-       deco:'<div class="sun"></div>'
-          +'<div class="cloud" style="left:60px;top:20px;width:30px;height:12px"></div>'
-          +'<div class="cloud" style="left:430px;top:34px;width:26px;height:10px"></div>'
-          +spr('bee',34,'fly','position:absolute;left:150px;top:40px')
-          +spr('chick',40,'bob','position:absolute;right:60px;bottom:90px')
-          +spr('pig',46,'bob','position:absolute;left:30px;bottom:14px'),
-       edge:'wall', num:'grass' },
-  down:{ cls:'down', badge:'LEVEL 2', name:'COUNT DOWN', sub:'(5 &rarr; 1)', cmp:'&ge;', op:'&minus;', start:5, stop:1,
-       deco:'<div class="torch" style="left:24px;top:30px"></div><div class="torch" style="right:24px;top:46px"></div>'
-          +spr('bat',38,'fly','position:absolute;right:120px;top:26px')
-          +spr('squid',40,'glow','position:absolute;left:70px;top:54px')
-          +spr('creep',44,'bob','position:absolute;right:40px;bottom:88px'),
-       edge:'bedrock', num:'stone' }
-};
-
-const PROG = (function(){ try{ return JSON.parse(localStorage.getItem('sl-prog-v2'))||{up:0,down:0}; }catch(e){ return {up:0,down:0}; } })();
-function renderProg(){
-  const fmt=n=>'<span class="star'+(1<=n?'':' off')+'">&#9733;</span><span class="star'+(2<=n?'':' off')+'">&#9733;</span><span class="star'+(3<=n?'':' off')+'">&#9733;</span>';
-  document.getElementById('starsUp').innerHTML=fmt(PROG.up);
-  document.getElementById('starsDown').innerHTML=fmt(PROG.down);
-  document.getElementById('master').classList.toggle('show', PROG.up>0 && PROG.down>0);
+/* ---- render the code ---- */
+function renderCode(){
+  $('#vStart').textContent=S.start; $('#vStop').textContent=S.stop; $('#vStep').textContent=S.step;
+  $('#dUp').classList.toggle('on',S.op==='+'); $('#dDown').classList.toggle('on',S.op==='-');
+  const opc=S.op==='+'?'+':'−';
+  $('#code').innerHTML=
+    '<span class="kw">for</span> <span class="pn">(</span> <span class="kw">let</span> '
+    +'<span class="tk" id="tk-init">i = '+S.start+'</span><span class="pn">;</span> '
+    +'<span class="tk" id="tk-check">i '+cmpTxt()+' '+S.stop+'</span><span class="pn">;</span> '
+    +'<span class="tk" id="tk-update">i = i '+opc+' '+S.step+'</span> <span class="pn">) {</span> '
+    +'<span class="tk" id="tk-body"><span class="fn">print</span>(i)</span> <span class="pn">; }</span>';
 }
-function onWin(dir,stars){ if(stars>(PROG[dir]||0)){ PROG[dir]=stars; try{localStorage.setItem('sl-prog-v2',JSON.stringify(PROG));}catch(e){} } renderProg(); }
+function hi(part){ ['init','check','body','update'].forEach(p=>{ const e=$('#tk-'+p); if(e)e.classList.toggle('on',p===part); }); }
+function label(cls,html){ const n=$('#nowlabel'); n.className='nowlabel '+(cls?'b-'+cls:''); n.innerHTML=html; }
+function say(h){ $('#say').innerHTML=h; }
 
-function makeGame(rootId, key){
-  const th=THEMES[key], root=document.getElementById(rootId);
-  const S={i:0,phase:'idle',collected:[],xp:0,wrong:0,won:false};
-  const passes=i=>key==='up'?i<=5:i>=1, nextI=i=>key==='up'?i+1:i-1;
-  let blk='';
-  for(let n=0;n<=6;n++){ const cls=(n===0||n===6)?th.edge:th.num; blk+='<div class="blk '+cls+'" id="'+rootId+'-b'+n+'">'+((n>=1&&n<=5)?'<span>'+n+'</span>':'')+'</div>'; }
-  root.innerHTML=
-    '<div class="lvtitle"><span class="px">'+th.badge+'</span> &middot; '+th.name+' <span class="lvsub">'+th.sub+'</span></div>'
-    +'<div class="panel gctrl"><div class="csign" id="'+rootId+'-sign"></div>'
-      +'<button class="iconbtn rs" title="reset">&#8635;</button></div>'
-    +'<div class="guide"><svg class="allay" width="52" height="52" viewBox="0 0 16 16"><use href="#allay"/></svg>'
-      +'<div class="bubble"><span class="say"></span></div></div>'
-    +'<div class="world '+th.cls+'">'+th.deco+'<div class="blocks">'+blk+'</div>'
-      +'<div class="slime"><svg width="46" height="46" viewBox="0 0 16 16"><use href="#sl"/></svg></div></div>'
-    +'<div class="panel hud"><span class="ipill">i =<b class="iv">0</b></span>'
-      +'<div class="phases"><span class="ph c">&#9312; CHECK</span><span class="ph d">&#9313; GRAB <i>=print</i></span><span class="ph s">&#9314; HOP <i>=step</i></span></div>'
-      +'<span class="ruleflag">&#11088; GRAB before HOP</span></div>'
-    +'<div class="actions"></div>'
-    +'<div class="panel scorebar"><span class="hblabel">Grabbed:</span><div class="hotbar"></div>'
-      +'<div class="xpwrap"><span style="font-size:20px;font-weight:700;color:#2f7a32">XP</span>'
-      +'<div class="xpbox"><div class="xpfill"></div></div><span style="font-size:21px;font-weight:700;color:#2f7a32" class="xpn">0</span></div></div>';
-  const q=s=>root.querySelector(s);
-  const els={sign:q('.csign'),say:q('.say'),slime:q('.slime'),acts:q('.actions'),iv:q('.iv'),
-    hot:q('.hotbar'),xpf:q('.xpfill'),xpn:q('.xpn'),world:q('.world'),
-    phC:q('.ph.c'),phD:q('.ph.d'),phS:q('.ph.s'),mascots:q('.world')};
-  q('.rs').onclick=()=>idle();
+/* ---- slime scene ---- */
+function buildScene(){ let h=''; for(let n=0;n<=7;n++){ const cls=(n===0||n===7)?'edge':'grass'; h+='<div class="blk '+cls+'" id="b'+n+'">'+((n>=1&&n<=6)?n:'')+'</div>'; } $('#blocks').innerHTML=h; }
+function clampB(i){ return Math.max(0,Math.min(7,i)); }
+function slimeTo(i,hop){ const el=$('#b'+clampB(i)); if(!el)return; const wr=$('#scene').getBoundingClientRect(),br=el.getBoundingClientRect();
+  const sl=$('#slime'); const left=br.left-wr.left-$('#scene').clientLeft+br.width/2-sl.offsetWidth/2;
+  if(hop){ sl.classList.remove('hop'); void sl.offsetWidth; sl.classList.add('hop'); } sl.style.left=left+'px'; }
+function litPad(i){ for(let n=1;n<=6;n++){ const e=$('#b'+n); if(e)e.classList.toggle('lit',S.output.indexOf(n)>=0&&n===i); } }
+function popNum(i){ const el=$('#b'+clampB(i)); if(!el)return; const wr=$('#scene').getBoundingClientRect(),br=el.getBoundingClientRect();
+  const t=document.createElement('div'); t.className='gnum'; t.textContent=i; t.style.left=(br.left-wr.left+br.width/2-7)+'px'; t.style.top='6px'; $('#scene').appendChild(t); setTimeout(()=>t.remove(),800); }
 
-  function slimeTo(i,hop){ const el=q('#'+rootId+'-b'+i); if(!el)return;
-    const wr=els.world.getBoundingClientRect(), br=el.getBoundingClientRect();
-    const left=(br.left-wr.left-els.world.clientLeft)+br.width/2-els.slime.offsetWidth/2;
-    if(hop){ els.slime.classList.remove('hop'); void els.slime.offsetWidth; els.slime.classList.add('hop'); }
-    els.slime.style.left=left+'px'; }
-  function face(c){ els.slime.classList.remove('happy','wow'); void els.slime.offsetWidth; if(c)els.slime.classList.add(c); }
-  function say(m){ els.say.innerHTML=m; }
-  function btns(list){ els.acts.innerHTML=''; list.forEach(b=>{ const e=document.createElement('button'); e.className='gbtn '+b.c; e.innerHTML=b.t; e.onclick=b.f; els.acts.appendChild(e); }); }
-  function render(){ els.iv.textContent=S.i;
-    els.sign.innerHTML='for ( i = <b>'+th.start+'</b> ; i '+th.cmp+' <b>'+th.stop+'</b> ; i = i '+th.op+' <b>1</b> ) <span class="o">&rarr; print(i)</span>';
-    let h=''; for(let k=0;k<5;k++){ const n=S.collected[k]; h+='<div class="bslot">'+(n!=null?'<div class="tok pop">'+n+'</div>':'')+'</div>'; } els.hot.innerHTML=h;
-    els.xpn.textContent=S.xp; els.xpf.style.width=Math.min(100,S.xp/60*100)+'%';
-    els.phC.classList.toggle('cOn',S.phase==='check'); els.phD.classList.toggle('dOn',S.phase==='do'); els.phS.classList.toggle('sOn',S.phase==='step'); }
+/* ---- trace + output ---- */
+function renderTrace(){
+  let h='<tr><th class="i">i</th><th class="c">i '+cmpSym()+' '+S.stop+' ?</th><th class="p">print</th><th class="u">then i =</th></tr>';
+  S.rows.forEach((r,idx)=>{ const cur=(idx===S.rows.length-1 && !S.done)?' cur':'';
+    h+='<tr class="'+(cur)+'">'
+      +'<td class="iv">'+r.i+'</td>'
+      +'<td class="cv '+(r.pass===null?'':(r.pass?'yes':'no'))+'">'+(r.pass===null?'<span class="blank">&middot;</span>':(r.pass?'YES':'NO'))+'</td>'
+      +'<td class="pv">'+(r.printed==null?'<span class="blank">&middot;</span>':r.printed)+'</td>'
+      +'<td class="uv">'+(r.next==null?'<span class="blank">&middot;</span>':r.next)+'</td></tr>'; });
+  $('#trace').innerHTML=h;
+}
+function renderOut(){ $('#out').innerHTML=S.output.map(n=>'<span class="oc">'+n+'</span>').join(''); }
+function setI(){ $('#iVal').textContent=(S.i==null?'–':S.i); }
 
-  function idle(){ S.i=th.start; S.phase='idle'; S.collected=[]; S.xp=0; S.wrong=0; S.won=false;
-    els.slime.classList.remove('spin'); render(); slimeTo(S.i,false); face('');
-    say('Press <b>START</b> to '+(key==='up'?'climb UP &#9650;':'dig DOWN &#9660;')+'!');
-    btns([{c:'start',t:'&#9654; START',f:start}]); }
-  function pCheck(){ S.phase='check'; render();
-    say('Is <b>i = '+S.i+'</b> still '+th.cmp+' <b>'+th.stop+'</b>?  You decide!');
-    btns([{c:'keep',t:'&#10003; KEEP GOING',f:onKeep},{c:'stop',t:'&#10007; STOP',f:onStop}]); }
-  function pDo(){ S.phase='do'; render();
-    say('Yes! First job: <b>GRAB the number</b> (this is <b>print</b>).');
-    btns([{c:'grab',t:'&#9935; GRAB the '+S.i,f:onGrab}]); }
-  function pStep(){ S.phase='step'; render();
-    say('Got the <b>'+S.collected[S.collected.length-1]+'</b>! Now <b>HOP</b> '+(key==='up'?'right':'left')+' (the <b>step</b>).');
-    btns([{c:'hop',t:'&#129058; HOP '+th.op+'1',f:onHop}]); }
-  function start(){ sStart(); S.i=th.start; S.collected=[]; S.xp=0; S.wrong=0; S.won=false; els.slime.classList.remove('spin'); slimeTo(S.i,false); face(''); pCheck(); }
-  function onKeep(){ if(S.phase!=='check')return;
-    if(passes(S.i)){ S.xp+=10; sRight(); face('happy'); flash('+10'); pDo(); }
-    else { S.wrong++; sWrong(); shake(); say('Oops! <b>'+S.i+'</b> is NOT '+th.cmp+' <b>'+th.stop+'</b> &mdash; past the end. Tap <b>STOP</b>.');
-      btns([{c:'stop big',t:'&#10007; STOP (yes!)',f:onStop}]); } }
-  function onStop(){ if(S.phase!=='check')return;
-    if(!passes(S.i)){ S.xp+=10; sRight(); win(); }
-    else { S.wrong++; sWrong(); shake(); say('Not yet! <b>'+S.i+'</b> is still '+th.cmp+' <b>'+th.stop+'</b> &mdash; tap <b>KEEP GOING</b>.'); } }
-  function onGrab(){ if(S.phase!=='do')return; sGrab(); face('wow'); S.collected.push(S.i); render(); burst(S.i); popNum(S.i); pStep(); }
-  function onHop(){ if(S.phase!=='step')return; sHop(); S.i=nextI(S.i); slimeTo(S.i,true); face(''); setTimeout(pCheck,270); }
-  function win(){ S.won=true; S.phase='idle'; render(); sWin(); els.slime.classList.add('spin');
-    els.world.classList.add('cheer'); setTimeout(()=>els.world.classList.remove('cheer'),1100);
-    const stars=S.wrong===0?3:(S.wrong<=2?2:1);
-    let st=''; for(let k=0;k<3;k++) st+=(k<stars?'&#9733;':'&#9734;');
-    const nums=S.collected.map(n=>'<div class="tok">'+n+'</div>').join('');
-    els.acts.innerHTML='<div class="winline"><span class="wt">LEVEL DONE!</span><span class="ws">'+st+'</span>'
-      +'<span class="wn">'+nums+'</span><button class="gbtn keep" id="'+rootId+'-again">&#8635; Play again</button></div>';
-    root.querySelector('#'+rootId+'-again').onclick=start;
-    onWin(key,stars); }
+/* ---- execution stepper ---- */
+function doCheck(){ S.phase='check'; const r={i:S.i,pass:passes(S.i),printed:null,next:null}; S.rows.push(r); hi('check'); sCheck();
+  renderTrace(); setI();
+  label('check','<b>CHECK</b>: is '+S.i+' '+cmpSym()+' '+S.stop+' ? &rarr; '+(r.pass?'<b>YES</b> &mdash; keep going':'<b>NO</b> &mdash; stop'));
+  say(r.pass?'Condition is <b>TRUE</b>. Press <b>Next step</b> to run the body.':'Condition is <b>FALSE</b>. Press <b>Next step</b> to end the loop.'); }
+function doBody(){ S.phase='body'; S.output.push(S.i); S.rows[S.rows.length-1].printed=S.i; hi('body'); sPrint();
+  slimeTo(S.i,false); litPad(S.i); popNum(S.i); renderTrace(); renderOut();
+  label('body','<b>print('+S.i+')</b> &mdash; the body runs and prints <b>'+S.i+'</b>');
+  say('It printed <b>'+S.i+'</b>. Next is <b>UPDATE</b> &mdash; i will change.'); }
+function doUpdate(){ S.phase='update'; const old=S.i; S.i=stepI(S.i); S.rows[S.rows.length-1].next=S.i; hi('update'); sStep();
+  slimeTo(S.i,true); renderTrace(); setI();
+  const opc=S.op==='+'?'+':'−';
+  label('update','<b>UPDATE</b>: i = '+old+' '+opc+' '+S.step+' = <b>'+S.i+'</b> &mdash; i changes!');
+  say('Now i is <b>'+S.i+'</b>. Back to <b>CHECK</b> &mdash; press Next step.'); }
+function doDone(){ S.phase='done'; S.done=true; hi(''); sStop(); renderTrace();
+  label('done','<b>STOP</b>: '+S.i+' '+cmpSym()+' '+S.stop+' is <b>FALSE</b> &rarr; the loop ends. Notice &mdash; <b>'+S.i+' was never printed!</b>');
+  say('The loop is finished. Look at the <b>print</b> column &mdash; that is the output.');
+  $('#bNext').disabled=true; $('#bAuto').disabled=true; reflect(); checkChallenges(); }
 
-  function flash(t){ const f=document.createElement('div'); f.className='xpfly'; f.textContent=t; els.world.appendChild(f); setTimeout(()=>f.remove(),1000); }
-  function shake(){ root.classList.remove('shake'); void root.offsetWidth; root.classList.add('shake'); setTimeout(()=>root.classList.remove('shake'),320); }
-  function burst(i){ const el=q('#'+rootId+'-b'+i); if(!el)return; const r=el.getBoundingClientRect(),w=els.world.getBoundingClientRect();
-    const x=r.left-w.left+r.width/2,y=r.top-w.top+8;
-    for(let k=0;k<9;k++){ const p=document.createElement('div'); p.className='pcl'; const a=Math.random()*6.28,d=22+Math.random()*30;
-      p.style.background=key==='up'?'#fcd34d':'#62e6f2'; p.style.border='1px solid '+(key==='up'?'#a9781a':'#188');
-      p.style.left=x+'px'; p.style.top=y+'px'; p.style.setProperty('--dx',Math.cos(a)*d+'px'); p.style.setProperty('--dy',(-18-Math.sin(a)*d)+'px');
-      els.world.appendChild(p); setTimeout(()=>p.remove(),680); } }
-  function popNum(i){ const el=q('#'+rootId+'-b'+i); if(!el)return; const r=el.getBoundingClientRect(),w=els.world.getBoundingClientRect();
-    const t=document.createElement('div'); t.className='grabnum'; t.textContent=i;
-    t.style.left=(r.left-w.left+r.width/2-12)+'px'; t.style.top=(r.top-w.top-4)+'px'; els.world.appendChild(t); setTimeout(()=>t.remove(),800); }
+function nextStep(){ if(S.phase==='init'){ doCheck(); }
+  else if(S.phase==='check'){ if(S.rows[S.rows.length-1].pass) doBody(); else doDone(); }
+  else if(S.phase==='body'){ doUpdate(); }
+  else if(S.phase==='update'){ doCheck(); } }
 
-  idle();
-  window.addEventListener('resize',()=>slimeTo(S.i,false));
-  return {S, start, idle, place:()=>slimeTo(S.i,false), root};
+let autoT=null;
+function auto(){ if(S.done)return; if(autoT){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto-play'; return; }
+  $('#bAuto').innerHTML='&#9209; Pause'; autoT=setInterval(()=>{ if(S.done){ clearInterval(autoT); autoT=null; $('#bAuto').innerHTML='&#9193; Auto-play'; return; } nextStep(); },900); }
+
+function startTrace(skip){
+  S.pred = skip? null : ($('#predIn').value.match(/-?\d+/g)||[]).map(Number);
+  S.i=S.start; S.rows=[]; S.output=[]; S.done=false; S.phase='init'; hi('init');
+  renderTrace(); renderOut(); setI(); slimeTo(S.i,false); for(let n=1;n<=6;n++){const e=$('#b'+n);if(e)e.classList.remove('lit');}
+  label('init','<b>START</b>: i = '+S.start+' &mdash; this happens <b>once</b>, before the loop.');
+  say('i starts at <b>'+S.start+'</b>. Press <b>Next step</b> to CHECK the condition.');
+  $('#bNext').disabled=false; $('#bAuto').disabled=false;
+  $('#reflectSec').style.display='none'; $('#predictSec').style.opacity='.55';
+  sStep();
+}
+function resetIdle(){ if(autoT){clearInterval(autoT);autoT=null;$('#bAuto').innerHTML='&#9193; Auto-play';}
+  S.i=null; S.phase='idle'; S.rows=[]; S.output=[]; S.done=false; hi('');
+  renderTrace(); renderOut(); setI(); slimeTo(S.start,false); for(let n=1;n<=6;n++){const e=$('#b'+n);if(e)e.classList.remove('lit');}
+  label('','Set the numbers, make a guess, then press <b>Start tracing</b>.');
+  say('Change the numbers if you like, type a guess, then <b>Start tracing</b>.');
+  $('#bNext').disabled=true; $('#bAuto').disabled=true; $('#predictSec').style.opacity='1'; $('#reflectSec').style.display='none'; }
+
+/* edit the code */
+function bump(k,d){ if(k==='start')S.start=clamp(S.start+d,1,6); if(k==='stop')S.stop=clamp(S.stop+d,1,6); if(k==='step')S.step=clamp(S.step+d,1,3);
+  renderCode(); resetIdle(); }
+function setDir(op){ if(S.op===op)return; S.op=op; if(op==='+'){if(S.start>S.stop){S.start=1;S.stop=5;}} else {if(S.start<S.stop){S.start=5;S.stop=1;}}
+  renderCode(); resetIdle(); }
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+
+/* reflect: predicted vs actual */
+function arrEq(a,b){ return a.length===b.length && a.every((x,i)=>x===b[i]); }
+function reflect(){ sWin(); const sec=$('#reflectSec'); sec.style.display='block';
+  const outTxt=S.output.join(' ')||'(nothing)';
+  if(S.pred===null){ sec.innerHTML='<div class="panel reflect"><div class="rt">&#9989; DONE!</div><p>The loop printed: <b>'+outTxt+'</b></p><p>The first number is the <b>start</b> ('+S.start+'). It stopped when the check went FALSE.</p></div>'; return; }
+  const ok=arrEq(S.pred,S.output);
+  sec.innerHTML='<div class="panel reflect '+(ok?'ok':'no')+'"><div class="rt">'+(ok?'&#11088; SPOT ON!':'&#129300; NOT QUITE')+'</div>'
+    +'<p>You guessed: <b>'+(S.pred.join(' ')||'(nothing)')+'</b></p>'
+    +'<p>It printed: <b>'+outTxt+'</b></p>'
+    +'<p>'+(ok?'You predicted the loop perfectly!':'Look at the <b>trace table</b> &mdash; follow i down the rows to see why.')+'</p></div>';
+  ok?sOk():sNo();
 }
 
-renderProg();
-window.G={ up:makeGame('game-up','up'), down:makeGame('game-down','down') };
-/* the slimes are placed by measuring block positions; do it again once layout + fonts settle */
-function reflow(){ try{ G.up.place(); G.down.place(); }catch(e){} }
-requestAnimationFrame(reflow);
-window.addEventListener('load',reflow);
-if(document.fonts&&document.fonts.ready) document.fonts.ready.then(reflow);
+/* challenges */
+const CH=[ {t:'1 2 3', g:[1,2,3]}, {t:'count DOWN: 5 4 3 2 1', g:[5,4,3,2,1]}, {t:'even: 2 4 6', g:[2,4,6]}, {t:'just one: 3', g:[3]} ];
+const CHDONE=(function(){ try{ return JSON.parse(localStorage.getItem('sl-tracer-ch-v1'))||[]; }catch(e){ return []; } })();
+function renderChal(){ $('#chalList').innerHTML=CH.map((c,i)=>{ const d=CHDONE.indexOf(i)>=0; return '<div class="crow'+(d?' done':'')+'"><span class="box">'+(d?'&#9745;':'&#9744;')+'</span><span>print <code>'+c.t+'</code></span></div>'; }).join(''); }
+function checkChallenges(){ CH.forEach((c,i)=>{ if(CHDONE.indexOf(i)<0 && arrEq(S.output,c.g)){ CHDONE.push(i); try{localStorage.setItem('sl-tracer-ch-v1',JSON.stringify(CHDONE));}catch(e){} renderChal(); toast('&#127919; Challenge done: '+c.t); } }); }
+let toT; function toast(m){ const e=$('#toast'); e.innerHTML=m; e.classList.add('show'); clearTimeout(toT); toT=setTimeout(()=>e.classList.remove('show'),2400); }
+
+/* init */
+renderCode(); buildScene(); renderTrace(); renderChal();
+function place(){ slimeTo(S.i==null?S.start:S.i,false); }
+requestAnimationFrame(place); window.addEventListener('load',place);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(place);
+window.addEventListener('resize',place);
 </script>
 </body>
 </html>
