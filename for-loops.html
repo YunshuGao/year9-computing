@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Loop Tracer — watch a for loop run · Year 9 Computing</title>
+<title>Loop Tracer — every step of a for loop · Year 9 Computing</title>
 <style>
 :root{
   --bg:#eef1f5;--card:#ffffff;--line:#e3e8ed;--line2:#cdd5dd;
   --ink:#202832;--muted:#6c7884;--faint:#9aa4af;
   --accent:#3b6ef0;--accent-bg:#eaf1fe;--accent-line:#bcd3fb;--accent-ink:#2256cc;
-  --ok:#15a34a;--ok-bg:#e9f7ee;--no:#dc2626;--no-bg:#fdecea;
+  --ok:#15a34a;--no:#dc2626;
   --mono:'Consolas','SF Mono','Cascadia Code',ui-monospace,monospace;
   --sans:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
 }
@@ -38,63 +38,47 @@ header p{margin:5px 0 0;font-size:16px;color:var(--muted)}
 .seg button{border:none;background:#fff;font-size:13px;font-weight:600;color:#43505c;padding:8px 12px;cursor:pointer}
 .seg button.on{background:var(--accent);color:#fff}
 
-.stage{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 20px 24px;margin-top:16px;text-align:center}
-.stPhase{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:14px}
-.stPhase .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
-.stPhase.stop{color:var(--no)}.stPhase.stop .dot{background:var(--no)}
-.stMain{font-family:var(--mono);font-size:27px;font-weight:600;color:var(--ink);line-height:1.4;min-height:38px}
-.stMain.in{animation:fade .3s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.stMain .v{color:var(--accent)}
-.stMain .ok{color:var(--ok)}.stMain .no{color:var(--no)}
-.stMain .rule{color:var(--faint)}
-.chips{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
-.chip{background:#f3f6f9;border-radius:10px;padding:8px 16px;text-align:center}
-.chip .cl{font-size:12px;color:var(--muted)}
-.chip .cv{font-family:var(--mono);font-size:19px;font-weight:600;color:var(--ink);margin-top:1px;min-height:23px}
-.chip.iC .cv{color:var(--accent)}
-
 .controls{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
-.btn{font-family:var(--sans);font-size:15px;font-weight:600;border-radius:10px;border:1px solid var(--line2);background:#fff;color:#43505c;padding:12px 18px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn{font-family:var(--sans);font-size:15px;font-weight:600;border-radius:10px;border:1px solid var(--line2);background:#fff;color:#43505c;padding:12px 18px;cursor:pointer}
 .btn:hover{background:#f3f6f9}.btn:disabled{opacity:.45;cursor:default}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-size:16px;padding:13px 26px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-size:16px;padding:13px 24px}
 .btn.primary:hover{background:#2f60de}
-.btn.ghost{border-color:transparent;color:var(--muted);font-weight:500;padding:12px 12px}
+.btn.ghost{border-color:transparent;color:var(--muted);font-weight:500}
 
-.storyWrap{margin-top:22px;display:none}
-.story-h{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:0 0 11px}
-.story{display:grid;grid-template-columns:repeat(auto-fit,minmax(94px,1fr));gap:10px}
-.scard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;animation:fade .3s ease}
-.scard.now{border:2px solid var(--accent-line);background:var(--accent-bg)}
-.scard.stopc{border-style:dashed;opacity:.8}
-.scard .st-turn{font-size:12px;color:var(--muted)}
-.scard.now .st-turn{color:var(--accent-ink)}
-.scard .st-i{font-family:var(--mono);font-size:21px;font-weight:600;color:var(--ink);margin:4px 0}
-.scard.now .st-i{color:var(--accent-ink)}
-.scard .st-chk{font-size:13px;color:var(--ok)}
-.scard.stopc .st-chk{color:var(--no)}
-.scard .st-pr{font-size:13px;color:var(--muted);margin-top:2px}
+.bk-h{font-size:13px;font-weight:600;color:var(--muted);margin:16px 0 7px;text-transform:uppercase;letter-spacing:.3px}
+.bk-h:first-child{margin-top:2px}
+.bk-h.stopH{color:var(--no)}
+.bk-line{display:flex;gap:12px;align-items:baseline;font-family:var(--mono);font-size:18px;color:var(--ink);padding:8px 12px;border-radius:9px;border:1px solid transparent;margin-bottom:3px}
+.bk-line .k{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--muted);min-width:58px;flex:none}
+.bk-line.cur{background:var(--accent-bg);border-color:var(--accent-line);font-size:22px}
+.bk-line.cur .k{color:var(--accent-ink)}
+.bk-line .v{color:var(--accent);font-weight:600}
+.bk-line .ok{color:var(--ok);font-weight:600}.bk-line .no{color:var(--no);font-weight:600}
+.bk-line .note{color:var(--faint);font-size:14px}
+.bk-hint{font-size:16px;color:var(--muted);padding:6px 2px}
+.bk-out{margin-top:16px;font-family:var(--mono);font-size:19px;color:var(--ink);padding:12px 14px;background:#f3f6f9;border-radius:9px}
+.bk-out b{color:var(--accent-ink)}
 
 .ex-h{font-size:14px;color:var(--muted);margin:0 0 11px}.ex-h b{color:var(--ink);font-weight:600}
 .exmenu{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
 .exbtn{text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:var(--sans)}
 .exbtn:hover{border-color:var(--accent-line);background:#f7faff}
 .exbtn.done{background:#f1f9f3;border-color:#bfe2c5}
-.exbtn .ex-t{font-size:15px;font-weight:600;color:#36424e;display:flex;align-items:center;gap:6px}
+.exbtn .ex-t{font-size:15px;font-weight:600;color:#36424e}
 .exbtn.done .ex-t{color:var(--ok)}
-.exbtn .ex-o{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:2px}
+.exbtn .ex-o{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 .recap{font-size:15px;color:var(--muted);line-height:1.6;margin-top:16px;padding:0 2px}
 .recap b{color:var(--ink);font-weight:600}
 .foot{margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .foot a{font-size:14px;color:var(--accent);text-decoration:none;border:1px solid var(--accent-line);border-radius:8px;padding:8px 16px;background:#fff}
-@media(max-width:540px){.code{font-size:16px}.stMain{font-size:21px}header h1{font-size:20px}}
-@media(prefers-reduced-motion:reduce){.stMain.in,.scard{animation:none}}
+@media(max-width:540px){.code{font-size:15px}.bk-line{font-size:16px}.bk-line.cur{font-size:18px}header h1{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <div class="page">
-<header><h1>Loop Tracer</h1><p>Watch a <code>for</code> loop run — one step at a time.</p></header>
+<header><h1>Loop Tracer</h1><p>Every step of a <code>for</code> loop, broken right down.</p></header>
 
 <section class="panel">
   <p class="lab">The loop</p>
@@ -108,40 +92,31 @@ header p{margin:5px 0 0;font-size:16px;color:var(--muted)}
   </div>
 </section>
 
-<div class="stage">
-  <div class="stPhase" id="stPhase"><span class="dot"></span>ready</div>
-  <div class="stMain" id="stMain">Press <b>Next step</b> to start.</div>
-  <div class="chips">
-    <div class="chip iC"><div class="cl">i</div><div class="cv" id="cI">–</div></div>
-    <div class="chip" style="flex:1;max-width:380px"><div class="cl">output</div><div class="cv" id="cOut"></div></div>
-  </div>
-</div>
-
 <div class="controls">
   <button class="btn primary" id="bNext" onclick="nextStep()">Next step →</button>
-  <button class="btn" id="bAuto" onclick="auto()">Auto-play</button>
+  <button class="btn" id="bAll" onclick="showAll()">Show all steps</button>
   <button class="btn" onclick="resetIdle()">Reset</button>
   <button class="btn ghost" id="bNarr" onclick="toggleNarrate()">🔊 Read aloud: on</button>
 </div>
 
-<div class="storyWrap" id="storyWrap">
-  <p class="story-h">The run so far</p>
-  <div class="story" id="story"></div>
-</div>
+<section class="panel">
+  <p class="lab" id="bkLab">Every step, broken down</p>
+  <div id="breakdown"><div class="bk-hint">Press <b>Next step</b> to break the loop down one piece at a time — or <b>Show all steps</b>.</div></div>
+</section>
 
-<section class="panel" style="margin-top:22px">
-  <p class="ex-h">Ready-made loops — <b><span id="exCount">0/6</span> traced</b>. Pick one:</p>
+<section class="panel">
+  <p class="ex-h">Ready-made loops — <b><span id="exCount">0/7</span> traced</b>. Pick one:</p>
   <div class="exmenu" id="exMenu"></div>
 </section>
 
-<div class="recap"><b>How a for loop works:</b> set i once, then repeat — <b>check</b> the condition, <b>print</b> i, <b>update</b> i — over and over. When the check is false the loop stops, and that last value is never printed.</div>
+<div class="recap"><b>The minimal pieces:</b> set i once, then each turn does just three things — <b>check</b> the condition, <b>print</b> i, <b>update</b> i. Repeat until the check is false; that last value is never printed.</div>
 
 <div class="foot"><a href="slime-loop.html">Slime Loop game</a><a href="loop-hopper.html">Loop Hopper</a></div>
 </div>
 
 <script>
 const $=s=>document.querySelector(s);
-const S=window.S={start:1,stop:5,step:1,op:'+',i:null,phase:'idle',turns:[],output:[],done:false,stepNo:0,narrate:true};
+const S=window.S={start:1,stop:5,step:1,op:'+',steps:[],revealed:0,done:false,narrate:true};
 const cmpTxt=()=>S.op==='+'?'≤':'≥';
 const cmpWord=()=>S.op==='+'?'less than or equal to':'greater than or equal to';
 const passes=i=>S.op==='+'?i<=S.stop:i>=S.stop;
@@ -165,70 +140,70 @@ function renderCode(){ $('#vStart').textContent=S.start; $('#vStop').textContent
     +'<span class="tk" id="tk-update">i = i '+opc+' '+S.step+'</span> <span class="pn">) {</span> '
     +'<span class="tk" id="tk-body">print(i)</span> <span class="pn">; }</span>'; }
 function hi(part){ ['init','check','body','update'].forEach(p=>{ const e=$('#tk-'+p); if(e)e.classList.toggle('on',p===part); }); }
+const TKMAP={start:'init',check:'check',print:'body',update:'update',stop:'check'};
 
-function stage(phase,stop,mainHTML,speak){ S.stepNo++;
-  const pe=$('#stPhase'); pe.className='stPhase'+(stop?' stop':''); pe.innerHTML='<span class="dot"></span>'+phase+' · step '+S.stepNo;
-  const m=$('#stMain'); m.innerHTML=mainHTML; m.classList.remove('in'); void m.offsetWidth; m.classList.add('in');
-  $('#cI').textContent=(S.i==null?'–':S.i); $('#cOut').textContent=S.output.join('  ');
-  if(speak) speakNow(speak); }
-function renderStory(){ const cmp=cmpTxt(); const w=$('#storyWrap'); w.style.display=(S.turns.length||S.done)?'block':'none';
-  $('#story').innerHTML=S.turns.map((t,k)=>{ const now=(k===S.turns.length-1 && !S.done);
-    return '<div class="scard'+(now?' now':'')+'"><div class="st-turn">turn '+(k+1)+(now?' · now':'')+'</div>'
-      +'<div class="st-i">i = '+t.i+'</div><div class="st-chk">'+t.i+' '+cmp+' '+S.stop+' ✓</div><div class="st-pr">prints '+t.i+'</div></div>'; }).join('')
-    +(S.done?'<div class="scard stopc"><div class="st-turn">stop</div><div class="st-i">i = '+S.i+'</div><div class="st-chk">'+S.i+' '+cmp+' '+S.stop+' ✗</div><div class="st-pr">loop ends</div></div>':''); }
+function build(){ const steps=[]; let i=S.start, part=0; steps.push({k:'start',i:i});
+  while(passes(i) && part<14){ part++; steps.push({k:'check',part:part,i:i}); steps.push({k:'print',part:part,i:i}); const old=i; i=stepI(i); steps.push({k:'update',part:part,old:old,ni:i}); }
+  steps.push({k:'stop',i:i,part:part});
+  S.steps=steps; S.parts=part; }
 
-function doCheck(){ S.phase='check'; if(passes(S.i)){ hi('check');
-    stage('check',false,'i is '+vv(S.i)+' <span class="rule">→ is</span> '+vv(S.i)+' '+cmpTxt()+' '+vv(S.stop)+'? &nbsp;<span class="ok">yes</span>',
-      'Check. i is '+S.i+'. Is '+S.i+' '+cmpWord()+' '+S.stop+'? Yes.'); }
-  else { hi('check'); S.done=true;
-    stage('stop',true,'i is '+vv(S.i)+' <span class="rule">→</span> '+vv(S.i)+' '+cmpTxt()+' '+vv(S.stop)+'? &nbsp;<span class="no">no</span> <span class="rule">→ stop. '+S.i+' is never printed.</span>',
-      'Check. i is '+S.i+'. Is '+S.i+' '+cmpWord()+' '+S.stop+'? No. The loop stops. '+S.i+' is never printed.');
-    renderStory(); $('#bNext').disabled=true; $('#bAuto').disabled=true; checkCrew(); } }
-function doBody(){ S.phase='body'; hi('body'); S.output.push(S.i); S.turns.push({i:S.i}); renderStory();
-  stage('print',false,'print(i) <span class="rule">→ i is</span> '+vv(S.i)+' <span class="rule">→ prints</span> '+vv(S.i),
-    'Print i. i is '+S.i+', so it prints '+S.i+'.'); }
-function doUpdate(){ S.phase='update'; const old=S.i; S.i=stepI(S.i); hi('update'); const opc=S.op==='+'?'+':'−';
-  stage('update',false,'i = '+vv(old)+' '+opc+' '+S.step+' <span class="rule">=</span> '+vv(S.i)+' <span class="rule">(i changes)</span>',
-    'Update. i becomes '+old+' '+(S.op==='+'?'plus':'minus')+' '+S.step+', which is '+S.i+'.'); }
+function lineHTML(st,cur){ const opc=S.op==='+'?'+':'−'; const c='bk-line'+(cur?' cur':''); let k,body;
+  if(st.k==='start'){ k='start'; body='i = '+vv(st.i)+' &nbsp;<span class="note">(happens once)</span>'; }
+  else if(st.k==='check'){ k='check'; body='is '+vv(st.i)+' '+cmpTxt()+' '+vv(S.stop)+'? &nbsp;<span class="ok">yes</span>'; }
+  else if(st.k==='print'){ k='print'; body='prints '+vv(st.i); }
+  else if(st.k==='update'){ k='update'; body='i = '+vv(st.old)+' '+opc+' '+S.step+' = '+vv(st.ni); }
+  else { k='check'; body='is '+vv(st.i)+' '+cmpTxt()+' '+vv(S.stop)+'? &nbsp;<span class="no">no</span> &nbsp;<span class="note">&rarr; the loop ends. '+st.i+' is never printed.</span>'; }
+  return '<div class="'+c+'"><span class="k">'+k+'</span><span>'+body+'</span></div>'; }
 
-function begin(){ S.i=S.start; S.turns=[]; S.output=[]; S.done=false; S.phase='init'; S.stepNo=0; hi('init'); renderStory();
-  stage('start',false,'let i = '+S.start+' <span class="rule">→ i starts at</span> '+vv(S.start),'Start. i starts at '+S.start+'.');
-  try{ $('.stage').scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} }
-function nextStep(){ if(S.done)return;
-  if(S.phase==='idle'){ begin(); return; }
-  if(S.phase==='init'){ doCheck(); } else if(S.phase==='check'){ doBody(); } else if(S.phase==='body'){ doUpdate(); } else if(S.phase==='update'){ doCheck(); } }
+function renderBreak(){ const n=S.revealed;
+  if(n===0){ $('#breakdown').innerHTML='<div class="bk-hint">Press <b>Next step</b> to break the loop down one piece at a time — or <b>Show all steps</b>.</div>'; return; }
+  let html='', shown=null;
+  for(let s=0;s<n;s++){ const st=S.steps[s], cur=(s===n-1);
+    if(st.k==='start' && shown!=='setup'){ html+='<div class="bk-h">Set&nbsp;up</div>'; shown='setup'; }
+    else if((st.k==='check'||st.k==='print'||st.k==='update') && shown!=='p'+st.part){ html+='<div class="bk-h">Part '+st.part+' &nbsp;&middot;&nbsp; i = '+st.i+'</div>'; shown='p'+st.part; }
+    else if(st.k==='stop' && shown!=='stop'){ html+='<div class="bk-h stopH">The loop ends</div>'; shown='stop'; }
+    html+=lineHTML(st,cur); }
+  const outArr=S.steps.slice(0,n).filter(x=>x.k==='print').map(x=>x.i);
+  if(S.done) html+='<div class="bk-out">Output: <b>'+(outArr.join('  ')||'(nothing)')+'</b></div>';
+  $('#breakdown').innerHTML=html;
+  const cl=$('#breakdown .bk-line.cur'); if(cl) try{ cl.scrollIntoView({block:'nearest'}); }catch(e){} }
 
-let autoT=null;
-function auto(){ if(S.done)return; if(autoT){ clearInterval(autoT); autoT=null; $('#bAuto').textContent='Auto-play'; return; }
-  if(S.phase==='idle') begin();
-  $('#bAuto').textContent='Pause'; const iv=S.narrate?2400:1200; autoT=setInterval(()=>{ if(S.done){ clearInterval(autoT); autoT=null; $('#bAuto').textContent='Auto-play'; return; } nextStep(); },iv); }
+function speakStep(st){ if(st.k==='start') return 'i starts at '+st.i+'.';
+  if(st.k==='check') return 'Check. Is '+st.i+' '+cmpWord()+' '+S.stop+'? Yes.';
+  if(st.k==='print') return 'Print. It prints '+st.i+'.';
+  if(st.k==='update') return 'Update. i becomes '+st.old+' '+(S.op==='+'?'plus':'minus')+' '+S.step+', which is '+st.ni+'.';
+  return 'Check. Is '+st.i+' '+cmpWord()+' '+S.stop+'? No. The loop ends. '+st.i+' is never printed.'; }
 
-function resetIdle(){ if(autoT){clearInterval(autoT);autoT=null;$('#bAuto').textContent='Auto-play';}
-  S.i=null; S.phase='idle'; S.turns=[]; S.output=[]; S.done=false; S.stepNo=0; hi('');
-  $('#stPhase').className='stPhase'; $('#stPhase').innerHTML='<span class="dot"></span>ready';
-  $('#stMain').innerHTML='Press <b>Next step</b> to start.'; $('#cI').textContent='–'; $('#cOut').textContent='';
-  renderStory(); $('#bNext').disabled=false; $('#bAuto').disabled=false; }
+function nextStep(){ if(S.done) return; S.revealed++; const st=S.steps[S.revealed-1]; hi(TKMAP[st.k]);
+  if(st.k==='stop') S.done=true; renderBreak(); speakNow(speakStep(st));
+  if(S.done){ $('#bNext').disabled=true; $('#bAll').disabled=true; checkCrew(); } }
+function showAll(){ if(S.done && S.revealed===S.steps.length) return; S.revealed=S.steps.length; S.done=true; hi('');
+  renderBreak(); $('#bNext').disabled=true; $('#bAll').disabled=true; checkCrew();
+  try{ $('.bk-out').scrollIntoView({block:'nearest'}); }catch(e){} }
+function resetIdle(){ S.revealed=0; S.done=false; hi(''); renderBreak(); $('#bNext').disabled=false; $('#bAll').disabled=false; }
 
-function bump(k,d){ if(k==='start')S.start=clamp(S.start+d,1,6); if(k==='stop')S.stop=clamp(S.stop+d,1,6); if(k==='step')S.step=clamp(S.step+d,1,3); renderCode(); resetIdle(); }
-function setDir(op){ if(S.op===op)return; S.op=op; if(op==='+'){if(S.start>S.stop){S.start=1;S.stop=5;}}else{if(S.start<S.stop){S.start=5;S.stop=1;}} renderCode(); resetIdle(); }
+function bump(k,d){ if(k==='start')S.start=clamp(S.start+d,1,10); if(k==='stop')S.stop=clamp(S.stop+d,1,10); if(k==='step')S.step=clamp(S.step+d,1,3); renderCode(); build(); resetIdle(); }
+function setDir(op){ if(S.op===op)return; S.op=op; if(op==='+'){if(S.start>S.stop){S.start=1;S.stop=5;}}else{if(S.start<S.stop){S.start=5;S.stop=1;}} renderCode(); build(); resetIdle(); }
 
 const EX=[
   {t:'Count to 5',start:1,stop:5,step:1,op:'+',out:'1 2 3 4 5'},
+  {t:'Count to 10',start:1,stop:10,step:1,op:'+',out:'1 2 3 4 5 6 7 8 9 10'},
   {t:'Countdown',start:5,stop:1,step:1,op:'-',out:'5 4 3 2 1'},
-  {t:'Even numbers',start:2,stop:6,step:2,op:'+',out:'2 4 6'},
-  {t:'Odd numbers',start:1,stop:6,step:2,op:'+',out:'1 3 5'},
-  {t:'Down by 2',start:6,stop:1,step:2,op:'-',out:'6 4 2'},
+  {t:'Even numbers',start:2,stop:10,step:2,op:'+',out:'2 4 6 8 10'},
+  {t:'Odd numbers',start:1,stop:9,step:2,op:'+',out:'1 3 5 7 9'},
+  {t:'Down by 2',start:10,stop:2,step:2,op:'-',out:'10 8 6 4 2'},
   {t:'Just once',start:3,stop:3,step:1,op:'+',out:'3'}
 ];
-const EXDONE=(function(){ try{ return JSON.parse(localStorage.getItem('sl-tracer-ex-v3'))||[]; }catch(e){ return []; } })();
+const EXDONE=(function(){ try{ return JSON.parse(localStorage.getItem('sl-tracer-ex-v4'))||[]; }catch(e){ return []; } })();
 function renderCrew(){ $('#exCount').textContent=EXDONE.length+'/'+EX.length;
   $('#exMenu').innerHTML=EX.map((e,i)=>{ const d=EXDONE.indexOf(i)>=0;
     return '<button class="exbtn'+(d?' done':'')+'" onclick="loadExample('+i+')"><span class="ex-t">'+(d?'✓ ':'')+e.t+'</span><span class="ex-o">'+e.out+'</span></button>'; }).join(''); }
-function loadExample(i){ const e=EX[i]; S.start=e.start;S.stop=e.stop;S.step=e.step;S.op=e.op; renderCode(); resetIdle();
+function loadExample(i){ const e=EX[i]; S.start=e.start;S.stop=e.stop;S.step=e.step;S.op=e.op; renderCode(); build(); resetIdle();
   try{ $('.code').scrollIntoView({behavior:'smooth',block:'start'}); }catch(x){} }
-function checkCrew(){ EX.forEach((e,i)=>{ if(EXDONE.indexOf(i)<0 && arrEq(S.output,(e.out.match(/-?\d+/g)||[]).map(Number))){ EXDONE.push(i); try{localStorage.setItem('sl-tracer-ex-v3',JSON.stringify(EXDONE));}catch(x){} renderCrew(); } }); }
+function checkCrew(){ const out=S.steps.filter(x=>x.k==='print').map(x=>x.i);
+  EX.forEach((e,i)=>{ if(EXDONE.indexOf(i)<0 && arrEq(out,(e.out.match(/-?\d+/g)||[]).map(Number))){ EXDONE.push(i); try{localStorage.setItem('sl-tracer-ex-v4',JSON.stringify(EXDONE));}catch(x){} renderCrew(); } }); }
 
-renderCode(); renderCrew();
+renderCode(); build(); renderCrew();
 </script>
 </body>
 </html>
