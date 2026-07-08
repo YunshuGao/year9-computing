@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Web Page Studio · Mujib</title>
+<title>My Web Page Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="html2canvas.min.js"></script>
@@ -86,7 +86,7 @@
 
 <div class="wrap">
   <div class="who">
-    <label>Your name<input id="sName" value="Mujib"></label>
+    <label>Your name<input id="sName" value="" placeholder="Type your name"></label>
     <label class="grow">What did you make? (this goes on your screenshot)
       <input id="sLabel" placeholder="e.g. Task 3 — the pizza menu"></label>
     <label>Date<input id="sDate" style="min-width:130px"></label>
@@ -110,7 +110,7 @@
     <span class="tip">Tip: do <b>one task at a time</b> — Run it, save the screenshot, then paste the next one.</span>
   </div>
 
-  <footer>My Web Page Studio · for Mujib · your work auto-saves on this computer</footer>
+  <footer>My Web Page Studio · your work auto-saves on this computer</footer>
 </div>
 
 <div id="stage"></div>
@@ -118,7 +118,7 @@
 
 <script>
 const $=id=>document.getElementById(id);
-const LSKEY='mujib-coder-v1';
+const LSKEY='my-coder-v1';
 const STARTER='<h1>Tomato Street Pizza</h1>\n<p>Wood-fired since 2005.</p>\n\n<style>\n  h1 { color: #e8402c; }\n</style>';
 
 /* same render scaffold as the class site, so pizza.png and fonts work the same way */
@@ -191,7 +191,7 @@ function persist(){ try{ localStorage.setItem(LSKEY,JSON.stringify({
   code:$('code').value, name:$('sName').value, label:$('sLabel').value, date:$('sDate').value })); }catch(e){} }
 function restore(){
   let s=null; try{ s=JSON.parse(localStorage.getItem(LSKEY)); }catch(e){}
-  if(s){ $('code').value=s.code||STARTER; $('sName').value=s.name||'Mujib';
+  if(s){ $('code').value=s.code||STARTER; $('sName').value=s.name||'';
     $('sLabel').value=s.label||''; $('sDate').value=s.date||todayAU(); }
   else { $('code').value=STARTER; $('sDate').value=todayAU(); }
 }
